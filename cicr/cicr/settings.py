@@ -97,11 +97,12 @@ DATABASES = {
         "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.postgresql"),
         "NAME": os.getenv("DB_NAME", "cicr_db"),
         "USER": os.getenv("DB_USER", "postgres"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "tush9022"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "cicrpro26"),
         "HOST": os.getenv("DB_HOST", "localhost"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
+
 
 
 # Password validation
