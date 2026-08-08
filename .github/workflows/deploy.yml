@@ -24,8 +24,22 @@ jobs:
           script: |
             set -e
             echo "Starting deployment..."
+
+            # Ensure /var/www/cicr directory exists
+            sudo mkdir -p /var/www/cicr
+            sudo chown -R $USER:$USER /var/www/cicr
+
             cd /var/www/cicr
-            git pull origin main
+
+            # If not a git repo yet, clone the repo automatically
+            if [ ! -d ".git" ]; then
+                echo "Git repository not found on server. Cloning repository..."
+                git clone https://github.com/zappkodesols57/cicr.git .
+            else
+                echo "Git repository found. Fetching latest changes..."
+                git fetch origin main
+                git reset --hard origin/main
+            fi
 
             if [ ! -d "venv" ]; then
                 python3 -m venv venv
