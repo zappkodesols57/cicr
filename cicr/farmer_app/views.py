@@ -17,86 +17,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import FarmerOTP, FarmerProfile
 from .serializers import FarmerProfileSerializer, SendOTPSerializer, VerifyOTPSerializer
-from investigator_app.models import NewsArticle, RepresentedPhotograph
-from login.models import Advisory, Banner
 
 User = get_user_model()
-
-
-def _file_url(file_field):
-    if not file_field:
-        return ''
-    try:
-        return file_field.url
-    except ValueError:
-        return ''
-
-
-def _dashboard_images():
-    carousel_images = []
-
-    for banner in Banner.objects.all().order_by('-id')[:6]:
-        url = _file_url(banner.image)
-        if url:
-            carousel_images.append({
-                'url': url,
-                'label': 'Pink Bollworm',
-            })
-
-    if not carousel_images:
-        photographs = RepresentedPhotograph.objects.all().order_by('-id')[:6]
-        for photo in photographs:
-            for field_name in ('image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'image_6'):
-                url = _file_url(getattr(photo, field_name))
-                if url:
-                    carousel_images.append({
-                        'url': url,
-                        'label': photo.brief_activity_description_1 or photo.district or 'Pink Bollworm',
-                    })
-                if len(carousel_images) >= 6:
-                    break
-            if len(carousel_images) >= 6:
-                break
-
-    return carousel_images
-
-
-def _advisory_cards():
-    cards = []
-    images = _dashboard_images()
-    image_count = len(images)
-
-    for advisory in Advisory.objects.all().order_by('-id'):
-        pdf_url = (
-            _file_url(advisory.path_pdf_en)
-            or _file_url(advisory.lang_1_pdf)
-            or _file_url(advisory.path_pdf_hi)
-            or _file_url(advisory.path_pdf_gu)
-        )
-        image_url = images[len(cards) % image_count]['url'] if image_count else ''
-        cards.append({
-            'title': (
-                f"Weekly Advisory {advisory.week_en}"
-                if advisory.week_en
-                else advisory.week_hi
-                or advisory.week_gu
-                or 'CICR IRM Advisory'
-            ),
-            'subtitle': advisory.date_range_en or advisory.month_en or '',
-            'url': pdf_url or '#',
-            'image_url': image_url,
-        })
-
-    for item in NewsArticle.objects.all().order_by('-id'):
-        image_url = images[len(cards) % image_count]['url'] if image_count else ''
-        cards.append({
-            'title': f"Issue No. {item.issue_no}" if item.issue_no else 'Pest Management Advisory',
-            'subtitle': item.date or item.month or '',
-            'url': _file_url(item.pdf) or '#',
-            'image_url': image_url,
-        })
-
-    return cards
 
 # =====================================================================
 # WEB UI VIEWS
@@ -116,9 +38,6 @@ def farmer_dashboard_view(request):
     Displays the public farmer dashboard.
     """
     context = {
-        'carousel_images': _dashboard_images(),
-        'advisory_count': Advisory.objects.count(),
-        'latest_news': NewsArticle.objects.all().order_by('-id')[:3],
         'active_tab': 'home',
     }
     return render(request, 'farmer_app/farmer_dashboard.html', context)
@@ -126,8 +45,6 @@ def farmer_dashboard_view(request):
 
 def farmer_advisories_view(request):
     return render(request, 'farmer_app/farmer_advisories.html', {
-        'cards': _advisory_cards(),
-        'carousel_images': _dashboard_images(),
         'active_tab': 'advisories',
     })
 
@@ -139,26 +56,7 @@ def farmer_calculator_view(request):
 
 
 def farmer_pest_view(request):
-    pest_cards = []
-    for image in _dashboard_images():
-        pest_cards.append({
-            'title': image['label'],
-            'image_url': image['url'],
-        })
-
-    if not pest_cards:
-        pest_cards = [
-            {'title': 'Whitefly', 'image_url': '', 'source': 'pending'},
-            {'title': 'Whitefly in North India', 'image_url': '', 'source': 'pending'},
-            {'title': 'Jassid', 'image_url': '', 'source': 'pending'},
-            {'title': 'Thrips', 'image_url': '', 'source': 'pending'},
-            {'title': 'Mealybug', 'image_url': '', 'source': 'pending'},
-            {'title': 'Aphid', 'image_url': '', 'source': 'pending'},
-            {'title': 'Pink Bollworm', 'image_url': '', 'source': 'pending'},
-        ]
-
     return render(request, 'farmer_app/farmer_pest.html', {
-        'pest_cards': pest_cards,
         'active_tab': 'pest',
     })
 

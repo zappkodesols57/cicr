@@ -102,19 +102,10 @@
 <section class="card hero-card">
     <div class="card-image hero-image">
         <div class="slides" id="slides">
-            {% if carousel_images %}
-                {% for image in carousel_images %}
-                    <article class="slide">
-                        <img src="{{ image.url }}" alt="{{ image.label }}">
-                        <span class="pill">{{ image.label }}</span>
-                    </article>
-                {% endfor %}
-            {% else %}
-                <article class="slide">
-                    <div class="image-fallback">CICR IRM Updates</div>
-                    <span class="pill">Pink Bollworm</span>
-                </article>
-            {% endif %}
+            <article class="slide">
+                <div class="image-fallback">Loading dashboard media...</div>
+                <span class="pill">CICR IRM</span>
+            </article>
         </div>
     </div>
     <div class="hero-footer">
@@ -154,7 +145,87 @@
 <script>
     const slides = document.getElementById('slides');
     const dots = document.getElementById('dots');
-    const cards = slides ? Array.from(slides.children) : [];
+    let cards = slides ? Array.from(slides.children) : [];
+
+    function absoluteUrl(url) {
+        if (!url) return '';
+        try {
+            return new URL(url, window.location.origin).href;
+        } catch (_) {
+            return '';
+        }
+    }
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;',
+        }[char]));
+    }
+
+    function slideTemplate(item) {
+        const image = item.url
+            ? `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.label)}" onerror="this.remove(); this.parentElement.querySelector('.image-fallback').hidden=false;">`
+            : '';
+        return `
+            <article class="slide">
+                ${image}
+                <div class="image-fallback" ${item.url ? 'hidden' : ''}>${escapeHtml(item.label)}</div>
+                <span class="pill">${escapeHtml(item.label)}</span>
+            </article>
+        `;
+    }
+
+    async function loadDashboardMedia() {
+        const items = [];
+
+        try {
+            const bannerResponse = await fetch('/api/banners/', { headers: { 'Accept': 'application/json' } });
+            if (bannerResponse.ok) {
+                const payload = await bannerResponse.json();
+                const banners = Array.isArray(payload) ? payload : (payload.banners || []);
+                banners.forEach((banner) => {
+                    const url = absoluteUrl(banner.image_url || banner.image);
+                    if (url) items.push({ url, label: 'Pink Bollworm' });
+                });
+            }
+        } catch (error) {
+            console.error('Banner API failed:', error);
+        }
+
+        if (!items.length) {
+            try {
+                const photoResponse = await fetch('/api/represented_photographs/', { headers: { 'Accept': 'application/json' } });
+                if (photoResponse.ok) {
+                    const photos = await photoResponse.json();
+                    photos.forEach((photo) => {
+                        ['image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'image_6'].forEach((key) => {
+                            const url = absoluteUrl(photo[key]);
+                            if (url) {
+                                items.push({
+                                    url,
+                                    label: photo.brief_activity_description_1 || photo.district || 'CICR IRM',
+                                });
+                            }
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error('Represented photographs API failed:', error);
+            }
+        }
+
+        if (!items.length) {
+            slides.innerHTML = slideTemplate({ url: '', label: 'No dashboard media available' });
+        } else {
+            slides.innerHTML = items.slice(0, 8).map(slideTemplate).join('');
+        }
+        cards = Array.from(slides.children);
+        renderDots();
+    }
 
     function activeIndex() {
         if (!slides || !cards.length) return 0;
@@ -186,6 +257,6 @@
     if (slides) {
         slides.addEventListener('scroll', () => requestAnimationFrame(renderDots));
     }
-    renderDots();
+    loadDashboardMedia();
 </script>
 {% endblock %}

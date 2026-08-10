@@ -12,34 +12,152 @@
     .pest-name {
         text-transform: none;
     }
+
+    .pest-data {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 14px;
+        margin-bottom: 22px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.35;
+    }
+
+    .state-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 26px;
+    }
+
+    .skeleton {
+        height: 360px;
+        border-radius: 10px;
+        background:
+            linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent) -120px 0 / 120px 100% no-repeat,
+            #e6f0e8;
+        animation: shimmer 1.1s infinite linear;
+    }
+
+    @keyframes shimmer {
+        to { background-position: calc(100% + 120px) 0, 0 0; }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="toolbar">
-    <span>Pest Management Advisory</span>
-    <span>{{ pest_cards|length }} records</span>
+    <span id="recordCount">Loading pest data...</span>
+    <span>Source: /api/pest_incidence_data/</span>
 </div>
 
-<section class="grid">
-    {% for pest in pest_cards %}
-        <article class="card pest-card">
-            <div class="card-image">
-                {% if pest.image_url %}
-                    <img src="{{ pest.image_url }}" alt="{{ pest.title }}" onerror="this.remove(); this.parentElement.querySelector('.image-fallback').hidden=false;">
-                    <div class="image-fallback" hidden>{{ pest.title }}</div>
-                {% else %}
-                    <div class="image-fallback">{{ pest.title }}</div>
-                {% endif %}
-            </div>
-            <div class="card-body">
-                <h3 class="card-title pest-name">{{ pest.title }}</h3>
-                <p class="card-meta">Pest advisory information from the existing CICR IRM data source.</p>
-                <span class="button">Read More</span>
-            </div>
-        </article>
-    {% empty %}
-        <div class="message">No pest advisories available.</div>
-    {% endfor %}
+<section id="loading" class="state-grid" aria-label="Loading pest data">
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
 </section>
+<section id="pestGrid" class="grid" aria-label="Pest management records" hidden></section>
+<div id="emptyState" class="message" hidden>No pest data available.</div>
+<div id="errorState" class="message" hidden>Unable to load pest data. Please try again.</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const API_URL = '/api/pest_incidence_data/';
+    const grid = document.getElementById('pestGrid');
+    const loading = document.getElementById('loading');
+    const emptyState = document.getElementById('emptyState');
+    const errorState = document.getElementById('errorState');
+    const recordCount = document.getElementById('recordCount');
+
+    function firstValue(record, keys) {
+        for (const key of keys) {
+            if (record[key] !== undefined && record[key] !== null && String(record[key]).trim() !== '') {
+                return String(record[key]).trim();
+            }
+        }
+        return '';
+    }
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;',
+        }[char]));
+    }
+
+    function numberText(value) {
+        if (value === undefined || value === null || value === '') return '-';
+        const numeric = Number(value);
+        if (Number.isFinite(numeric)) return numeric.toFixed(2).replace(/\.00$/, '');
+        return String(value);
+    }
+
+    function normalize(record, index) {
+        const district = firstValue(record, ['district']) || 'CICR IRM';
+        const week = firstValue(record, ['standard_week', 'week']);
+        const month = firstValue(record, ['month']);
+        const year = firstValue(record, ['year']);
+        return {
+            id: firstValue(record, ['id', 'pk']) || String(index + 1),
+            title: [district, week].filter(Boolean).join(' - ') || `Pest Record ${index + 1}`,
+            meta: [month, year].filter(Boolean).join(' '),
+            values: {
+                'Jassid IRM': record.jassid_irm_average,
+                'Whitefly IRM': record.whitefly_irm_average,
+                'Thrips IRM': record.thrips_irm_average,
+                'Incidence IRM': record.incidence_irm_average,
+            },
+        };
+    }
+
+    function cardTemplate(item) {
+        const values = Object.entries(item.values).map(([label, value]) => (
+            `<span><strong>${escapeHtml(label)}:</strong> ${escapeHtml(numberText(value))}</span>`
+        )).join('');
+        return `
+            <article class="card pest-card" data-id="${escapeHtml(item.id)}">
+                <div class="card-image">
+                    <div class="image-fallback">${escapeHtml(item.title)}</div>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title pest-name">${escapeHtml(item.title)}</h3>
+                    <p class="card-meta">${escapeHtml(item.meta || 'Pest incidence data')}</p>
+                    <div class="pest-data">${values}</div>
+                    <span class="button">Read More</span>
+                </div>
+            </article>
+        `;
+    }
+
+    async function loadPestData() {
+        try {
+            const response = await fetch(API_URL, { headers: { 'Accept': 'application/json' } });
+            if (!response.ok) throw new Error(`API ${response.status}`);
+            const payload = await response.json();
+            const records = Array.isArray(payload) ? payload : (payload.results || payload.data || payload.pest_data || []);
+            const items = records.map(normalize);
+
+            loading.hidden = true;
+            if (!items.length) {
+                recordCount.textContent = '0 pest records';
+                emptyState.hidden = false;
+                return;
+            }
+
+            grid.innerHTML = items.map(cardTemplate).join('');
+            recordCount.textContent = `${items.length} pest records`;
+            grid.hidden = false;
+        } catch (error) {
+            loading.hidden = true;
+            errorState.hidden = false;
+            recordCount.textContent = 'Could not load pest data';
+            console.error('Pest API failed:', error);
+        }
+    }
+
+    loadPestData();
+</script>
 {% endblock %}
