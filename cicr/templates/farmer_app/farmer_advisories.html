@@ -7,8 +7,10 @@
 <style>
     .advisory-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 36px;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        max-width: 760px;
+        margin: 0 auto;
     }
 
     .advisory-card {
@@ -21,7 +23,7 @@
     }
 
     .advisory-image {
-        height: 260px;
+        height: 300px;
         background: linear-gradient(135deg, #dceddf, #eff8f1);
     }
 
@@ -33,7 +35,7 @@
     }
 
     .advisory-body {
-        padding: 32px;
+        padding: 32px 36px;
     }
 
     .advisory-body h2 {
@@ -62,6 +64,16 @@
         font-weight: 700;
     }
 
+    .advisory-placeholder {
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: #008b24;
+        font-size: 22px;
+        font-weight: 800;
+        text-align: center;
+    }
+
     .empty {
         padding: 52px;
         text-align: center;
@@ -79,8 +91,9 @@
             <a class="advisory-card" href="{{ card.url }}">
                 <div class="advisory-image">
                     {% if card.image_url %}
-                        <img src="{{ card.image_url }}" alt="">
+                        <img src="{{ card.image_url }}" alt="{{ card.title }}" onerror="this.remove(); this.parentElement.querySelector('.advisory-placeholder').style.display='grid';">
                     {% endif %}
+                    <div class="advisory-placeholder" {% if card.image_url %}style="display:none"{% endif %}>{{ card.title }}</div>
                 </div>
                 <div class="advisory-body">
                     <h2>{{ card.title }}</h2>

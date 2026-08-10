@@ -1139,14 +1139,13 @@ from rest_framework import status
 
 class AdvisoryCreateAPIView(APIView):
     def get(self, request, format=None):
-        # Allow an optional ?limit= query param; default=4
-        try:
-            limit = int(request.query_params.get('limit', 4))
-        except ValueError:
-            limit = 4
-
-        # Latest advisories (by id desc) limited to `limit`
-        advisories = Advisory.objects.order_by('-id')[:limit]
+        limit_param = request.query_params.get('limit')
+        advisories = Advisory.objects.order_by('-id')
+        if limit_param:
+            try:
+                advisories = advisories[:int(limit_param)]
+            except ValueError:
+                pass
         serializer = AdvisorySerializer(advisories, many=True, context={'request': request})
         advisory_data = list(serializer.data)
 
