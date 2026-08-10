@@ -17,6 +17,8 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .models import FarmerOTP, FarmerProfile
 from .serializers import FarmerProfileSerializer, SendOTPSerializer, VerifyOTPSerializer
+from investigator_app.models import NewsArticle, RepresentedPhotograph
+from login.models import Advisory, Banner
 
 User = get_user_model()
 
@@ -35,46 +37,44 @@ def farmer_login_view(request):
 
 def farmer_dashboard_view(request):
     """
-    Displays the farmer's dashboard where they can see and update their profile.
+    Displays the public farmer dashboard.
     """
-    if not request.user.is_authenticated or not getattr(request.user, 'is_farmer', False):
-        messages.error(request, "Access denied. Please log in as a farmer.")
-        return redirect('farmer_login')
-        
-    profile, created = FarmerProfile.objects.get_or_create(
-        user=request.user,
-        defaults={'mobile_number': request.user.mobile_number}
-    )
-    
-    if request.method == 'POST':
-        first_name = request.POST.get('first_name', '')
-        last_name = request.POST.get('last_name', '')
-        state = request.POST.get('state', '')
-        district = request.POST.get('district', '')
-        taluka = request.POST.get('taluka', '')
-        village = request.POST.get('village', '')
-        gender = request.POST.get('gender', '')
+    carousel_images = []
 
-        # Update profile
-        profile.first_name = first_name
-        profile.last_name = last_name
-        profile.state = state
-        profile.district = district
-        profile.taluka = taluka
-        profile.village = village
-        profile.gender = gender
-        profile.save()
+    for banner in Banner.objects.all().order_by('-id')[:6]:
+        if banner.image:
+            try:
+                carousel_images.append({
+                    'url': banner.image.url,
+                    'label': 'Pink Bollworm',
+                })
+            except ValueError:
+                pass
 
-        # Update user record
-        request.user.first_name = first_name
-        request.user.last_name = last_name
-        request.user.user_district = district
-        request.user.save()
+    if not carousel_images:
+        photographs = RepresentedPhotograph.objects.all().order_by('-id')[:6]
+        for photo in photographs:
+            for field_name in ('image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'image_6'):
+                image = getattr(photo, field_name)
+                if image:
+                    try:
+                        carousel_images.append({
+                            'url': image.url,
+                            'label': photo.brief_activity_description_1 or 'Pink Bollworm',
+                        })
+                    except ValueError:
+                        pass
+                if len(carousel_images) >= 6:
+                    break
+            if len(carousel_images) >= 6:
+                break
 
-        messages.success(request, "Profile updated successfully!")
-        return redirect('farmer_dashboard')
-
-    return render(request, 'farmer_app/farmer_dashboard.html', {'profile': profile})
+    context = {
+        'carousel_images': carousel_images,
+        'advisory_count': Advisory.objects.count(),
+        'latest_news': NewsArticle.objects.all().order_by('-id')[:3],
+    }
+    return render(request, 'farmer_app/farmer_dashboard.html', context)
 
 def farmer_logout_view(request):
     """
