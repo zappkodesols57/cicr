@@ -1,0 +1,118 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+      <section>
+        {% for report in yearly_data %}
+        <div>
+            <label>Name of Farmer: <span>{{ report.name_of_farmer|default:"-" }}</span></label><br>
+            <label>Village: <span>{{ report.village|default:"-" }}</span></label><br>
+            <label>Taluka: <span>{{ report.taluka|default:"-" }}</span></label><br>
+            <label>District: <span>{{ report.district|default:"-" }}</span></label><br>
+            <label>State: <span>{{ report.state|default:"-" }}</span></label><br>
+            <label>Cultivation: 
+                <span>{{ report.get_cultivation_display|default:"-" }}</span>
+            </label>
+        </div>
+        <div class="container-table">
+            <table class="table table-responsive table-bordered">
+                <thead class="table-secondary">
+                    <tr>
+                        <th>Spray Schedule on Cotton</th>
+                        <th>Name of Pesticide (Generic or Brand Name)</th>
+                        <th>Dose per acre (ml or gram)</th>
+                        <th>Target pest / Disease</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1<sup>st</sup> Spray</td>
+                        <td>{{ report.spray_1_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_1_dose|default:"-" }}</td>
+                        <td>{{ report.spray_1_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>2<sup>nd</sup> Spray</td>
+                        <td>{{ report.spray_2_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_2_dose|default:"-" }}</td>
+                        <td>{{ report.spray_2_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>3<sup>rd</sup> Spray</td>
+                        <td>{{ report.spray_3_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_3_dose|default:"-" }}</td>
+                        <td>{{ report.spray_3_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>4<sup>th</sup> Spray</td>
+                        <td>{{ report.spray_4_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_4_dose|default:"-" }}</td>
+                        <td>{{ report.spray_4_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>5<sup>th</sup> Spray</td>
+                        <td>{{ report.spray_5_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_5_dose|default:"-" }}</td>
+                        <td>{{ report.spray_5_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>6<sup>th</sup> Spray</td>
+                        <td>{{ report.spray_6_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_6_dose|default:"-" }}</td>
+                        <td>{{ report.spray_6_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>7<sup>th</sup> Spray</td>
+                        <td>{{ report.spray_7_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_7_dose|default:"-" }}</td>
+                        <td>{{ report.spray_7_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>8<sup>th</sup> Spray</td>
+                        <td>{{ report.spray_8_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_8_dose|default:"-" }}</td>
+                        <td>{{ report.spray_8_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>9<sup>th</sup> Spray</td>
+                        <td>{{ report.spray_9_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_9_dose|default:"-" }}</td>
+                        <td>{{ report.spray_9_target_pest|default:"-" }}</td>
+                    </tr>
+                    <tr>
+                        <td>10<sup>th</sup> Spray</td>
+                        <td>{{ report.spray_10_pesticide|default:"-" }}</td>
+                        <td>{{ report.spray_10_dose|default:"-" }}</td>
+                        <td>{{ report.spray_10_target_pest|default:"-" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </section>
+  </body>
+  </html>
+
+  {% endblock %}
+

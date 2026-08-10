@@ -1,0 +1,302 @@
+{% extends "admin_base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weekly Report</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <style>
+      *{
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background-color: #ffffff;
+      }
+      .table-container {
+        padding: 10px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: auto;
+      }
+      h2{
+        font-size: 20px;
+      }
+      .table th,.table td {
+        vertical-align: middle;
+        text-align: center;
+        padding: 5px;
+        border-collapse: collapse;
+      }
+      .table th{
+        font-size: 12px;
+        font-weight: 400;
+      }
+
+    .r-irm{background-color:#ccc;text-align:center;vertical-align:top}
+    .r-non-irm{background-color:#efefef;text-align:center;vertical-align:top}
+     .pagination {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .pagination button {
+            padding: 8px 16px;
+            margin: 0 2px;
+            cursor: pointer;
+        }
+</style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="text-center">PEST INCIDENCE DETAILS OF DISTRICT <b>{{district_name}}<b></h2>
+      <div class="table-container">
+     
+<table class="table table-bordered table-responsive" id="myTable">
+  <thead class="position-sticky top-0">
+  <tr>
+    <th class="" rowspan="4">SR No.<br><br></th>
+    <th class="tg-baqh" colspan="24">Sucking Pest Infestation</th>
+    <th class="tg-baqh" colspan="40">Pink Bollworm Infestaton</th>
+    <th class="tg-baqh" colspan="8">Boll Rot Incidence</th>
+    <th class="" rowspan="4">Action</th>
+  </tr>
+  <tr>
+    <th class="tg-c3ow" colspan="8">Jassid / 3leaves / plant</th>
+    <th class="tg-c3ow" colspan="8">Whitefly / 3 leaves / plant</th>
+    <th class="tg-c3ow" colspan="8">Thrips / 3 leaves / plant</th>
+    <th class="tg-baqh" colspan="8">% Flowers infestation</th>
+    <th class="tg-baqh" colspan="8">% Green boll infestation</th>
+    <th class="tg-baqh" colspan="8">% Locule Damage</th>
+    <th class="tg-baqh" colspan="8">% Open Boll Infestation</th>
+    <th class="tg-baqh" colspan="8">Av. Pheromone trap catches per Trap/Week</th>
+    <th class="tg-baqh" colspan="8">% Incidence</th>
+  </tr>
+  <tr>
+    <th class="r-irm" colspan="4">IRM</th>
+    <th class="r-non-irm" colspan="4">Non-IRM</th>
+    <th class="r-irm" colspan="4">IRM</th>
+    <th class="r-non-irm" colspan="4">Non-IRM</th>
+    <th class="r-irm" colspan="4">IRM</th>
+    <th class="r-irm" colspan="4">Non-IRM</th>
+    <th class="r-non-irm" colspan="4">IRM</th>
+    <th class="r-irm" colspan="4">Non-IRM</th>
+    <th class="r-non-irm" colspan="4">IRM</th>
+    <th class="r-irm" colspan="4">Non-IRM</th>
+    <th class="r-non-irm" colspan="4">IRM</th>
+    <th class="r-irm" colspan="4">Non-IRM  </th>
+    <th class="r-non-irm" colspan="4">IRM</th>
+    <th class="r-irm" colspan="4">Non-IRM</th>
+    <th class="r-non-irm" colspan="4">IRM</th>
+    <th class="r-irm" colspan="4">Non-IRM</th>
+    <th class="r-non-irm" colspan="4">IRM  </th>
+    <th class="r-irm" colspan="4">Non-IRM</th>
+  </tr>
+  <tr class="week-row">
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+    <th >Week-1</th>
+    <th >Week-2</th>
+    <th >Week-3</th>
+    <th >Week-4</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+    <td class=""></td>
+  </tr>
+</tbody>
+</table>
+      </div>
+      <div class="pagination p-2">
+        <button id="prevBtn" class="btn btn-sucesss">Previous</button>
+        <button id="nextBtn" class="btn btn-success">Next</button>
+       </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    </script>
+
+      <script>
+        const table = document.getElementById('myTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        const rowsPerPage = 10;  // Number of rows per page
+        let currentPage = 1;
+
+        function displayRows() {
+          const start = (currentPage - 1) * rowsPerPage;
+          const end = start + rowsPerPage;
+
+          for (let i = 0; i < rows.length; i++) {
+            rows[i].style.display = i >= start && i < end ? '' : 'none';
+          }
+          document.getElementById('prevBtn').disabled = currentPage === 1;
+          document.getElementById('nextBtn').disabled = end >= rows.length;
+        }
+        document.getElementById('prevBtn').addEventListener('click', () => {
+          if (currentPage > 1) {
+            currentPage--;
+            displayRows();
+          }
+        });
+        document.getElementById('nextBtn').addEventListener('click', () => {
+          if ((currentPage * rowsPerPage) < rows.length) {
+            currentPage++;
+            displayRows();
+          }
+        });
+        displayRows();  // Initialize table
+    </script> 
+  </body>
+</html>
+{% endblock content %}

@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add District</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+
+        .add-district-form{
+            width: 100%;
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .form-container {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: black;
+            outline: none;
+        }
+
+        .form-group p {
+            font-size: 14px;
+            color: red;
+            margin-top: 5px;
+        }
+
+        button {
+            background-color: #198754;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            display: block;
+        }
+
+
+        button:focus {
+            outline: none;
+        }
+        .colored-toast.swal2-icon-success {
+        background-color: #E9FFEA !important;
+        }
+        .toast-title{color: #198754;}
+    </style>
+</head>
+<body>
+
+        <div class="add-district-form">
+            <div class="form-container">
+                <h1>Add Standard Weeks</h1>
+                <form method="post" onsubmit="showToast()">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="standard_number">Standard Number:</label>
+                        <input type="number" id="standard_number" name="standard_number" required placeholder="eg. 12">
+                        <p>{{ number_message }}</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="standard_week">Standard Week:</label>
+                        <input type="text" id="standard_week" name="standard_week" required oninput="updateMonthData()" placeholder="eg. JAN 01-07">
+                        <p>{{ error_messages }}</p>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="weeks_value">Weeks:</label>
+                      <select id="weeks_value" class="form-select" name="weeks_value" required>
+                        <option value="Week 1">Week 1</option>
+                        <option value="Week 2">Week 2</option>
+                        <option value="Week 3">Week 3</option>
+                        <option value="Week 4">Week 4</option>
+                        <option value="Week 5">Week 5</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                    	<label for="month_data">Month:</label>
+                        <input type="text" id="month_data" name="month_data" required readonly>
+                    </div>
+
+                    <button type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const standardNameInput = document.getElementById('standard_week');
+                standardNameInput.addEventListener('input', function() {
+                    standardNameInput.value = standardNameInput.value.toUpperCase();
+                });
+            });
+        </script>
+        <script>
+		    function updateMonthData() {
+		        const standardWeek = document.getElementById('standard_week').value;
+		        if (standardWeek.length >= 3) {
+		            const monthAbbr = standardWeek.substring(0, 3).toUpperCase();
+		            const monthNames = {
+		                'JAN': 'January',
+		                'FEB': 'February',
+		                'MAR': 'March',
+		                'APR': 'April',
+		                'MAY': 'May',
+		                'JUN': 'June',
+		                'JUL': 'July',
+		                'AUG': 'August',
+		                'SEP': 'September',
+		                'OCT': 'October',
+		                'NOV': 'November',
+		                'DEC': 'December'
+		            };
+		            const monthFullName = monthNames[monthAbbr] || '';
+		            document.getElementById('month_data').value = monthFullName;
+		        } else {
+		            document.getElementById('month_data').value = '';
+		        }
+		    }
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+		<script> 
+		  function showToast(){
+		    Swal.fire({
+		      toast: true,
+		      icon: 'success',
+		      iconColor: '#198754',
+		      customClass: {popup: 'colored-toast',title:'toast-title'},
+		      title: 'Standard Week Added',
+		      animation: false,
+		      position: 'bottom',
+		      showConfirmButton: false,
+		      timer: 3000,
+		      timerProgressBar: true,
+		      didOpen: (toast) => {
+		        toast.addEventListener('mouseenter', Swal.stopTimer)
+		        toast.addEventListener('mouseleave', Swal.resumeTimer)
+		      }
+		    })
+		  }
+		</script>
+</body>
+</html>
+{% endblock %}

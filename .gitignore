@@ -22,3 +22,7 @@ staticfiles/
 # IDE files
 .vscode/
 .idea/
+
+# Secrets
+*credentials*.json
+*-*.json

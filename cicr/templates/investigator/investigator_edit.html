@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if is_new %}New Farmer{% else %}Edit Farmer{% endif %}</title>
+</head>
+<body>
+    <h1>{% if is_new %}New Farmer{% else %}Edit Farmer{% endif %}</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="IRM">Type:</label>
+        <input type="radio" id="IRM" name="IRM" value="True" {% if not is_new and farmer.IRM %}checked{% endif %}> IRM
+        <input type="radio" id="NON_IRM" name="IRM" value="False" {% if not is_new and not farmer.IRM %}checked{% endif %}> NON-IRM<br>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{% if not is_new %}{{ farmer.name }}{% endif %}" required><br>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" value="{% if not is_new %}{{ farmer.category }}{% endif %}"><br>
+
+        <label for="farmer_gender">Gender:</label>
+        <input type="radio" id="farmer_gender_male" name="farmer_gender" value="male" {% if not is_new and farmer.farmer_gender %}checked{% endif %}> Male
+        <input type="radio" id="farmer_gender_female" name="farmer_gender" value="female" {% if not is_new and not farmer.farmer_gender %}checked{% endif %}> Female<br>
+
+        <label for="village">Village:</label>
+        <input type="text" id="village" name="village" value="{% if not is_new %}{{ farmer.village }}{% endif %}"><br>
+
+        <label for="taluka">Taluka:</label>
+        <input type="text" id="taluka" name="taluka" value="{% if not is_new %}{{ farmer.taluka }}{% endif %}"><br>
+
+        <label for="district">District:</label>
+        <input type="text" id="district" name="district" value="{% if not is_new %}{{ farmer.district }}{% endif %}" required><br>
+
+        <label for="mobile_number">Mobile Number:</label>
+        <input type="text" id="mobile_number" name="mobile_number" value="{% if not is_new %}{{ farmer.mobile_number }}{% endif %}" required><br>
+
+        <label for="geolocations">Add Geolocation:</label>
+        <input type="text" id="geolocations" name="geolocations" value="{% if not is_new %}{{ farmer.geolocations }}{% endif %}"><br>
+
+        <label for="date_of_sowing">Date of Sowing:</label>
+        <input type="date" id="date_of_sowing" name="date_of_sowing" value="{% if not is_new %}{{ farmer.date_of_sowing }}{% endif %}" required><br>
+
+        <label for="spacing">Spacing:</label>
+        <input type="text" id="spacing" name="spacing" value="{% if not is_new %}{{ farmer.spacing }}{% endif %}" required><br>
+
+        <label for="cotton_variety">Cotton Variety:</label>
+        <input type="text" id="cotton_variety" name="cotton_variety" value="{% if not is_new %}{{ farmer.cotton_variety }}{% endif %}"><br>
+
+        <label for="previous_year_crop_grown">Previous Year Crop Grown:</label>
+        <input type="text" id="previous_year_crop_grown" name="previous_year_crop_grown" value="{% if not is_new %}{{ farmer.previous_year_crop_grown }}{% endif %}"><br>
+        
+        <label for="causes">Causes:</label>
+        <input type="radio" id="causes_irrigation" name="causes" value="True" {% if not is_new and farmer.causes %}checked{% endif %}> Irrigation
+        <input type="radio" id="causes_rainfed" name="causes" value="False" {% if not is_new and not farmer.causes %}checked{% endif %}> Rainfed<br>
+
+        <label for="last_year_crop_extended">Last Year Crop Extended:</label>
+        <input type="radio" id="last_year_crop_extended_yes" name="last_year_crop_extended" value="True" {% if not is_new and farmer.last_year_crop_extended %}checked{% endif %}> Yes
+        <input type="radio" id="last_year_crop_extended_no" name="last_year_crop_extended" value="False" {% if not is_new and not farmer.last_year_crop_extended %}checked{% endif %}> No<br>
+
+        <label for="soil_type">Soil Type:</label>
+        <input type="radio" id="soil_type_shallow" name="soil_type" value="shallow" {% if not is_new and farmer.soil_type == 'shallow' %}checked{% endif %}> Shallow
+        <input type="radio" id="soil_type_medium" name="soil_type" value="medium" {% if not is_new and farmer.soil_type == 'medium' %}checked{% endif %}> Medium
+        <input type="radio" id="soil_type_heavy" name="soil_type" value="heavy" {% if not is_new and farmer.soil_type == 'heavy' %}checked{% endif %}> Heavy<br>
+
+        <label for="crop_rotation_followed">Crop Rotation Followed:</label>
+        <input type="radio" id="crop_rotation_followed_yes" name="crop_rotation_followed" value="True" {% if not is_new and farmer.crop_rotation_followed %}checked{% endif %}> Yes
+        <input type="radio" id="crop_rotation_followed_no" name="crop_rotation_followed" value="False" {% if not is_new and not farmer.crop_rotation_followed %}checked{% endif %}> No<br>
+
+        <label for="advisory_received_from">Advisory Received From:</label>
+        <textarea id="advisory_received_from" name="advisory_received_from">{% if not is_new %}{{ farmer.advisory_received_from }}{% endif %}</textarea><br>
+
+        <label for="recorded_file">Recorded File:</label>
+        <input type="file" id="recorded_file" name="recorded_file"><br>
+
+        <button type="submit">{% if is_new %}Create{% else %}Save{% endif %}</button>
+    </form>
+    <a href="{% url 'farmer_list' %}">Back to List</a>
+</body>
+</html>

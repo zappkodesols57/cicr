@@ -1,0 +1,140 @@
+{% extends "admin_base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Districts List</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #ffffff;
+      }
+      .table-container {
+        margin-top: 50px;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+      }
+      .table th,
+      .table td {
+        vertical-align: middle;
+      }
+      .btn-primary {
+        background-color: #198754;
+        border-color: #198754;
+      }
+      .btn-primary:hover {
+        background-color: #157347;
+        border-color: #157347;
+      }
+      .tooltip-inner {
+        background-color: #198754;
+        color: #ffffff;
+      }
+      .tooltip-arrow::before {
+        border-top-color: #198754;
+      }
+
+      .create i {
+        font-size: 20px;
+        color: #198754;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="table-container">
+        <h2 class="text-center">PEST INCIDENCE DETAILS OF DISTRICT <b>{{district_name}}<b></h2>
+        <table class="table table-hover table-bordered">
+          <thead class="">
+            
+              <tr>
+                  <th style="width: 5%;">Sr. No.</th>
+                  <th style="width: 5%;">IRM/NON-IRM</th>
+                  <th style="width: 20%;">Name</th>
+                  <th style="width: 20%;">User Id</th>
+                  <th style="width: 20%;">Row Spacing</th>
+                  <th style="width: 20%;">Plant Distance</th>
+                  <th style="width: 20%;">Cotton Variety</th> 
+                  <th style="width: 20%;">Previous Year Crop Grown </th> 
+                  <th style="width: 20%;">Causes</th>
+                  <th style="width: 20%;">Last Year Crop Extended</th> 
+                  <th style="width: 20%;">Soil Type</th> 
+                  <th style="width: 20%;">Crop Rotation Followed</th> 
+                  <th style="width: 20%;">Advisory Received From</th> 
+                  <!-- <th style="width: 20%;">Recorded File</th>  -->
+                  <th style="width: 20%;">Total Farmers Ecommunication</th> 
+                  <th style="width: 20%;">Landarea</th> 
+                  <th style="width: 20%;">Aadhar Number</th> 
+                  <th style="width: 20%;">Servey Date</th> 
+              </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                {% if i.IRM %}
+                    <td>IRM</td>
+                {% else %}
+                    <td>NON-IRM</td>
+                {% endif %}
+                <td>{{i.name}}</td>
+                <td>{{ i.user_id }}</td>
+                <td>{{ i.row_distance }}</td>
+                <td>{{ i.plant_distance }}</td>
+                <td>{{ i.cotton_variety }}</td>
+                <td>{{ i.previous_year_crop_grown }}</td>
+
+                {% if i.causes %}
+                    <td>Irrigation</td>
+                {% else %}
+                    <td>Rainfed</td>
+                {% endif %}
+
+                {% if i.last_year_crop_extended %}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+        
+                <td>{{ i.soil_type }}</td>
+
+                {% if i.crop_rotation_followed %}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+
+                <td>{{ i.advisory_received_from }}</td>
+                <!-- <td>{{ i.recorded_file }}</td> -->
+                <td>{{ i.total_farmers_ecommunication }}</td>
+                <td>{{ i.landarea }}</td>
+                <td>{{ i.aadhar_number }}</td>
+                <td>{{ i.servey_date }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!-- <div class="text-center mt-4">
+          <p>Total Number of Investigator: <strong>{{ data|length }}</strong></p>
+        </div> -->
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    </script>
+  </body>
+</html>
+{% endblock content %}

@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from cicrapp.views import home_view
+from login import views as login_views
 
 from drf_spectacular.views import (
     SpectacularAPIView,
@@ -32,8 +32,15 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
-    path("", home_view, name="home"),
     path("admin/", admin.site.urls),
+
+    # Migrated CICR 2 apps
+    path("", include("login.urls")),
+    path("", login_views.super_login, name="super_login"),
+    path("", include("investigator_app.urls")),
+    path("", include("owner_settings.urls")),
+    path("", include("chatbot.urls")),
+    path("farmer/", include("farmer_app.urls")),
 
     # JWT Authentication Endpoints
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
@@ -54,4 +61,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

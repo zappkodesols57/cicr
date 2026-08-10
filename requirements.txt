@@ -10,3 +10,11 @@ django-filter>=26.1
 pillow>=12.3.0
 django-extensions>=4.1
 django-storages>=1.14.6
+
+# From CICR 2 (migrated apps)
+whitenoise>=6.11.0
+django-sweetify>=1.2.0
+pandas>=2.2.0
+requests>=2.32.0
+python-dateutil>=2.9.0
+google-cloud-dialogflow>=2.35.0

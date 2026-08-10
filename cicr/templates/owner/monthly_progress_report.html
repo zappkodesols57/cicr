@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Progress Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+
+      .Monthly-report-section{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+      }
+
+      .Monthly-report-section h1{
+        margin-top: 30px;
+      }
+        table{
+            background-color: #fdfdfd;
+        }
+        td{
+            padding: 5px 10px;
+            text-align: center;
+        }
+        h1{
+            text-align: center;
+            font-size: 30px;
+        }
+        .head-sec label{
+            font-size: 18px;
+            font-weight: bold;
+            padding: 20px;
+            margin-top: 10px;
+        }
+        .table-sec{
+            padding: 5px 20px;
+        }
+        .main-heading{
+            font-weight: bold;
+        }
+        .sub-heading{
+            text-align: left;
+        }
+        .w-heading{
+            font-weight: bold;
+            text-align: center;
+        }
+        .head-sec1 label{
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            padding: 5px;
+        }
+     
+
+        .head-sec{
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-direction: row;
+          flex-wrap: wrap;
+        
+        }
+
+        .head-sec button{
+          border: none;
+          background-color: #21b500;
+          padding: 15px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          color: white;
+          border-radius: 15px;
+        }
+
+        .tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:6px 20px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:6px 20px;word-break:normal;}
+.tg .tg-0pky{text-align:center;vertical-align:top}
+ a{
+    text-decoration: none;
+  }
+    </style>
+
+
+</head>
+<body>
+  <div id="content" class="Monthly-report-section">
+    <div id="reportContent">
+      <h1>Monthly Progress Report super</h1>
+
+      
+      <div class="container-fluid d-flex justify-content-between">
+        <button class="btn btn-success"><a href="/monthly_report_month/{{ district_name }}/" class="text-white">Back</a></button>
+        <button id="downloadBtn" class="btn btn-success">Download Report</button>
+      </div>
+
+      <div class="head-sec">
+          <div>
+
+            <label>Name of District: </label><span>{{ district_name }}</span>
+            <label>Month: </label><span>{{ month }}</span>
+          </div>
+          <div></div>
+      </div>
+  
+  
+  
+          <div class="table-sec">
+            <table class="table table-responsive table-bordered">
+              <tbody>
+                  <tr>
+                      <td class="main-heading" rowspan="6">1.</td>
+                      <td class="main-heading" rowspan="6">Sucking Pest Infestation</td>
+                      <td class="main-heading" rowspan="3">Name of Pest</td>
+                      <td class="main-heading text-center" colspan="4">IRM</td>
+                      <td class="main-heading text-center" colspan="4">Non IRM</td>
+                  </tr>
+                  <tr>
+                      <td class="main-heading text-center" colspan="4">SMW</td>
+                      <td class="main-heading text-center" colspan="4">SMW</td>
+                  </tr>
+                  <tr>
+                      {% for key, averages in weekwise_averages.items %}
+                          {% with standard_number=key.0 standard_week=key.1 %}
+                              <td class="w-heading">{{ standard_number }} | {{ standard_week }}</td>
+                          {% endwith %}
+                      {% endfor %}
+                      {% for key, averages in weekwise_averages.items %}
+                          {% with standard_number=key.0 standard_week=key.1 %}
+                              <td class="w-heading">{{ standard_number }} | {{ standard_week }}</td>
+                          {% endwith %}
+                      {% endfor %}
+                  </tr>
+                  
+                  <tr><!--Jassid / 3 leaves plant week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">Jassid / 3 leaves / plant</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_jassid_irm is not None %}
+                                  {{ averages.avg_jassid_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_jassid_nonirm is not None %}
+                                  {{ averages.avg_jassid_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <tr><!--Whitefly / 3 leaves plant week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">Whitefly / 3 leaves / plant</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_whitefly_irm is not None %}
+                                  {{ averages.avg_whitefly_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_whitefly_nonirm is not None %}
+                                  {{ averages.avg_whitefly_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <tr><!--Thrips / 3 leaves plant week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">Thrips / 3 leaves / plant</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_thrips_irm is not None %}
+                                  {{ averages.avg_thrips_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_thrips_nonirm is not None %}
+                                  {{ averages.avg_thrips_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <!--Pink Bollworm infestation-->
+                  <tr>
+                      <td class="main-heading" rowspan="5">2.</td>
+                      <td class="main-heading" rowspan="5">Pink Bollworm Infestation</td>
+                      <!--Flowers infestation week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">i. % Flowers infestation</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_flowers_irm is not None %}
+                                  {{ averages.avg_flowers_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_flowers_nonirm is not None %}
+                                  {{ averages.avg_flowers_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <tr><!--Green Boll infestation week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">ii. % Green Boll Infestation</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_green_irm is not None %}
+                                  {{ averages.avg_green_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_green_nonirm is not None %}
+                                  {{ averages.avg_green_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <tr><!--Locule Damage week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">iii. % Locule Damage</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_locule_irm is not None %}
+                                  {{ averages.avg_locule_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_locule_nonirm is not None %}
+                                  {{ averages.avg_locule_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <tr><!--Open Boll week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">iv. Open Boll Infestation</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_open_ball_irm is not None %}
+                                  {{ averages.avg_open_ball_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_open_ball_nonirm is not None %}
+                                  {{ averages.avg_open_ball_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <tr><!--Av. Pheromone trap week 1 to 4 IRM & Non IRM-->
+                      <td class="sub-heading">v. Av. Pheromone trap catches (No.) per Trap/week:</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_pheromone_irm is not None %}
+                                  {{ averages.avg_pheromone_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_pheromone_nonirm is not None %}
+                                  {{ averages.avg_pheromone_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+                  <tr><!--Boll rot incidence-->
+                      <td class="main-heading">3.</td>
+                      <td class="main-heading">Boll rot incidence</td>
+                      <td class="sub-heading">i. % Incidence</td>
+                      <!--IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_incidence_irm is not None %}
+                                  {{ averages.avg_incidence_irm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                      <!--Non IRM-->
+                      {% for key, averages in weekwise_averages.items %}
+                          <td class="data-cell">
+                              {% if averages.avg_incidence_nonirm is not None %}
+                                  {{ averages.avg_incidence_nonirm|floatformat:2 }}
+                              {% else %}
+                                  -
+                              {% endif %}
+                          </td>
+                      {% endfor %}
+                  </tr>
+
+              </tbody>
+
+            </table>
+
+          
+      
+  
+  <div class="head-sec1">
+      <label>B. Physical progress</label><br>
+      <label>Critical input distributed</label>
+  </div>
+  
+  <table class="table table-responsive table-bordered">
+    <tr>
+      <th class="tg-0pky">Sr.No</th>
+      <th class="main-heading head-sec1">Critical input distributed</th>
+      <th class="main-heading text-center head-sec1" >Total quantity<br> (60 farmers)<br></th>
+    </tr>
+  <tbody class="text-center">
+    <tr>
+      <td class="tg-0pky">1.</td>
+      <td class="sub-heading">Pheromone traps</td>
+      <td class="tg-0pky">{{ progress_count.avg_pheromone_traps|floatformat:2|default:"-" }}</td>
+    </tr> 
+    <tr>
+      <td class="tg-0pky">2.</td>
+      <td class="sub-heading">SPLAT (kg)</td>
+      <td class="tg-0pky">{{ progress_count.avg_splat|floatformat:2|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">3.</td>
+      <td class="sub-heading">PB rope (Number)</td>
+      <td class="tg-0pky">{{ progress_count.avg_pb_rope|floatformat:2|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">4.</td>
+      <td class="sub-heading">Neem based insecticides (Neem seed extract, Neem oil) (L)</td>
+      <td class="tg-0pky">{{ progress_count.avg_neem_insecticides|floatformat:2|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">5.</td>
+      <td class="sub-heading">Flonicamid 50WG (kg)</td>
+      <td class="tg-0pky">{{ progress_count.avg_flonicamid|floatformat:2|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">6.</td>
+      <td class="sub-heading">Trichocards (Parasitoid Trichogramma bactrae) (number)</td>
+      <td class="tg-0pky">{{ progress_count.avg_trichocards|floatformat:2|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">7.</td>
+      <td class="sub-heading">Quninalphos 20% AF (L)</td>
+      <td class="tg-0pky">{{ progress_count.avg_quinalphos|floatformat:2|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">8.</td>
+      <td class="sub-heading">Chlorpyriphos 20% EC (L)</td>
+      <td class="tg-0pky">{{ progress_count.avg_chlorpyriphos|floatformat:2|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">9.</td>
+      <td class="sub-heading">Profenophos 50%EC (L)</td>
+      <td class="tg-0pky">{{ progress_count.avg_profenophos|floatformat:2|default:"-" }}</td>
+    </tr>
+  </tbody>
+</table>
+  
+  <!-- 
+  <style type="text/css">
+  .tg  {border-collapse:collapse;border-spacing:0;}
+  .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    overflow:hidden;padding:8px 7px;word-break:normal;}
+  .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+    font-weight:normal;overflow:hidden;padding:8px 7px;word-break:normal;}
+  .tg .tg-c3ow{border-color:inherit;text-align:center;vertical-align:top}
+  .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+  </style> -->
+  
+  <div class="head-sec1">
+      <label>Extension activities carried out</label>
+  </div>
+  <table class="table table-responsive table-bordered">
+  <thead>
+    <tr>
+      <th class="tg-0pky">Sr.No</th>
+      <th class="main-heading head-sec1">Particulars</th>
+      <th class="main-heading head-sec1">Number</th>
+      <th class="main-heading head-sec1">Number Of Beneficiary Farmers (Male)</th>
+      <th class="main-heading head-sec1">Number Of Beneficiary Farmers (Female)</th>
+    </tr>
+  </thead>
+  <tbody>
+     <tr>
+      <td class="tg-0pky">1.</td>
+      <td class="tg-0pky">Popular Articles Published (Magazine, Newspapers, Weekly Magazine, Newsletter, etc)</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_popular_artical_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_popular_artical_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_popular_artical_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <!-- <tr>
+      <td class="tg-0pky">1.</td>
+      <td class="tg-0pky">Popular Articles Published (Magazine, Newspapers, Weekly Magazine, Newsletter, etc)</td>
+      <td class="tg-c3ow">{{ activities_averages.avg_popular_artical_number|floatformat:2|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_averages.avg_popular_artical_beneficiary_male|floatformat:2|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_averages.avg_popular_artical_beneficiary_female|floatformat:2|default:"-" }}</td>
+    </tr> -->
+    <tr>
+      <td class="tg-0pky">2.</td>
+      <td class="tg-0pky">Press Release (in Newspaper, TV, Radio)</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_press_release_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_press_release_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_press_release_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">3.</td>
+      <td class="tg-0pky">Extension Material Publication (Printed)</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_extension_material_booklet_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_extension_material_booklet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_extension_material_booklet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">a) Booklet</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_extension_material_booklet_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_booklet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_booklet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">b) Leaflet</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_extension_material_leaflet_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_leaflet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_leaflet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">c) Pamphlet</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_extension_material_pamphlet_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_pamphlet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_pamphlet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">d) Poster</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_extension_material_poster_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_poster_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_extension_material_poster_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">4.</td>
+      <td class="tg-0pky">Literature Distributed</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_literature_distributed_booklet_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_literature_distributed_booklet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_literature_distributed_booklet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">1) Booklet</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_literature_distributed_booklet_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies distributed = {{ activities_sums.sum_literature_distributed_booklet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_literature_distributed_booklet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">2) Leaflet</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_literature_distributed_leaflet_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies distributed = {{ activities_sums.sum_literature_distributed_leaflet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_literature_distributed_leaflet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky"></td>
+      <td class="tg-0pky">3) Pamphlet</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_literature_distributed_pamphlet_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies distributed = {{ activities_sums.sum_literature_distributed_pamphlet_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_literature_distributed_pamphlet_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">5.</td>
+      <td class="tg-0pky">Voice Messages Sent</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_voice_messages_number|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies distributed = {{ activities_sums.sum_voice_messages_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">No. of copies printed = {{ activities_sums.sum_voice_messages_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">6.</td>
+      <td class="tg-0pky">Field Visits</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_field_visit_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_field_visit_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_field_visit_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">7.</td>
+      <td class="tg-0pky">Farmers Mela/Kisan Mela</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_farmer_mela_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_mela_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_mela_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">8.</td>
+      <td class="tg-0pky">Exhibition Arranged</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_exhibitions_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_exhibitions_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_exhibitions_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">9.</td>
+      <td class="tg-0pky">Farmers Field Training Organized</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_farmer_training_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_training_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_training_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">10.</td>
+      <td class="tg-0pky">Training/ Workshop</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_workshops_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_workshops_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_workshops_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">11.</td>
+      <td class="tg-0pky">TV Show</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_tv_shows_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_tv_shows_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_tv_shows_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">12.</td>
+      <td class="tg-0pky">Radio Talks</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_radio_talks_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_radio_talks_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_radio_talks_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">13.</td>
+      <td class="tg-0pky">Sensitization Workshop To Ginning Mills</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_sensitization_workshops_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_sensitization_workshops_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_sensitization_workshops_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">14.</td>
+      <td class="tg-0pky">Farmers Queries Replied</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_farmer_queries_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_queries_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_queries_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">15.</td>
+      <td class="tg-0pky">Lectures Delivered In Training</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_lectures_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_lectures_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_lectures_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">16.</td>
+      <td class="tg-0pky">News Clips</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_news_clips_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_news_clips_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_news_clips_beneficiary_female|default:"-" }}</td>
+    </tr>
+    <tr>
+      <td class="tg-0pky">17.</td>
+      <td class="tg-0pky">Visit Of Farmers To Station / Personal Contact</td>
+      <td class="tg-c3ow">{{ activities_sums.sum_farmer_visits_number|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_visits_beneficiary_male|default:"-" }}</td>
+      <td class="tg-0pky">{{ activities_sums.sum_farmer_visits_beneficiary_female|default:"-" }}</td>
+    </tr>
+  </tbody>
+</table>
+
+  
+  
+  
+  
+  
+  <div class="head-sec1">
+    <label>Representative Photographs</label>
+  </div>
+  <<table class="table table-responsive table-bordered">
+  <thead>
+    <tr>
+      <th class="tg-0pky">Sr.No</th>
+      <th class="main-heading head-sec1">Activity Description</th>
+      <th class="main-heading head-sec1">Photograph 1</th>
+      <th class="main-heading head-sec1">Photograph 2</th>
+      <th class="main-heading head-sec1">Photograph 3</th>
+      <th class="main-heading head-sec1">Photograph 4</th>
+      <th class="main-heading head-sec1">Photograph 5</th>
+      <th class="main-heading head-sec1">Photograph 6</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for photo in photograph_data %}
+    <tr>
+      <td class="tg-0pky">{{ forloop.counter }}</td>
+      <td class="tg-0pky">
+        {% if photo.brief_activity_description_1 %}
+          {{ photo.brief_activity_description_1 }}
+        {% elif photo.brief_activity_description_2 %}
+          {{ photo.brief_activity_description_2 }}
+        {% elif photo.brief_activity_description_3 %}
+          {{ photo.brief_activity_description_3 }}
+        {% else %}
+          No description available
+        {% endif %}
+      </td>
+      <td class="tg-c3ow">
+        {% if photo.image_1 %}
+          <img src="{{ photo.image_1.url }}" alt="Photograph 1" width="100">
+        {% else %}
+          No image available
+        {% endif %}
+      </td>
+      <td class="tg-0pky">
+        {% if photo.image_2 %}
+          <img src="{{ photo.image_2.url }}" alt="Photograph 2" width="100">
+        {% else %}
+          No image available
+        {% endif %}
+      </td>
+      <td class="tg-0pky">
+        {% if photo.image_3 %}
+          <img src="{{ photo.image_3.url }}" alt="Photograph 3" width="100">
+        {% else %}
+          No image available
+        {% endif %}
+      </td>
+      <td class="tg-0pky">
+        {% if photo.image_4 %}
+          <img src="{{ photo.image_4.url }}" alt="Photograph 4" width="100">
+        {% else %}
+          No image available
+        {% endif %}
+      </td>
+      <td class="tg-0pky">
+        {% if photo.image_5 %}
+          <img src="{{ photo.image_5.url }}" alt="Photograph 5" width="100">
+        {% else %}
+          No image available
+        {% endif %}
+      </td>
+      <td class="tg-0pky">
+        {% if photo.image_6 %}
+          <img src="{{ photo.image_6.url }}" alt="Photograph 6" width="100">
+        {% else %}
+          No image available
+        {% endif %}
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="4" class="tg-0pky">No data available</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  
+  
+  <div class="head-sec1">
+    <label>Assessment at the end of the season</label>
+  </div>
+  <table class="table table-responsive table-bordered table-last">
+  <thead>
+    <tr>
+      <th class="tg-0pky" style="width: 3%;">Sr.No</th>
+      <th class="main-heading head-sec1">Total number of Sprays</th>
+      <th class="main-heading head-sec1">Cost of Spray for plant protection</th>
+      <th class="main-heading head-sec1">Pesticide reduction in terms of cost</th>
+      <th class="main-heading head-sec1">Pesticide reduction in terms of volume</th>
+      <th class="main-heading head-sec1">Seed Cotton Yield (kg/ha)</th>
+      <th class="main-heading head-sec1">Benefit: Cost ratio</th>
+      <th class="main-heading head-sec1">Farmers feedback</th>
+      <th class="main-heading head-sec1">Success stories</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for assessment in assesment_data %}
+    <tr>
+      <td class="tg-0pky">{{ forloop.counter }}</td>
+      <td class="tg-0pky">
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th class="tg-0pky">Sucking pest</th>
+              <th>Bollworms</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ assessment.number_sucking }}</td>
+              <td>{{ assessment.number_bollworms }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td class="tg-c3ow">
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th class="tg-0pky">Sucking pest</th>
+              <th class="tg-0pky">Bollworms</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ assessment.cost_spray_sucking }}</td>
+              <td>{{ assessment.cost_spray_bollworms }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td class="tg-0pky">{{ assessment.pesticide_reduction_cost }}</td>
+      <td class="tg-0pky">{{ assessment.pesticide_reduction_volume }}</td>
+      <td class="tg-0pky">
+        <table class="table table-responsive table-bordered">
+          <thead>
+            <tr>
+              <th class="tg-0pky">1st Picking</th>
+              <th class="tg-0pky">2nd Picking</th>
+              <th class="tg-0pky">3rd Picking</th>
+              <th class="tg-0pky">4th Picking</th>
+              <th class="tg-0pky">5th Picking</th>
+              <th class="tg-0pky">6th Picking</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ assessment.picking_1 }}</td>
+              <td>{{ assessment.picking_2 }}</td>
+              <td>{{ assessment.picking_3 }}</td>
+              <td>{{ assessment.picking_4 }}</td>
+              <td>{{ assessment.picking_5 }}</td>
+              <td>{{ assessment.picking_6 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+      <td class="tg-0pky">{{ assessment.cost_ratio }}</td>
+      <td class="tg-0pky">{{ assessment.farmer_feedback }}</td>
+      <td class="tg-0pky">{{ assessment.success_stories }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="9" class="tg-0pky">No data available</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  
+  
+  </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  document.getElementById('downloadBtn').addEventListener('click', function () {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const content = document.getElementById('reportContent');
+      const downloadBtn = document.getElementById('downloadBtn');
+
+      // Hide the button
+      downloadBtn.style.display = 'none';
+
+      html2canvas(content).then(canvas => {
+          const imgData = canvas.toDataURL('image/jpeg', 0.8); // Adjust quality
+          const imgWidth = 210; // A4 width in mm
+          const pageHeight = 295; // A4 height in mm
+          const imgHeight = canvas.height * imgWidth / canvas.width;
+          let heightLeft = imgHeight;
+          let position = 0;
+
+          doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight); // Use JPEG
+          heightLeft -= pageHeight;
+
+          while (heightLeft >= 0) {
+              position = heightLeft - imgHeight;
+              doc.addPage();
+              doc.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+              heightLeft -= pageHeight;
+          }
+
+          doc.save('MPR_{{ district_name }}_{{ month }}.pdf');
+
+          // Restore the button
+          downloadBtn.style.display = 'block';
+      });
+  });
+</script>
+
+<!-- <button id=”download-pdf”>Download PDF</button>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+  <script>
+    document.getElementById('download-pdf').addEventListener('click', function() {
+      const element = document.getElementById('html-content'); // Get the HTML element to be converted to PDF
+      html2canvas(element).then(canvas => {
+      const imgData = canvas.toDataURL('image/png'); // Convert canvas to image data
+      const pdf = new jsPDF(); // Initialize jsPDF
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight); // Add image to PDF
+      pdf.save('converted-document.pdf'); // Save PDF
+      });
+      });
+
+  </script> -->
+
+</body>
+</html>

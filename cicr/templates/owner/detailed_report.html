@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        *{
+            font-family: calibri;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="p-2">
+    <div class="m-2">
+        <button class="btn btn-success"><a class="text-white" href="/super_monthly_progress/{{district_name}}/{{month}}/">Back</a></button>
+    </div>
+    <h2>Detailed Pest Report for {{ district_name }} - {{ month }}</h2>
+    <table class="table table-responsive">
+        <thead class="table-secondary">
+            <tr>
+                <th>Week Number</th>
+                <th>Week</th>
+                <th>Jassid IRM</th>
+                <th>Jassid Non-IRM</th>
+                <th>Whitefly IRM</th>
+                <th>Whitefly Non-IRM</th>
+                <th>Thrips IRM</th>
+                <th>Thrips Non-IRM</th>
+                <th>Flowers IRM</th>
+                <th>Flowers Non-IRM</th>
+                <th>Green Boll IRM</th>
+                <th>Green Boll Non-IRM</th>
+                <th>Locule IRM</th>
+                <th>Locule Non-IRM</th>
+                <th>Open Ball IRM</th>
+                <th>Open Ball Non-IRM</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week, data in weekwise_data.items %}
+            <tr>
+                <td class="fw-bold">{{ week.0 }}</td> <!-- Standard Week Number -->
+                <td>{{ week.1 }}</td> <!-- Standard Week Name -->
+
+                <!-- Display Jassid IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.jassid_irm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_jassid_irm|floatformat:2 }}
+                </td>
+
+                <!-- Display Jassid Non-IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.jassid_nonirm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_jassid_nonirm|floatformat:2 }}
+                </td>
+
+                <!-- Display Whitefly IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.whitefly_irm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_whitefly_irm|floatformat:2 }}
+                </td>
+
+                <!-- Display Whitefly Non-IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.whitefly_nonirm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_whitefly_nonirm|floatformat:2 }}
+                </td>
+
+                <!-- Display Thrips IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.thrips_irm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_thrips_irm|floatformat:2 }}
+                </td>
+
+                <!-- Display Thrips Non-IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.thrips_nonirm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_thrips_nonirm|floatformat:2 }}
+                </td>
+
+                <!-- Display Flowers IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.flowers_irm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_flowers_irm|floatformat:2 }}
+                </td>
+
+                <!-- Display Flowers Non-IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.flowers_nonirm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_flowers_nonirm|floatformat:2 }}
+                </td>
+
+                <!-- Display Green Boll IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.green_boll_irm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_green_boll_irm }}
+                </td>
+
+                <!-- Display Green Boll Non-IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.green_boll_nonirm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_green_boll_nonirm }}
+                </td>
+
+
+                <!-- Display Locule IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.locule_irm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_locule_irm|floatformat:2 }}
+                </td>
+
+                <!-- Display Locule Non-IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.locule_nonirm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_locule_nonirm|floatformat:2 }}
+                </td>
+
+                <!-- Display Open Ball IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.open_ball_irm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_open_ball_irm|floatformat:2 }}
+                </td>
+
+                <!-- Display Open Ball Non-IRM items -->
+                <td>
+                    <ul>
+                        {% for item in data.data.open_ball_nonirm %}
+                            <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    Avg:{{ data.averages.avg_open_ball_nonirm|floatformat:2 }}
+                </td>
+
+                <!-- Display averages for each pest -->
+                <!-- <td>{{ data.averages.avg_jassid_irm }}</td>
+                <td>{{ data.averages.avg_jassid_nonirm }}</td>
+                <td>{{ data.averages.avg_whitefly_irm }}</td>
+                <td>{{ data.averages.avg_whitefly_nonirm }}</td>
+                <td>{{ data.averages.avg_thrips_irm }}</td>
+                <td>{{ data.averages.avg_thrips_nonirm }}</td>
+                <td>{{ data.averages.avg_flowers_irm }}</td>
+                <td>{{ data.averages.avg_flowers_nonirm }}</td>
+                <td>{{ data.averages.avg_green_boll_irm }}</td>
+                <td>{{ data.averages.avg_green_boll_nonirm }}</td>
+                <td>{{ data.averages.avg_locule_irm }}</td>
+                <td>{{ data.averages.avg_locule_nonirm }}</td>
+                <td>{{ data.averages.avg_open_ball_irm }}</td>
+                <td>{{ data.averages.avg_open_ball_nonirm }}</td> -->
+                <td>
+                    <a href="{% url 'update_pest_incidence' district_name=district_name month=month week_number=week.0 %}" class="edit-btn btn btn-success text-white">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

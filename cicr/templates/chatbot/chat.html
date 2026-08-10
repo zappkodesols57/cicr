@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CICR Chat Assistant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'chatbot/css/style.css' %}">
+
+<style>
+  :root {
+    --primary: #007b4f;
+    --primary-dark: #00663f;
+    --background: #f1f7f4;
+    --chat-bg: #ffffff;
+    --user-msg-bg: #d1f2e1;
+    --bot-msg-bg: #ffffff;
+    --hint-bg: #eef6f2;
+    --hint-text: #2f5c49;
+    --header-bg: linear-gradient(to right, #007b4f, #005c3b);
+    --welcome-bg: #e6f5ea;
+    --welcome-border: #2d8b5f;
+    --scrollbar-color: rgba(0, 123, 79, 0.4);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    background: var(--background);
+    color: #333;
+  }
+
+  .chat-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background: var(--chat-bg);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    overflow: hidden;
+  }
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--header-bg);
+    color: #fff;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+
+  .hospital-logo img {
+    width: 48px;
+    margin-right: 15px;
+    border-radius: 8px;
+  }
+
+  .header-title h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .header-title p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #fafafa;
+    scrollbar-color: var(--scrollbar-color) transparent;
+    scrollbar-width: thin;
+  }
+
+  .chat-messages::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .chat-messages::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-color);
+    border-radius: 4px;
+  }
+
+  .welcome-message {
+    background: var(--welcome-bg);
+    border-left: 4px solid var(--welcome-border);
+    padding: 12px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+  }
+
+  .welcome-message h5 {
+    margin: 0 0 4px;
+    font-size: 16px;
+    color: #155c3c;
+  }
+
+  .message {
+    display: flex;
+    margin: 10px 0;
+    align-items: flex-start;
+  }
+
+  .message.user {
+    flex-direction: row-reverse;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 8px;
+    font-size: 16px;
+    color: var(--primary);
+  }
+
+  .message-content {
+    background: var(--bot-msg-bg);
+    padding: 10px 14px;
+    border-radius: 14px;
+    max-width: 80%;
+    font-size: 15px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .message.user .message-content {
+    background: var(--user-msg-bg);
+  }
+
+  .typing-indicator {
+    display: none;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  .typing-dots {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 6px 12px;
+    background: #dcdcdc;
+    border-radius: 8px;
+  }
+
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    background: #666;
+    border-radius: 50%;
+    animation: blink 1.4s infinite ease-in-out both;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+  }
+
+  .input-area {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-top: 1px solid #ddd;
+    background: #fff;
+  }
+
+  .input-area textarea {
+    flex-grow: 1;
+    resize: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.4;
+    transition: border 0.2s;
+  }
+
+  .input-area textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+  }
+
+  .send-btn {
+    margin-left: 10px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .send-btn:hover {
+    background: var(--primary-dark);
+  }
+
+  #message-hints {
+    padding: 10px 20px;
+    font-size: 14px;
+    background: var(--hint-bg);
+    color: var(--hint-text);
+    text-align: center;
+  }
+
+  #hint-text {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .chat-container {
+      margin: 10px;
+      height: 95vh;
+    }
+    .chat-header h1 {
+      font-size: 18px;
+    }
+  }
+</style>
+
+</head> 
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="hospital-logo">
+        <img src="{% static 'images/CICR_logo.png' %}" alt="CICR logo" />
+      </div>
+      <div class="header-title">
+        <h1>CICR Chat Assistant</h1>
+        <p>Helping farmers with pest, weather & fertilizer advice</p>
+      </div>
+    </div>
+
+    <div id="chat-messages" class="chat-messages">
+      <div class="welcome-message">
+        <i class="fas fa-leaf"></i>
+        <h5>Welcome to CICR Advisory!</h5>
+        <p>Ask about rainfall, sowing time, pests, fertilizer & more.</p>
+      </div>
+      <div class="message bot">
+        <div class="avatar bot"><i class="fas fa-robot"></i></div>
+        <div class="message-content">
+          Hello! I’m your assistant. How can I help with your crop today?
+        </div>
+      </div>
+    </div>
+
+    <div id="typing-indicator" class="typing-indicator message bot" style="display: none;">
+      <div class="avatar bot"><i class="fas fa-robot"></i></div>
+      <div class="typing-dots">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>
+
+    <div id="message-hints" style="padding: 10px 20px; font-size: 14px; background: #eef6f2; color: #2f5c49;">
+      💡 You can ask things like: <span id="hint-text" style="cursor:pointer; text-decoration: underline;">"Is it the right time to sow cotton?"</span>
+    </div>
+
+<div id="listening-popup" style="display:none; text-align:center; padding:8px; background:#e6f5ea; color:#155c3c; font-weight:500;">
+  🎤 Listening... please speak
+</div>
+<div class="input-area">
+  <textarea id="user-input" rows="1" placeholder="Type your message..."></textarea>
+  <button class="send-btn" onclick="startListening()" title="Speak"><i class="fas fa-microphone"></i></button>
+  <button class="send-btn" onclick="sendMessage()" title="Send"><i class="fas fa-paper-plane"></i></button>
+</div>
+  </div>
+
+{% comment %} this script for language   {% endcomment %}
+<!-- Inside chatbot/chat.html -->
+
+
+<script>
+const textarea = document.getElementById('user-input');
+const chatMessages = document.getElementById('chat-messages');
+const hintText = document.getElementById('hint-text');
+
+const hints = [
+  "Is it the right time to sow cotton?",
+  "What is the rainfall forecast for Nagpur?",
+  "Tell me about crop condition in Yavatmal.",
+  "Any pest advisory for cotton?",
+  "Is there a dry spell in Washim?",
+  "Suggest fertilizer for cotton crops.",
+  "What is the sowing guideline for Gujarat?",
+  "Is there any pest outbreak expected?"
+];
+
+let hintIndex = 0;
+setInterval(() => {
+  hintIndex = (hintIndex + 1) % hints.length;
+  hintText.textContent = `"${hints[hintIndex]}"`;
+}, 6000);
+
+hintText.addEventListener("click", () => {
+  textarea.value = hints[hintIndex];
+  textarea.focus();
+});
+
+textarea.addEventListener('input', function () {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+textarea.addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+navigator.geolocation.getCurrentPosition(success => {
+  const lat = success.coords.latitude;
+  const lon = success.coords.longitude;
+  fetch(`/chatbot/reverse-geocode/?lat=${lat}&lon=${lon}`)
+    .then(res => res.json())
+    .then(data => {
+      const resolvedCity = data.district || "";
+      const resolvedRegion = data.state || "";
+      fetch('/chatbot/set-location/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ district: resolvedCity, state: resolvedRegion })
+      }).then(() => {
+        console.log(`[✅ Location Set] ${resolvedRegion}, ${resolvedCity}`);
+      });
+    }).catch(err => {
+      console.warn("[⚠️ Reverse Geocode Error]", err);
+    });
+}, error => {
+  console.warn("[⚠️ Geolocation Error]", error.message);
+});
+
+window.onload = () => textarea.focus();
+
+function escapeHTML(text) {
+  const div = document.createElement('div');
+  div.innerText = text;
+  return div.innerHTML;
+}
+
+function showTypingIndicator() {
+  document.getElementById('typing-indicator').style.display = 'flex';
+  const popup = document.getElementById('listening-popup');
+  if (popup) popup.style.display = 'block';
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function hideTypingIndicator() {
+  document.getElementById('typing-indicator').style.display = 'none';
+  const popup = document.getElementById('listening-popup');
+  if (popup) popup.style.display = 'none';
+}
+
+function giveMicFeedback() {
+  if (navigator.vibrate) navigator.vibrate(80);
+
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = ctx.createOscillator();
+  const gainNode = ctx.createGain();
+
+  oscillator.type = 'sine';
+  oscillator.frequency.value = 880;
+  gainNode.gain.value = 0.15;
+
+  oscillator.connect(gainNode);
+  gainNode.connect(ctx.destination);
+
+  oscillator.start();
+  oscillator.stop(ctx.currentTime + 0.15);
+}
+
+function startListening() {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    alert('Your browser does not support speech recognition.');
+    return;
+  }
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'hi-IN';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  giveMicFeedback();
+  showTypingIndicator();
+  recognition.start();
+
+  recognition.onresult = function (event) {
+    hideTypingIndicator();
+    const transcript = event.results[0][0].transcript;
+    textarea.value = transcript;
+    sendMessage();
+  };
+
+  recognition.onerror = function (event) {
+    hideTypingIndicator();
+    console.warn('Hindi failed. Retrying English...', event.error);
+
+    const fallback = new SpeechRecognition();
+    fallback.lang = 'en-IN';
+    fallback.interimResults = false;
+    fallback.maxAlternatives = 1;
+
+    giveMicFeedback();
+    showTypingIndicator();
+    fallback.start();
+
+    fallback.onresult = function (event) {
+      hideTypingIndicator();
+      const transcript = event.results[0][0].transcript;
+      textarea.value = transcript;
+      sendMessage();
+    };
+
+    fallback.onerror = function (event) {
+      hideTypingIndicator();
+      addMessage("🎤 Could not understand your voice in Hindi or English.", false);
+    };
+  };
+}
+
+function sendMessage() {
+  const message = textarea.value.trim();
+  if (!message) return;
+  textarea.value = '';
+  textarea.style.height = 'auto';
+  addMessage(message, true);
+  showTypingIndicator();
+
+  fetch('/chatbot/response/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message })
+  })
+  .then(response => response.json())
+  .then(data => {
+    hideTypingIndicator();
+    addMessage(data.response || "Sorry, I didn’t get that.");
+  })
+  .catch(error => {
+    hideTypingIndicator();
+    addMessage("Oops! Something went wrong.");
+    console.error('Chatbot error:', error);
+  });
+}
+
+function addMessage(content, isUser = false) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+  const avatarIcon = isUser ? 'fas fa-user' : 'fas fa-robot';
+  messageDiv.innerHTML = `
+    <div class="avatar ${isUser ? 'user' : 'bot'}">
+      <i class="${avatarIcon}"></i>
+    </div>
+    <div class="message-content">${escapeHTML(content).replace(/\n/g, '<br>')}</div>
+  `;
+  chatMessages.appendChild(messageDiv);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  const welcome = document.querySelector('.welcome-message');
+  if (welcome) welcome.remove();
+
+  if (!isUser) {
+    const lang = detectLang(content);
+    speakText(content, lang);
+  }
+}
+
+function detectLang(text) {
+  return /[\u0900-\u097F]/.test(text) ? 'hi-IN' : 'en-IN';
+}
+
+function speakText(text, lang = 'en-IN') {
+  if (!window.speechSynthesis) {
+    console.warn("❌ TTS not supported in this browser.");
+    return;
+  }
+
+  const voices = window.speechSynthesis.getVoices();
+  const selectedVoice =
+    voices.find(v => v.lang === lang) ||
+    voices.find(v => v.lang.startsWith(lang.split('-')[0])) ||
+    voices.find(v => v.lang.startsWith('en')) ||
+    voices[0];
+
+  if (!selectedVoice) {
+    console.warn("❌ No matching voice found.");
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.voice = selectedVoice;
+  utterance.lang = selectedVoice.lang;
+  utterance.pitch = 1;
+  utterance.rate = 1;
+  utterance.volume = 1;
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utterance);
+}
+
+window.speechSynthesis.onvoiceschanged = () => {
+  const loadedVoices = window.speechSynthesis.getVoices();
+  console.log("✅ Voices loaded:", loadedVoices.map(v => v.name + ' (' + v.lang + ')'));
+};
+
+document.addEventListener('click', () => {
+  const dummy = new SpeechSynthesisUtterance('');
+  window.speechSynthesis.speak(dummy);
+  console.log("🆗 Speech synthesis unlocked by user interaction");
+}, { once: true });
+
+// Optional: test line
+speakText("Welcome! This is your crop assistant.", "en-IN");
+</script>
+</body>
+</html>
+

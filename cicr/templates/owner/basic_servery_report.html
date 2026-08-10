@@ -1,0 +1,354 @@
+{% extends "base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SURVEY REPORT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #ffffff;
+      }
+      .table-container {
+        padding: 10px 0px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: auto;
+      }
+      table{
+        position: relative;
+        border-collapse: collapse; 
+      }
+      .table th,
+      .table td {
+        vertical-align: middle;
+        text-align: center;
+        font-weight: 400;
+        font-size: 12px;
+        min-width: 70px;
+        padding: 5px;
+      }
+      table th{
+        font-weight: 500 !important;
+      }
+      h2{
+        font-size: 20px;
+      }
+      .btn-primary {
+        background-color: #198754;
+        border-color: #198754;
+      }
+      .btn-primary:hover {
+        background-color: #157347;
+        border-color: #157347;
+      }
+      .tooltip-inner {
+        background-color: #198754;
+        color: #ffffff;
+      }
+      .tooltip-arrow::before {
+        border-top-color: #198754;
+      }
+
+      .create i {
+        font-size: 20px;
+        color: #198754;
+        text-decoration: none;
+      }
+      .pagination {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap:20px;
+        }
+        .pagination button {
+            padding: 8px 16px;
+            margin: 0 2px;
+            cursor: pointer;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center mt-2 ">
+        <h2 >BASIC SURVEY DETAILS OF DISTRICT <b>{{district_name}}</b></h2>
+          <div class="d-flex align-items-center justify-content-center">
+            <label for="monthFilter" class="me-2"> Months: </label>
+            <select id="monthFilter" class="form-select form-select-sm " style="width: 150px;">
+                <option value="all">All</option>
+            </select>
+          </div>
+      </div>
+
+      <div class="table-container">
+        <table class="table table-hover table-bordered table-responsive" id="myTable">
+          <thead class="table-secondary">
+              <tr>
+                  <th> Sr. No.</th>
+                  <th >IRM/NON-IRM</th>
+                  <th >Name</th>
+                  <th >User Id</th>
+                  <th >Row Spacing</th>
+                  <th >Plant Distance</th>
+                  <th >Cotton Variety</th> 
+                  <th >Previous Year Crop Grown </th> 
+                  <th >Causes</th>
+                  <th >Last Year Crop Extended</th> 
+                  <th >Soil Type</th> 
+                  <th >Crop Rotation Followed</th> 
+                  <th >Advisory Received From</th> 
+                  <!-- <th style="width: 20%;">Recorded File</th>  -->
+                  <th >Total Farmers Ecommunication</th> 
+                  <th >Landarea</th> 
+                  <th >Aadhar Number</th>
+                  <th >GeoLocation</th> 
+                  <th >Survey Date</th>
+                  <th >Action</th> 
+              </tr>
+          </thead>
+          <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                {% if i.IRM %}
+                    <td>IRM</td>
+                {% else %}
+                    <td>NON-IRM</td>
+                {% endif %}
+                <td>{{ i.name }}</td>
+                <td>{{ i.user_id }}</td>
+                <td>{{ i.row_distance }}</td>
+                <td>{{ i.plant_distance }}</td>
+                <td>{{ i.cotton_variety }}</td>
+                <td>{{ i.previous_year_crop_grown }}</td>
+
+                {% if i.causes %}
+                    <td>Irrigation</td>
+                {% else %}
+                    <td>Rainfed</td>
+                {% endif %}
+
+                {% if i.last_year_crop_extended %}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+        
+                <td>{{ i.soil_type }}</td>
+
+                {% if i.crop_rotation_followed %}
+                    <td>Yes</td>
+                {% else %}
+                    <td>No</td>
+                {% endif %}
+
+                <td>{{ i.advisory_received_from }}</td>
+                <!-- <td>{{ i.recorded_file }}</td> -->
+                <td>{{ i.total_farmers_ecommunication }}</td>
+                <td>{{ i.landarea }}</td>
+                <td>{{ i.aadhar_number }}</td>
+                <td>{{ i.geolocations }}</td>
+                <td>{{ i.servey_date }}</td>
+                <td style="text-align: center">
+                  <a
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Edit"
+                    href="/edit_servey_report/{{district_name}}/{{ i.id }}/"
+                    class="create"
+                  >
+                    <i class="bx bx-edit"></i>
+                  </a>
+                  <a
+                    type="button"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                    href="javascript:void(0);"  
+                    class="create"
+                    data-id="{{ i.id }}"
+                    data-district="{{ district_name }}"
+                    onclick="openDeleteModal(this)"  
+                  >
+                    <i class="bx bx-trash"></i>
+                </a>
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <!-- <div class="text-center mt-4">
+          <p>Total Number of Investigator: <strong>{{ data|length }}</strong></p>
+        </div> -->
+      </div>
+      <div class="pagination p-2">
+        <button id="prevBtn" class="btn btn-sucesss">Previous</button>
+        <button id="nextBtn" class="btn btn-success">Next</button>
+       </div>
+    </div>
+
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete this item?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <a id="confirmDeleteBtn" href="#" class="btn btn-danger">Yes, Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openDeleteModal(element) {
+          var district = element.getAttribute('data-district');
+          var id = element.getAttribute('data-id');
+          
+          // Set the href for the delete confirmation button
+          var deleteUrl = "/delete_servey_report/" + district + "/" + id + "/";
+          document.getElementById('confirmDeleteBtn').setAttribute('href', deleteUrl);
+          
+          // Show the modal
+          var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+          deleteModal.show();
+      }
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      var tooltipTriggerList = [].slice.call(
+        document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      );
+      var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+    </script>
+
+  <!--   <script>
+        const table = document.getElementById('myTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        const rowsPerPage = 10;  // Number of rows per page
+        let currentPage = 1;
+
+        function displayRows() {
+          const start = (currentPage - 1) * rowsPerPage;
+          const end = start + rowsPerPage;
+
+          for (let i = 0; i < rows.length; i++) {
+            rows[i].style.display = i >= start && i < end ? '' : 'none';
+          }
+          document.getElementById('prevBtn').disabled = currentPage === 1;
+          document.getElementById('nextBtn').disabled = end >= rows.length;
+        }
+        document.getElementById('prevBtn').addEventListener('click', () => {
+          if (currentPage > 1) {
+            currentPage--;
+            displayRows();
+          }
+        });
+        document.getElementById('nextBtn').addEventListener('click', () => {
+          if ((currentPage * rowsPerPage) < rows.length) {
+            currentPage++;
+            displayRows();
+          }
+        });
+        displayRows();  // Initialize table
+    </script> -->
+
+<script>
+        const table = document.getElementById('myTable');
+        const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+        const rowsPerPage = 10;  // Number of rows per page
+        let currentPage = 1;
+
+        // Function to extract unique months from survey dates
+        function extractUniqueMonths() {
+            const months = new Set();
+            for (let i = 0; i < rows.length; i++) {
+                const dateText = rows[i].getElementsByTagName('td')[17].textContent;  // Survey Date is in the 17th column (index 16)
+                const month = new Date(dateText).toLocaleString('default', { month: 'long' });
+                months.add(month);
+            }
+            return Array.from(months).sort((a, b) => new Date(`${a} 1, 2024`) - new Date(`${b} 1, 2024`));
+        }
+
+        // Function to populate the month dropdown
+        function populateMonthDropdown() {
+            const monthFilter = document.getElementById('monthFilter');
+            const months = extractUniqueMonths();
+            months.forEach(month => {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = month;
+                monthFilter.appendChild(option);
+            });
+        }
+
+        // Function to filter rows by selected month
+        function filterRowsByMonth() {
+            const selectedMonth = document.getElementById('monthFilter').value;
+            for (let i = 0; i < rows.length; i++) {
+                const dateText = rows[i].getElementsByTagName('td')[17].textContent;  // Survey Date is in the 17th column (index 16)
+                const rowMonth = new Date(dateText).toLocaleString('default', { month: 'long' });
+                rows[i].dataset.filtered = (selectedMonth === 'all' || rowMonth === selectedMonth) ? 'true' : 'false';
+            }
+            currentPage = 1;  // Reset to first page after filtering
+            displayRows(); // Update the rows display after filtering
+        }
+
+        // Function to display rows for the current page
+        function displayRows() {
+            const filteredRows = Array.from(rows).filter(row => row.dataset.filtered === 'true');
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].style.display = 'none'; // Hide all rows first
+            }
+
+            for (let i = start; i < end && i < filteredRows.length; i++) {
+                filteredRows[i].style.display = ''; // Display rows for the current page
+            }
+
+            document.getElementById('prevBtn').disabled = currentPage === 1;
+            document.getElementById('nextBtn').disabled = end >= filteredRows.length;
+        }
+
+        // Event listeners
+        document.getElementById('monthFilter').addEventListener('change', filterRowsByMonth);
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayRows();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if ((currentPage * rowsPerPage) < Array.from(rows).filter(row => row.dataset.filtered === 'true').length) {
+                currentPage++;
+                displayRows();
+            }
+        });
+
+        // Initialize table and dropdown
+        populateMonthDropdown();
+        filterRowsByMonth();  // Initialize with all rows visible
+    </script>
+  </body>
+</html>
+{% endblock content %}

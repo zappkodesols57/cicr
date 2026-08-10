@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Super Admin Dashboard</title>
+  </head>
+
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+    body {
+      font-family: "Open Sans", Arial;
+    }
+
+    .dashboard {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+      flex-wrap: wrap;
+      padding:20px;
+      gap: 2rem;
+    }
+
+    .dashboard-title {
+      width: 100%;
+      height: 100%;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .dashboard-title span {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .charts-section {
+      width: 100%;
+      /*height: 350px; */
+      padding: 10px;
+      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+    }
+
+    #bar-chart1, #bar-chart2 {
+      width: 100%;
+      height: 550px;
+    }
+
+    .table {
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    .table thead th {
+      background-color: #f8f9fa;
+    }
+
+    .table tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+  </style>
+
+  <body>
+    <section class="dashboard">
+      <!-- <div class="dashboard-title">
+        <span>CICR - IRM SUPER ADMIN PANEL</span>
+      </div> -->
+
+      <div class="charts-section">
+        <!-- <div class="charts-section-title">
+          <span>Survey Reports Submitted by Investigators</span>
+        </div> -->
+        <div id="bar-chart1"></div>
+      </div>
+
+      <div class="charts-section">
+        <!-- <div class="charts-section-title">
+          <span>Pest Incidence Report Submitted by Investigators</span>
+        </div> -->
+        <div id="bar-chart2"></div>
+      </div>
+
+      <table class="table table-bordered table-light">
+        <thead>
+          <tr>
+            <th scope="col">Sr.No.</th>
+            <th scope="col">Districts</th>
+            <th scope="col">Investigators</th>
+            <th scope="col">Admins</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in combined_data %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ item.district }}</td>
+              <td>
+                <a href="{% url 'investigator_details' item.district %}">
+                  {{ item.investigators }}
+                </a>
+              </td>
+              <td>
+                <a href="{% url 'admin_user' item.district %}">
+                  {{ item.admins }}
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        
+        </tbody>
+      </table>
+    </section>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawCharts);
+
+      function drawCharts() {
+        // Create data for Survey Data by District chart
+        var surveyData = new google.visualization.DataTable();
+        surveyData.addColumn('string', 'District');
+        surveyData.addColumn('number', 'IRM');
+        surveyData.addColumn('number', 'NON-IRM');
+
+        surveyData.addRows([
+          {% for item in survey_data %}
+            ["{{ item.district }}", {{ item.irm_count }}, {{ item.non_irm_count }}],
+          {% endfor %}
+        ]);
+
+        var surveyOptions = {
+          title: 'Survey Reports Submitted by Investigators',
+          chartArea: { width: '90%' },
+          legend: { position: 'bottom' },
+          hAxis: {
+            title: 'District',
+            minValue: 0,
+            textStyle: { fontSize: 12 },
+          },
+          vAxis: {
+            title: 'Count',
+            textStyle: { bold: true },
+          },
+          series: {
+            0: { color: 'green' },
+            1: { color: 'lightgreen' }
+          }
+        };
+
+        var surveyChart = new google.visualization.ColumnChart(document.getElementById('bar-chart1'));
+        surveyChart.draw(surveyData, surveyOptions);
+
+        // Create data for District-wise Count of Entries chart
+        var districtData = new google.visualization.DataTable();
+        districtData.addColumn('string', 'District');
+        districtData.addColumn('number', 'Entries');
+
+        districtData.addRows([
+          {% for item in district_counts %}
+            ["{{ item.district }}", {{ item.count }}],
+          {% endfor %}
+        ]);
+
+        var districtOptions = {
+          title: 'Pest Incidence Report Submitted by Investigators',
+          chartArea: { width: '90%' },
+          legend: { position: 'bottom' },
+          hAxis: {
+            title: 'District',
+            minValue: 0,
+            textStyle: { fontSize: 12},
+          },
+          vAxis: {
+            title: 'Count',
+            textStyle: { bold: true },
+          },
+          colors: ['#008000']
+        };
+
+        var districtChart = new google.visualization.ColumnChart(document.getElementById('bar-chart2'));
+        districtChart.draw(districtData, districtOptions);
+      }
+    </script>
+  </body>
+</html>
+{% endblock %}
