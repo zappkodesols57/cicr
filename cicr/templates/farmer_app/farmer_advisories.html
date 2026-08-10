@@ -78,8 +78,8 @@
         {% for card in cards %}
             <a class="advisory-card" href="{{ card.url }}">
                 <div class="advisory-image">
-                    {% if carousel_images.0.url %}
-                        <img src="{{ carousel_images.0.url }}" alt="">
+                    {% if card.image_url %}
+                        <img src="{{ card.image_url }}" alt="">
                     {% endif %}
                 </div>
                 <div class="advisory-body">

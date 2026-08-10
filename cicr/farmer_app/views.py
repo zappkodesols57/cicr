@@ -63,6 +63,9 @@ def _dashboard_images():
 
 def _advisory_cards():
     cards = []
+    images = _dashboard_images()
+    image_count = len(images)
+
     for advisory in Advisory.objects.all().order_by('-id'):
         pdf_url = (
             _file_url(advisory.path_pdf_en)
@@ -70,17 +73,27 @@ def _advisory_cards():
             or _file_url(advisory.path_pdf_hi)
             or _file_url(advisory.path_pdf_gu)
         )
+        image_url = images[len(cards) % image_count]['url'] if image_count else ''
         cards.append({
-            'title': advisory.week_en or advisory.week_hi or advisory.week_gu or 'CICR IRM Advisory',
+            'title': (
+                f"Weekly Advisory {advisory.week_en}"
+                if advisory.week_en
+                else advisory.week_hi
+                or advisory.week_gu
+                or 'CICR IRM Advisory'
+            ),
             'subtitle': advisory.date_range_en or advisory.month_en or '',
             'url': pdf_url or '#',
+            'image_url': image_url,
         })
 
     for item in NewsArticle.objects.all().order_by('-id'):
+        image_url = images[len(cards) % image_count]['url'] if image_count else ''
         cards.append({
-            'title': item.issue_no or 'Pest Management Advisory',
+            'title': f"Issue No. {item.issue_no}" if item.issue_no else 'Pest Management Advisory',
             'subtitle': item.date or item.month or '',
             'url': _file_url(item.pdf) or '#',
+            'image_url': image_url,
         })
 
     return cards
@@ -135,12 +148,13 @@ def farmer_pest_view(request):
 
     if not pest_cards:
         pest_cards = [
-            {'title': 'Whitefly', 'image_url': ''},
-            {'title': 'Jassid', 'image_url': ''},
-            {'title': 'Thrips', 'image_url': ''},
-            {'title': 'Mealybug', 'image_url': ''},
-            {'title': 'Aphid', 'image_url': ''},
-            {'title': 'Pink Bollworm', 'image_url': ''},
+            {'title': 'Whitefly', 'image_url': '', 'source': 'pending'},
+            {'title': 'Whitefly in North India', 'image_url': '', 'source': 'pending'},
+            {'title': 'Jassid', 'image_url': '', 'source': 'pending'},
+            {'title': 'Thrips', 'image_url': '', 'source': 'pending'},
+            {'title': 'Mealybug', 'image_url': '', 'source': 'pending'},
+            {'title': 'Aphid', 'image_url': '', 'source': 'pending'},
+            {'title': 'Pink Bollworm', 'image_url': '', 'source': 'pending'},
         ]
 
     return render(request, 'farmer_app/farmer_pest.html', {
