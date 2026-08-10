@@ -47,11 +47,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="toolbar">
-    <span id="recordCount">Loading advisories...</span>
-    <span>Source: /api/advisory/</span>
-</div>
-
 <section id="loading" class="state-grid" aria-label="Loading advisories">
     <div class="skeleton"></div>
     <div class="skeleton"></div>
@@ -69,7 +64,6 @@
     const loading = document.getElementById('loading');
     const emptyState = document.getElementById('emptyState');
     const errorState = document.getElementById('errorState');
-    const recordCount = document.getElementById('recordCount');
 
     function absoluteUrl(url) {
         if (!url) return '';
@@ -114,7 +108,7 @@
 
         return {
             id,
-            title: title || 'CICR IRM Advisory',
+            title: title || 'Untitled advisory',
             date,
             description,
             image,
@@ -166,18 +160,15 @@
 
             loading.hidden = true;
             if (!items.length) {
-                recordCount.textContent = '0 advisories';
                 emptyState.hidden = false;
                 return;
             }
 
             grid.innerHTML = items.map(cardTemplate).join('');
-            recordCount.textContent = `${items.length} advisories`;
             grid.hidden = false;
         } catch (error) {
             loading.hidden = true;
             errorState.hidden = false;
-            recordCount.textContent = 'Could not load advisories';
             console.error('Advisory API failed:', error);
         }
     }

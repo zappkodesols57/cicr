@@ -1,0 +1,674 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Survey | CICR IRM</title>
+    <style>
+        :root {
+            --green-950: #003d0d;
+            --green-900: #00720d;
+            --green-800: #07831a;
+            --green-100: #e9f6ec;
+            --green-50: #f7fbf8;
+            --line: #dbe8dd;
+            --text: #111811;
+            --muted: #657168;
+            --danger: #aa1f1f;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px clamp(20px, 4vw, 54px);
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .back {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.24);
+            border-radius: 50%;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page {
+            width: min(1080px, calc(100% - 40px));
+            margin: 28px auto 38px;
+        }
+
+        .stepper {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding: 16px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 12px 26px rgba(17, 24, 17, 0.07);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            font-weight: 800;
+        }
+
+        .step::before {
+            content: attr(data-step);
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            background: #9ca39e;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+
+        .step.active,
+        .step.done {
+            color: var(--green-950);
+        }
+
+        .step.active::before,
+        .step.done::before {
+            background: var(--green-900);
+        }
+
+        .card {
+            padding: clamp(22px, 3vw, 34px);
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(17, 24, 17, 0.08);
+        }
+
+        .card h2 {
+            margin: 0 0 24px;
+            color: #000000;
+            font-size: 28px;
+            line-height: 1.2;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .field label,
+        .group-label {
+            display: block;
+            margin: 0 0 8px;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            color: #111111;
+            background: #ffffff;
+            border: 1.6px solid #1a9a35;
+            border-radius: 5px;
+            outline: none;
+            font: inherit;
+            font-size: 15px;
+        }
+
+        .field textarea {
+            min-height: 96px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--green-900);
+            box-shadow: 0 0 0 4px rgba(0, 114, 13, 0.1);
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 22px;
+            min-height: 48px;
+            align-items: center;
+        }
+
+        .option {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+
+        .option input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--green-900);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .button {
+            min-width: 128px;
+            min-height: 48px;
+            padding: 12px 22px;
+            color: #ffffff;
+            background: var(--green-900);
+            border: 0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button.secondary {
+            color: var(--green-900);
+            background: var(--green-100);
+            border: 1px solid #c4e5ca;
+        }
+
+        .button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .review {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .review-item {
+            padding: 16px;
+            background: var(--green-50);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .review-item strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .message {
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-weight: 800;
+        }
+
+        .message.success {
+            color: var(--green-950);
+            background: var(--green-100);
+            border: 1px solid #bfdfc5;
+        }
+
+        .message.error {
+            color: var(--danger);
+            background: #fff2f2;
+            border: 1px solid #f0c6c6;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 760px) {
+            .page {
+                width: min(100% - 20px, 560px);
+                margin-top: 0;
+            }
+
+            .stepper,
+            .form-grid,
+            .review {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                border-radius: 0 0 10px 10px;
+            }
+
+            .actions {
+                justify-content: stretch;
+            }
+
+            .button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    {{ investigator_id|json_script:"investigator-id" }}
+
+    <header class="topbar">
+        <a class="back" href="/investigator_dashboard/" aria-label="Back to dashboard">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        </a>
+        <h1>Basic Survey</h1>
+        <span aria-hidden="true"></span>
+    </header>
+
+    <main class="page">
+        <nav class="stepper" aria-label="Survey steps">
+            <span class="step active" data-step="1" id="stepLabel1">Personal Information</span>
+            <span class="step" data-step="2" id="stepLabel2">Field Information</span>
+            <span class="step" data-step="3" id="stepLabel3">Confirm</span>
+        </nav>
+
+        <form id="surveyForm">
+            <section class="card" data-panel="1">
+                <h2>Personal Information</h2>
+                <div class="form-grid">
+                    <div class="full">
+                        <span class="group-label">Type</span>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="IRM" value="true" checked> IRM</label>
+                            <label class="option"><input type="radio" name="IRM" value="false"> NON-IRM</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="name">Name of Farmer</label>
+                        <input id="name" name="name" type="text" required>
+                    </div>
+                    <div class="field">
+                        <label for="mobile_number">Mobile No.</label>
+                        <input id="mobile_number" name="mobile_number" type="tel" required>
+                    </div>
+                    <div class="field">
+                        <label for="aadhar_number">Aadhar No. (Not Mandatory)</label>
+                        <input id="aadhar_number" name="aadhar_number" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="landarea">Land Area (in Acre)</label>
+                        <input id="landarea" name="landarea" type="text">
+                    </div>
+                    <div>
+                        <span class="group-label">Gender</span>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="gender" value="Male"> Male</label>
+                            <label class="option"><input type="radio" name="gender" value="Female"> Female</label>
+                            <label class="option"><input type="radio" name="gender" value="Other"> Other</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="category">Category</label>
+                        <select id="category" name="category">
+                            <option value="">Select category</option>
+                            <option value="SC">SC</option>
+                            <option value="ST">ST</option>
+                            <option value="OBC">OBC</option>
+                            <option value="General">General</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="village">Village</label>
+                        <input id="village" name="village" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="taluka">Taluka</label>
+                        <input id="taluka" name="taluka" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="district">District</label>
+                        <select id="district" name="district" required>
+                            <option value="">Loading districts...</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="geolocations">Geolocation</label>
+                        <textarea id="geolocations" name="geolocations" placeholder="Enter Geolocation (Lat:37.0, Long:40.2)"></textarea>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="button secondary" type="button" id="locationButton">Get Location</button>
+                    <button class="button" type="button" data-next>Continue</button>
+                </div>
+            </section>
+
+            <section class="card" data-panel="2" hidden>
+                <h2>Field Information</h2>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="date_of_sowing">Date of Sowing</label>
+                        <input id="date_of_sowing" name="date_of_sowing" type="date" required>
+                    </div>
+                    <div class="field">
+                        <label for="row_distance">Spacing / Row Distance in cm</label>
+                        <input id="row_distance" name="row_distance" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="plant_distance">Spacing / Plant Distance in cm</label>
+                        <input id="plant_distance" name="plant_distance" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="cotton_variety">Name of Cotton Variety / Bt Hybrid</label>
+                        <input id="cotton_variety" name="cotton_variety" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="previous_year_crop_grown">Previous year crop grown</label>
+                        <input id="previous_year_crop_grown" name="previous_year_crop_grown" type="text">
+                    </div>
+                    <div>
+                        <span class="group-label">Irrigation type</span>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="causes" value="true" checked> Irrigated</label>
+                            <label class="option"><input type="radio" name="causes" value="false"> Rainfed</label>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="group-label">Whether last year crop extended</span>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="last_year_crop_extended" value="true" checked> Yes</label>
+                            <label class="option"><input type="radio" name="last_year_crop_extended" value="false"> No</label>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="group-label">Soil Type</span>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="soil_type" value="Heavy"> Heavy</label>
+                            <label class="option"><input type="radio" name="soil_type" value="Medium"> Medium</label>
+                            <label class="option"><input type="radio" name="soil_type" value="Shallow"> Shallow</label>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="group-label">Whether crop rotation followed</span>
+                        <div class="options">
+                            <label class="option"><input type="radio" name="crop_rotation_followed" value="true" checked> Yes</label>
+                            <label class="option"><input type="radio" name="crop_rotation_followed" value="false"> No</label>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="advisory_received_from">Pest management advisory received from</label>
+                        <select id="advisory_received_from" name="advisory_received_from">
+                            <option value="">Select source</option>
+                            <option value="ICAR CICR, Nagpur">ICAR CICR, Nagpur</option>
+                            <option value="State Agriculture University">State Agriculture University</option>
+                            <option value="Agri. Department">Agri. Department</option>
+                            <option value="KVK">KVK</option>
+                            <option value="Krishi Seva Kendra (Dealer)">Krishi Seva Kendra (Dealer)</option>
+                            <option value="Self , Fellow Farmer">Self , Fellow Farmer</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="total_farmers_ecommunication">Total Number of Farmer Registered for e-communication</label>
+                        <input id="total_farmers_ecommunication" name="total_farmers_ecommunication" type="number" min="0">
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="button secondary" type="button" data-back>Back</button>
+                    <button class="button" type="button" data-next>Continue</button>
+                </div>
+            </section>
+
+            <section class="card" data-panel="3" hidden>
+                <h2>Confirm Survey Details</h2>
+                <div class="review" id="review"></div>
+                <div class="actions">
+                    <button class="button secondary" type="button" data-back>Back</button>
+                    <button class="button" type="submit" id="submitButton">Submit</button>
+                </div>
+                <div class="message success" id="successMessage" hidden>Survey submitted successfully.</div>
+                <div class="message error" id="errorMessage" hidden>Unable to submit survey.</div>
+            </section>
+        </form>
+    </main>
+
+    <script>
+        const investigatorId = JSON.parse(document.getElementById('investigator-id').textContent);
+        const form = document.getElementById('surveyForm');
+        const panels = Array.from(document.querySelectorAll('[data-panel]'));
+        const labels = [1, 2, 3].map((step) => document.getElementById(`stepLabel${step}`));
+        const review = document.getElementById('review');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const submitButton = document.getElementById('submitButton');
+        let currentStep = 1;
+
+        const reviewFields = [
+            ['Name', 'name'],
+            ['Gender', 'gender'],
+            ['Category', 'category'],
+            ['Village', 'village'],
+            ['Taluka', 'taluka'],
+            ['District', 'district'],
+            ['Mobile No.', 'mobile_number'],
+            ['Aadhar No.', 'aadhar_number'],
+            ['Land Area', 'landarea'],
+            ['Geo location', 'geolocations'],
+            ['Date of Sowing', 'date_of_sowing'],
+            ['Spacing / Row Distance', 'row_distance'],
+            ['Spacing / Plant Distance', 'plant_distance'],
+            ['Name of Cotton Variety / Bt Hybrid', 'cotton_variety'],
+            ["Previous year's crop grown", 'previous_year_crop_grown'],
+            ['Irrigation type', 'causes'],
+            ['Whether last year crop extended', 'last_year_crop_extended'],
+            ['Soil type', 'soil_type'],
+            ['Advisory received for pest management from', 'advisory_received_from'],
+            ['Total farmers registered', 'total_farmers_ecommunication'],
+        ];
+
+        function csrfToken() {
+            const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            return input ? input.value : '';
+        }
+
+        function boolValue(value) {
+            return value === 'true';
+        }
+
+        function formValue(name) {
+            const checked = form.querySelector(`[name="${name}"]:checked`);
+            if (checked) return checked.value;
+            const field = form.elements[name];
+            return field ? field.value.trim() : '';
+        }
+
+        function displayValue(name) {
+            const value = formValue(name);
+            if (name === 'causes') return boolValue(value) ? 'Irrigated' : 'Rainfed';
+            if (name === 'last_year_crop_extended' || name === 'crop_rotation_followed') return boolValue(value) ? 'Yes' : 'No';
+            return value || '-';
+        }
+
+        function payload() {
+            return {
+                user_id: investigatorId,
+                IRM: boolValue(formValue('IRM')),
+                name: formValue('name'),
+                category: formValue('category'),
+                gender: formValue('gender'),
+                village: formValue('village'),
+                taluka: formValue('taluka'),
+                district: formValue('district'),
+                mobile_number: formValue('mobile_number'),
+                date_of_sowing: formValue('date_of_sowing'),
+                row_distance: formValue('row_distance'),
+                plant_distance: formValue('plant_distance'),
+                cotton_variety: formValue('cotton_variety'),
+                previous_year_crop_grown: formValue('previous_year_crop_grown'),
+                causes: boolValue(formValue('causes')),
+                last_year_crop_extended: boolValue(formValue('last_year_crop_extended')),
+                soil_type: formValue('soil_type'),
+                crop_rotation_followed: boolValue(formValue('crop_rotation_followed')),
+                advisory_received_from: formValue('advisory_received_from'),
+                geolocations: formValue('geolocations'),
+                total_farmers_ecommunication: formValue('total_farmers_ecommunication') || null,
+                landarea: formValue('landarea'),
+                aadhar_number: formValue('aadhar_number'),
+            };
+        }
+
+        function updateStep(step) {
+            currentStep = step;
+            panels.forEach((panel) => {
+                panel.hidden = Number(panel.dataset.panel) !== step;
+            });
+            labels.forEach((label, index) => {
+                const labelStep = index + 1;
+                label.classList.toggle('active', labelStep === step);
+                label.classList.toggle('done', labelStep < step);
+            });
+            if (step === 3) renderReview();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateStep(step) {
+            const panel = panels[step - 1];
+            const required = Array.from(panel.querySelectorAll('[required]'));
+            return required.every((field) => field.reportValidity());
+        }
+
+        function renderReview() {
+            review.innerHTML = reviewFields.map(([label, name]) => `
+                <div class="review-item">
+                    <strong>${label}</strong>
+                    <span>${escapeHtml(displayValue(name))}</span>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            }[char]));
+        }
+
+        async function loadDistricts() {
+            const select = document.getElementById('district');
+            try {
+                const response = await fetch('/api/districts/', { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) throw new Error(`District API ${response.status}`);
+                const districts = await response.json();
+                select.innerHTML = '<option value="">Select district</option>' + districts.map((item) => {
+                    const value = item.district_name || item.name || item.district || '';
+                    return value ? `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>` : '';
+                }).join('');
+            } catch (error) {
+                select.innerHTML = '<option value="">District unavailable</option>';
+                console.error(error);
+            }
+        }
+
+        document.querySelectorAll('[data-next]').forEach((button) => {
+            button.addEventListener('click', () => {
+                if (validateStep(currentStep)) updateStep(currentStep + 1);
+            });
+        });
+
+        document.querySelectorAll('[data-back]').forEach((button) => {
+            button.addEventListener('click', () => updateStep(currentStep - 1));
+        });
+
+        document.getElementById('locationButton').addEventListener('click', () => {
+            const field = document.getElementById('geolocations');
+            if (!navigator.geolocation) {
+                field.value = 'Geolocation is not supported by this browser.';
+                return;
+            }
+            navigator.geolocation.getCurrentPosition((position) => {
+                field.value = `Lat:${position.coords.latitude}, Long:${position.coords.longitude}`;
+            }, () => {
+                field.value = 'Unable to fetch current location.';
+            });
+        });
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            successMessage.hidden = true;
+            errorMessage.hidden = true;
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('/api/servey_info/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken(),
+                    },
+                    body: JSON.stringify(payload()),
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(JSON.stringify(data));
+                successMessage.textContent = `Survey submitted successfully. Record ID: ${data.id || '-'}`;
+                successMessage.hidden = false;
+            } catch (error) {
+                errorMessage.textContent = 'Unable to submit survey. Please check required fields and try again.';
+                errorMessage.hidden = false;
+                console.error(error);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        loadDistricts();
+    </script>
+    {% include "includes/accessibility_panel.html" %}
+</body>
+</html>

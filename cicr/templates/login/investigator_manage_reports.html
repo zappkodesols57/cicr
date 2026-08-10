@@ -1,0 +1,1008 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Reports | CICR IRM</title>
+    <style>
+        :root {
+            --green-950: #003d0d;
+            --green-900: #00720d;
+            --green-800: #07831a;
+            --green-100: #e9f6ec;
+            --green-50: #f7fbf8;
+            --line: #dbe8dd;
+            --text: #111811;
+            --muted: #657168;
+            --danger: #b42318;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px clamp(20px, 4vw, 54px);
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .back,
+        .icon-button {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.24);
+            border-radius: 50%;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page {
+            width: min(1280px, calc(100% - 40px));
+            margin: 28px auto 38px;
+        }
+
+        .toolbar {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 22px;
+            padding: 18px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 12px 26px rgba(17, 24, 17, 0.07);
+        }
+
+        .toolbar input {
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 14px;
+            border: 1.6px solid #1a9a35;
+            border-radius: 6px;
+            outline: none;
+            font: inherit;
+        }
+
+        .count {
+            color: var(--green-950);
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .report-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .report-card {
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 14px 28px rgba(17, 24, 17, 0.08);
+        }
+
+        .report-head {
+            display: grid;
+            grid-template-columns: 120px 1fr 1fr 1fr auto;
+            gap: 18px;
+            align-items: center;
+            padding: 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .head-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .head-value {
+            color: #000000;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .tag {
+            display: inline-flex;
+            padding: 8px 12px;
+            color: var(--green-950);
+            background: var(--green-100);
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .button {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 0;
+            border-radius: 7px;
+            padding: 0 16px;
+            color: #ffffff;
+            background: var(--green-900);
+            font: inherit;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button.secondary {
+            color: var(--green-950);
+            background: #ffffff;
+            border: 1px solid var(--line);
+        }
+
+        .button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        details {
+            padding: 0 18px 18px;
+        }
+
+        summary {
+            width: max-content;
+            margin-top: 16px;
+            color: var(--green-900);
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .meta-grid,
+        .metric-grid,
+        .extra-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .meta-grid {
+            grid-template-columns: repeat(4, minmax(160px, 1fr));
+            margin: 16px 0;
+        }
+
+        .meta-item,
+        .metric-value,
+        .item-value {
+            padding: 12px;
+            background: var(--green-50);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .meta-item span,
+        .metric-value span,
+        .item-value span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .meta-item strong,
+        .metric-value strong,
+        .item-value strong {
+            display: block;
+            margin-top: 6px;
+            color: #000000;
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+        .section-title {
+            margin: 22px 0 12px;
+            color: var(--green-950);
+            font-size: 20px;
+        }
+
+        .metric-block {
+            margin-top: 12px;
+            padding: 16px;
+            background: #fbfdfb;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .metric-block h4 {
+            margin: 0 0 12px;
+            color: var(--green-950);
+            font-size: 17px;
+        }
+
+        .metric-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .set-block {
+            display: grid;
+            gap: 10px;
+            padding: 12px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .set-block h5 {
+            margin: 0;
+            color: var(--green-950);
+            font-size: 15px;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .item-value {
+            min-height: 62px;
+            padding: 10px;
+        }
+
+        .average-badge {
+            display: flex;
+            justify-content: center;
+            margin-top: 4px;
+        }
+
+        .average-pill {
+            min-width: 150px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 18px;
+            color: #ffffff;
+            background: #08a33a;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .extra-grid {
+            grid-template-columns: repeat(3, minmax(180px, 1fr));
+            margin-top: 16px;
+        }
+
+        .message {
+            padding: 34px;
+            color: var(--muted);
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font-weight: 800;
+        }
+
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: grid;
+            justify-items: end;
+            background: rgba(0, 0, 0, 0.42);
+        }
+
+        .drawer {
+            width: min(980px, 100%);
+            height: 100vh;
+            overflow: auto;
+            background: var(--green-50);
+            box-shadow: -16px 0 42px rgba(0, 0, 0, 0.2);
+        }
+
+        .drawer-head {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 18px 22px;
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .drawer-head h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .edit-form {
+            padding: 22px;
+        }
+
+        .edit-panel {
+            margin-bottom: 16px;
+            padding: 18px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .edit-panel h3 {
+            margin: 0 0 14px;
+            color: var(--green-950);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        label {
+            display: grid;
+            gap: 7px;
+            color: #263128;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            min-height: 42px;
+            border: 1px solid var(--green-900);
+            border-radius: 5px;
+            padding: 9px 11px;
+            color: var(--text);
+            background: #ffffff;
+            font: inherit;
+        }
+
+        textarea {
+            min-height: 94px;
+            resize: vertical;
+        }
+
+        input[readonly] {
+            border-color: var(--line);
+            background: #f6faf7;
+        }
+
+        .edit-metric {
+            margin-top: 14px;
+            padding: 16px;
+            background: #fbfdfb;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .edit-metric h4 {
+            margin: 0 0 12px;
+            color: var(--green-950);
+        }
+
+        .edit-set-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .edit-set {
+            display: grid;
+            gap: 10px;
+            padding: 12px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .edit-set h5 {
+            margin: 0;
+            color: var(--green-950);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .input-grid label {
+            gap: 5px;
+            color: var(--green-900);
+            font-size: 12px;
+        }
+
+        .input-grid input {
+            padding: 9px 11px;
+            text-align: left;
+        }
+
+        .drawer-actions {
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 14px 22px;
+            background: linear-gradient(180deg, rgba(247,251,248,0), var(--green-50) 30%);
+        }
+
+        .toast {
+            margin: 0 22px 18px;
+            padding: 12px 14px;
+            border-radius: 7px;
+            font-weight: 800;
+        }
+
+        .toast.success {
+            color: var(--green-950);
+            background: var(--green-100);
+        }
+
+        .toast.error {
+            color: var(--danger);
+            background: #fff0ed;
+        }
+
+        [hidden] { display: none !important; }
+
+        @media (max-width: 1020px) {
+            .report-head,
+            .meta-grid,
+            .metric-grid,
+            .form-grid,
+            .edit-set-grid,
+            .extra-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-actions {
+                justify-content: flex-start;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 20px, 560px);
+                margin-top: 20px;
+            }
+
+            .toolbar {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                padding: 14px 12px;
+            }
+
+            .topbar h1 {
+                font-size: 20px;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="back" href="/investigator_dashboard/" aria-label="Back to dashboard">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        </a>
+        <h1>Manage Reports</h1>
+        <span aria-hidden="true"></span>
+    </header>
+
+    <main class="page">
+        <section class="toolbar">
+            <input id="search" type="search" placeholder="Search by district, month, week, year">
+            <span class="count" id="count">Loading...</span>
+        </section>
+
+        <section class="report-list" id="reportList" hidden></section>
+        <div id="empty" class="message" hidden>No weekly report records found.</div>
+        <div id="error" class="message" hidden>Unable to load weekly report records.</div>
+    </main>
+
+    <section class="drawer-backdrop" id="drawerBackdrop" hidden>
+        <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+            <header class="drawer-head">
+                <h2 id="drawerTitle">Edit Weekly Report</h2>
+                <button class="icon-button" type="button" id="closeDrawer" aria-label="Close editor">
+                    <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </header>
+            <form class="edit-form" id="editForm">
+                {% csrf_token %}
+                <div id="editBody"></div>
+                <div class="toast success" id="successToast" hidden>Report updated successfully.</div>
+                <div class="toast error" id="errorToast" hidden>Unable to update report.</div>
+                <div class="drawer-actions">
+                    <button class="button secondary" type="button" id="cancelEdit">Cancel</button>
+                    <button class="button" type="submit" id="saveEdit">Save Changes</button>
+                </div>
+            </form>
+        </aside>
+    </section>
+
+    <script>
+        const reportList = document.getElementById('reportList');
+        const count = document.getElementById('count');
+        const search = document.getElementById('search');
+        const empty = document.getElementById('empty');
+        const error = document.getElementById('error');
+        const drawerBackdrop = document.getElementById('drawerBackdrop');
+        const closeDrawer = document.getElementById('closeDrawer');
+        const cancelEdit = document.getElementById('cancelEdit');
+        const editForm = document.getElementById('editForm');
+        const editBody = document.getElementById('editBody');
+        const saveEdit = document.getElementById('saveEdit');
+        const successToast = document.getElementById('successToast');
+        const errorToast = document.getElementById('errorToast');
+        let records = [];
+        let editingRecord = null;
+
+        const reportSections = [
+            {
+                title: 'Sucking Pest Infestation',
+                metrics: [
+                    { label: 'Jassid / 3 leaves / plant', sets: prefixes('jassid') },
+                    { label: 'Whitefly / 3 leaves / plant', sets: prefixes('whitefly') },
+                    { label: 'Thrips / 3 leaves / plant', sets: prefixes('thrips') }
+                ]
+            },
+            {
+                title: 'Pink Bollworm Infestation',
+                metrics: [
+                    { label: '% Flowers infestation', sets: prefixes('flowers') },
+                    { label: '% Green boll infestation', sets: prefixes('green') },
+                    { label: '% Locule damage', sets: prefixes('locule') },
+                    { label: '% Open boll infestation', sets: prefixes('open_ball') },
+                    { label: 'Average pheromone trap catches per trap/week', sets: prefixes('pheromone') }
+                ]
+            },
+            {
+                title: 'Boll Rot Incidence',
+                metrics: [
+                    { label: '% Incidence', sets: prefixes('incidence') },
+                    {
+                        label: '% Locular damage',
+                        sets: [
+                            { label: 'IRM', prefix: 'locular_damage_irm', bareItems: true },
+                            { label: 'Non-IRM', prefix: 'locular_damage_nonirm', bareItems: true }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function prefixes(name) {
+            return [
+                { label: 'IRM', prefix: `${name}_irm` },
+                { label: 'Non-IRM', prefix: `${name}_nonirm` }
+            ];
+        }
+
+        function itemName(set, index) {
+            return set.bareItems ? `${set.prefix}${index}` : `${set.prefix}_item${index}`;
+        }
+
+        function averageName(set) {
+            return `${set.prefix}_average`;
+        }
+
+        function fieldLabel(number) {
+            return `Field ${number} (${number <= 5 ? 'Fixed' : 'Random'})`;
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            }[char]));
+        }
+
+        function labelFor(key) {
+            return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+        }
+
+        function numberText(value) {
+            if (value === undefined || value === null || value === '') return '-';
+            const numeric = Number(value);
+            if (Number.isFinite(numeric)) return numeric.toFixed(2).replace(/\.00$/, '');
+            return String(value);
+        }
+
+        function matches(record, query) {
+            if (!query) return true;
+            return ['id', 'district', 'month', 'year', 'week', 'standard_week', 'pest_date', 'date_field']
+                .some((key) => String(record[key] || '').toLowerCase().includes(query));
+        }
+
+        function metaItems(record) {
+            return [
+                ['Report ID', `#${record.id}`],
+                ['Date', record.date_field || record.pest_date],
+                ['Week', record.week],
+                ['Standard Week', record.standard_week],
+                ['Month', record.month],
+                ['Year', record.year],
+                ['District', record.district],
+                ['Investigator', record.name_of_investigator || record.user_id]
+            ];
+        }
+
+        function reportCard(record) {
+            return `
+                <article class="report-card">
+                    <div class="report-head">
+                        <div><span class="head-label">Report</span><span class="tag">#${escapeHtml(record.id)}</span></div>
+                        <div><span class="head-label">District</span><span class="head-value">${escapeHtml(record.district || '-')}</span></div>
+                        <div><span class="head-label">Week</span><span class="head-value">${escapeHtml(record.standard_week || record.week || '-')}</span></div>
+                        <div><span class="head-label">Month / Year</span><span class="head-value">${escapeHtml([record.month, record.year].filter(Boolean).join(' ') || '-')}</span></div>
+                        <div class="card-actions">
+                            <button class="button secondary" type="button" data-view-id="${escapeHtml(record.id)}">View Full Data</button>
+                            <button class="button" type="button" data-edit-id="${escapeHtml(record.id)}">
+                                <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                    <details id="details-${escapeHtml(record.id)}">
+                        <summary>View Details</summary>
+                        ${detailsMarkup(record)}
+                    </details>
+                </article>
+            `;
+        }
+
+        function detailsMarkup(record) {
+            return `
+                <div class="meta-grid">
+                    ${metaItems(record).map(([label, value]) => metaBox(label, value)).join('')}
+                </div>
+                ${reportSections.map(section => `
+                    <h3 class="section-title">${escapeHtml(section.title)}</h3>
+                    ${section.metrics.map(metric => metricMarkup(record, metric)).join('')}
+                `).join('')}
+                <div class="extra-grid">
+                    ${metaBox('Number of Messages', record.number_of_message)}
+                    ${metaBox('Delivered to Farmers', record.delivered_to_number_of_farmer)}
+                    ${metaBox('Relevant Information', record.any_relevant_information)}
+                </div>
+            `;
+        }
+
+        function metricMarkup(record, metric) {
+            return `
+                <article class="metric-block">
+                    <h4>${escapeHtml(metric.label)}</h4>
+                    <div class="metric-grid">
+                        ${metric.sets.map(set => setMarkup(record, set)).join('')}
+                    </div>
+                </article>
+            `;
+        }
+
+        function setMarkup(record, set) {
+            const average = record[averageName(set)];
+            const items = Array.from({ length: 10 }, (_, index) => {
+                const number = index + 1;
+                return itemBox(number, record[itemName(set, number)]);
+            }).join('');
+
+            return `
+                <div class="set-block">
+                    <h5>${escapeHtml(set.label)}</h5>
+                    <div class="items-grid">${items}</div>
+                    <div class="average-badge">
+                        <span class="average-pill">Average: ${escapeHtml(numberText(average === null || average === undefined ? 0 : average))}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function metaBox(label, value) {
+            return `
+                <div class="meta-item">
+                    <span>${escapeHtml(label)}</span>
+                    <strong>${escapeHtml(value || value === 0 ? value : '-')}</strong>
+                </div>
+            `;
+        }
+
+        function itemBox(number, value) {
+            return `
+                <div class="item-value">
+                    <span>${escapeHtml(fieldLabel(number))}</span>
+                    <strong>${escapeHtml(numberText(value))}</strong>
+                </div>
+            `;
+        }
+
+        function render() {
+            const query = search.value.trim().toLowerCase();
+            const visible = records.filter((record) => matches(record, query));
+            count.textContent = `${visible.length} report record${visible.length === 1 ? '' : 's'}`;
+            reportList.innerHTML = visible.map(reportCard).join('');
+            reportList.hidden = !visible.length;
+            empty.hidden = Boolean(visible.length);
+        }
+
+        async function load() {
+            try {
+                const response = await fetch('/api/weeklyreports_entries/', { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) throw new Error(`Weekly report API ${response.status}`);
+                records = await response.json();
+                render();
+            } catch (err) {
+                count.textContent = 'Could not load';
+                error.hidden = false;
+                console.error(err);
+            }
+        }
+
+        function getCookie(name) {
+            const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            if (input && input.value) return input.value;
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        function openEditor(record) {
+            editingRecord = record;
+            successToast.hidden = true;
+            errorToast.hidden = true;
+            editBody.innerHTML = editorMarkup(record);
+            drawerBackdrop.hidden = false;
+            document.body.style.overflow = 'hidden';
+            document.querySelectorAll('.edit-observation').forEach(input => {
+                input.addEventListener('input', () => updateAverage(input.dataset.average));
+            });
+        }
+
+        function closeEditor() {
+            drawerBackdrop.hidden = true;
+            document.body.style.overflow = '';
+            editingRecord = null;
+        }
+
+        function editorMarkup(record) {
+            return `
+                <section class="edit-panel">
+                    <h3>Report Details</h3>
+                    <div class="form-grid">
+                        ${inputField('date_field', 'Date', record.date_field, 'date')}
+                        ${inputField('pest_date', 'Pest Date', record.pest_date, 'date')}
+                        ${inputField('week', 'Week', record.week)}
+                        ${inputField('standard_week', 'Standard Week', record.standard_week)}
+                        ${inputField('month', 'Month', record.month)}
+                        ${inputField('year', 'Year', record.year)}
+                        ${inputField('district', 'District', record.district)}
+                        ${inputField('name_of_investigator', 'Investigator', record.name_of_investigator || record.user_id)}
+                    </div>
+                </section>
+                <section class="edit-panel">
+                    <h3>Field Data</h3>
+                    ${reportSections.map(section => `
+                        <h3 class="section-title">${escapeHtml(section.title)}</h3>
+                        ${section.metrics.map(metric => editMetricMarkup(record, metric)).join('')}
+                    `).join('')}
+                </section>
+                <section class="edit-panel">
+                    <h3>Additional Information</h3>
+                    <div class="form-grid">
+                        ${inputField('number_of_message', 'Number of Messages', record.number_of_message, 'number')}
+                        ${inputField('delivered_to_number_of_farmer', 'Delivered to Farmers', record.delivered_to_number_of_farmer, 'number')}
+                        <label style="grid-column: 1 / -1;">
+                            Relevant Information
+                            <textarea name="any_relevant_information">${escapeHtml(record.any_relevant_information || '')}</textarea>
+                        </label>
+                    </div>
+                </section>
+            `;
+        }
+
+        function editMetricMarkup(record, metric) {
+            return `
+                <article class="edit-metric">
+                    <h4>${escapeHtml(metric.label)}</h4>
+                    <div class="edit-set-grid">
+                        ${metric.sets.map(set => editSetMarkup(record, set)).join('')}
+                    </div>
+                </article>
+            `;
+        }
+
+        function editSetMarkup(record, set) {
+            const average = averageName(set);
+            const fields = Array.from({ length: 10 }, (_, index) => {
+                const number = index + 1;
+                const name = itemName(set, number);
+                return `
+                    <label>
+                        ${fieldLabel(number)}
+                        <input class="edit-observation" type="number" min="0" step="1" name="${escapeHtml(name)}" value="${escapeHtml(record[name] ?? '')}" data-average="${escapeHtml(average)}">
+                    </label>
+                `;
+            }).join('');
+
+            return `
+                <div class="edit-set">
+                    <h5>${escapeHtml(set.label)}</h5>
+                    <div class="input-grid">${fields}</div>
+                    <input type="hidden" name="${escapeHtml(average)}" value="${escapeHtml(record[average] ?? '')}" data-average-field="${escapeHtml(average)}">
+                    <div class="average-badge">
+                        <span class="average-pill" data-average-display="${escapeHtml(average)}">Average: ${escapeHtml(numberText(record[average] ?? 0))}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function inputField(name, label, value, type = 'text', readonly = false) {
+            const step = type === 'number' ? ' step="0.01"' : '';
+            const read = readonly ? ' readonly' : '';
+            return `
+                <label>
+                    ${escapeHtml(label)}
+                    <input type="${escapeHtml(type)}" name="${escapeHtml(name)}" value="${escapeHtml(value ?? '')}"${step}${read}>
+                </label>
+            `;
+        }
+
+        function updateAverage(name) {
+            const values = Array.from(editForm.querySelectorAll(`[data-average="${name}"]`))
+                .map(input => input.value.trim())
+                .filter(value => value !== '')
+                .map(Number)
+                .filter(value => Number.isFinite(value));
+            const averageField = editForm.querySelector(`[name="${name}"]`);
+            const averageDisplay = editForm.querySelector(`[data-average-display="${name}"]`);
+            if (!averageField) return;
+            const averageValue = values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(2) : '0.00';
+            averageField.value = values.length ? averageValue : '';
+            if (averageDisplay) averageDisplay.textContent = `Average: ${averageValue}`;
+        }
+
+        function collectEditPayload() {
+            reportSections.forEach(section => {
+                section.metrics.forEach(metric => {
+                    metric.sets.forEach(set => updateAverage(averageName(set)));
+                });
+            });
+
+            const formData = new FormData(editForm);
+            const payload = {};
+            for (const [key, value] of formData.entries()) {
+                if (key === 'csrfmiddlewaretoken') continue;
+                const cleanValue = typeof value === 'string' ? value.trim() : value;
+                if (cleanValue === '') {
+                    payload[key] = null;
+                } else if (isNumericField(key)) {
+                    payload[key] = Number(cleanValue);
+                } else {
+                    payload[key] = cleanValue;
+                }
+            }
+            return payload;
+        }
+
+        function isNumericField(name) {
+            return /(_item\d+|\d+|_average|number_of_message|delivered_to_number_of_farmer)$/.test(name);
+        }
+
+        reportList.addEventListener('click', event => {
+            const viewButton = event.target.closest('[data-view-id]');
+            const editButton = event.target.closest('[data-edit-id]');
+
+            if (viewButton) {
+                const details = document.getElementById(`details-${viewButton.dataset.viewId}`);
+                if (details) details.open = true;
+            }
+
+            if (editButton) {
+                const record = records.find(item => String(item.id) === String(editButton.dataset.editId));
+                if (record) openEditor(record);
+            }
+        });
+
+        editForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!editingRecord) return;
+            saveEdit.disabled = true;
+            successToast.hidden = true;
+            errorToast.hidden = true;
+
+            try {
+                const response = await fetch(`/api/managereports_update/${encodeURIComponent(editingRecord.id)}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(collectEditPayload())
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(JSON.stringify(data));
+                records = records.map(record => String(record.id) === String(data.id) ? data : record);
+                editingRecord = data;
+                editBody.innerHTML = editorMarkup(data);
+                document.querySelectorAll('.edit-observation').forEach(input => {
+                    input.addEventListener('input', () => updateAverage(input.dataset.average));
+                });
+                render();
+                successToast.hidden = false;
+            } catch (err) {
+                errorToast.hidden = false;
+                console.error(err);
+            } finally {
+                saveEdit.disabled = false;
+            }
+        });
+
+        closeDrawer.addEventListener('click', closeEditor);
+        cancelEdit.addEventListener('click', closeEditor);
+        drawerBackdrop.addEventListener('click', event => {
+            if (event.target === drawerBackdrop) closeEditor();
+        });
+        search.addEventListener('input', render);
+        load();
+    </script>
+    {% include "includes/accessibility_panel.html" %}
+</body>
+</html>

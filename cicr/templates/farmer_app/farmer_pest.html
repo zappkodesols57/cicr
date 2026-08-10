@@ -45,11 +45,6 @@
 {% endblock %}
 
 {% block content %}
-<div class="toolbar">
-    <span id="recordCount">Loading pest data...</span>
-    <span>Source: /api/pest_incidence_data/</span>
-</div>
-
 <section id="loading" class="state-grid" aria-label="Loading pest data">
     <div class="skeleton"></div>
     <div class="skeleton"></div>
@@ -67,7 +62,6 @@
     const loading = document.getElementById('loading');
     const emptyState = document.getElementById('emptyState');
     const errorState = document.getElementById('errorState');
-    const recordCount = document.getElementById('recordCount');
 
     function firstValue(record, keys) {
         for (const key of keys) {
@@ -95,6 +89,20 @@
         return String(value);
     }
 
+    function labelFor(key) {
+        return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+    }
+
+    function averageValues(record) {
+        return Object.entries(record)
+            .filter(([key, value]) => key.endsWith('_average') && value !== null && value !== undefined && value !== '')
+            .slice(0, 4)
+            .reduce((values, [key, value]) => {
+                values[labelFor(key)] = value;
+                return values;
+            }, {});
+    }
+
     function normalize(record, index) {
         const district = firstValue(record, ['district']) || 'CICR IRM';
         const week = firstValue(record, ['standard_week', 'week']);
@@ -104,12 +112,7 @@
             id: firstValue(record, ['id', 'pk']) || String(index + 1),
             title: [district, week].filter(Boolean).join(' - ') || `Pest Record ${index + 1}`,
             meta: [month, year].filter(Boolean).join(' '),
-            values: {
-                'Jassid IRM': record.jassid_irm_average,
-                'Whitefly IRM': record.whitefly_irm_average,
-                'Thrips IRM': record.thrips_irm_average,
-                'Incidence IRM': record.incidence_irm_average,
-            },
+            values: averageValues(record),
         };
     }
 
@@ -142,18 +145,15 @@
 
             loading.hidden = true;
             if (!items.length) {
-                recordCount.textContent = '0 pest records';
                 emptyState.hidden = false;
                 return;
             }
 
             grid.innerHTML = items.map(cardTemplate).join('');
-            recordCount.textContent = `${items.length} pest records`;
             grid.hidden = false;
         } catch (error) {
             loading.hidden = true;
             errorState.hidden = false;
-            recordCount.textContent = 'Could not load pest data';
             console.error('Pest API failed:', error);
         }
     }

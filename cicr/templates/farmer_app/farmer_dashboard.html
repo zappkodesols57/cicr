@@ -104,7 +104,6 @@
         <div class="slides" id="slides">
             <article class="slide">
                 <div class="image-fallback">Loading dashboard media...</div>
-                <span class="pill">CICR IRM</span>
             </article>
         </div>
     </div>
@@ -167,14 +166,16 @@
     }
 
     function slideTemplate(item) {
+        const alt = item.label || 'Dashboard media';
         const image = item.url
-            ? `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.label)}" onerror="this.remove(); this.parentElement.querySelector('.image-fallback').hidden=false;">`
+            ? `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(alt)}" onerror="this.remove(); this.parentElement.querySelector('.image-fallback').hidden=false;">`
             : '';
+        const label = item.label ? `<span class="pill">${escapeHtml(item.label)}</span>` : '';
         return `
             <article class="slide">
                 ${image}
-                <div class="image-fallback" ${item.url ? 'hidden' : ''}>${escapeHtml(item.label)}</div>
-                <span class="pill">${escapeHtml(item.label)}</span>
+                <div class="image-fallback" ${item.url ? 'hidden' : ''}>${escapeHtml(item.label || 'Dashboard media')}</div>
+                ${label}
             </article>
         `;
     }
@@ -189,7 +190,7 @@
                 const banners = Array.isArray(payload) ? payload : (payload.banners || []);
                 banners.forEach((banner) => {
                     const url = absoluteUrl(banner.image_url || banner.image);
-                    if (url) items.push({ url, label: 'Pink Bollworm' });
+                    if (url) items.push({ url, label: '' });
                 });
             }
         } catch (error) {

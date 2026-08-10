@@ -1,6 +1,459 @@
-{% extends "admin/admin_base.html" %}
-{% block content %}
-<section class="home-section">
-    <div class="text">Welcome to the Investigator dashboard</div>
-</section>
-{% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigator Dashboard | CICR IRM</title>
+    <style>
+        :root {
+            --green-950: #003d0d;
+            --green-900: #00720d;
+            --green-800: #07831a;
+            --green-100: #e9f6ec;
+            --green-50: #f7fbf8;
+            --line: #dfe9e1;
+            --text: #131a14;
+            --muted: #647168;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 18px clamp(24px, 4vw, 54px);
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 0;
+        }
+
+        .brand img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .brand strong {
+            display: block;
+            font-size: 22px;
+            line-height: 1.1;
+        }
+
+        .brand span {
+            display: block;
+            margin-top: 4px;
+            color: rgba(255,255,255,0.72);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .logout {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 50%;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page {
+            width: min(1180px, calc(100% - 40px));
+            margin: 28px auto 34px;
+        }
+
+        .welcome {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 22px;
+            padding: 24px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(19, 26, 20, 0.07);
+        }
+
+        .welcome h1 {
+            margin: 0;
+            color: var(--green-950);
+            font-size: clamp(28px, 4vw, 44px);
+            line-height: 1.1;
+        }
+
+        .welcome p {
+            margin: 8px 0 0;
+            color: var(--muted);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .status-pill {
+            padding: 10px 14px;
+            color: var(--green-900);
+            background: var(--green-100);
+            border: 1px solid #c7e6cc;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+            margin-bottom: 24px;
+        }
+
+        .panel {
+            padding: 22px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(19, 26, 20, 0.07);
+        }
+
+        .panel h2 {
+            margin: 0 0 16px;
+            color: #000000;
+            font-size: 20px;
+            line-height: 1.25;
+        }
+
+        .chart {
+            width: 100%;
+            height: 238px;
+            display: block;
+            overflow: visible;
+        }
+
+        .axis-label {
+            fill: #111111;
+            font-size: 11px;
+        }
+
+        .grid-line {
+            stroke: #d5ddd7;
+            stroke-width: 1;
+        }
+
+        .month-line {
+            stroke: #c8d3cc;
+            stroke-dasharray: 5 5;
+        }
+
+        .series-line {
+            fill: none;
+            stroke: #4fbd5d;
+            stroke-width: 2.5;
+        }
+
+        .series-point {
+            fill: #4fbd5d;
+            stroke: #ffffff;
+            stroke-width: 1.5;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .action-card {
+            min-height: 172px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 22px;
+            color: #ffffff;
+            text-decoration: none;
+            background: var(--green-900);
+            border-radius: 10px;
+            box-shadow: 0 16px 26px rgba(0, 114, 13, 0.22);
+        }
+
+        .action-card.wide {
+            grid-column: span 2;
+            min-height: 86px;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .action-card h3 {
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.35;
+        }
+
+        .action-card .icon {
+            width: 34px;
+            height: 34px;
+        }
+
+        .arrow {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            align-self: flex-end;
+            color: #000000;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+
+        .footer {
+            margin-top: 26px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .message {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 1000px) {
+            .chart-grid,
+            .action-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 680px) {
+            .topbar {
+                min-height: 82px;
+            }
+
+            .brand img {
+                display: none;
+            }
+
+            .page {
+                width: min(100% - 20px, 560px);
+                margin-top: 0;
+            }
+
+            .welcome {
+                grid-template-columns: 1fr;
+                border-radius: 0 0 10px 10px;
+            }
+
+            .chart-grid,
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-card.wide {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    {{ investigator_id|json_script:"investigator-id" }}
+    {{ investigator_district|json_script:"investigator-district" }}
+
+    <header class="topbar">
+        <div class="brand">
+            <img src="{% static 'images/CICR_logo.png' %}" alt="CICR IRM">
+            <div>
+                <strong>Dashboard</strong>
+                <span>CICR - IRM Investigator Panel</span>
+            </div>
+        </div>
+        <a class="logout" href="/logout_admin/" aria-label="Logout">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+        </a>
+    </header>
+
+    <main class="page">
+        <section class="welcome">
+            <div>
+                <h1>Welcome, {{ investigator_id }}</h1>
+                <p>{{ investigator_district|default:"Investigator" }}</p>
+            </div>
+            <span class="status-pill">Signed in</span>
+        </section>
+
+        <section class="chart-grid" aria-label="Investigator activity charts">
+            <article class="panel">
+                <h2>Basic Survey</h2>
+                <svg class="chart" id="basicChart" viewBox="0 0 620 238" role="img" aria-label="Basic survey chart"></svg>
+                <div class="message" id="basicMeta">Loading basic survey data...</div>
+            </article>
+
+            <article class="panel">
+                <h2>Weekly Report</h2>
+                <svg class="chart" id="weeklyChart" viewBox="0 0 620 238" role="img" aria-label="Weekly report chart"></svg>
+                <div class="message" id="weeklyMeta">Loading weekly report data...</div>
+            </article>
+        </section>
+
+        <section class="action-grid" aria-label="Investigator shortcuts">
+            <a class="action-card" href="/investigator/basic-survey/">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M3 3h8v8H3z"/><path d="M13 3h8v5h-8z"/><path d="M13 10h8v11h-8z"/><path d="M3 13h8v8H3z"/></svg>
+                <h3>Basic Survey</h3>
+                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </a>
+
+            <a class="action-card" href="/investigator/weekly-report/">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>
+                <h3>Weekly progress report</h3>
+                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </a>
+
+            <a class="action-card" href="/investigator/monthly-progress/">
+                <svg class="icon" viewBox="0 0 24 24"><path d="m4 17 5-5 4 4 7-8"/><path d="M20 8v6"/><path d="M14 8h6"/></svg>
+                <h3>Monthly progress report</h3>
+                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </a>
+
+            <a class="action-card" href="/investigator/yearly-progress/">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5"/><rect x="12" y="8" width="3" height="8"/><rect x="17" y="5" width="3" height="11"/></svg>
+                <h3>Yearly progress report</h3>
+                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </a>
+
+            <a class="action-card wide" href="/investigator/manage-surveys/">
+                <h3>Manage Surveys</h3>
+                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </a>
+
+            <a class="action-card wide" href="/investigator/manage-reports/">
+                <h3>Manage Reports</h3>
+                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </a>
+        </section>
+
+        <div class="footer">CICR - IRM Developed By Zappkode Solutions.</div>
+    </main>
+
+    <script>
+        const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        function monthIndex(record, keys) {
+            for (const key of keys) {
+                const value = record[key];
+                if (!value) continue;
+                const date = new Date(value);
+                if (!Number.isNaN(date.getTime())) return date.getMonth();
+                const text = String(value).slice(0, 3).toLowerCase();
+                const idx = MONTHS.findIndex((month) => month.toLowerCase() === text);
+                if (idx >= 0) return idx;
+            }
+            return -1;
+        }
+
+        function monthlyCounts(records, dateKeys) {
+            const counts = Array(12).fill(0);
+            records.forEach((record) => {
+                const idx = monthIndex(record, dateKeys);
+                if (idx >= 0) counts[idx] += 1;
+            });
+            return counts;
+        }
+
+        function fetchList(url) {
+            return fetch(url, { headers: { 'Accept': 'application/json' } })
+                .then((response) => {
+                    if (!response.ok) throw new Error(`${url} ${response.status}`);
+                    return response.json();
+                })
+                .then((payload) => Array.isArray(payload) ? payload : (payload.results || payload.data || []));
+        }
+
+        function renderChart(svg, values) {
+            const width = 620;
+            const height = 238;
+            const left = 44;
+            const right = 18;
+            const top = 18;
+            const bottom = 34;
+            const plotWidth = width - left - right;
+            const plotHeight = height - top - bottom;
+            const max = Math.max(10, ...values);
+            const x = (index) => left + (plotWidth / 11) * index;
+            const y = (value) => top + plotHeight - (value / max) * plotHeight;
+            const points = values.map((value, index) => `${x(index)},${y(value)}`).join(' ');
+            const yTicks = [0, Math.round(max / 2), max];
+
+            svg.innerHTML = `
+                ${yTicks.map((tick) => `<line class="grid-line" x1="${left}" y1="${y(tick)}" x2="${width - right}" y2="${y(tick)}"></line><text class="axis-label" x="8" y="${y(tick) + 4}">${tick}</text>`).join('')}
+                ${MONTHS.map((month, index) => `<line class="month-line" x1="${x(index)}" y1="${top}" x2="${x(index)}" y2="${top + plotHeight}"></line><text class="axis-label" x="${x(index) - 10}" y="${height - 8}">${month}</text>`).join('')}
+                <polyline class="series-line" points="${points}"></polyline>
+                ${values.map((value, index) => `<circle class="series-point" cx="${x(index)}" cy="${y(value)}" r="5"></circle>`).join('')}
+            `;
+        }
+
+        async function loadDashboard() {
+            const basicSvg = document.getElementById('basicChart');
+            const weeklySvg = document.getElementById('weeklyChart');
+            const basicMeta = document.getElementById('basicMeta');
+            const weeklyMeta = document.getElementById('weeklyMeta');
+
+            try {
+                const basicRows = await fetchList('/api/basic_servey_info/');
+                renderChart(basicSvg, monthlyCounts(basicRows, ['servey_date', 'date_of_sowing', 'date_field', 'month']));
+                basicMeta.textContent = `${basicRows.length} basic survey record${basicRows.length === 1 ? '' : 's'}`;
+            } catch (error) {
+                renderChart(basicSvg, Array(12).fill(0));
+                basicMeta.textContent = 'Basic survey data unavailable';
+                console.error(error);
+            }
+
+            try {
+                const weeklyRows = await fetchList('/api/weeklyreports_entries/');
+                renderChart(weeklySvg, monthlyCounts(weeklyRows, ['pest_date', 'date_field', 'month']));
+                weeklyMeta.textContent = `${weeklyRows.length} weekly report record${weeklyRows.length === 1 ? '' : 's'}`;
+            } catch (error) {
+                renderChart(weeklySvg, Array(12).fill(0));
+                weeklyMeta.textContent = 'Weekly report data unavailable';
+                console.error(error);
+            }
+        }
+
+        loadDashboard();
+    </script>
+    {% include "includes/accessibility_panel.html" %}
+</body>
+</html>

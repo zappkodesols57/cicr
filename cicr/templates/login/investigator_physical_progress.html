@@ -1,0 +1,539 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Progress Report | CICR IRM</title>
+    <style>
+        :root {
+            --green-950: #003d0d;
+            --green-900: #00720d;
+            --green-800: #07831a;
+            --green-100: #e9f6ec;
+            --green-50: #f7fbf8;
+            --line: #dbe8dd;
+            --text: #111811;
+            --muted: #657168;
+            --danger: #aa1f1f;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px clamp(20px, 4vw, 54px);
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .back {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.24);
+            border-radius: 50%;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page {
+            width: min(980px, calc(100% - 40px));
+            margin: 28px auto 38px;
+        }
+
+        .stepper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 22px;
+            padding: 16px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 12px 26px rgba(17, 24, 17, 0.07);
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--muted);
+            font-weight: 800;
+        }
+
+        .step::before {
+            content: "";
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            background: #9ca39e;
+            border-radius: 50%;
+        }
+
+        .step.active,
+        .step.done {
+            color: var(--green-950);
+        }
+
+        .step.active::before,
+        .step.done::before {
+            background: var(--green-900);
+        }
+
+        .card {
+            padding: clamp(22px, 3vw, 34px);
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(17, 24, 17, 0.08);
+        }
+
+        .card h2 {
+            margin: 0 0 24px;
+            color: #000000;
+            font-size: 28px;
+            line-height: 1.2;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            display: block;
+            margin: 0 0 8px;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            color: #111111;
+            background: #ffffff;
+            border: 1.6px solid #1a9a35;
+            border-radius: 5px;
+            outline: none;
+            font: inherit;
+            font-size: 15px;
+        }
+
+        .field textarea {
+            min-height: 112px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--green-900);
+            box-shadow: 0 0 0 4px rgba(0, 114, 13, 0.1);
+        }
+
+        .section-label {
+            margin: 8px 0 0;
+            color: #000000;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .button {
+            min-width: 128px;
+            min-height: 48px;
+            padding: 12px 22px;
+            color: #ffffff;
+            background: var(--green-900);
+            border: 0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button.secondary {
+            color: var(--green-900);
+            background: var(--green-100);
+            border: 1px solid #c4e5ca;
+        }
+
+        .button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .review {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .review-item {
+            padding: 16px;
+            background: var(--green-50);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .review-item strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .message {
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-weight: 800;
+        }
+
+        .message.success {
+            color: var(--green-950);
+            background: var(--green-100);
+            border: 1px solid #bfdfc5;
+        }
+
+        .message.error {
+            color: var(--danger);
+            background: #fff2f2;
+            border: 1px solid #f0c6c6;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 760px) {
+            .page {
+                width: min(100% - 20px, 560px);
+                margin-top: 0;
+            }
+
+            .form-grid,
+            .review {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                border-radius: 0 0 10px 10px;
+            }
+
+            .actions {
+                justify-content: stretch;
+            }
+
+            .button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    {{ investigator_id|json_script:"investigator-id" }}
+
+    <header class="topbar">
+        <a class="back" href="/investigator/monthly-progress/" aria-label="Back to monthly progress">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        </a>
+        <h1>Physical Progress Report</h1>
+        <span aria-hidden="true"></span>
+    </header>
+
+    <main class="page">
+        <nav class="stepper" aria-label="Physical progress steps">
+            <span class="step active" id="stepLabel1">Details</span>
+            <span class="step" id="stepLabel2">Confirm</span>
+        </nav>
+
+        <form id="progressForm">
+            <section class="card" data-panel="1">
+                <h2>A . Physical Progress</h2>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="date_field">Date</label>
+                        <input id="date_field" name="date_field" type="date" required>
+                    </div>
+                    <div class="field">
+                        <label for="district">District</label>
+                        <select id="district" name="district" required>
+                            <option value="">Loading districts...</option>
+                        </select>
+                    </div>
+                    <div class="full section-label">Critical Input Distributed</div>
+                    <div class="field">
+                        <label for="pheromone_traps">Pheromone traps No</label>
+                        <input id="pheromone_traps" name="pheromone_traps" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="splat">SPLAT (Pheromone Lure) (kg)</label>
+                        <input id="splat" name="splat" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="pb_rope">PB rope (Number)</label>
+                        <input id="pb_rope" name="pb_rope" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="neem_insecticides">Neem based insecticides (L)</label>
+                        <input id="neem_insecticides" name="neem_insecticides" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="flonicamid">Flonicamid 50 WG (kg)</label>
+                        <input id="flonicamid" name="flonicamid" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="trichocards">Trichocards (Parasitoid Trichogramma)</label>
+                        <input id="trichocards" name="trichocards" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="quinalphos">Quinalphos 20% AF (L)</label>
+                        <input id="quinalphos" name="quinalphos" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="chlorpyriphos">Chlorpyriphos 20% EC (L)</label>
+                        <input id="chlorpyriphos" name="chlorpyriphos" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="profenophos">Profenophos 50%EC (L)</label>
+                        <input id="profenophos" name="profenophos" type="text">
+                    </div>
+                    <div class="field">
+                        <label for="additional_info">Additional Information</label>
+                        <textarea id="additional_info" name="additional_info"></textarea>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="button" type="button" data-next>Continue</button>
+                </div>
+            </section>
+
+            <section class="card" data-panel="2" hidden>
+                <h2>Confirm Physical Progress</h2>
+                <div class="review" id="review"></div>
+                <div class="actions">
+                    <button class="button secondary" type="button" data-back>Back</button>
+                    <button class="button" type="submit" id="submitButton">Submit</button>
+                </div>
+                <div class="message success" id="successMessage" hidden>Physical progress submitted successfully.</div>
+                <div class="message error" id="errorMessage" hidden>Unable to submit physical progress.</div>
+            </section>
+        </form>
+    </main>
+
+    <script>
+        const investigatorId = JSON.parse(document.getElementById('investigator-id').textContent);
+        const form = document.getElementById('progressForm');
+        const panels = Array.from(document.querySelectorAll('[data-panel]'));
+        const labels = [document.getElementById('stepLabel1'), document.getElementById('stepLabel2')];
+        const review = document.getElementById('review');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const submitButton = document.getElementById('submitButton');
+        let currentStep = 1;
+
+        const reviewFields = [
+            ['Date', 'date_field'],
+            ['District', 'district'],
+            ['Pheromone traps No', 'pheromone_traps'],
+            ['SPLAT (Pheromone Lure) (kg)', 'splat'],
+            ['PB rope (Number)', 'pb_rope'],
+            ['Neem based insecticides (L)', 'neem_insecticides'],
+            ['Flonicamid 50 WG (kg)', 'flonicamid'],
+            ['Trichocards', 'trichocards'],
+            ['Quinalphos 20% AF (L)', 'quinalphos'],
+            ['Chlorpyriphos 20% EC (L)', 'chlorpyriphos'],
+            ['Profenophos 50%EC (L)', 'profenophos'],
+            ['Additional Information', 'additional_info'],
+        ];
+
+        function csrfToken() {
+            const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            return input ? input.value : '';
+        }
+
+        function fieldValue(name) {
+            const field = form.elements[name];
+            return field ? field.value.trim() : '';
+        }
+
+        function monthName(dateValue) {
+            const date = new Date(dateValue);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleString('en-US', { month: 'long' });
+        }
+
+        function yearValue(dateValue) {
+            const date = new Date(dateValue);
+            if (Number.isNaN(date.getTime())) return '';
+            return String(date.getFullYear());
+        }
+
+        function payload() {
+            const date = fieldValue('date_field');
+            return {
+                user_id: investigatorId,
+                date_field: date,
+                physical_date: date,
+                name_of_investigator: investigatorId,
+                month: monthName(date),
+                year: yearValue(date),
+                district: fieldValue('district'),
+                pheromone_traps: fieldValue('pheromone_traps'),
+                splat: fieldValue('splat'),
+                pb_rope: fieldValue('pb_rope'),
+                neem_insecticides: fieldValue('neem_insecticides'),
+                flonicamid: fieldValue('flonicamid'),
+                trichocards: fieldValue('trichocards'),
+                quinalphos: fieldValue('quinalphos'),
+                chlorpyriphos: fieldValue('chlorpyriphos'),
+                profenophos: fieldValue('profenophos'),
+                additional_info: fieldValue('additional_info'),
+            };
+        }
+
+        function updateStep(step) {
+            currentStep = step;
+            panels.forEach((panel) => {
+                panel.hidden = Number(panel.dataset.panel) !== step;
+            });
+            labels.forEach((label, index) => {
+                const labelStep = index + 1;
+                label.classList.toggle('active', labelStep === step);
+                label.classList.toggle('done', labelStep < step);
+            });
+            if (step === 2) renderReview();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateStep(step) {
+            const panel = panels[step - 1];
+            const required = Array.from(panel.querySelectorAll('[required]'));
+            return required.every((field) => field.reportValidity());
+        }
+
+        function renderReview() {
+            review.innerHTML = reviewFields.map(([label, name]) => `
+                <div class="review-item">
+                    <strong>${escapeHtml(label)}</strong>
+                    <span>${escapeHtml(fieldValue(name) || '-')}</span>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            }[char]));
+        }
+
+        async function loadDistricts() {
+            const select = document.getElementById('district');
+            try {
+                const response = await fetch('/api/districts/', { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) throw new Error(`District API ${response.status}`);
+                const districts = await response.json();
+                select.innerHTML = '<option value="">Select district</option>' + districts.map((item) => {
+                    const value = item.district_name || item.name || item.district || '';
+                    return value ? `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>` : '';
+                }).join('');
+            } catch (error) {
+                select.innerHTML = '<option value="">District unavailable</option>';
+                console.error(error);
+            }
+        }
+
+        document.querySelector('[data-next]').addEventListener('click', () => {
+            if (validateStep(currentStep)) updateStep(2);
+        });
+
+        document.querySelector('[data-back]').addEventListener('click', () => updateStep(1));
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            successMessage.hidden = true;
+            errorMessage.hidden = true;
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('/api/monthly_physical_progress/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken(),
+                    },
+                    body: JSON.stringify(payload()),
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(JSON.stringify(data));
+                successMessage.textContent = `Physical progress submitted successfully. Record ID: ${data.id || '-'}`;
+                successMessage.hidden = false;
+            } catch (error) {
+                errorMessage.textContent = 'Unable to submit physical progress. Please check required fields and try again.';
+                errorMessage.hidden = false;
+                console.error(error);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        loadDistricts();
+    </script>
+    {% include "includes/accessibility_panel.html" %}
+</body>
+</html>
