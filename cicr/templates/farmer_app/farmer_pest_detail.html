@@ -92,19 +92,6 @@
     const errorState = document.getElementById('errorState');
     const detail = document.getElementById('detail');
 
-    const metricFields = [
-        ['Jassid IRM', 'jassid_irm_average'],
-        ['Jassid Non-IRM', 'jassid_nonirm_average'],
-        ['Whitefly IRM', 'whitefly_irm_average'],
-        ['Whitefly Non-IRM', 'whitefly_nonirm_average'],
-        ['Thrips IRM', 'thrips_irm_average'],
-        ['Thrips Non-IRM', 'thrips_nonirm_average'],
-        ['PBW Incidence IRM', 'incidence_irm_average'],
-        ['PBW Incidence Non-IRM', 'incidence_nonirm_average'],
-        ['Pheromone IRM', 'pheromone_irm_average'],
-        ['Pheromone Non-IRM', 'pheromone_nonirm_average'],
-    ];
-
     function escapeHtml(value) {
         return String(value).replace(/[&<>"']/g, (char) => ({
             '&': '&amp;',
@@ -129,15 +116,16 @@
     function renderDetail(record) {
         const title = [record.district, record.standard_week || record.week].filter(Boolean).join(' - ') || `Pest Record ${recordId}`;
         const meta = [record.month, record.year, record.pest_date || record.date_field].filter(Boolean).join(' | ');
-        const metrics = metricFields
-            .filter(([, key]) => record[key] !== undefined && record[key] !== null)
-            .map(([label, key]) => `
+        const metricKeys = Object.keys(record)
+            .filter((key) => key.endsWith('_average') && record[key] !== undefined && record[key] !== null);
+        const metrics = metricKeys
+            .map((key) => `
                 <div class="metric">
-                    <strong>${escapeHtml(label)}</strong>
+                    <strong>${escapeHtml(labelFor(key))}</strong>
                     <span>${escapeHtml(numberText(record[key]))}</span>
                 </div>
             `).join('');
-        const skip = new Set(['id', ...metricFields.map(([, key]) => key)]);
+        const skip = new Set(['id', ...metricKeys]);
         const fields = Object.entries(record)
             .filter(([key, value]) => !skip.has(key) && value !== null && value !== undefined && String(value).trim() !== '')
             .map(([key, value]) => `
@@ -157,7 +145,7 @@
                 <div class="metric-grid">${metrics}</div>
             </article>
             <article class="card detail-card">
-                <h3 class="card-title">API Data</h3>
+                <h3 class="card-title">Details</h3>
                 <div class="field-grid">${fields}</div>
             </article>
         `;

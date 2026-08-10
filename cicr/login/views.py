@@ -328,8 +328,68 @@ def super_dashboard(request):
     return render(request, 'login/super_dashboard.html', context)
 
 
+@login_required(login_url='/login_investigator/')
 def investigator_dashboard(request):
-    return render(request, 'login/investigator_dashboard.html')
+    return render(request, 'login/investigator_dashboard.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_basic_survey(request):
+    return render(request, 'login/investigator_basic_survey.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_weekly_report(request):
+    return render(request, 'login/investigator_weekly_report.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_monthly_progress(request):
+    return render(request, 'login/investigator_monthly_progress.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_physical_progress(request):
+    return render(request, 'login/investigator_physical_progress.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_yearly_progress(request):
+    return render(request, 'login/investigator_yearly_progress.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_manage_surveys(request):
+    return render(request, 'login/investigator_manage_surveys.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_manage_reports(request):
+    return render(request, 'login/investigator_manage_reports.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
 
 @login_required(login_url='/super_login/')
 def logout_view(request):
@@ -474,6 +534,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 def login_investigator(request):
+    error_message = None
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -491,7 +552,7 @@ def login_investigator(request):
             error_message = "Invalid username or password. Please try again."
             # return HttpResponseRedirect(reverse('create_investigator'))  # Redirect to create investigator page if not a POST request
     
-    return render(request, 'login/login_investigator.html')
+    return render(request, 'login/login_investigator.html', {'error_message': error_message})
     
 # views.py
 from django.contrib.auth.decorators import login_required

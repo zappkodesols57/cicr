@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Progress Report | CICR IRM</title>
+    <style>
+        :root {
+            --green-900: #00720d;
+            --green-800: #07831a;
+            --green-50: #f7fbf8;
+            --line: #dfe9e1;
+            --text: #121812;
+            --muted: #66726a;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px clamp(20px, 4vw, 54px);
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .back {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.24);
+            border-radius: 50%;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page {
+            width: min(900px, calc(100% - 40px));
+            margin: 28px auto;
+        }
+
+        .menu {
+            display: grid;
+            gap: 18px;
+        }
+
+        .menu a {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px 22px;
+            color: #ffffff;
+            text-decoration: none;
+            background: var(--green-900);
+            border-radius: 9px;
+            box-shadow: 0 14px 24px rgba(0, 114, 13, 0.16);
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .menu a:hover,
+        .menu a:focus {
+            background: var(--green-800);
+        }
+
+        .hint {
+            margin: 18px 0 0;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        @media (max-width: 680px) {
+            .page {
+                width: min(100% - 20px, 560px);
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="back" href="/investigator_dashboard/" aria-label="Back to dashboard">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        </a>
+        <h1>Monthly Progress Report</h1>
+    </header>
+
+    <main class="page">
+        <nav class="menu" aria-label="Monthly progress report sections">
+            <a href="/investigator/monthly-progress/physical/">
+                <span>A . Physical Progress Report</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+            <a href="/api/extension_activities/">
+                <span>B . Extension Activities Carried out</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+            <a href="/api/represented_photographs/">
+                <span>C . Representative Photographs</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+            <a href="/api/assessment_season/">
+                <span>D . Assessment at the end of Season</span>
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+        </nav>
+        <p class="hint">A section uses the existing monthly physical progress API. Other section forms can be added in the same flow when their screenshots are provided.</p>
+    </main>
+    {% include "includes/accessibility_panel.html" %}
+</body>
+</html>

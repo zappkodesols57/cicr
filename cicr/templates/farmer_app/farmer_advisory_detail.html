@@ -123,7 +123,7 @@
     }
 
     function renderDetail(record) {
-        const title = firstValue(record, ['title', 'advisory_title', 'week_en', 'week_hi', 'week_gu']) || `Advisory ${recordId}`;
+        const title = firstValue(record, ['title', 'advisory_title', 'week_en', 'week_hi', 'week_gu']) || 'Untitled advisory';
         const meta = firstValue(record, ['date_range_en', 'date_range_hi', 'date_range_gu', 'month_en', 'start_date_en']);
         const pdfLinks = pdfFields
             .map(([label, key]) => ({ label: record[key.replace('_pdf', '')] || label, url: absoluteUrl(record[key]) }))
@@ -150,7 +150,7 @@
                 </div>
             </article>
             <article class="card detail-card">
-                <h3 class="card-title">API Data</h3>
+                <h3 class="card-title">Details</h3>
                 <div class="field-grid">${fields}</div>
             </article>
         `;

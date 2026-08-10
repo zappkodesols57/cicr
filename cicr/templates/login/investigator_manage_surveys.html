@@ -1,0 +1,763 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Surveys | CICR IRM</title>
+    <style>
+        :root {
+            --green-950: #003d0d;
+            --green-900: #00720d;
+            --green-800: #07831a;
+            --green-100: #e9f6ec;
+            --green-50: #f7fbf8;
+            --line: #dbe8dd;
+            --text: #111811;
+            --muted: #657168;
+            --danger: #b42318;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px clamp(20px, 4vw, 54px);
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .back,
+        .icon-button {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.24);
+            border-radius: 50%;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page {
+            width: min(1280px, calc(100% - 40px));
+            margin: 28px auto 38px;
+        }
+
+        .toolbar {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 22px;
+            padding: 18px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 12px 26px rgba(17, 24, 17, 0.07);
+        }
+
+        .toolbar input {
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 14px;
+            border: 1.6px solid #1a9a35;
+            border-radius: 6px;
+            outline: none;
+            font: inherit;
+        }
+
+        .count {
+            color: var(--green-950);
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .survey-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .survey-card {
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            box-shadow: 0 14px 28px rgba(17, 24, 17, 0.08);
+        }
+
+        .survey-head {
+            display: grid;
+            grid-template-columns: 120px 1.2fr 1fr 1fr auto;
+            gap: 18px;
+            align-items: center;
+            padding: 18px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .head-label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .head-value {
+            color: #000000;
+            font-size: 18px;
+            font-weight: 700;
+            word-break: break-word;
+        }
+
+        .tag {
+            display: inline-flex;
+            padding: 8px 12px;
+            color: var(--green-950);
+            background: var(--green-100);
+            border-radius: 999px;
+            font-weight: 800;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .button {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 0;
+            border-radius: 7px;
+            padding: 0 16px;
+            color: #ffffff;
+            background: var(--green-900);
+            font: inherit;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button.secondary {
+            color: var(--green-950);
+            background: #ffffff;
+            border: 1px solid var(--line);
+        }
+
+        .button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        details {
+            padding: 0 18px 18px;
+        }
+
+        summary {
+            width: max-content;
+            margin-top: 16px;
+            color: var(--green-900);
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(160px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .detail-item {
+            padding: 12px;
+            background: var(--green-50);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .detail-item span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .detail-item strong {
+            display: block;
+            margin-top: 6px;
+            color: #000000;
+            font-size: 15px;
+            word-break: break-word;
+        }
+
+        .message {
+            padding: 34px;
+            color: var(--muted);
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font-weight: 800;
+        }
+
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 20;
+            display: grid;
+            justify-items: end;
+            background: rgba(0, 0, 0, 0.42);
+        }
+
+        .drawer {
+            width: min(860px, 100%);
+            height: 100vh;
+            overflow: auto;
+            background: var(--green-50);
+            box-shadow: -16px 0 42px rgba(0, 0, 0, 0.2);
+        }
+
+        .drawer-head {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            padding: 18px 22px;
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .drawer-head h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .edit-form {
+            padding: 22px;
+        }
+
+        .edit-panel {
+            margin-bottom: 16px;
+            padding: 18px;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .edit-panel h3 {
+            margin: 0 0 14px;
+            color: var(--green-950);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label,
+        .radio-group {
+            display: grid;
+            gap: 7px;
+            color: #263128;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            min-height: 42px;
+            border: 1px solid var(--green-900);
+            border-radius: 5px;
+            padding: 9px 11px;
+            color: var(--text);
+            background: #ffffff;
+            font: inherit;
+        }
+
+        textarea {
+            min-height: 94px;
+            resize: vertical;
+        }
+
+        .radio-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            min-height: 42px;
+        }
+
+        .radio-row label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .radio-row input {
+            width: 18px;
+            min-height: 18px;
+            accent-color: var(--green-900);
+        }
+
+        .drawer-actions {
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 14px 22px;
+            background: linear-gradient(180deg, rgba(247,251,248,0), var(--green-50) 30%);
+        }
+
+        .toast {
+            margin: 0 22px 18px;
+            padding: 12px 14px;
+            border-radius: 7px;
+            font-weight: 800;
+        }
+
+        .toast.success {
+            color: var(--green-950);
+            background: var(--green-100);
+        }
+
+        .toast.error {
+            color: var(--danger);
+            background: #fff0ed;
+        }
+
+        [hidden] { display: none !important; }
+
+        @media (max-width: 1020px) {
+            .survey-head,
+            .detail-grid,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-actions {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page {
+                width: min(100% - 20px, 560px);
+                margin-top: 20px;
+            }
+
+            .toolbar {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                padding: 14px 12px;
+            }
+
+            .topbar h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <a class="back" href="/investigator_dashboard/" aria-label="Back to dashboard">
+            <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        </a>
+        <h1>Manage Surveys</h1>
+        <span aria-hidden="true"></span>
+    </header>
+
+    <main class="page">
+        <section class="toolbar">
+            <input id="search" type="search" placeholder="Search by farmer, village, district, mobile number">
+            <span class="count" id="count">Loading...</span>
+        </section>
+
+        <section id="surveyList" class="survey-list" aria-label="Survey records" hidden></section>
+        <div id="empty" class="message" hidden>No survey records found.</div>
+        <div id="error" class="message" hidden>Unable to load survey records.</div>
+    </main>
+
+    <section class="drawer-backdrop" id="drawerBackdrop" hidden>
+        <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+            <header class="drawer-head">
+                <h2 id="drawerTitle">Edit Survey</h2>
+                <button class="icon-button" type="button" id="closeDrawer" aria-label="Close editor">
+                    <svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                </button>
+            </header>
+            <form class="edit-form" id="editForm">
+                {% csrf_token %}
+                <div id="editBody"></div>
+                <div class="toast success" id="successToast" hidden>Survey updated successfully.</div>
+                <div class="toast error" id="errorToast" hidden>Unable to update survey.</div>
+                <div class="drawer-actions">
+                    <button class="button secondary" type="button" id="cancelEdit">Cancel</button>
+                    <button class="button" type="submit" id="saveEdit">Save Changes</button>
+                </div>
+            </form>
+        </aside>
+    </section>
+
+    <script>
+        const surveyList = document.getElementById('surveyList');
+        const count = document.getElementById('count');
+        const search = document.getElementById('search');
+        const empty = document.getElementById('empty');
+        const error = document.getElementById('error');
+        const drawerBackdrop = document.getElementById('drawerBackdrop');
+        const closeDrawer = document.getElementById('closeDrawer');
+        const cancelEdit = document.getElementById('cancelEdit');
+        const editForm = document.getElementById('editForm');
+        const editBody = document.getElementById('editBody');
+        const saveEdit = document.getElementById('saveEdit');
+        const successToast = document.getElementById('successToast');
+        const errorToast = document.getElementById('errorToast');
+        let records = [];
+        let editingRecord = null;
+
+        const detailFields = [
+            ['Type', 'IRM'],
+            ['Farmer Name', 'name'],
+            ['Mobile', 'mobile_number'],
+            ['Aadhar No.', 'aadhar_number'],
+            ['Land Area', 'landarea'],
+            ['Category', 'category'],
+            ['Gender', 'gender'],
+            ['Village', 'village'],
+            ['Taluka', 'taluka'],
+            ['District', 'district'],
+            ['Geolocation', 'geolocations'],
+            ['Date of Sowing', 'date_of_sowing'],
+            ['Row Distance', 'row_distance'],
+            ['Plant Distance', 'plant_distance'],
+            ['Cotton Variety', 'cotton_variety'],
+            ['Previous Crop', 'previous_year_crop_grown'],
+            ['Irrigation Type', 'causes'],
+            ['Last Year Crop Extended', 'last_year_crop_extended'],
+            ['Soil Type', 'soil_type'],
+            ['Crop Rotation', 'crop_rotation_followed'],
+            ['Advisory From', 'advisory_received_from'],
+            ['Farmers E-communication', 'total_farmers_ecommunication'],
+            ['Survey Date', 'servey_date'],
+            ['Year', 'year']
+        ];
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            }[char]));
+        }
+
+        function yesNo(value) {
+            if (value === true) return 'Yes';
+            if (value === false) return 'No';
+            return value || '-';
+        }
+
+        function display(record, key) {
+            if (key === 'IRM') return record[key] ? 'IRM' : 'NON-IRM';
+            if (key === 'causes') return record[key] ? 'Irrigated' : 'Rainfed';
+            if (key === 'last_year_crop_extended' || key === 'crop_rotation_followed') return yesNo(record[key]);
+            return record[key] || record[key] === 0 ? record[key] : '-';
+        }
+
+        function matches(record, query) {
+            if (!query) return true;
+            return ['id', 'name', 'village', 'taluka', 'district', 'mobile_number', 'category']
+                .some((key) => String(record[key] || '').toLowerCase().includes(query));
+        }
+
+        function surveyCard(record) {
+            return `
+                <article class="survey-card">
+                    <div class="survey-head">
+                        <div><span class="head-label">Survey</span><span class="tag">#${escapeHtml(record.id)}</span></div>
+                        <div><span class="head-label">Farmer</span><span class="head-value">${escapeHtml(record.name || 'Unnamed Farmer')}</span></div>
+                        <div><span class="head-label">District</span><span class="head-value">${escapeHtml(record.district || '-')}</span></div>
+                        <div><span class="head-label">Mobile</span><span class="head-value">${escapeHtml(record.mobile_number || '-')}</span></div>
+                        <div class="card-actions">
+                            <button class="button secondary" type="button" data-view-id="${escapeHtml(record.id)}">View Full Data</button>
+                            <button class="button" type="button" data-edit-id="${escapeHtml(record.id)}">
+                                <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                    <details id="details-${escapeHtml(record.id)}">
+                        <summary>View Details</summary>
+                        <div class="detail-grid">
+                            ${detailFields.map(([label, key]) => detailBox(label, display(record, key))).join('')}
+                        </div>
+                    </details>
+                </article>
+            `;
+        }
+
+        function detailBox(label, value) {
+            return `
+                <div class="detail-item">
+                    <span>${escapeHtml(label)}</span>
+                    <strong>${escapeHtml(value || value === 0 ? value : '-')}</strong>
+                </div>
+            `;
+        }
+
+        function render() {
+            const query = search.value.trim().toLowerCase();
+            const visible = records.filter((record) => matches(record, query));
+            count.textContent = `${visible.length} survey record${visible.length === 1 ? '' : 's'}`;
+            surveyList.innerHTML = visible.map(surveyCard).join('');
+            surveyList.hidden = !visible.length;
+            empty.hidden = Boolean(visible.length);
+        }
+
+        async function load() {
+            try {
+                const response = await fetch('/api/basic_servey_data/', { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) throw new Error(`Survey API ${response.status}`);
+                records = await response.json();
+                render();
+            } catch (err) {
+                count.textContent = 'Could not load';
+                error.hidden = false;
+                console.error(err);
+            }
+        }
+
+        function getCookie(name) {
+            const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            if (input && input.value) return input.value;
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
+
+        function radioGroup(name, label, value, trueLabel, falseLabel) {
+            return `
+                <div class="radio-group">
+                    ${escapeHtml(label)}
+                    <div class="radio-row">
+                        <label><input type="radio" name="${escapeHtml(name)}" value="true"${value ? ' checked' : ''}> ${escapeHtml(trueLabel)}</label>
+                        <label><input type="radio" name="${escapeHtml(name)}" value="false"${!value ? ' checked' : ''}> ${escapeHtml(falseLabel)}</label>
+                    </div>
+                </div>
+            `;
+        }
+
+        function inputField(name, label, value, type = 'text') {
+            const step = type === 'number' ? ' step="1" min="0"' : '';
+            return `
+                <label>
+                    ${escapeHtml(label)}
+                    <input type="${escapeHtml(type)}" name="${escapeHtml(name)}" value="${escapeHtml(value ?? '')}"${step}>
+                </label>
+            `;
+        }
+
+        function textAreaField(name, label, value) {
+            return `
+                <label class="full">
+                    ${escapeHtml(label)}
+                    <textarea name="${escapeHtml(name)}">${escapeHtml(value || '')}</textarea>
+                </label>
+            `;
+        }
+
+        function editorMarkup(record) {
+            return `
+                <section class="edit-panel">
+                    <h3>Personal Information</h3>
+                    <div class="form-grid">
+                        ${radioGroup('IRM', 'Type', Boolean(record.IRM), 'IRM', 'NON-IRM')}
+                        ${inputField('name', 'Name of Farmer', record.name)}
+                        ${inputField('mobile_number', 'Mobile No.', record.mobile_number)}
+                        ${inputField('aadhar_number', 'Aadhar No.', record.aadhar_number)}
+                        ${inputField('landarea', 'Land Area', record.landarea)}
+                        ${inputField('gender', 'Gender', record.gender)}
+                        ${inputField('category', 'Category', record.category)}
+                    </div>
+                </section>
+
+                <section class="edit-panel">
+                    <h3>Address</h3>
+                    <div class="form-grid">
+                        ${inputField('village', 'Village', record.village)}
+                        ${inputField('taluka', 'Taluka', record.taluka)}
+                        ${inputField('district', 'District', record.district)}
+                        ${textAreaField('geolocations', 'Geolocation', record.geolocations)}
+                    </div>
+                </section>
+
+                <section class="edit-panel">
+                    <h3>Field Information</h3>
+                    <div class="form-grid">
+                        ${inputField('date_of_sowing', 'Date of Sowing', record.date_of_sowing, 'date')}
+                        ${inputField('row_distance', 'Spacing / Row Distance in cm', record.row_distance)}
+                        ${inputField('plant_distance', 'Spacing / Plant Distance in cm', record.plant_distance)}
+                        ${inputField('cotton_variety', 'Name of Cotton Variety / Bt Hybrid', record.cotton_variety)}
+                        ${inputField('previous_year_crop_grown', 'Previous year crop grown', record.previous_year_crop_grown)}
+                        ${radioGroup('causes', 'Irrigation type', Boolean(record.causes), 'Irrigated', 'Rainfed')}
+                        ${radioGroup('last_year_crop_extended', 'Whether last year crop extended', Boolean(record.last_year_crop_extended), 'Yes', 'No')}
+                        ${inputField('soil_type', 'Soil Type', record.soil_type)}
+                        ${radioGroup('crop_rotation_followed', 'Whether crop rotation followed', Boolean(record.crop_rotation_followed), 'Yes', 'No')}
+                        ${inputField('advisory_received_from', 'Pest management advisory received from', record.advisory_received_from)}
+                        ${inputField('total_farmers_ecommunication', 'Total Number of Farmer Registered for E-communication', record.total_farmers_ecommunication, 'number')}
+                        ${inputField('servey_date', 'Survey Date', record.servey_date, 'date')}
+                        ${inputField('year', 'Year', record.year)}
+                    </div>
+                </section>
+            `;
+        }
+
+        function openEditor(record) {
+            editingRecord = record;
+            successToast.hidden = true;
+            errorToast.hidden = true;
+            editBody.innerHTML = editorMarkup(record);
+            drawerBackdrop.hidden = false;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeEditor() {
+            drawerBackdrop.hidden = true;
+            document.body.style.overflow = '';
+            editingRecord = null;
+        }
+
+        function collectPayload() {
+            const formData = new FormData(editForm);
+            const payload = {};
+            for (const [key, value] of formData.entries()) {
+                if (key === 'csrfmiddlewaretoken') continue;
+                const cleanValue = typeof value === 'string' ? value.trim() : value;
+                if (booleanFields().includes(key)) {
+                    payload[key] = cleanValue === 'true';
+                } else if (key === 'total_farmers_ecommunication') {
+                    payload[key] = cleanValue === '' ? null : Number(cleanValue);
+                } else {
+                    payload[key] = cleanValue === '' ? null : cleanValue;
+                }
+            }
+            payload.user_id = editingRecord.user_id;
+            return payload;
+        }
+
+        function booleanFields() {
+            return ['IRM', 'causes', 'last_year_crop_extended', 'crop_rotation_followed'];
+        }
+
+        surveyList.addEventListener('click', event => {
+            const viewButton = event.target.closest('[data-view-id]');
+            const editButton = event.target.closest('[data-edit-id]');
+
+            if (viewButton) {
+                const details = document.getElementById(`details-${viewButton.dataset.viewId}`);
+                if (details) details.open = true;
+            }
+
+            if (editButton) {
+                const record = records.find(item => String(item.id) === String(editButton.dataset.editId));
+                if (record) openEditor(record);
+            }
+        });
+
+        editForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!editingRecord) return;
+            saveEdit.disabled = true;
+            successToast.hidden = true;
+            errorToast.hidden = true;
+
+            try {
+                const response = await fetch(`/api/basicservey_update/${encodeURIComponent(editingRecord.id)}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(collectPayload())
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(JSON.stringify(data));
+                records = records.map(record => String(record.id) === String(data.id) ? data : record);
+                editingRecord = data;
+                editBody.innerHTML = editorMarkup(data);
+                render();
+                successToast.hidden = false;
+            } catch (err) {
+                errorToast.hidden = false;
+                console.error(err);
+            } finally {
+                saveEdit.disabled = false;
+            }
+        });
+
+        closeDrawer.addEventListener('click', closeEditor);
+        cancelEdit.addEventListener('click', closeEditor);
+        drawerBackdrop.addEventListener('click', event => {
+            if (event.target === drawerBackdrop) closeEditor();
+        });
+        search.addEventListener('input', render);
+        load();
+    </script>
+    {% include "includes/accessibility_panel.html" %}
+</body>
+</html>

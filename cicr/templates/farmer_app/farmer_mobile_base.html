@@ -196,9 +196,7 @@
             {% block content %}{% endblock %}
         </main>
 
-        <button class="accessibility" type="button" aria-label="Accessibility">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"/><path d="M4 9h16"/><path d="M12 9v12"/><path d="m8 21 4-7 4 7"/></svg>
-        </button>
+        {% include "includes/accessibility_panel.html" %}
 
         <nav class="bottom-nav" aria-label="Farmer tabs">
             <a class="nav-item {% if active_tab == 'home' %}active{% endif %}" href="/farmer/dashboard/">

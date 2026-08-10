@@ -25,4 +25,5 @@ staticfiles/
 
 # Secrets
 *credentials*.json
-*-*.json
+*-*.json
+media/
