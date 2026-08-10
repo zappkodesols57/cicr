@@ -100,7 +100,7 @@ def super_login(request):
             return redirect('/super_dashboard/')  # Redirect to the admin index page after login
         else:
             return HttpResponse("Invalid login credentials.")
-    return render(request, 'login/admin_login.html')
+    return render(request, 'home.html')
 
 
 # comment on 30july 2025 after implement financial year functionality
