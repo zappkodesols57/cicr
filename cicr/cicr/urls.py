@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from login import views as login_views
+from farmer_app import views as farmer_views
 
 from drf_spectacular.views import (
     SpectacularAPIView,
@@ -33,6 +34,9 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("advisories/", farmer_views.farmer_advisories_view, name="farmer_advisories_short"),
+    path("calculator/", farmer_views.farmer_calculator_view, name="farmer_calculator_short"),
+    path("pest/", farmer_views.farmer_pest_view, name="farmer_pest_short"),
 
     # Migrated CICR 2 apps
     path("", include("login.urls")),

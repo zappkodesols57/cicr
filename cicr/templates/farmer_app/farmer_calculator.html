@@ -1,153 +1,122 @@
-{% extends "farmer_app/farmer_mobile_base.html" %}
+{% extends "farmer_app/farmer_panel_base.html" %}
 
 {% block title %}Dose Calculator{% endblock %}
-{% block app_title %}Dose Calculator{% endblock %}
+{% block page_heading %}Dose Calculator{% endblock %}
 
 {% block extra_css %}
 <style>
-    .calculator-grid {
-        display: grid;
-        gap: 28px;
-    }
-
     .calc-card {
-        padding: 30px;
-        background: #ffffff;
-        border: 2px solid #9d9d9d;
-        border-radius: 14px;
-    }
-
-    .calc-card h2 {
-        margin: 0 0 44px;
-        font-size: 31px;
-        line-height: 1.2;
+        min-height: 360px;
     }
 
     .steps {
         display: grid;
         grid-template-columns: 1fr auto 1fr auto 1fr;
         align-items: center;
-        gap: 24px;
-        margin-bottom: 48px;
+        gap: 18px;
+        margin: 18px 0 30px;
     }
 
     .step {
         text-align: center;
-        font-size: 16px;
-        line-height: 1.35;
-        color: #232323;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.4;
+        font-weight: 700;
     }
 
     .step-icon {
-        height: 88px;
+        width: 66px;
+        height: 66px;
         display: grid;
         place-items: center;
-        color: #11c438;
-        margin-bottom: 16px;
+        margin: 0 auto 12px;
+        color: var(--green-800);
+        background: var(--green-100);
+        border-radius: 50%;
     }
 
     .step-icon svg {
-        width: 74px;
-        height: 74px;
-        stroke-width: 1.9;
+        width: 34px;
+        height: 34px;
     }
 
     .chev {
-        color: #000000;
+        color: var(--green-900);
     }
 
     .chev svg {
-        width: 36px;
-        height: 36px;
-        stroke-width: 4;
+        width: 26px;
+        height: 26px;
+        stroke-width: 3;
     }
 
     .calculate {
         width: 100%;
-        min-height: 84px;
-        border: 0;
-        color: #ffffff;
-        background: #000000;
-        border-radius: 14px;
-        font-size: 30px;
-        font-weight: 700;
-        cursor: pointer;
+        justify-content: center;
+        margin-top: auto;
     }
 
-    @media (min-width: 900px) {
-        .calculator-grid {
-            grid-template-columns: repeat(2, 1fr);
-            align-items: start;
-        }
-    }
-
-    @media (max-width: 620px) {
-        .calc-card {
-            padding: 22px;
-        }
-
-        .calc-card h2 {
-            font-size: 25px;
-        }
-
+    @media (max-width: 920px) {
         .steps {
-            gap: 10px;
+            grid-template-columns: 1fr;
         }
 
-        .step {
-            font-size: 12px;
-        }
-
-        .step-icon svg {
-            width: 54px;
-            height: 54px;
+        .chev {
+            display: none;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<section class="calculator-grid">
-    <article class="calc-card">
-        <h2>Insecticide Dose Calculator</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M6 9 3 12l3 3 3-3Z"/><path d="M13 3 9 7l8 8 4-4Z"/><path d="m10 14-5 5"/><path d="M4 20h7"/><path d="M14 7l3 3"/></svg></div>
-                Select Insecticide
+<section class="grid">
+    <article class="card calc-card">
+        <div class="card-body">
+            <h3 class="card-title">Insecticide Dose Calculator</h3>
+            <p class="card-meta">Select insecticide, select pest, and calculate dosage per acre.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M6 9 3 12l3 3 3-3Z"/><path d="M13 3 9 7l8 8 4-4Z"/><path d="m10 14-5 5"/><path d="M4 20h7"/><path d="M14 7l3 3"/></svg></div>
+                    Select Insecticide
+                </div>
+                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
+                <div class="step">
+                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M4 15c4-5 8-7 16-8"/><path d="M9 14c2 3 5 4 9 2"/><path d="M8 11a3 3 0 1 0 0 6"/></svg></div>
+                    Select Pest
+                </div>
+                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
+                <div class="step">
+                    <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2"/><path d="M14 8h2"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 18h8"/></svg></div>
+                    Calculate Dose / Acres
+                </div>
             </div>
-            <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-            <div class="step">
-                <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M4 15c4-5 8-7 16-8"/><path d="M9 14c2 3 5 4 9 2"/><path d="M8 11a3 3 0 1 0 0 6"/></svg></div>
-                Select Pest
-            </div>
-            <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-            <div class="step">
-                <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2"/><path d="M14 8h2"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 18h8"/></svg></div>
-                Get Calculated Dosage / Acres
-            </div>
+            <button class="button calculate" type="button">Calculate Dose</button>
         </div>
-        <button class="calculate" type="button">Calculate Dose</button>
     </article>
 
-    <article class="calc-card">
-        <h2>Fungicide Dose Calculator</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M6 9 3 12l3 3 3-3Z"/><path d="M13 3 9 7l8 8 4-4Z"/><path d="m10 14-5 5"/><path d="M4 20h7"/><path d="M14 7l3 3"/></svg></div>
-                Select Fungicide
+    <article class="card calc-card">
+        <div class="card-body">
+            <h3 class="card-title">Fungicide Dose Calculator</h3>
+            <p class="card-meta">Select fungicide, select plant disease, and calculate dosage per acre.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M6 9 3 12l3 3 3-3Z"/><path d="M13 3 9 7l8 8 4-4Z"/><path d="m10 14-5 5"/><path d="M4 20h7"/><path d="M14 7l3 3"/></svg></div>
+                    Select Fungicide
+                </div>
+                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
+                <div class="step">
+                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M5 21c8-4 12-10 13-18"/><path d="M7 12c4-3 7-4 11-3"/><path d="M13 9c2 2 3 4 3 7"/></svg></div>
+                    Select Plant Disease
+                </div>
+                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
+                <div class="step">
+                    <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2"/><path d="M14 8h2"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 18h8"/></svg></div>
+                    Calculate Dose / Acres
+                </div>
             </div>
-            <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-            <div class="step">
-                <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M5 21c8-4 12-10 13-18"/><path d="M7 12c4-3 7-4 11-3"/><path d="M13 9c2 2 3 4 3 7"/></svg></div>
-                Select Plant disease
-            </div>
-            <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-            <div class="step">
-                <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2"/><path d="M14 8h2"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 18h8"/></svg></div>
-                Get Calculated Dosage / Acres
-            </div>
+            <button class="button calculate" type="button">Calculate Dose</button>
         </div>
-        <button class="calculate" type="button">Calculate Dose</button>
     </article>
 </section>
 {% endblock %}

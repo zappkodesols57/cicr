@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     # Web UI Paths
+    path('', views.farmer_dashboard_view, name='farmer_home'),
     path('login/', views.farmer_login_view, name='farmer_login'),
     path('dashboard/', views.farmer_dashboard_view, name='farmer_dashboard'),
     path('advisories/', views.farmer_advisories_view, name='farmer_advisories'),

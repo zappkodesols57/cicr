@@ -1,75 +1,45 @@
-{% extends "farmer_app/farmer_mobile_base.html" %}
+{% extends "farmer_app/farmer_panel_base.html" %}
 
 {% block title %}Pest Management{% endblock %}
-{% block app_title %}Pest Management{% endblock %}
+{% block page_heading %}Pest Management{% endblock %}
 
 {% block extra_css %}
 <style>
-    .pest-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-        gap: 38px;
-    }
-
     .pest-card {
-        overflow: hidden;
-        background: #ffffff;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-    }
-
-    .pest-image {
-        height: 190px;
-        background: linear-gradient(135deg, #e0eedf, #cfe6d2);
-    }
-
-    .pest-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
-
-    .pest-placeholder {
-        height: 100%;
-        display: grid;
-        place-items: center;
-        color: var(--green);
-        font-weight: 800;
+        min-height: 360px;
     }
 
     .pest-name {
-        min-height: 86px;
-        display: grid;
-        place-items: center;
-        padding: 18px;
-        font-size: 22px;
-        line-height: 1.2;
-        text-align: center;
-    }
-
-    @media (min-width: 900px) {
-        .pest-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
+        text-transform: none;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<h1 class="section-title">Pest Management Advisory</h1>
-<section class="pest-grid">
+<div class="toolbar">
+    <span>Pest Management Advisory</span>
+    <span>{{ pest_cards|length }} records</span>
+</div>
+
+<section class="grid">
     {% for pest in pest_cards %}
-        <article class="pest-card">
-            <div class="pest-image">
+        <article class="card pest-card">
+            <div class="card-image">
                 {% if pest.image_url %}
-                    <img src="{{ pest.image_url }}" alt="{{ pest.title }}">
+                    <img src="{{ pest.image_url }}" alt="{{ pest.title }}" onerror="this.remove(); this.parentElement.querySelector('.image-fallback').hidden=false;">
+                    <div class="image-fallback" hidden>{{ pest.title }}</div>
                 {% else %}
-                    <div class="pest-placeholder">{{ pest.title }}</div>
+                    <div class="image-fallback">{{ pest.title }}</div>
                 {% endif %}
             </div>
-            <div class="pest-name">{{ pest.title }}</div>
+            <div class="card-body">
+                <h3 class="card-title pest-name">{{ pest.title }}</h3>
+                <p class="card-meta">Pest advisory information from the existing CICR IRM data source.</p>
+                <span class="button">Read More</span>
+            </div>
         </article>
+    {% empty %}
+        <div class="message">No pest advisories available.</div>
     {% endfor %}
 </section>
 {% endblock %}

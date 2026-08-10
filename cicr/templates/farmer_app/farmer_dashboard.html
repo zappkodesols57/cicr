@@ -1,22 +1,24 @@
-{% extends "farmer_app/farmer_mobile_base.html" %}
+{% extends "farmer_app/farmer_panel_base.html" %}
 
 {% block title %}Farmer Dashboard{% endblock %}
-{% block app_title %}Farmer Dashboard{% endblock %}
+{% block page_heading %}Farmer Dashboard{% endblock %}
 
 {% block extra_css %}
 <style>
-    .carousel-wrap {
+    .hero-card {
+        margin-bottom: 24px;
+    }
+
+    .hero-image {
         position: relative;
-        margin: 10px calc(50% - 50vw) 0;
-        overflow: hidden;
+        height: 320px;
     }
 
     .slides {
+        height: 100%;
         display: flex;
-        gap: 28px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
-        padding: 0 max(38px, calc((100vw - 1120px) / 2 + 38px));
         scrollbar-width: none;
     }
 
@@ -24,12 +26,9 @@
 
     .slide {
         position: relative;
-        flex: 0 0 min(760px, 82vw);
-        height: 270px;
-        scroll-snap-align: center;
-        border-radius: 10px;
-        overflow: hidden;
-        background: #dfeee2;
+        flex: 0 0 100%;
+        height: 100%;
+        scroll-snap-align: start;
     }
 
     .slide img {
@@ -39,173 +38,112 @@
         display: block;
     }
 
-    .empty-slide {
-        height: 100%;
-        display: grid;
-        place-items: center;
-        color: #008b24;
-        font-size: 28px;
-        font-weight: 800;
-        background: linear-gradient(135deg, #eef8f0, #d6ecdb);
-    }
-
     .pill {
         position: absolute;
-        top: 28px;
-        left: 28px;
-        padding: 10px 16px;
-        border-radius: 5px;
+        top: 18px;
+        left: 18px;
+        padding: 9px 15px;
+        color: #000000;
         background: #ffffff;
-        color: #111111;
-        font-size: 14px;
+        border-radius: 7px;
+        font-size: 13px;
         font-weight: 800;
         text-transform: uppercase;
     }
 
-    .dots-row {
+    .hero-footer {
         display: flex;
-        justify-content: flex-end;
         align-items: center;
-        gap: 24px;
-        margin: 24px 0 68px;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 18px 24px;
     }
 
     .dots {
         display: flex;
-        gap: 12px;
+        gap: 10px;
     }
 
     .dot {
-        width: 14px;
-        height: 14px;
+        width: 11px;
+        height: 11px;
         border-radius: 50%;
         background: #cbead2;
     }
 
     .dot.active {
-        background: var(--green);
+        background: var(--green-800);
     }
 
-    .read-all {
-        color: var(--green);
-        text-decoration: none;
-        font-size: 24px;
-        font-weight: 800;
+    .action-card {
+        min-height: 210px;
     }
 
-    .home-actions {
-        display: grid;
-        gap: 26px;
-    }
-
-    .home-action {
-        min-height: 90px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        padding: 0 36px;
-        color: #ffffff;
-        text-decoration: none;
-        background: #000000;
-        border-radius: 22px;
-        font-size: 28px;
-        line-height: 1.2;
-        font-weight: 700;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.14);
-    }
-
-    .arrow {
-        width: 62px;
-        height: 62px;
+    .action-arrow {
+        width: 42px;
+        height: 42px;
         display: grid;
         place-items: center;
-        flex: 0 0 auto;
-        color: #000000;
-        background: #ffffff;
+        color: #ffffff;
+        background: var(--green-900);
         border-radius: 50%;
     }
 
     .footer-note {
-        margin-top: 64px;
+        margin: 28px 0 0;
+        color: var(--muted);
         text-align: center;
-        color: #606060;
-        font-size: 20px;
-    }
-
-    @media (min-width: 900px) {
-        .home-actions {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .home-action {
-            min-height: 84px;
-            font-size: 20px;
-            padding: 0 24px;
-        }
-    }
-
-    @media (max-width: 620px) {
-        .slide {
-            height: 230px;
-            flex-basis: 84vw;
-        }
-
-        .dots-row {
-            margin-bottom: 54px;
-        }
-
-        .home-action {
-            min-height: 78px;
-            padding: 0 24px;
-            font-size: 22px;
-            border-radius: 18px;
-        }
-
-        .arrow {
-            width: 50px;
-            height: 50px;
-        }
+        font-size: 13px;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<section class="carousel-wrap">
-    <div class="slides" id="slides">
-        {% if carousel_images %}
-            {% for image in carousel_images %}
+<section class="card hero-card">
+    <div class="card-image hero-image">
+        <div class="slides" id="slides">
+            {% if carousel_images %}
+                {% for image in carousel_images %}
+                    <article class="slide">
+                        <img src="{{ image.url }}" alt="{{ image.label }}">
+                        <span class="pill">{{ image.label }}</span>
+                    </article>
+                {% endfor %}
+            {% else %}
                 <article class="slide">
-                    <img src="{{ image.url }}" alt="{{ image.label }}">
-                    <span class="pill">{{ image.label }}</span>
+                    <div class="image-fallback">CICR IRM Updates</div>
+                    <span class="pill">Pink Bollworm</span>
                 </article>
-            {% endfor %}
-        {% else %}
-            <article class="slide">
-                <div class="empty-slide">CICR IRM Updates</div>
-                <span class="pill">Pink Bollworm</span>
-            </article>
-        {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="hero-footer">
+        <div class="dots" id="dots" aria-hidden="true"></div>
+        <a class="button" href="/farmer/advisories/">Read all</a>
     </div>
 </section>
 
-<div class="dots-row">
-    <div class="dots" id="dots" aria-hidden="true"></div>
-    <a class="read-all" href="/farmer/advisories/">Read all</a>
-</div>
-
-<section class="home-actions">
-    <a class="home-action" href="/farmer/pest/">
-        Pest & Disease Management
-        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+<section class="grid">
+    <a class="card action-card" href="/farmer/pest/">
+        <div class="card-body">
+            <h3 class="card-title">Pest & Disease Management</h3>
+            <p class="card-meta">View pest advisories and management information from the existing application data.</p>
+            <span class="action-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+        </div>
     </a>
-    <a class="home-action" href="/farmer/calculator/">
-        Insecticide Calculator
-        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+    <a class="card action-card" href="/farmer/calculator/">
+        <div class="card-body">
+            <h3 class="card-title">Insecticide Calculator</h3>
+            <p class="card-meta">Select insecticide and pest to calculate dosage per acre.</p>
+            <span class="action-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+        </div>
     </a>
-    <a class="home-action" href="/farmer/calculator/">
-        Fungicide Calculator
-        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+    <a class="card action-card" href="/farmer/calculator/">
+        <div class="card-body">
+            <h3 class="card-title">Fungicide Calculator</h3>
+            <p class="card-meta">Select fungicide and plant disease to calculate dosage per acre.</p>
+            <span class="action-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+        </div>
     </a>
 </section>
 

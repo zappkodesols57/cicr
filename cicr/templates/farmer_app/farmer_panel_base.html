@@ -1,0 +1,298 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Farmer Panel{% endblock %} | CICR IRM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-950: #003d0d;
+            --green-900: #005414;
+            --green-800: #08701f;
+            --green-100: #eaf7ed;
+            --green-50: #f7fbf8;
+            --line: #dfe9e1;
+            --text: #172118;
+            --muted: #68766b;
+            --sidebar: 220px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: "Inter", Arial, sans-serif;
+        }
+
+        .panel {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: var(--sidebar) 1fr;
+        }
+
+        .sidebar {
+            padding: 24px 18px;
+            background: #ffffff;
+            border-right: 1px solid var(--line);
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .brand img {
+            width: 74px;
+            height: 74px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            color: var(--green-900);
+            font-size: 24px;
+            line-height: 1.1;
+        }
+
+        .brand p {
+            margin: 6px 0 0;
+            color: #2d3b30;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .nav {
+            display: grid;
+            gap: 10px;
+        }
+
+        .nav a {
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav a.active {
+            color: #ffffff;
+            background: var(--green-900);
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .main {
+            min-width: 0;
+            padding: 32px clamp(28px, 4vw, 56px) 56px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .header h2 {
+            margin: 0;
+            color: var(--green-950);
+            font-size: 34px;
+            line-height: 1.2;
+        }
+
+        .back {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            color: var(--green-900);
+            text-decoration: none;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: #ffffff;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 22px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 26px;
+        }
+
+        .card {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            color: inherit;
+            text-decoration: none;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(23, 33, 24, 0.08);
+        }
+
+        .card-image {
+            height: 220px;
+            background: linear-gradient(135deg, #e5f3e8, #f6fbf7);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-fallback {
+            height: 100%;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            color: var(--green-800);
+            text-align: center;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+
+        .card-title {
+            margin: 0 0 12px;
+            color: #000000;
+            font-size: 24px;
+            line-height: 1.22;
+            font-weight: 800;
+        }
+
+        .card-meta {
+            margin: 0 0 22px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .button {
+            width: max-content;
+            margin-top: auto;
+            padding: 13px 22px;
+            color: #ffffff;
+            background: #000000;
+            border: 0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .message {
+            padding: 38px;
+            color: var(--muted);
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 1100px) {
+            .grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .panel {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .brand {
+                margin-bottom: 18px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main {
+                padding: 24px 20px 42px;
+            }
+
+            .header h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="panel">
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="{% static 'images/CICR_logo.png' %}" alt="CICR IRM">
+                <h1>CICR - IRM</h1>
+                <p>Pink Bollworm Monitor</p>
+            </div>
+            <nav class="nav" aria-label="Farmer navigation">
+                <a class="{% if active_tab == 'home' %}active{% endif %}" href="/farmer/dashboard/"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>Home</a>
+                <a class="{% if active_tab == 'advisories' %}active{% endif %}" href="/farmer/advisories/"><svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>Advisories</a>
+                <a class="{% if active_tab == 'calculator' %}active{% endif %}" href="/farmer/calculator/"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h2"/><path d="M14 12h2"/><path d="M8 16h2"/><path d="M14 16h2"/></svg>Calculator</a>
+                <a class="{% if active_tab == 'pest' %}active{% endif %}" href="/farmer/pest/"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>Pest</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <header class="header">
+                <h2>{% block page_heading %}Farmer Panel{% endblock %}</h2>
+                <a class="back" href="/web_aap/" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></a>
+            </header>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
