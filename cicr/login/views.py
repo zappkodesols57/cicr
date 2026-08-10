@@ -100,6 +100,10 @@ def super_login(request):
             return redirect('/super_dashboard/')  # Redirect to the admin index page after login
         else:
             return HttpResponse("Invalid login credentials.")
+    return render(request, 'login/admin_login.html')
+
+
+def web_aap(request):
     return render(request, 'home.html')
 
 
