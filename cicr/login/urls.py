@@ -32,6 +32,7 @@ urlpatterns = [
     path('get-csrf-token/', get_csrf_token, name='get_csrf_token'),
 
     path('api/advisory/', AdvisoryCreateAPIView.as_view(), name='advisory-create'),
+    path('api/advisory/<int:pk>/', AdvisoryDetailAPIView.as_view(), name='advisory-detail'),
 
     path('banners/', banner_list, name='banner_list'),
     path('banners/add/', banner_add, name='banner_add'),

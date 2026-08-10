@@ -49,6 +49,13 @@ def farmer_advisories_view(request):
     })
 
 
+def farmer_advisory_detail_view(request, advisory_id):
+    return render(request, 'farmer_app/farmer_advisory_detail.html', {
+        'active_tab': 'advisories',
+        'advisory_id': advisory_id,
+    })
+
+
 def farmer_calculator_view(request):
     return render(request, 'farmer_app/farmer_calculator.html', {
         'active_tab': 'calculator',
@@ -59,6 +66,14 @@ def farmer_pest_view(request):
     return render(request, 'farmer_app/farmer_pest.html', {
         'active_tab': 'pest',
     })
+
+
+def farmer_pest_detail_view(request, pest_id):
+    return render(request, 'farmer_app/farmer_pest_detail.html', {
+        'active_tab': 'pest',
+        'pest_id': pest_id,
+    })
+
 
 def farmer_logout_view(request):
     """

@@ -1,0 +1,176 @@
+{% extends "farmer_app/farmer_panel_base.html" %}
+
+{% block title %}Advisory Detail{% endblock %}
+{% block page_heading %}Advisory Detail{% endblock %}
+
+{% block extra_css %}
+<style>
+    .detail-layout {
+        display: grid;
+        gap: 22px;
+    }
+
+    .detail-card {
+        padding: 28px;
+    }
+
+    .detail-title {
+        margin: 0 0 10px;
+        color: var(--green-950);
+        font-size: 30px;
+        line-height: 1.2;
+    }
+
+    .detail-meta {
+        margin: 0;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .field {
+        padding: 16px;
+        background: var(--green-50);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+    }
+
+    .field strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--green-900);
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .pdf-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    @media (max-width: 760px) {
+        .field-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="loading" class="message">Loading advisory detail...</div>
+<div id="errorState" class="message" hidden>Advisory detail not found.</div>
+<section id="detail" class="detail-layout" hidden></section>
+{% endblock %}
+
+{% block scripts %}
+{{ advisory_id|json_script:"record-id" }}
+<script>
+    const recordId = JSON.parse(document.getElementById('record-id').textContent);
+    const API_URL = `/api/advisory/${encodeURIComponent(recordId)}/`;
+    const loading = document.getElementById('loading');
+    const errorState = document.getElementById('errorState');
+    const detail = document.getElementById('detail');
+
+    const pdfFields = [
+        ['English PDF', 'path_pdf_en'],
+        ['Hindi PDF', 'path_pdf_hi'],
+        ['Gujarati PDF', 'path_pdf_gu'],
+        ['Language 1 PDF', 'lang_1_pdf'],
+        ['Language 2 PDF', 'lang_2_pdf'],
+        ['Language 3 PDF', 'lang_3_pdf'],
+        ['Language 4 PDF', 'lang_4_pdf'],
+        ['Language 5 PDF', 'lang_5_pdf'],
+        ['Language 6 PDF', 'lang_6_pdf'],
+        ['Language 7 PDF', 'lang_7_pdf'],
+    ];
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;',
+        }[char]));
+    }
+
+    function absoluteUrl(url) {
+        if (!url) return '';
+        try {
+            return new URL(url, window.location.origin).href;
+        } catch (_) {
+            return '';
+        }
+    }
+
+    function firstValue(record, keys) {
+        for (const key of keys) {
+            if (record[key] !== undefined && record[key] !== null && String(record[key]).trim() !== '') {
+                return String(record[key]).trim();
+            }
+        }
+        return '';
+    }
+
+    function labelFor(key) {
+        return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+    }
+
+    function renderDetail(record) {
+        const title = firstValue(record, ['title', 'advisory_title', 'week_en', 'week_hi', 'week_gu']) || `Advisory ${recordId}`;
+        const meta = firstValue(record, ['date_range_en', 'date_range_hi', 'date_range_gu', 'month_en', 'start_date_en']);
+        const pdfLinks = pdfFields
+            .map(([label, key]) => ({ label: record[key.replace('_pdf', '')] || label, url: absoluteUrl(record[key]) }))
+            .filter((item) => item.url);
+        const skip = new Set(['id', ...pdfFields.map(([, key]) => key)]);
+        const fields = Object.entries(record)
+            .filter(([key, value]) => !skip.has(key) && value !== null && value !== undefined && String(value).trim() !== '')
+            .map(([key, value]) => `
+                <div class="field">
+                    <strong>${escapeHtml(labelFor(key))}</strong>
+                    <span>${escapeHtml(value)}</span>
+                </div>
+            `).join('');
+
+        detail.innerHTML = `
+            <article class="card detail-card">
+                <h3 class="detail-title">${escapeHtml(title)}</h3>
+                <p class="detail-meta">${escapeHtml(meta)}</p>
+            </article>
+            <article class="card detail-card">
+                <h3 class="card-title">Advisory Files</h3>
+                <div class="pdf-list">
+                    ${pdfLinks.length ? pdfLinks.map((item) => `<a class="button" href="${escapeHtml(item.url)}" target="_blank" rel="noopener">${escapeHtml(item.label)}</a>`).join('') : '<p class="card-meta">No PDF file available.</p>'}
+                </div>
+            </article>
+            <article class="card detail-card">
+                <h3 class="card-title">API Data</h3>
+                <div class="field-grid">${fields}</div>
+            </article>
+        `;
+        detail.hidden = false;
+    }
+
+    async function loadDetail() {
+        try {
+            const response = await fetch(API_URL, { headers: { 'Accept': 'application/json' } });
+            if (!response.ok) throw new Error(`API ${response.status}`);
+            const record = await response.json();
+            loading.hidden = true;
+            renderDetail(record);
+        } catch (error) {
+            loading.hidden = true;
+            errorState.hidden = false;
+            console.error('Advisory detail API failed:', error);
+        }
+    }
+
+    loadDetail();
+</script>
+{% endblock %}

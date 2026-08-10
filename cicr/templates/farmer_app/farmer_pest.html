@@ -118,7 +118,7 @@
             `<span><strong>${escapeHtml(label)}:</strong> ${escapeHtml(numberText(value))}</span>`
         )).join('');
         return `
-            <article class="card pest-card" data-id="${escapeHtml(item.id)}">
+            <a class="card pest-card" href="/farmer/pest/${encodeURIComponent(item.id)}/" data-id="${escapeHtml(item.id)}">
                 <div class="card-image">
                     <div class="image-fallback">${escapeHtml(item.title)}</div>
                 </div>
@@ -128,7 +128,7 @@
                     <div class="pest-data">${values}</div>
                     <span class="button">Read More</span>
                 </div>
-            </article>
+            </a>
         `;
     }
 

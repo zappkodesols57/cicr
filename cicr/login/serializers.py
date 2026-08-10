@@ -35,6 +35,7 @@ class AdvisorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Advisory
         fields = [
+            'id',
             'week_en', 'week_hi', 'week_gu',
             'date_range_en', 'date_range_hi', 'date_range_gu',
             'month_en', 'month_hi', 'month_gu',

@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from investigator_app.models import *
 
 from rest_framework.views import APIView
@@ -2522,6 +2522,13 @@ class PestIncidenceDataListCreateAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PestIncidenceDataDetailAPIView(APIView):
+    def get(self, request, pk):
+        pest_data = get_object_or_404(pest_incidence_data, pk=pk)
+        serializer = PestIncidenceDataSerializer(pest_data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 

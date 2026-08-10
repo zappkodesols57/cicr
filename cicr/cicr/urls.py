@@ -35,8 +35,10 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("advisories/", farmer_views.farmer_advisories_view, name="farmer_advisories_short"),
+    path("advisories/<int:advisory_id>/", farmer_views.farmer_advisory_detail_view, name="farmer_advisory_detail_short"),
     path("calculator/", farmer_views.farmer_calculator_view, name="farmer_calculator_short"),
     path("pest/", farmer_views.farmer_pest_view, name="farmer_pest_short"),
+    path("pest/<int:pest_id>/", farmer_views.farmer_pest_detail_view, name="farmer_pest_detail_short"),
 
     # Migrated CICR 2 apps
     path("", include("login.urls")),

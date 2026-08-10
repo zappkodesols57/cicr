@@ -1191,6 +1191,13 @@ class AdvisoryCreateAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class AdvisoryDetailAPIView(APIView):
+    def get(self, request, pk, format=None):
+        advisory = get_object_or_404(Advisory, pk=pk)
+        serializer = AdvisorySerializer(advisory, context={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 
 
 from django.shortcuts import render, redirect, get_object_or_404

@@ -1,0 +1,183 @@
+{% extends "farmer_app/farmer_panel_base.html" %}
+
+{% block title %}Pest Detail{% endblock %}
+{% block page_heading %}Pest Detail{% endblock %}
+
+{% block extra_css %}
+<style>
+    .detail-layout {
+        display: grid;
+        gap: 22px;
+    }
+
+    .detail-card {
+        padding: 28px;
+    }
+
+    .detail-title {
+        margin: 0 0 10px;
+        color: var(--green-950);
+        font-size: 30px;
+        line-height: 1.2;
+    }
+
+    .detail-meta {
+        margin: 0;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
+    .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .metric,
+    .field {
+        padding: 16px;
+        background: var(--green-50);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+    }
+
+    .metric strong,
+    .field strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--green-900);
+        font-size: 13px;
+        text-transform: uppercase;
+    }
+
+    .metric span {
+        color: #000000;
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    @media (max-width: 1100px) {
+        .metric-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 760px) {
+        .metric-grid,
+        .field-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="loading" class="message">Loading pest detail...</div>
+<div id="errorState" class="message" hidden>Pest detail not found.</div>
+<section id="detail" class="detail-layout" hidden></section>
+{% endblock %}
+
+{% block scripts %}
+{{ pest_id|json_script:"record-id" }}
+<script>
+    const recordId = JSON.parse(document.getElementById('record-id').textContent);
+    const API_URL = `/api/pest_incidence_data/${encodeURIComponent(recordId)}/`;
+    const loading = document.getElementById('loading');
+    const errorState = document.getElementById('errorState');
+    const detail = document.getElementById('detail');
+
+    const metricFields = [
+        ['Jassid IRM', 'jassid_irm_average'],
+        ['Jassid Non-IRM', 'jassid_nonirm_average'],
+        ['Whitefly IRM', 'whitefly_irm_average'],
+        ['Whitefly Non-IRM', 'whitefly_nonirm_average'],
+        ['Thrips IRM', 'thrips_irm_average'],
+        ['Thrips Non-IRM', 'thrips_nonirm_average'],
+        ['PBW Incidence IRM', 'incidence_irm_average'],
+        ['PBW Incidence Non-IRM', 'incidence_nonirm_average'],
+        ['Pheromone IRM', 'pheromone_irm_average'],
+        ['Pheromone Non-IRM', 'pheromone_nonirm_average'],
+    ];
+
+    function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, (char) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;',
+        }[char]));
+    }
+
+    function labelFor(key) {
+        return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+    }
+
+    function numberText(value) {
+        if (value === undefined || value === null || value === '') return '-';
+        const numeric = Number(value);
+        if (Number.isFinite(numeric)) return numeric.toFixed(2).replace(/\.00$/, '');
+        return String(value);
+    }
+
+    function renderDetail(record) {
+        const title = [record.district, record.standard_week || record.week].filter(Boolean).join(' - ') || `Pest Record ${recordId}`;
+        const meta = [record.month, record.year, record.pest_date || record.date_field].filter(Boolean).join(' | ');
+        const metrics = metricFields
+            .filter(([, key]) => record[key] !== undefined && record[key] !== null)
+            .map(([label, key]) => `
+                <div class="metric">
+                    <strong>${escapeHtml(label)}</strong>
+                    <span>${escapeHtml(numberText(record[key]))}</span>
+                </div>
+            `).join('');
+        const skip = new Set(['id', ...metricFields.map(([, key]) => key)]);
+        const fields = Object.entries(record)
+            .filter(([key, value]) => !skip.has(key) && value !== null && value !== undefined && String(value).trim() !== '')
+            .map(([key, value]) => `
+                <div class="field">
+                    <strong>${escapeHtml(labelFor(key))}</strong>
+                    <span>${escapeHtml(value)}</span>
+                </div>
+            `).join('');
+
+        detail.innerHTML = `
+            <article class="card detail-card">
+                <h3 class="detail-title">${escapeHtml(title)}</h3>
+                <p class="detail-meta">${escapeHtml(meta || 'Pest incidence record')}</p>
+            </article>
+            <article class="card detail-card">
+                <h3 class="card-title">Incidence Summary</h3>
+                <div class="metric-grid">${metrics}</div>
+            </article>
+            <article class="card detail-card">
+                <h3 class="card-title">API Data</h3>
+                <div class="field-grid">${fields}</div>
+            </article>
+        `;
+        detail.hidden = false;
+    }
+
+    async function loadDetail() {
+        try {
+            const response = await fetch(API_URL, { headers: { 'Accept': 'application/json' } });
+            if (!response.ok) throw new Error(`API ${response.status}`);
+            const record = await response.json();
+            loading.hidden = true;
+            renderDetail(record);
+        } catch (error) {
+            loading.hidden = true;
+            errorState.hidden = false;
+            console.error('Pest detail API failed:', error);
+        }
+    }
+
+    loadDetail();
+</script>
+{% endblock %}

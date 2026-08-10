@@ -105,19 +105,21 @@
             'image', 'image_url', 'advisory_image', 'thumbnail', 'thumbnail_url',
             'photo', 'photo_url', 'banner', 'banner_image'
         ]));
-        const link = absoluteUrl(firstValue(record, [
-            'url', 'detail_url', 'pdf', 'path_pdf_en', 'path_pdf_hi', 'path_pdf_gu',
-            'lang_1_pdf', 'lang_2_pdf', 'lang_3_pdf', 'lang_4_pdf', 'lang_5_pdf',
-            'lang_6_pdf', 'lang_7_pdf'
-        ])) || '#';
+        const id = firstValue(record, ['id', 'pk', 'advisory_id']);
+        const pdf = absoluteUrl(firstValue(record, [
+            'pdf', 'path_pdf_en', 'path_pdf_hi', 'path_pdf_gu', 'lang_1_pdf',
+            'lang_2_pdf', 'lang_3_pdf', 'lang_4_pdf', 'lang_5_pdf', 'lang_6_pdf',
+            'lang_7_pdf'
+        ]));
 
         return {
-            id: firstValue(record, ['id', 'pk']) || String(index + 1),
+            id,
             title: title || 'CICR IRM Advisory',
             date,
             description,
             image,
-            link,
+            pdf,
+            link: id ? `/farmer/advisories/${encodeURIComponent(id)}/` : '#',
         };
     }
 

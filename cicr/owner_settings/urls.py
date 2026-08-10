@@ -63,6 +63,7 @@ urlpatterns = [
     
     # All API's 
     path('api/pest_incidence_data/', PestIncidenceDataListCreateAPIView.as_view(), name='pest_incidence_data_list_create'),
+    path('api/pest_incidence_data/<int:pk>/', PestIncidenceDataDetailAPIView.as_view(), name='pest_incidence_data_detail'),
     path('api/monthly_physical_progress/', MonthlyPhysicalProgressListCreateAPIView.as_view(), name='monthly_physical_progress_list_create'),
     path('api/monthly_physical_progress/<int:pk>/', MonthlyPhysicalProgressDetailAPIView.as_view(), name='monthly_physical_progress_detail'),
     path('api/extension_activities/', ExtensionActivitiesListCreateAPIView.as_view(), name='extension_activities_list_create'),

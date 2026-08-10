@@ -67,5 +67,5 @@ class StandardWeekSerializer(serializers.ModelSerializer):
 class NewsArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewsArticle
-        fields = ['issue_no', 'date', 'month', 'pdf']
+        fields = ['id', 'issue_no', 'date', 'month', 'pdf']
 
