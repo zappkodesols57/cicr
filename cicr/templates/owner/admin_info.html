@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admins</title>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding: 20px;
+      }
+      .admin-list {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .table-container {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      .table-container table {
+        width: 100%;
+      }
+      .create-admin-btn {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        animation-name: popup;
+        animation-duration: 0.4s;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .create-admin-btn button {
+        border: none;
+        background-color: #198754;
+        color: white;
+        padding: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 10px;
+      }
+      .modal-input-section label {
+        font-size: 14px;
+      }
+      .modal-input-section input {
+        width: 100%;
+        outline: none;
+        border: none;
+        background-color: #ffffff;
+        padding: 10px;
+        border-radius: 6px;
+        transition: all 0.2s ease-in;
+        border: 1px solid rgb(68, 68, 68);
+      }
+      .modal-input-section input:focus {
+        outline: none;
+        border: 1.5px solid black;
+        background-color: white;
+      }
+      .action-btns {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 15px;
+      }
+      .close-btn {
+        padding: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        background-color: #888;
+        color: white;
+        border: none;
+        border-radius: 10px;
+      }
+      .save-btn {
+        padding: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        background-color: #198754;
+        color: white;
+        border: none;
+        border-radius: 10px;
+      }
+      @keyframes popup {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container admin-list">
+      <p style="color: red">{{ error_message }}</p>
+      <div class="create-admin-btn">
+        <button type="button" id="openModalBtn">Create Admin</button>
+      </div>
+      {% if admin_data %}
+      <div class="table-container">
+        <h3>{{ district_user }} Admin List</h3>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Password</th>
+              <th>Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for admin in admin_data %}
+            <tr>
+              <td>{{ admin.user_id }}</td>
+              <td>{{ admin.generated_pass }}</td>
+              <td>{{ admin.first_name }} {{ admin.last_name }}</td>
+              <td>{{ admin.email_id }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No admins found.</p>
+      {% endif %}
+    </div>
+    <div id="createAdminModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Admin</h5>
+          <span class="close" id="closeModalBtn">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form action="/users/{{ district_user }}/" method="POST">
+            {% csrf_token %}
+            <div class="col-md-12">
+              <div class="d-flex row">
+                <div class="col-md-6 mb-3 modal-input-section">
+                  <label for="first_name" class="">First Name <span style="color: red;">*</span></label>
+                  <input type="text" class="" id="first_name" name="first_name" pattern="[A-Za-z]+" title="Only alphabets are allowed" required />
+                </div>
+
+                <div class="col-md-6 mb-3 modal-input-section">
+                  <label for="last_name" class="">Last Name</label>
+                    <input type="text" class="" id="last_name" name="last_name" />
+                </div>
+
+                <!-- <div class="col-md-6 mb-3 modal-input-section">
+                  <label for="salutation" class="">Salutation</label>
+                  <input type="text" class="" id="salutation" name="salutation" />
+                </div> -->
+
+              </div>
+
+              <div class="d-flex row">
+                <div class="col-md-6 mb-3 modal-input-section">
+                  <label for="email_id" class="">Email ID <span style="color: red;">*</span></label>
+                  <input type="email" class="" id="email_id" name="email_id" required />
+                </div>
+                <div class="col-md-6 mb-3 modal-input-section">
+                  <label for="mobile_number" class="">Mobile Number <span style="color: red;">*</span> </label>
+                  <input type="tel" class="" id="mobile_number" name="mobile_number"  pattern="[0-9]{10}" maxlength="10" required title="Please enter 10 digits Mobile Number" />
+                </div>
+              </div>
+
+              <!-- <div class="d-flex row">
+                <div class="col-md-4 mb-3 modal-input-section">
+                  <label for="first_name" class="">First Name</label>
+                  <input type="text" class="" id="first_name" name="first_name" required />
+                </div>
+
+                <div class="col-md-4 mb-3 modal-input-section">
+                  <label for="middle_name" class="">Middle Name</label>
+                  <input type="text" class="" id="middle_name" name="middle_name" />
+                </div>
+
+                <div class="col-md-4 mb-3 modal-input-section">
+                  <label for="last_name" class="">Last Name</label>
+                  <input type="text" class="" id="last_name" name="last_name" />
+                </div>
+              </div> -->
+
+              <div class="d-flex row">
+                <div class="col-md-6 mb-3 modal-input-section">
+                    <label for="user_district" class="">User District</label>
+                    <input type="text" id="user_district" name="user_district" value="{{ district_user }}" readonly />
+                </div>
+              </div>
+              
+            </div>
+            <div class="action-btns p-0 pt-1">
+              <button type="button" class="close-btn" id="closeModalFooterBtn">Close</button>
+              <button type="submit" class="save-btn">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById("createAdminModal");
+        var openModalBtn = document.getElementById("openModalBtn");
+        var closeModalBtn = document.getElementById("closeModalBtn");
+        var closeModalFooterBtn = document.getElementById("closeModalFooterBtn");
+
+        openModalBtn.onclick = function () {
+          modal.style.display = "flex";
+        };
+
+        closeModalBtn.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        closeModalFooterBtn.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
+{% endblock %}

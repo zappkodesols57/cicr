@@ -1,0 +1,533 @@
+{% extends "admin_base.html" %} 
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+  </head>
+
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+    body {
+      font-family: "Open Sans", Arial;
+    }
+    .dashboard {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 3rem;
+      gap: 2rem;
+    }
+
+    .dashboard-title {
+      width: 100%;
+      height: 100%;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .dashboard-title span {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .charts-section {
+      width: 48%;
+      height: 350px; /* Fixed height */
+      padding: 0.5rem;
+      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .weekly-status-parent-section {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .weekly-status-title{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .weekly-status-title span {
+      font-size: 30px;
+    }
+
+    /*.weekly-status-section {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }*/
+
+    .charts-section-week {
+      height: 380px; /* Fixed height */
+      padding: 20px 10px;
+      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+    }
+
+    #bar-chart1,
+    #bar-chart2 {
+      width: 100%;
+      height: 350px;
+    }
+
+    #line-chart1,
+    #line-chart2,
+    #line-chart3,
+    #line-chart4,
+    #line-chart5,
+    #line-chart6,
+    #line-chart7,
+    #line-chart8 {
+    
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .charts-section-title-parent{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .modal-input-section{
+      margin-right: 50px;
+    }
+
+
+    .modal-input-section select {
+      width: 100%;
+      outline: none;
+      border: none;
+      background-color: #ffffff;
+      padding: 8px 15px;
+      border-radius: 6px;
+      transition: all 0.2s ease-in;
+      border: 1px solid rgb(68, 68, 68);
+    }
+    .modal-input-section select::selection {
+      outline: none;
+      border: 1.5px solid black;
+      background-color: white;
+    }
+
+
+    
+  </style>
+
+  <body>
+    <section class="dashboard">
+      <div class="dashboard-title d-flex justify-content-between">
+        <h2>ADMIN PANEL</h2>
+        <div class="modal-input-section">
+            <form id="month-form" method="GET" action="{% url 'dashboard_admin' %}">
+              <select id="month" name="month" class="" required>
+                <option value="" disabled selected>{{selected_month}}</option>
+                {% for month in months %}
+                    <option value="{{ month }}" {% if month == selected_month %}selected{% endif %}>
+                        {{ month }}
+                    </option>
+                {% endfor %}
+              </select>
+            </form>
+          </div>
+      </div>
+
+      <div class="charts-section">
+        <div class="charts-section-title">
+          <span>Survey Submitted by Investigators</span>
+        </div>
+        <div id="bar-chart1"></div>
+      </div>
+
+      <div class="charts-section">
+        <div class="charts-section-title-parent">
+          <span>Weekly Report Submitted by Investigators</span>
+
+
+        </div>
+        <div id="bar-chart2"></div>
+      </div>
+
+      <div class="weekly-status-parent-section">
+        <div class="weekly-status-title">
+          <span>Weekly Progress Report Analytics</span>
+
+        </div>
+        <div class="row">
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+              <div class="charts-section-title">
+                <span>JASSID</span>
+              </div>
+              <div id="line-chart1"></div>
+            </div>
+          </div>
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+              <div class="charts-section-title">
+                <span>WHITEFLY</span>
+              </div>
+              <div id="line-chart2"></div>
+            </div>
+          </div>
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+              <div class="charts-section-title">
+                <span>THRIPS</span>
+              </div>
+              <div id="line-chart3"></div>
+            </div>
+          </div>
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+              <div class="charts-section-title">
+                <span>PINK BOLLWORM</span>
+              </div>
+              <div id="line-chart4"></div>
+            </div>
+          </div>
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+              <div class="charts-section-title">
+                <span>PINK BOLLWORM Infestation (Green Boll)</span>
+              </div>
+              <div id="line-chart5"></div>
+            </div>
+          </div>
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+            <div class="charts-section-title">
+              <span>PINK BOLLWORM Infestation (Locule Damage)</span>
+            </div>
+            <div id="line-chart6"></div>
+            </div>
+          </div>
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+              <div class="charts-section-title">
+                <span>PINK BOLLWORM Infestation (Open Boll)</span>
+              </div>
+              <div id="line-chart7"></div>
+            </div>
+          </div>
+
+          <div class="p-2 col-md-4 col-xl-4 col-sm-6">
+            <div class="charts-section-week">
+              <div class="charts-section-title">
+                <span>Pheromone trap Catches</span>
+              </div>
+              <div id="line-chart8"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+  <script>
+    document.getElementById('month').addEventListener('change', function() {
+        document.getElementById('month-form').submit();
+    });
+
+    // const currentMonth = new Date().toLocaleString('default', { month: 'long' });
+    // const monthSelect = document.getElementById('month');
+
+    // for (let i = 0; i < monthSelect.options.length; i++) {
+    //   if (monthSelect.options[i].value === currentMonth) {
+    //     monthSelect.options[i].selected = true;
+    //     break;
+    //   }
+    // }
+  </script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script>
+      google.load("visualization", "1", { packages: ["corechart"] });
+      google.setOnLoadCallback(drawCharts);
+
+      function drawCharts() {
+        // Bar chart data
+        var barData1 = google.visualization.arrayToDataTable([
+                ["Month", "Surveys"],
+                {% for item in survey_data %}
+                    ["{{ item.month_name }}", {{ item.count }}],
+                {% endfor %}
+                
+            ]);
+
+        var barData2 = google.visualization.arrayToDataTable([
+              ["Region", "Weekly Reports"],
+              {% for item in pest_data %}
+                ["{{ item.month }}", {{ item.count }}],
+              {% endfor %}
+            
+            ]);
+
+        // Line chart data (jassid data)
+        var lineData1 = google.visualization.arrayToDataTable({{ chart_data|safe }});
+
+        // comment aparna to do:
+
+        // var lineData1 = google.visualization.arrayToDataTable([
+        //   ["Month", "IRM", "NON-IRM"],
+        //   ["week-1", 1000, 41],
+        //   ["week-2", 170, 460],
+        //   ["week-3", 660, 111],
+        //   ["week-4", 110, 540],
+        // ]);
+
+        // Line chart data (whitfly)
+        var lineData2 = google.visualization.arrayToDataTable({{ chart_data2|safe }});
+        
+
+        // Line chart data (THRIPS)
+        var lineData3 = google.visualization.arrayToDataTable({{ chart_data3|safe }});
+        
+        // Line chart data (PINK BOLLWORM)
+        var lineData4 = google.visualization.arrayToDataTable({{ chart_data4|safe }});
+
+        // Line chart data (PINK BOLLWORM Infestation (Green Boll))
+        var lineData5 = google.visualization.arrayToDataTable({{ chart_data5|safe }});
+
+        // Line chart data (PINK BOLLWORM Infestation (Locule Damage))
+        var lineData6 = google.visualization.arrayToDataTable({{ chart_data6|safe }});
+
+        // Line chart data (PINK BOLLWORM Infestation (Open Boll))
+        var lineData7 = google.visualization.arrayToDataTable({{ chart_data7|safe }});
+
+        // Line chart data (Pheromone trap Catches)
+        var lineData8 = google.visualization.arrayToDataTable({{ chart_data8|safe }});
+
+
+        // Set bar chart options
+        var barOptions = {
+          focusTarget: "category",
+          backgroundColor: "transparent",
+          colors: ["green", "lightgreen"],
+          fontName: "Open Sans",
+          chartArea: {
+            left: 50,
+            top: 10,
+            width: "80%",
+            height: "70%",
+          },
+          bar: {
+            groupWidth: "30%",
+          },
+          hAxis: {
+            textStyle: {
+              fontSize: 11,
+            },
+          },
+          //
+          vAxis: {
+            minValue: 0,
+            maxValue: 100,
+            baselineColor: "#DDD",
+            gridlines: {
+              color: "#DDD",
+              count: 5,
+            },
+            textStyle: {
+              fontSize: 11,
+            },
+          },
+          legend: {
+            position: "bottom",
+            textStyle: {
+              fontSize: 12,
+            },
+          },
+          animation: {
+            duration: 500,
+            easing: "out",
+            startup: true,
+          },
+        };
+
+        var barOptions2 = {
+          focusTarget: "category",
+          backgroundColor: "transparent",
+          colors: ["green", "lightgreen"],
+          fontName: "Open Sans",
+          chartArea: {
+            left: 50,
+            top: 10,
+            width: "80%",
+            height: "70%",
+          },
+          bar: {
+            groupWidth: "30%",
+          },
+          hAxis: {
+            textStyle: {
+              fontSize: 11,
+            },
+          },
+          //
+          vAxis: {
+            minValue: 50,
+            maxValue: 0,
+            baselineColor: "#DDD",
+            gridlines: {
+              color: "#DDD",
+              count: 5,
+            },
+            textStyle: {
+              fontSize: 11,
+            },
+          },
+          legend: {
+            position: "bottom",
+            textStyle: {
+              fontSize: 12,
+            },
+          },
+          animation: {
+            duration: 500,
+            easing: "out",
+            startup: true,
+          },
+        };
+
+        // Set line chart options
+        var lineOptions = {
+          backgroundColor: "transparent",
+          colors: ["cornflowerblue", "lightcoral"],
+          fontName: "Open Sans",
+          chartArea: {
+            left: 50,
+            top: 10,
+            width: "80%",
+            height: "70%",
+          },
+          hAxis: {
+            textStyle: {
+              fontSize: 11,
+            },
+          },
+          vAxis: {
+            minValue: 50,
+            maxValue: 0,
+            baselineColor: "#DDD",
+            gridlines: {
+              color: "#DDD",
+              count: 5,
+            },
+            textStyle: {
+              fontSize: 11,
+            },
+          },
+          legend: {
+            position: "bottom",
+            textStyle: {
+              fontSize: 12,
+            },
+          },
+          animation: {
+            duration: 500,
+            easing: "out",
+            startup: true,
+          },
+          series: {
+            0: { lineWidth: 4 }, // Increase the line width for the first series
+            1: { lineWidth: 4 }, // Increase the line width for the second series
+          },
+          tooltip: {
+            trigger: "both", // Display tooltip on hover and focus
+            ignoreBounds: true, // Allow tooltip to be displayed outside the data point bounds
+          },
+        };
+
+        // Draw bar charts
+        var barChart1 = new google.visualization.ColumnChart(
+          document.getElementById("bar-chart1")
+        );
+        var barChart2 = new google.visualization.ColumnChart(
+          document.getElementById("bar-chart2")
+        );
+
+        barChart1.draw(barData1, barOptions);
+        barChart2.draw(barData2, barOptions2);
+
+        // Draw line chart
+        var lineChart1 = new google.visualization.LineChart(
+          document.getElementById("line-chart1")
+        );
+        var lineChart2 = new google.visualization.LineChart(
+          document.getElementById("line-chart2")
+        );
+        var lineChart3 = new google.visualization.LineChart(
+          document.getElementById("line-chart3")
+        );
+        var lineChart4 = new google.visualization.LineChart(
+          document.getElementById("line-chart4")
+        );
+        var lineChart5 = new google.visualization.LineChart(
+          document.getElementById("line-chart5")
+        );
+        var lineChart6 = new google.visualization.LineChart(
+          document.getElementById("line-chart6")
+        );
+        var lineChart7 = new google.visualization.LineChart(
+          document.getElementById("line-chart7")
+        );
+        var lineChart8 = new google.visualization.LineChart(
+          document.getElementById("line-chart8")
+        );
+
+        lineChart1.draw(lineData1, lineOptions);
+        lineChart2.draw(lineData2, lineOptions);
+        lineChart3.draw(lineData3, lineOptions);
+        lineChart4.draw(lineData4, lineOptions);
+        lineChart5.draw(lineData5, lineOptions);
+        lineChart6.draw(lineData6, lineOptions);
+        lineChart7.draw(lineData7, lineOptions);
+        lineChart8.draw(lineData8, lineOptions);
+      }
+    </script>
+  </body>
+</html>
+{% endblock %}

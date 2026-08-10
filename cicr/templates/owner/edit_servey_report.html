@@ -1,0 +1,211 @@
+{% extends "base.html" %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SURVEY REPORT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <style type="text/css">
+    	label{
+    		font-size: 14px;
+    	}
+    </style>
+</head>
+<body>
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="p-2">
+	    <div class="row mt-2 w-100 border-bottom">
+			<div class="col-md-3">
+				<div class="p-2 ">
+					<label class="form-label">IRM:</label>
+					<div class="d-flex">
+						<input class="form-check" type="radio" name="IRM" value="IRM" {% if data.IRM %}checked{% endif %}> IRM
+				    	<input class="ms-2 form-check" type="radio" name="IRM" value="NON-IRM" {% if not data.IRM %}checked{% endif %}> NON-IRM 
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">User ID:</label>
+    				<input class="form-control" type="text" name="user_id" value="{{ data.user_id }}" readonly/>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">District:</label>
+    				<input class="form-control" type="text" name="district" value="{{ data.district }}" readonly/>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Name:</label>
+    				<input class="form-control" type="text" name="name" value="{{ data.name }}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-2 w-100 border-bottom bg-light">
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Category:</label>
+    				<input class="form-control" type="text" name="category" value="{{ data.category }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Gender:</label>
+    				<input class="form-control" type="text" name="gender" value="{{ data.gender }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Village:</label>
+    				<input class="form-control" type="text" name="village" value="{{ data.village }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Taluka:</label>
+    				<input class="form-control" type="text" name="taluka" value="{{ data.taluka }}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-2 w-100 border-bottom">
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Mobile Number:</label>
+    				<input class="form-control" type="text" name="mobile_number" value="{{ data.mobile_number }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Date of Sowing:</label>
+    				<input class="form-control" type="date" name="date_of_sowing" value="{{ data.date_of_sowing|date:'Y-m-d' }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Row Distance:</label>
+    				<input class="form-control" type="text" name="row_distance" value="{{ data.row_distance }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Plant Distance:</label>
+    				<input class="form-control" type="text" name="plant_distance" value="{{ data.plant_distance }}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-2 w-100 border-bottom bg-light">
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Cotton Variety:</label>
+    				<input class="form-control" type="text" name="cotton_variety" value="{{ data.cotton_variety }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Previous Year Crop Grown:</label>
+				    <input class="form-control" type="text" name="previous_year_crop_grown" value="{{ data.previous_year_crop_grown }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Causes:</label>
+					<div>
+						<input class="form-check-input" type="radio" name="causes" value="irrigation" {% if data.causes %}checked{% endif %}> Irrigation
+    					<input class="form-check-input ms-2" type="radio" name="causes" value="rainfed" {% if not data.causes %}checked{% endif %}> Rainfed
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Last Year Crop Extended:</label>
+					<div class="d-flex">
+						<input class="form-check-input" type="radio" name="last_year_crop_extended" value="Yes" {% if data.last_year_crop_extended %}checked{% endif %}> Yes
+				    	<input class="form-check-input ms-2" type="radio" name="last_year_crop_extended" value="No" {% if not data.last_year_crop_extended %}checked{% endif %}> No 
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-2 w-100 border-bottom">
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label" for="soil_type">Soil Type:</label>
+				    <select class="form-select" name="soil_type" id="soil_type">
+				        <option value="{{ data.soil_type }}"> {{ data.soil_type }} </option>
+				        <option value="shallow" {% if data.soil_type == "Shallow" %}selected{% endif %}>Shallow</option>
+				        <option value="medium" {% if data.soil_type == "Medium" %}selected{% endif %}>Medium</option>
+				        <option value="heavy" {% if data.soil_type == "Heavy" %}selected{% endif %}>Heavy</option>
+				    </select>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Crop Rotation Followed:</label>
+					<div class="d-flex">
+						<input class="form-check-input" type="radio" name="crop_rotation_followed" value="Yes" {% if data.crop_rotation_followed %}checked{% endif %}> Yes
+				    	<input class="form-check-input ms-2" type="radio" name="crop_rotation_followed" value="No" {% if not data.crop_rotation_followed %}checked{% endif %}> No 
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Advisory Received From:</label>
+    				<input class="form-control" type="text" name="advisory_received_from" value="{{ data.advisory_received_from }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Total Farmers Ecommunication:</label>
+    				<input class="form-control" type="number" name="total_farmers_ecommunication" value="{{ data.total_farmers_ecommunication }}" />
+				</div>
+			</div>
+		</div>
+
+		<div class="row mt-2 w-100 border-bottom bg-light">
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Survey Date:</label>
+    				<input class="form-control" type="date" name="servey_date"  value="{{ data.servey_date|date:'Y-m-d' }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Year:</label>
+    				<input class="form-control" type="text" name="year" value="{{ data.year }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Land Area:</label>
+    				<input class="form-control" type="text" name="landarea" value="{{ data.landarea }}" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="p-2">
+					<label class="form-label">Aadhar Number:</label>
+    				<input class="form-control" type="text" name="aadhar_number" value="{{ data.aadhar_number }}" /> 
+				</div>
+			</div>
+		</div>
+
+		<div class="w-100 text-center mt-2"><button type="submit" class="btn btn-success">Save Changes</button></div>
+	</div>
+  
+  </form>
+
+</body>
+</html>
+{% endblock content %}
+
+  

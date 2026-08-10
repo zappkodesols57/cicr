@@ -1,0 +1,486 @@
+{% extends "base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Pest Incidence Data</title>
+    <style>
+        h1{
+            font-size: 25px;
+            margin-left: 18px;
+        } 
+    </style>
+</head>
+<body>
+<div class="w-100 border-bottom d-flex justify-content-between p-1">
+    <h1 >Update Pest Incidence Data</h1>
+    <button class="btn btn-success btn-sm me-2">
+        <a class="text-white" href="{% url 'detailed_report' district_name=district_name month=month %}">Back to Detailed Report</a>
+    </button>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="p-2">
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Jassid IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item1" value="{{ pest_data.jassid_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item2" value="{{ pest_data.jassid_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item3" value="{{ pest_data.jassid_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item4" value="{{ pest_data.jassid_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item5" value="{{ pest_data.jassid_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item6" value="{{ pest_data.jassid_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item7" value="{{ pest_data.jassid_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item8" value="{{ pest_data.jassid_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_irm_item9" value="{{ pest_data.jassid_irm_item9 }}">
+                        <input class="form-control p-1" type="text" name="jassid_irm_item10" value="{{ pest_data.jassid_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1 align-items-center">
+                        <label class="form-label">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.jassid_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Jassid Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item1" value="{{ pest_data.jassid_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item2" value="{{ pest_data.jassid_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item3" value="{{ pest_data.jassid_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item4" value="{{ pest_data.jassid_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item5" value="{{ pest_data.jassid_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item6" value="{{ pest_data.jassid_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item7" value="{{ pest_data.jassid_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item8" value="{{ pest_data.jassid_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="jassid_nonirm_item9" value="{{ pest_data.jassid_nonirm_item9 }}">
+                        <input class="form-control p-1" type="text" name="jassid_nonirm_item10" value="{{ pest_data.jassid_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.jassid_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Whitefly IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item1" value="{{ pest_data.whitefly_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item2" value="{{ pest_data.whitefly_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item3" value="{{ pest_data.whitefly_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item4" value="{{ pest_data.whitefly_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item5" value="{{ pest_data.whitefly_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item6" value="{{ pest_data.whitefly_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item7" value="{{ pest_data.whitefly_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item8" value="{{ pest_data.whitefly_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_irm_item9" value="{{ pest_data.whitefly_irm_item9 }}">
+                        <input class="form-control p-1" type="text" name="whitefly_irm_item10" value="{{ pest_data.whitefly_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.whitefly_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Whitefly Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item1" value="{{ pest_data.whitefly_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item2" value="{{ pest_data.whitefly_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item3" value="{{ pest_data.whitefly_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item4" value="{{ pest_data.whitefly_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item5" value="{{ pest_data.whitefly_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item6" value="{{ pest_data.whitefly_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item7" value="{{ pest_data.whitefly_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item8" value="{{ pest_data.whitefly_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="whitefly_nonirm_item9" value="{{ pest_data.whitefly_nonirm_item9 }}">
+                        <input class="form-control p-1" type="text" name="whitefly_nonirm_item10" value="{{ pest_data.whitefly_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.whitefly_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Thrips IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item1" value="{{ pest_data.thrips_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item2" value="{{ pest_data.thrips_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item3" value="{{ pest_data.thrips_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item4" value="{{ pest_data.thrips_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item5" value="{{ pest_data.thrips_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item6" value="{{ pest_data.thrips_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item7" value="{{ pest_data.thrips_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item8" value="{{ pest_data.thrips_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_irm_item9" value="{{ pest_data.thrips_irm_item9 }}">
+                        <input class="form-control p-1" type="text" name="thrips_irm_item10" value="{{ pest_data.thrips_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.thrips_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Thrips Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item1" value="{{ pest_data.thrips_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item2" value="{{ pest_data.thrips_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item3" value="{{ pest_data.thrips_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item4" value="{{ pest_data.thrips_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item5" value="{{ pest_data.thrips_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item6" value="{{ pest_data.thrips_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item7" value="{{ pest_data.thrips_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item8" value="{{ pest_data.thrips_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="thrips_nonirm_item9" value="{{ pest_data.thrips_nonirm_item9 }}">
+                        <input class="form-control p-1" type="text" name="thrips_nonirm_item10" value="{{ pest_data.thrips_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.thrips_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Flower IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item1" value="{{ pest_data.flowers_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item2" value="{{ pest_data.flowers_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item3" value="{{ pest_data.flowers_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item4" value="{{ pest_data.flowers_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item5" value="{{ pest_data.flowers_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item6" value="{{ pest_data.flowers_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item7" value="{{ pest_data.flowers_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item8" value="{{ pest_data.flowers_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_irm_item9" value="{{ pest_data.flowers_irm_item9 }}">
+                        <input class="form-control p-1" type="text" name="flower_irm_item10" value="{{ pest_data.flowers_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.flowers_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Flower Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item1" value="{{ pest_data.flowers_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item2" value="{{ pest_data.flowers_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item3" value="{{ pest_data.flowers_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item4" value="{{ pest_data.flowers_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item5" value="{{ pest_data.flowers_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item6" value="{{ pest_data.flowers_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item7" value="{{ pest_data.flowers_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item8" value="{{ pest_data.flowers_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="flower_nonirm_item9" value="{{ pest_data.flowers_nonirm_item9 }}">
+                        <input class="form-control p-1" type="text" name="flower_nonirm_item10" value="{{ pest_data.flowers_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.flowers_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Green IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item1" value="{{ pest_data.green_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item2" value="{{ pest_data.green_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item3" value="{{ pest_data.green_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item4" value="{{ pest_data.green_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item5" value="{{ pest_data.green_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item6" value="{{ pest_data.green_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item7" value="{{ pest_data.green_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item8" value="{{ pest_data.green_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_irm_item9" value="{{ pest_data.green_irm_item9 }}">
+                        <input class="form-control p-1" type="text" name="green_irm_item10" value="{{ pest_data.green_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.green_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Green Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item1" value="{{ pest_data.green_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item2" value="{{ pest_data.green_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item3" value="{{ pest_data.green_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item4" value="{{ pest_data.green_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item5" value="{{ pest_data.green_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item6" value="{{ pest_data.green_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item7" value="{{ pest_data.green_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item8" value="{{ pest_data.green_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="green_nonirm_item9" value="{{ pest_data.green_nonirm_item9 }}">
+                        <input class="form-control p-1" type="text" name="green_nonirm_item10" value="{{ pest_data.green_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.green_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Locule IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item1" value="{{ pest_data.locule_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item2" value="{{ pest_data.locule_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item3" value="{{ pest_data.locule_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item4" value="{{ pest_data.locule_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item5" value="{{ pest_data.locule_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item6" value="{{ pest_data.locule_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item7" value="{{ pest_data.locule_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item8" value="{{ pest_data.locule_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_irm_item9" value="{{ pest_data.locule_irm_item9 }}">
+                        <input class="form-control p-1" type="text" name="locule_irm_item10" value="{{ pest_data.locule_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.locule_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Locule Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item1" value="{{ pest_data.locule_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item2" value="{{ pest_data.locule_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item3" value="{{ pest_data.locule_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item4" value="{{ pest_data.locule_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item5" value="{{ pest_data.locule_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item6" value="{{ pest_data.locule_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item7" value="{{ pest_data.locule_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item8" value="{{ pest_data.locule_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locule_nonirm_item9" value="{{ pest_data.locule_nonirm_item9 }}">
+                        <input class="form-control p-1 " type="text" name="locule_nonirm_item10" value="{{ pest_data.locule_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.locule_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Open Boll IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item1" value="{{ pest_data.open_ball_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item2" value="{{ pest_data.open_ball_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item3" value="{{ pest_data.open_ball_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item4" value="{{ pest_data.open_ball_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item5" value="{{ pest_data.open_ball_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item6" value="{{ pest_data.open_ball_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item7" value="{{ pest_data.open_ball_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item8" value="{{ pest_data.open_ball_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_irm_item9" value="{{ pest_data.open_ball_irm_item9 }}">
+                        <input class="form-control p-1 " type="text" name="open_ball_irm_item10" value="{{ pest_data.open_ball_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.open_ball_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Open Boll Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item1" value="{{ pest_data.open_ball_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item2" value="{{ pest_data.open_ball_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item3" value="{{ pest_data.open_ball_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item4" value="{{ pest_data.open_ball_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item5" value="{{ pest_data.open_ball_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item6" value="{{ pest_data.open_ball_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item7" value="{{ pest_data.open_ball_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item8" value="{{ pest_data.open_ball_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="open_ball_nonirm_item9" value="{{ pest_data.open_ball_nonirm_item9 }}">
+                        <input class="form-control p-1" type="text" name="open_ball_nonirm_item10" value="{{ pest_data.open_ball_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.open_ball_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Pheromone IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item1" value="{{ pest_data.pheromone_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item2" value="{{ pest_data.pheromone_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item3" value="{{ pest_data.pheromone_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item4" value="{{ pest_data.pheromone_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item5" value="{{ pest_data.pheromone_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item6" value="{{ pest_data.pheromone_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item7" value="{{ pest_data.pheromone_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item8" value="{{ pest_data.pheromone_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_irm_item9" value="{{ pest_data.pheromone_irm_item9 }}">
+                        <input class="form-control p-1 " type="text" name="pheromone_irm_item10" value="{{ pest_data.pheromone_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.pheromone_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Pheromone Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item1" value="{{ pest_data.pheromone_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item2" value="{{ pest_data.pheromone_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item3" value="{{ pest_data.pheromone_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item4" value="{{ pest_data.pheromone_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item5" value="{{ pest_data.pheromone_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item6" value="{{ pest_data.pheromone_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item7" value="{{ pest_data.pheromone_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item8" value="{{ pest_data.pheromone_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="pheromone_nonirm_item9" value="{{ pest_data.pheromone_nonirm_item9 }}">
+                        <input class="form-control p-1 " type="text" name="pheromone_nonirm_item10" value="{{ pest_data.pheromone_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.pheromone_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Incidence IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item1" value="{{ pest_data.incidence_irm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item2" value="{{ pest_data.incidence_irm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item3" value="{{ pest_data.incidence_irm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item4" value="{{ pest_data.incidence_irm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item5" value="{{ pest_data.incidence_irm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item6" value="{{ pest_data.incidence_irm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item7" value="{{ pest_data.incidence_irm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item8" value="{{ pest_data.incidence_irm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_irm_item9" value="{{ pest_data.incidence_irm_item9 }}">
+                        <input class="form-control p-1" type="text" name="incidence_irm_item10" value="{{ pest_data.incidence_irm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.incidence_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Incidence Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item1" value="{{ pest_data.incidence_nonirm_item1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item2" value="{{ pest_data.incidence_nonirm_item2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item3" value="{{ pest_data.incidence_nonirm_item3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item4" value="{{ pest_data.incidence_nonirm_item4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item5" value="{{ pest_data.incidence_nonirm_item5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item6" value="{{ pest_data.incidence_nonirm_item6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item7" value="{{ pest_data.incidence_nonirm_item7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item8" value="{{ pest_data.incidence_nonirm_item8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="incidence_nonirm_item9" value="{{ pest_data.incidence_nonirm_item9 }}">
+                        <input class="form-control p-1 " type="text" name="incidence_nonirm_item10" value="{{ pest_data.incidence_nonirm_item10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.incidence_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100 border-bottom">
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Locular Damage IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm1" value="{{ pest_data.locular_damage_irm1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm2" value="{{ pest_data.locular_damage_irm2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm3" value="{{ pest_data.locular_damage_irm3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm4" value="{{ pest_data.locular_damage_irm4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm5" value="{{ pest_data.locular_damage_irm5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm6" value="{{ pest_data.locular_damage_irm6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm7" value="{{ pest_data.locular_damage_irm7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm8" value="{{ pest_data.locular_damage_irm8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_irm9" value="{{ pest_data.locular_damage_irm9 }}">
+                        <input class="form-control p-1 " type="text" name="locular_damage_irm10" value="{{ pest_data.locular_damage_irm10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.locular_damage_irm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-2 ">
+                    <label class="form-label fw-bold">Locular Damage Non-IRM</label>
+                    <div class="d-flex">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm1" value="{{ pest_data.locular_damage_nonirm1 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm2" value="{{ pest_data.locular_damage_nonirm2 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm3" value="{{ pest_data.locular_damage_nonirm3 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm4" value="{{ pest_data.locular_damage_nonirm4 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm5" value="{{ pest_data.locular_damage_nonirm5 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm6" value="{{ pest_data.locular_damage_nonirm6 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm7" value="{{ pest_data.locular_damage_nonirm7 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm8" value="{{ pest_data.locular_damage_nonirm8 }}">
+                        <input class="form-control p-1 me-1" type="text" name="locular_damage_nonirm9" value="{{ pest_data.locular_damage_nonirm9 }}">
+                        <input class="form-control p-1 " type="text" name="locular_damage_nonirm10" value="{{ pest_data.locular_damage_nonirm10 }}">
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="form-label align-items-center">Average:</label>
+                        <input class="form-control p-1 ms-1" type="text" value="{{ pest_data.locular_damage_nonirm_average|floatformat:2 }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-100 text-center mt-2"><button class="btn btn-success" type="submit">Update</button></div>
+    </div>
+    
+</form>
+
+
+
+</body>
+</html>
+{% endblock content %}

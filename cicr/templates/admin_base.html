@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <style type="text/css">
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  z-index: 100;
+  transition: all 0.5s ease;
+  background-color: #e9ffea;
+}
+.sidebar.close{
+  width: 78px;
+}
+.sidebar .logo-details{
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.sidebar .logo-details i{
+  font-size: 30px;
+  color: #11101d;
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+}
+.sidebar .logo-details .logo_name{
+  font-size: 22px;
+  color: #fff;
+  font-weight: 600;
+  transition: 0.3s ease;
+  transition-delay: 0.1s;
+}
+.sidebar.close .logo-details .logo_name{
+  transition-delay: 0s;
+  opacity: 0;
+  pointer-events: none;
+}
+.sidebar .nav-links{
+  height: 100%;
+  padding: 30px 0 150px 0;
+  overflow: auto;
+}
+.sidebar.close .nav-links{
+  overflow: visible;
+}
+.sidebar .nav-links::-webkit-scrollbar{
+  display: none;
+}
+.sidebar .nav-links li{
+  position: relative;
+  list-style: none;
+  transition: all 0.4s ease;
+}
+.sidebar .nav-links > li.active:before,
+.sidebar .nav-links > li:before{
+  position:absolute;
+  left:0;
+  top:0;
+  content:'';
+  width:4px;
+  height:100%;
+  background:#008000;
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+  border-top-right-radius:5px;
+  border-top-right-radius:5px;
+}
+.sidebar .nav-links li.active:before,
+.sidebar .nav-links li:hover:before{
+  opacity: 1;
+}
+.sidebar .nav-links li .iocn-link{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar.close .nav-links li .iocn-link{
+  display: block
+}
+.sidebar .nav-links li i{
+  height: 50px;
+  min-width: 78px;
+  text-align: center;
+  line-height: 50px;
+  color: #11101d;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-links li.active i,
+.sidebar .nav-links li:hover i{
+  color: #008000;  
+}
+.sidebar .nav-links li.showMenu i.arrow{
+  transform: rotate(-180deg);
+}
+.sidebar.close .nav-links i.arrow{
+  display: none;
+}
+.sidebar .nav-links li a{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.sidebar .nav-links li a .link_name{
+  font-size: 16px;
+  font-weight: 400;
+  color: #11101d;
+  transition: all 0.4s ease;
+}
+.sidebar .nav-links li.active a .link_name,
+.sidebar .nav-links li:hover a .link_name{  
+  color: #008000;
+}
+.sidebar.close .nav-links li a .link_name{
+  opacity: 0;
+  pointer-events: none;
+}
+.sidebar .nav-links li .sub-menu{
+  padding: 6px 6px 14px 80px;
+  margin-top: -10px;
+  background: #fff;
+  display: none;
+}
+.sidebar .nav-links li.showMenu .sub-menu{
+  display: block;
+}
+.sidebar .nav-links li .sub-menu a{
+  color: #1d1b31;
+  font-size: 15px;
+  padding: 5px 0;
+  white-space: nowrap;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+.sidebar .nav-links li .sub-menu a:hover{
+  opacity: 1;
+}
+.sidebar.close .nav-links li .sub-menu{
+  position: absolute;
+  left: 100%;
+  top: -10px;
+  margin-top: 0;
+  padding: 10px 20px;
+  border-radius: 0 6px 6px 0;
+  opacity: 0;
+  display: block;
+  pointer-events: none;
+  transition: 0s;
+}
+.sidebar.close .nav-links li:hover .sub-menu{
+  top: 0;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+}
+.sidebar .nav-links li .sub-menu .link_name{
+  display: none;
+}
+.sidebar.close .nav-links li .sub-menu .link_name{
+  font-size: 18px;
+  opacity: 1;
+  display: block;
+}
+.sidebar .nav-links li .sub-menu.blank{
+  opacity: 1;
+  pointer-events: auto;
+  padding: 3px 20px 6px 16px;
+  opacity: 0;
+  pointer-events: none;
+}
+.sidebar .nav-links li:hover .sub-menu.blank{
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar .profile-details{
+  position: fixed;
+  bottom: 0;
+  width: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1d1b31;
+  padding: 12px 0;
+  transition: all 0.5s ease;
+}
+.sidebar.close .profile-details{
+  background: none;
+}
+.sidebar.close .profile-details{
+  width: 78px;
+}
+.sidebar .profile-details .profile-content{
+  display: flex;
+  align-items: center;
+}
+.sidebar .profile-details img{
+  height: 52px;
+  width: 52px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin: 0 14px 0 12px;
+  background: #1d1b31;
+  transition: all 0.5s ease;
+}
+.sidebar.close .profile-details img{
+  padding: 10px;
+}
+.sidebar .profile-details .profile_name,
+.sidebar .profile-details .job{
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.sidebar .profile-details .job{
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  opacity:.5;
+  white-space: nowrap;
+}
+.sidebar .profile-details i.bx{  
+    min-width: 50px;
+}
+
+.sidebar.close .profile-details i,
+.sidebar.close .profile-details .profile_name,
+.sidebar.close .profile-details .job{
+  display: none;
+}
+.sidebar .profile-details .job{
+  font-size: 12px;
+}
+.home-section{
+  position: relative;
+ 
+  left: 260px;
+  width: calc(100% - 260px);
+  transition: all 0.5s ease;
+}
+.sidebar.close ~ .home-section{
+  left: 78px;
+  width: calc(100% - 78px);
+}
+.home-section .home-content{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0px;
+  background-color: #ffffff;
+  z-index: 5;
+  padding: 0px 20px;
+}
+.home-section .home-content .bx-menu,
+.home-section .home-content .text{
+  color: #11101d;
+  font-size: 30px;
+  font-weight: 300;
+}
+.home-section .home-content .bx-menu{
+  margin: 0 15px;
+  cursor: pointer;
+}
+.home-section .home-content .text{
+  font-size: 25px;
+  font-weight: 400;
+}
+@media (max-width: 420px) {
+  .sidebar.close .nav-links li .sub-menu{
+    display: none;
+  }
+}
+.logo-details .bx-menu{
+	cursor: pointer;
+}
+ /*below are the styles for logout popup*/
+    .swal2-modern-popup {
+      border-radius: 20px;
+      padding: 2rem;
+      background: linear-gradient(to right, #ffffff, #f1f1f1);
+    }
+
+    .swal2-modern-title {
+      font-size: 1.75rem;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .swal2-modern-content {
+      font-size: 1.125rem;
+      color: #666;
+      margin-bottom: 1.5rem;
+    }
+
+    .swal2-modern-confirm-btn {
+      background-color: #54dc35;
+      color: #fff;
+      border: none;
+      border-radius: 100%;
+      padding: 10px;
+      height: 50px;
+      width: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.35rem;
+      transition: background-color 0.3s ease;
+      margin-right: 20px;
+    }
+
+    .swal2-modern-cancel-btn {
+      background-color: #dc3545;
+      color: #fff;
+      border: none;
+      border-radius: 100%;
+      padding: 10px;
+      height: 50px;
+      width: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.35rem;
+      transition: background-color 0.3s ease;
+      margin-right: 20px;
+    }
+
+    .welcome-text {
+      margin-left: auto;
+      font-size: 16px; 
+      font-weight: 300;
+    }
+  </style>
+  <body>
+
+
+   <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bx-menu' ></i>
+     <!--  <span class="logo_name">CICR - IRM</span> -->
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/dashboard_admin/">
+          <i class='bx bx-grid-alt' ></i>
+          <span class="link_name">Dashboard</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Dashboard</a></li>
+        </ul>
+      </li>
+
+     <!--  <li class="active"> -->
+      <li >
+        <div class="iocn-link">
+          <a>
+            <i class='bx bx-collection' ></i>
+            <span class="link_name">Investigator</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Investigator</a></li>
+          <li><a href="/create-investigator/">Create Investigator</a></li>
+          <!-- <li><a href="#">JavaScript</a></li>
+          <li><a href="#">PHP & MySQL</a></li> -->
+        </ul>
+      </li>
+
+      <li>
+        <a href="/investigator_list/">
+          <i class='bx bx-user-circle' ></i>
+          <span class="link_name">Investigator List</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Investigator List</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <div class="iocn-link">
+          <a>
+            <i class='bx bx-line-chart' ></i>
+            <span class="link_name">Reports</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Reports</a></li>
+          <li><a href="/admin_basic_servery/{{request.user.user_district}}/">Basic Survey</a></li>
+          <!-- <li><a href="/admin_weeks/{{request.user.user_district}}/">Pest Incidence Report</a></li> -->
+          <li><a href="/monthly_report_month/{{request.user.user_district}}/">Monthly Report</a></li>
+          <li><a href="/admin_year/{{request.user.user_district}}/">Yearly Report</a></li>
+         <!--  <li><a href="#">Pigments</a></li>
+          <li><a href="#">Box Icons</a></li> -->
+        </ul>
+      </li>
+
+      <li>
+        <a href="/admin_profile/">
+          <i class='bx bx-user-circle' ></i>
+          <span class="link_name">Profile</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Profile</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="/logout_admin/" id="log_out" onclick="confirmLogout(event)">
+          <i class='bx bx-log-out' ></i>
+          <span class="link_name">Logout</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" >Logout</a></li>
+        </ul>
+      </li>
+
+     <!-- <li>
+
+    <div class="profile-details">
+      <div class="name-job ms-3">
+        <div class="profile_name"></div>
+        <div class="job">Admin Logout</div>
+      </div>
+      <i class='bx bx-log-out' id="log_out" onclick="confirmLogout(event)"></i>
+    </div>
+  </li> -->
+</ul>
+  </div>
+  <section class="home-section">
+    <div class="home-content">
+      <!-- <i class='bx bx-menu' ></i> -->
+      <span class="text">CICR - Admin</span>
+      <form method="GET" action="{% url 'change_financial_year' %}">
+          <div class="input-group">
+              <span class="input-group-text">FY</span>
+              <select class="form-select form-select-sm select-fy" id="financial-year-select" name="financial_year" onchange="this.form.submit()" style="min-width: 120px; max-width: 180px;">
+                  {% for year in financial_years %}
+                      <option value="{{ year.financial_year }}" {% if year.financial_year|stringformat:"s" == selected_financial_year_id|stringformat:"s" %}selected{% endif %}>
+                      {{ year.financial_year }}
+                  </option>
+                  {% endfor %}
+              </select>
+          </div>
+      </form>
+      <span class="welcome-text"><b>Welcome {{request.user.first_name}}</b></span>
+    </div>
+    <div>
+    	{% block content %} {% endblock %}
+    </div>
+  </section>
+
+   <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/dist/boxicons.js"
+      integrity="sha512-Dm5UxqUSgNd93XG7eseoOrScyM1BVs65GrwmavP0D0DujOA8mjiBfyj71wmI2VQZKnnZQsSWWsxDKNiQIqk8sQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+      <script >
+      function confirmLogout(event) {
+        event.preventDefault(); // Prevent the default action of the link
+
+        Swal.fire({
+          title: "Logout",
+          text: "Are you sure you want to logout?",
+          
+          showCancelButton: true,
+          confirmButtonText: '<i class="bx bx-check"></i>',
+          cancelButtonText: '<i class="bx bx-x"></i>',
+          reverseButtons: true,
+          customClass: {
+            popup: "swal2-modern-popup",
+            title: "swal2-modern-title",
+            content: "swal2-modern-content",
+            confirmButton: "swal2-modern-confirm-btn",
+            cancelButton: "swal2-modern-cancel-btn",
+          },
+          buttonsStyling: false,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/logout_admin/";
+          } else {
+          }
+        });
+      }
+    </script>
+
+
+    <script>
+    	let arrow = document.querySelectorAll(".arrow");
+	  for (var i = 0; i < arrow.length; i++) {
+	    arrow[i].addEventListener("click", (e)=>{
+	   let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+	   arrowParent.classList.toggle("showMenu");
+	    });
+	  }
+	  let sidebar = document.querySelector(".sidebar");
+	  let sidebarBtn = document.querySelector(".bx-menu");
+	  console.log(sidebarBtn);
+	  sidebarBtn.addEventListener("click", ()=>{
+	    sidebar.classList.toggle("close");
+	  });
+    </script>
+  </body>
+</html>
+
+

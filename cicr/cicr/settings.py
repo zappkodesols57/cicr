@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "whitenoise.runserver_nostatic",
     # Third party packages
     "rest_framework",
     "rest_framework_simplejwt",
@@ -53,8 +54,13 @@ INSTALLED_APPS = [
     "django_filters",
     "django_extensions",
     "storages",
+    "sweetify",
     # Local apps
-    "cicrapp",
+    "login",
+    "investigator_app",
+    "owner_settings",
+    "chatbot",
+    "farmer_app",
 ]
 
 MIDDLEWARE = [
@@ -66,7 +72,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "investigator_app.middleware.DisableCSRF",
 ]
+
+AUTH_USER_MODEL = "login.User"
 
 ROOT_URLCONF = "cicr.urls"
 
@@ -77,9 +87,11 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "login.context_processors.session_financial_year",
             ],
         },
     },
@@ -91,17 +103,29 @@ WSGI_APPLICATION = "cicr.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# Production (server .env) sets DB_ENGINE/DB_HOST etc. to use PostgreSQL.
+# With no DB env vars set (e.g. local dev without Postgres installed), this
+# falls back to the local db.sqlite3 (seeded from the CICR 2 migration) so the
+# project still runs locally.
 
-DATABASES = {
-    "default": {
-        "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.postgresql"),
-        "NAME": os.getenv("DB_NAME", "cicr_db"),
-        "USER": os.getenv("DB_USER", "postgres"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "cicrpro26"),
-        "HOST": os.getenv("DB_HOST", "localhost"),
-        "PORT": os.getenv("DB_PORT", "5432"),
+if os.getenv("DB_ENGINE") or os.getenv("DB_HOST"):
+    DATABASES = {
+        "default": {
+            "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.postgresql"),
+            "NAME": os.getenv("DB_NAME", "cicr_db"),
+            "USER": os.getenv("DB_USER", "postgres"),
+            "PASSWORD": os.getenv("DB_PASSWORD", "cicrpro26"),
+            "HOST": os.getenv("DB_HOST", "localhost"),
+            "PORT": os.getenv("DB_PORT", "5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 
@@ -141,6 +165,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Media files (File uploads & Pillow ImageField handling)
 MEDIA_URL = "/media/"
@@ -153,13 +178,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # REST Framework Configuration
+# NOTE: DEFAULT_PERMISSION_CLASSES kept as AllowAny (matching CICR 2's live config) because
+# the migrated apps' API endpoints (OTP, investigator/banner APIs, etc.) rely on that default
+# and don't set permission_classes themselves. JWT auth is added on top, not in place of it.
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticatedOrReadOnly",
+        "rest_framework.permissions.AllowAny",
     ),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
@@ -177,4 +206,10 @@ SPECTACULAR_SETTINGS = {
 
 # CORS Configuration
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Weatherstack API (used by investigator_app)
+WEATHERSTACK_API_KEY = os.getenv("WEATHERSTACK_API_KEY", "")
+
+# Behind nginx reverse proxy (HTTPS terminated at nginx)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 

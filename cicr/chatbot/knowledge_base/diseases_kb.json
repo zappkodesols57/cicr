@@ -1,0 +1,476 @@
+{
+    "disease_details": {
+        "root_rot": {
+            "en": {
+                "name": "Root Rot",
+                "causal_organism": "Rhizoctonia solani, Rhizoctonia bataticola, Sclerotium rolfsii",
+                "symptoms": "Sudden wilting and drooping of plants from top to bottom. Affected plants can be easily pulled out of the ground.",
+                "time_of_occurrence": "Appears 30 days after sowing and becomes severe at 90-120 days after sowing",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Trichoderma harzianum or T. viride @ 4.0 g/kg of seed",
+                    "Soil drenching with Carbendazim 50% WP @ 2gm/L water"
+                ]
+            },
+            "hi": {
+                "name": "जड़ सड़न",
+                "causal_organism": "राइजोक्टोनिया सोलानी, राइजोक्टोनिया बैटाटिकोला, स्क्लेरोशियम रोल्फसी",
+                "symptoms": "पौधों का ऊपर से नीचे की ओर अचानक मुरझाना और झुकना। प्रभावित पौधों को आसानी से जमीन से उखाड़ा जा सकता है।",
+                "time_of_occurrence": "बुवाई के 30 दिन बाद दिखाई देता है और 90-120 दिन बाद गंभीर हो जाता है",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "ट्राइकोडर्मा हरजियानम या टी. विरिडे @ 4.0 ग्राम/किलो बीज",
+                    "कार्बेन्डाजिम 50% डब्ल्यूपी @ 2 ग्राम/लीटर पानी से मिट्टी में ड्रेंचिंग"
+                ]
+            }
+        },
+        "fusarium_wilt": {
+            "en": {
+                "name": "Fusarium Wilt",
+                "causal_organism": "Fusarium oxysporum f.sp. vasinfectum",
+                "symptoms": "Wilting and drooping of leaves and discolouration of vascular bundle.",
+                "time_of_occurrence": "30-120 days after sowing. Appears in heavy black alkaline soils and specifically on desi (arboreum) and Asiatic (herbaceum) cottons",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Trichoderma harzianum or T. viride @ 4.0 g/kg of seed",
+                    "Soil drenching with Carbendazim 50% WP @ 2g/L water"
+                ]
+            },
+            "hi": {
+                "name": "फ्यूजेरियम विल्ट",
+                "causal_organism": "फ्यूजेरियम ऑक्सीस्पोरम एफ.एसपी. वेसिन्फेक्टम",
+                "symptoms": "पत्तियों का मुरझाना और झुकना तथा संवहनी बंडल का रंग बदलना।",
+                "time_of_occurrence": "बुवाई के 30-120 दिन बाद। भारी काली क्षारीय मिट्टी में और विशेष रूप से देसी (आर्बोरियम) और एशियाई (हर्बेसियम) कपास पर दिखाई देता है",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "ट्राइकोडर्मा हरजियानम या टी. विरिडे @ 4.0 ग्राम/किलो बीज",
+                    "कार्बेन्डाजिम 50% डब्ल्यूपी @ 2 ग्राम/लीटर पानी से मिट्टी में ड्रेंचिंग"
+                ]
+            }
+        },
+        "anthracnose": {
+            "en": {
+                "name": "Anthracnose",
+                "causal_organism": "Colletotrichum gossypii",
+                "symptoms": "Small circular, water soaked sunken reddish to brown spots on leaves with black centre. Under severe infection, necrotic lesion area increases causing defoliation. May attack seedlings, bracts and bolls.",
+                "time_of_occurrence": "20 days after sowing to boll maturation stage (severe at seedling stage)",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "ऐन्थ्रेक्नोज",
+                "causal_organism": "कोलेटोट्राइकम गोसिपाई",
+                "symptoms": "पत्तियों पर छोटे गोल, पानी से लथपथ धँसे हुए लाल-भूरे धब्बे जिनका केंद्र काला होता है। गंभीर संक्रमण में, नेक्रोटिक घाव बढ़ जाते हैं जिससे पत्तियाँ झड़ जाती हैं। यह रोग पौध, ब्रैक्ट्स और टिंडों को भी प्रभावित कर सकता है।",
+                "time_of_occurrence": "बुवाई के 20 दिन बाद से टिंडे के पकने तक (पौध अवस्था में अधिक गंभीर)",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "charcol_rot": {
+            "en": {
+                "name": "Charcoal Rot",
+                "causal_organism": "Macrophomina phaseolina",
+                "symptoms": "Slow wilting and drying of plants. Affected basal stem becomes dark with shredding of bark and pycnidial bodies in the diseased bark.",
+                "time_of_occurrence": "60 days after sowing to boll maturation stage.",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Trichoderma harzianum or T. viride @ 4.0 g/kg of seed",
+                    "Soil drenching with Carbendazim 50% WP @ 2g/L water"
+                ]
+            },
+            "hi": {
+                "name": "चारकोल रॉट",
+                "causal_organism": "मैक्रोफोमिना फेजोलिना",
+                "symptoms": "पौधों का धीरे-धीरे मुरझाना और सूखना। प्रभावित तना गहरा हो जाता है जिसमें छाल फट जाती है और रोगग्रस्त छाल में पाइक्निडियल बॉडी दिखाई देती हैं।",
+                "time_of_occurrence": "बुवाई के 60 दिन बाद से टिंडे के पकने तक",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "ट्राइकोडर्मा हरजियानम या टी. विरिडे @ 4.0 ग्राम/किलो बीज",
+                    "कार्बेन्डाजिम 50% डब्ल्यूपी @ 2 ग्राम/लीटर पानी से मिट्टी में ड्रेंचिंग"
+                ]
+            }
+        },
+        "myrothecium_leaf_spot": {
+            "en": {
+                "name": "Myrothecium Leaf Spot",
+                "causal_organism": "Myrothecium roridum",
+                "symptoms": "Small, circular, light to brown spots with dark brown margin on leaves (2-10 mm diameter). Later shows shot holes and pin head sized black fruiting bodies of fungus.",
+                "time_of_occurrence": "After 55 days of sowing (Favoured by high relative humidity and prolonged rainfall)",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "मायरोथीसियम पत्ती धब्बा",
+                "causal_organism": "मायरोथीसियम रोरिडम",
+                "symptoms": "पत्तियों पर छोटे, गोल, हल्के से भूरे धब्बे जिनका किनारा गहरा भूरा होता है (2-10 मिमी व्यास)। बाद में शॉट होल और पिन हेड आकार के काले फंगल फ्रूटिंग बॉडी दिखाई देते हैं।",
+                "time_of_occurrence": "बुवाई के 55 दिन बाद (उच्च सापेक्ष आर्द्रता और लंबे समय तक वर्षा से बढ़ता है)",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "corynespora_leaf_spot": {
+            "en": {
+                "name": "Corynespora Leaf Spot",
+                "causal_organism": "Corynespora cassicola",
+                "symptoms": "Initially, circular to irregular dark red spots turning to brown lesions with dark border. Later, alternate light and dark brown rings develop on lesions causing defoliation in severe cases.",
+                "time_of_occurrence": "After 90 days of sowing (Frequent rains facilitate disease appearance and spread)",
+                "zone_of_occurrence": "Central and south zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "कोराइनस्पोरा पत्ती धब्बा",
+                "causal_organism": "कोराइनस्पोरा कैसिकोला",
+                "symptoms": "प्रारंभ में, गोल से अनियमित गहरे लाल धब्बे जो भूरे घावों में बदल जाते हैं जिनका किनारा गहरा होता है। बाद में, घावों पर हल्के और गहरे भूरे रंग के वैकल्पिक छल्ले बनते हैं जो गंभीर स्थिति में पत्तियों के झड़ने का कारण बनते हैं।",
+                "time_of_occurrence": "बुवाई के 90 दिन बाद (लगातार बारिश से रोग का प्रसार होता है)",
+                "zone_of_occurrence": "मध्य और दक्षिणी क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "bacterial_leaf_blight": {
+            "en": {
+                "name": "Bacterial Leaf Blight (BLB)",
+                "causal_organism": "Xanthomonas axonopodis pv. malvacearum",
+                "symptoms": "Dark green, water soaked, angular lesions (1-5mm) on cotyledons, leaves and bracts. Spots more prominent on lower leaves. Causes leaf blight, angular leaf spot and black arm symptoms.",
+                "time_of_occurrence": "Starts at 18-22 days after sowing (depending on onset of monsoon)",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed treatment: Carboxin 75% WP @ 1.5 g/kg or carboxin 37.5% + Thirum 37.5% DS @2.5 g/kg seed",
+                    "Foliar application: Spray Copper oxychloride 50% WP + Streptocycline (25g+1g) per 10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "जीवाणुजनित पत्ती झुलसा (बीएलबी)",
+                "causal_organism": "जैन्थोमोनास एक्सोनोपोडिस पीवी. माल्वेसीरम",
+                "symptoms": "कोटिलिडोन, पत्तियों और ब्रैक्ट्स पर गहरे हरे, पानी से लथपथ, कोणीय घाव (1-5 मिमी)। निचली पत्तियों पर धब्बे अधिक स्पष्ट होते हैं। पत्ती झुलसा, कोणीय पत्ती धब्बा और ब्लैक आर्म लक्षण पैदा करता है।",
+                "time_of_occurrence": "बुवाई के 18-22 दिन बाद शुरू होता है (मानसून के आगमन पर निर्भर करता है)",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार: कार्बोक्सिन 75% डब्ल्यूपी @ 1.5 ग्राम/किलो या कार्बोक्सिन 37.5% + थायरम 37.5% डीएस @2.5 ग्राम/किलो बीज",
+                    "पर्णीय अनुप्रयोग: कॉपर ऑक्सीक्लोराइड 50% डब्ल्यूपी + स्ट्रेप्टोसाइक्लिन (25 ग्राम+1 ग्राम) प्रति 10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "alternaria_leaf_spot": {
+            "en": {
+                "name": "Alternaria Leaf Spot",
+                "causal_organism": "Alternaria macrospora, Alternaria alternata",
+                "symptoms": "Brown to grey or tan spots on cotyledons, leaves, bracts and bolls. Severe defoliation due to development of an abscission layer.",
+                "time_of_occurrence": "60 to 90 days after sowing (Frequent rains facilitate disease appearance and spread)",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "ऑल्टरनेरिया पत्ती धब्बा",
+                "causal_organism": "ऑल्टरनेरिया मैक्रोस्पोरा, ऑल्टरनेरिया अल्टरनेटा",
+                "symptoms": "कोटिलिडोन, पत्तियों, ब्रैक्ट्स और टिंडों पर भूरे से ग्रे या भूरे-पीले धब्बे। एब्सिसिशन परत के विकास के कारण गंभीर पर्णपात होता है।",
+                "time_of_occurrence": "बुवाई के 60 से 90 दिन बाद (लगातार बारिश से रोग का प्रसार होता है)",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "cercospora_leaf_spot": {
+            "en": {
+                "name": "Cercospora Leaf Spot",
+                "causal_organism": "Cercospora gossypina",
+                "symptoms": "Small round to irregular greyish spots with dark brown or blackish margins on older leaves.",
+                "time_of_occurrence": "Generally appears at the end of the season",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "सरकोस्पोरा पत्ती धब्बा",
+                "causal_organism": "सरकोस्पोरा गोसिपिना",
+                "symptoms": "पुरानी पत्तियों पर छोटे गोल से अनियमित भूरे धब्बे जिनका किनारा गहरा भूरा या काला होता है।",
+                "time_of_occurrence": "आमतौर पर मौसम के अंत में दिखाई देता है",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "boll_rot_complex": {
+            "en": {
+                "name": "Boll Rot Complex",
+                "causal_organism": "Fusarium moniliforme, Colletotrichum spp., Aspergillus flavus, A. niger, Rhizopus nigricans, Nematospora sp., Botryodiplodia sp., Pantoea agglomerans",
+                "symptoms": "Light brown to black spots may infect whole bolls. Rotting may be internal as well as external. Diseased bolls do not open and may fall prematurely.",
+                "time_of_occurrence": "After boll development stage",
+                "zone_of_occurrence": "All cotton growing zones",
+                "management": [
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water",
+                    "Spray of Copper oxychloride 50% WP + Streptocycline (25g+2g) per 10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "टिंडा सड़न कॉम्प्लेक्स",
+                "causal_organism": "फ्यूजेरियम मोनिलिफॉर्मे, कोलेटोट्राइकम स्पीशीज, एस्परजिलस फ्लेवस, ए. नाइजर, राइजोपस नाइग्रिकन्स, नेमाटोस्पोरा स्पीशीज, बोट्रायोडिप्लोडिया स्पीशीज, पैंटोया एग्लोमेरन्स",
+                "symptoms": "हल्के भूरे से काले धब्बे पूरे टिंडे को संक्रमित कर सकते हैं। सड़न आंतरिक और बाहरी दोनों हो सकती है। रोगग्रस्त टिंडे नहीं खुलते और समय से पहले गिर सकते हैं।",
+                "time_of_occurrence": "टिंडे के विकास के बाद",
+                "zone_of_occurrence": "सभी कपास उगाने वाले क्षेत्र",
+                "management": [
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव",
+                    "कॉपर ऑक्सीक्लोराइड 50% डब्ल्यूपी + स्ट्रेप्टोसाइक्लिन (25 ग्राम+2 ग्राम) प्रति 10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "tobacco_streak_virus": {
+            "en": {
+                "name": "Tobacco Streak Virus (TSV) Disease",
+                "causal_organism": "Ilarvirus",
+                "symptoms": "Chlorosis of young leaves at growing tips, discolouration, bronzing, necrosis, curling and dwarfing of affected plants. Transmitted by thrips (Thrips tabaci).",
+                "time_of_occurrence": "110 days after sowing (depends on abundance of infected pollens of parthenium and thrips populations)",
+                "zone_of_occurrence": "Central and South zone",
+                "management": [
+                    "Use recommended dose of insecticides for management of insect vector Thrips (Thrips tabaci)"
+                ]
+            },
+            "hi": {
+                "name": "तंबाकू स्ट्रीक वायरस (टीएसवी) रोग",
+                "causal_organism": "इलारवायरस",
+                "symptoms": "बढ़ते हुए शीर्ष पर युवा पत्तियों का क्लोरोसिस, रंग बदलना, कांस्य होना, नेक्रोसिस, कर्लिंग और प्रभावित पौधों का बौनापन। थ्रिप्स (थ्रिप्स टैबैसी) द्वारा फैलता है।",
+                "time_of_occurrence": "बुवाई के 110 दिन बाद (पार्थेनियम के संक्रमित परागकणों और थ्रिप्स की आबादी पर निर्भर करता है)",
+                "zone_of_occurrence": "मध्य और दक्षिणी क्षेत्र",
+                "management": [
+                    "कीट वेक्टर थ्रिप्स (थ्रिप्स टैबैसी) के प्रबंधन के लिए अनुशंसित कीटनाशकों का उपयोग करें"
+                ]
+            }
+        },
+        "cotton_leaf_curl_disease": {
+            "en": {
+                "name": "Cotton Leaf Curl Disease (CLCuD)",
+                "causal_organism": "Geminivirus",
+                "symptoms": "Thickening of small veins, upward and downward curling, enation and stunting.",
+                "time_of_occurrence": "Starts at 45 days after sowing and peaks at 120 days after sowing",
+                "zone_of_occurrence": "North zone only",
+                "management": [
+                    "Use recommended dose of insecticides for management of insect vector Whiteflies (Bemisia tabaci)",
+                    "Cultivation of recommended tolerant/resistant varieties"
+                ]
+            },
+            "hi": {
+                "name": "कपास पत्ती कर्ल रोग (सीएलसीयूडी)",
+                "causal_organism": "जेमिनीवायरस",
+                "symptoms": "छोटी शिराओं का मोटा होना, ऊपर और नीचे की ओर कर्लिंग, एनेशन और बौनापन।",
+                "time_of_occurrence": "बुवाई के 45 दिन बाद शुरू होता है और 120 दिन बाद चरम पर होता है",
+                "zone_of_occurrence": "केवल उत्तरी क्षेत्र",
+                "management": [
+                    "कीट वेक्टर व्हाइटफ्लाइज (बेमिसिया टैबैसी) के प्रबंधन के लिए अनुशंसित कीटनाशकों का उपयोग करें",
+                    "अनुशंसित सहनशील/प्रतिरोधी किस्मों की खेती करें"
+                ]
+            }
+        },
+        "verticillium_wilt": {
+            "en": {
+                "name": "Verticillium Wilt",
+                "causal_organism": "Verticillium dahliae",
+                "symptoms": "Bronzing of veins, interveinal chlorosis, yellowing followed by leaf scorching. 'Tiger stripe symptom' between dry leaf margin and vein areas. Infected stem becomes pink discoloured and develops small size bolls.",
+                "time_of_occurrence": "110 days after sowing (favoured by cooler temperatures)",
+                "zone_of_occurrence": "South zone",
+                "management": [
+                    "Seed Treatment- Thirum 75% WS @3 g/kg of seed",
+                    "Trichoderma harzianum or T. viride @ 4.0 g/kg of seed",
+                    "Soil drenching with Carbendazim 50% WP @ 2g/litres of water"
+                ]
+            },
+            "hi": {
+                "name": "वर्टिसिलियम विल्ट",
+                "causal_organism": "वर्टिसिलियम डाहलिया",
+                "symptoms": "शिराओं का कांस्य होना, अंतरशिरा क्लोरोसिस, पीला पड़ना और फिर पत्तियों का झुलसना। सूखे पत्ते के किनारे और शिरा क्षेत्रों के बीच 'टाइगर स्ट्राइप लक्षण'। संक्रमित तना गुलाबी रंग का हो जाता है और छोटे आकार के टिंडे बनते हैं।",
+                "time_of_occurrence": "बुवाई के 110 दिन बाद (ठंडे तापमान में बढ़ता है)",
+                "zone_of_occurrence": "दक्षिणी क्षेत्र",
+                "management": [
+                    "बीजोपचार- थायरम 75% डब्ल्यूएस @3 ग्राम/किलो बीज",
+                    "ट्राइकोडर्मा हरजियानम या टी. विरिडे @ 4.0 ग्राम/किलो बीज",
+                    "कार्बेन्डाजिम 50% डब्ल्यूपी @ 2 ग्राम/लीटर पानी से मिट्टी में ड्रेंचिंग"
+                ]
+            }
+        },
+        "grey_mildew": {
+            "en": {
+                "name": "Grey Mildew",
+                "causal_organism": "Ramularia areola",
+                "symptoms": "Irregular, angular, pale translucent spots surrounded by veinlets. Dirty white mildew spreads on lower surface. In advanced stage, leaves turn yellowish brown with defoliation.",
+                "time_of_occurrence": "120-150 days after sowing. Especially during early senescence period",
+                "zone_of_occurrence": "Central and South zone",
+                "management": [
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "ग्रे मिल्ड्यू",
+                "causal_organism": "रामुलारिया एरियोला",
+                "symptoms": "अनियमित, कोणीय, हल्के पारदर्शी धब्बे जो छोटी शिराओं से घिरे होते हैं। निचली सतह पर गंदे सफेद फफूंदी फैलती है। उन्नत अवस्था में, पत्तियाँ पीले-भूरे रंग की हो जाती हैं और झड़ जाती हैं।",
+                "time_of_occurrence": "बुवाई के 120-150 दिन बाद। विशेष रूप से प्रारंभिक वृद्धावस्था अवधि के दौरान",
+                "zone_of_occurrence": "मध्य और दक्षिणी क्षेत्र",
+                "management": [
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "rust": {
+            "en": {
+                "name": "Rust",
+                "causal_organism": "Phakospora gossypii",
+                "symptoms": "Rusty light to brown spots appear on older leaves. Causes premature defoliation.",
+                "time_of_occurrence": "120 days after sowing (favoured by cooler temperatures)",
+                "zone_of_occurrence": "South zone",
+                "management": [
+                    "Spray with Pyraclostrobin 20% WG @1g or Carbendazim 50% WP @15-20g or Metiram 55% + Pyraclostrobin 5% WG @20g /10 litres of water"
+                ]
+            },
+            "hi": {
+                "name": "रस्ट",
+                "causal_organism": "फैकोस्पोरा गोसिपाई",
+                "symptoms": "पुरानी पत्तियों पर जंग जैसे हल्के से भूरे धब्बे दिखाई देते हैं। समय से पहले पत्तियाँ झड़ जाती हैं।",
+                "time_of_occurrence": "बुवाई के 120 दिन बाद (ठंडे तापमान में बढ़ता है)",
+                "zone_of_occurrence": "दक्षिणी क्षेत्र",
+                "management": [
+                    "पायराक्लोस्ट्रोबिन 20% डब्ल्यूजी @1 ग्राम या कार्बेन्डाजिम 50% डब्ल्यूपी @15-20 ग्राम या मेटिराम 55% + पायराक्लोस्ट्रोबिन 5% डब्ल्यूजी @20 ग्राम /10 लीटर पानी में छिड़काव"
+                ]
+            }
+        },
+        "root_knot_nematode": {
+            "en": {
+                "name": "Root Knot Nematode",
+                "causal_organism": "Meloidogyne incognita",
+                "symptoms": "Stunting, yellowing, chlorosis, mid-day wilting, reduced boll size and lint percentage. Produces galls on roots. Patches of stunted plants appear in field.",
+                "zone_of_occurrence": "Predominant in north Indian zone and central part particularly in Gujarat, favours sandy loam soils.",
+                "management": [
+                    "Use of zone wise resistant and tolerant varieties of cotton",
+                    "Maintain weed-free fields",
+                    "Crop rotation with non-host crops",
+                    "Application of well decomposed compost/FYM",
+                    "Deep ploughing during summer and/or soil solarisation with polyethylene cover",
+                    "Trap crop Crotalaria spectabilis up to 30-45 days after sowing then plough",
+                    "Soil amendments with non-edible cakes of Neem, Karanj, Mahua etc.",
+                    "Seed treatment with biocontrol agent Gluconacetobacter diazotrophicus strain 35-47 CCSHAU, Hissar @ 1kg a.i/ha"
+                ]
+            },
+            "hi": {
+                "name": "रूट नॉट नेमाटोड",
+                "causal_organism": "मेलॉयडोगाइन इन्कोग्निटा",
+                "symptoms": "पौधों का बौनापन, पीलापन, क्लोरोसिस, दोपहर में मुरझाना, टिंडे का आकार और लिंट प्रतिशत कम होना। जड़ों पर गॉल बनते हैं। खेत में बौने पौधों के पैच दिखाई देते हैं।",
+                "zone_of_occurrence": "उत्तर भारतीय क्षेत्र और गुजरात के मध्य भाग में प्रमुखता से पाया जाता है, बलुई दोमट मिट्टी को पसंद करता है।",
+                "management": [
+                    "क्षेत्रानुसार प्रतिरोधी और सहनशील कपास की किस्मों का उपयोग",
+                    "खेत को खरपतवार मुक्त रखें",
+                    "अनधिकारी फसलों के साथ फसल चक्र अपनाएं",
+                    "अच्छी तरह से सड़ी हुई खाद/एफवाईएम का प्रयोग",
+                    "गर्मियों में गहरी जुताई और/या पॉलीथीन कवर के साथ मिट्टी की सौर्यकरण",
+                    "30-45 दिनों तक ट्रैप क्रॉप क्रोटेलेरिया स्पेक्टाबिलिस उगाएं फिर जुताई करें",
+                    "नीम, करंज, महुआ आदि के अखाद्य केक से मिट्टी संशोधन",
+                    "जैव नियंत्रण एजेंट ग्लूकोनेसीटोबैक्टर डायजोट्रोफिकस स्ट्रेन 35-47 सीसीएसएचएयू, हिसार @ 1 किग्रा सक्रिय तत्व/हेक्टेयर से बीजोपचार"
+                ]
+            }
+        },
+        "reniform_nematode": {
+            "en": {
+                "name": "Reniform Nematode",
+                "causal_organism": "Rotylenchulus reniformis",
+                "symptoms": "Yellowing, stunted growth with chlorosis and reduced boll size. Pericycle and phloem tissues of roots are damaged by immature female nematodes. Patches of stunted plants appear in field.",
+                "zone_of_occurrence": "Central and south India",
+                "management": [
+                    "Use of zone wise resistant and tolerant varieties of cotton",
+                    "Maintain weed-free fields",
+                    "Crop rotation with non-host crops",
+                    "Application of well decomposed compost/FYM",
+                    "Deep ploughing during summer and/or soil solarisation with polyethylene cover",
+                    "Egg parasitic fungi Paecilomyces lilacinus parasitizes nematode eggs effectively"
+                ]
+            },
+            "hi": {
+                "name": "रेनिफॉर्म नेमाटोड",
+                "causal_organism": "रोटाइलेंकुलस रेनिफॉर्मिस",
+                "symptoms": "पीलापन, क्लोरोसिस के साथ बौना विकास और टिंडे का आकार कम होना। जड़ों के पेरीसाइकिल और फ्लोएम ऊतक अपरिपक्व मादा नेमाटोड द्वारा क्षतिग्रस्त होते हैं। खेत में बौने पौधों के पैच दिखाई देते हैं।",
+                "zone_of_occurrence": "मध्य और दक्षिणी भारत",
+                "management": [
+                    "क्षेत्रानुसार प्रतिरोधी और सहनशील कपास की किस्मों का उपयोग",
+                    "खेत को खरपतवार मुक्त रखें",
+                    "अनधिकारी फसलों के साथ फसल चक्र अपनाएं",
+                    "अच्छी तरह से सड़ी हुई खाद/एफवाईएम का प्रयोग",
+                    "गर्मियों में गहरी जुताई और/या पॉलीथीन कवर के साथ मिट्टी की सौर्यकरण",
+                    "अंडा परजीवी कवक पेसिलोमाइसिस लिलासिनस नेमाटोड अंडों को प्रभावी ढंग से परजीवित करता है"
+                ]
+            }
+        }
+    },
+    "general_agricultural_practices": {
+        "en": {
+            "pre_sowing": [
+                "Deep ploughing during land preparation",
+                "Collection and destruction of infected crop debris",
+                "Avoid mono cropping in fields with fungal inoculums (sick fields)"
+            ],
+            "during_sowing": [
+                "Use recommended resistant cultivars and follow crop rotation with non-host crops",
+                "Seed treatment with Trichoderma harzianum or T. viride @ 4.0 g/kg of seed",
+                "Seed treatment with Thiram @ 3g/kg seed",
+                "Soil drenching with Carbendazim @ 2g/L of water (for root rot and wilt)",
+                "Growing marigold as intercrop to reduce nematode infestation"
+            ],
+            "during_cropping_season": [
+                "Avoid excess nitrogen application (young and succulent plants are highly susceptible)",
+                "Avoid excess irrigation and late sowing",
+                "Avoid growing bhendi, brinjal and tomato in nearby fields (alternate hosts)",
+                "Avoid mixing different agrochemicals with fungicides",
+                "Follow CIBRC recommendations while using agrochemicals",
+                "Avoid excess nitrogen and phosphate fertilizer application, excess irrigation and late sowing"
+            ]
+        },
+        "hi": {
+            "pre_sowing": [
+                "भूमि तैयारी के दौरान गहरी जुताई",
+                "संक्रमित फसल अवशेषों को इकट्ठा करके नष्ट करें",
+                "फंगल इनोकुलम वाले खेतों में मोनो क्रॉपिंग से बचें (बीमार खेत)"
+            ],
+            "during_sowing": [
+                "अनुशंसित प्रतिरोधी किस्मों का उपयोग करें और अनधिकारी फसलों के साथ फसल चक्र अपनाएं",
+                "ट्राइकोडर्मा हरजियानम या टी. विरिडे @ 4.0 ग्राम/किलो बीज से बीजोपचार",
+                "थायरम @ 3 ग्राम/किलो बीज से बीजोपचार",
+                "कार्बेन्डाजिम @ 2 ग्राम/लीटर पानी से मिट्टी में ड्रेंचिंग (जड़ सड़न और विल्ट के लिए)",
+                "नेमाटोड संक्रमण को कम करने के लिए गेंदे को अंतरफसल के रूप में उगाएं"
+            ],
+            "during_cropping_season": [
+                "अत्यधिक नाइट्रोजन अनुप्रयोग से बचें (युवा और रसीले पौधे अत्यधिक संवेदनशील होते हैं)",
+                "अत्यधिक सिंचाई और देर से बुवाई से बचें",
+                "पास के खेतों में भिंडी, बैंगन और टमाटर उगाने से बचें (वैकल्पिक मेजबान)",
+                "फफूंदनाशकों के साथ विभिन्न कृषि रसायनों को मिलाने से बचें",
+                "कृषि रसायनों का उपयोग करते समय सीआईबीआरसी की सिफारिशों का पालन करें",
+                "अत्यधिक नाइट्रोजन और फॉस्फेट उर्वरक अनुप्रयोग, अत्यधिक सिंचाई और देर से बुवाई से बचें"
+            ]
+        }
+    }
+}

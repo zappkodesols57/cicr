@@ -1,0 +1,80 @@
+{% extends "base.html" %} 
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Districts List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e0f7e0;
+        }
+        table {
+            background-color: #ffffff;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #28a745;
+            color: white;
+            text-align: center;
+        }
+        td {
+            text-align: center;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center" style="margin-top: 20px; color: #28a745;">Districts List</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 10%;">Sr. No.</th>
+                <th style="width: 70%;">District</th>
+                <th style="width: 20%;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in dis %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.district_name }}</td>
+                <td>
+                    <div>
+                        <a type="button" data-toggle="tooltip" data-original-title="View" href="/users/{{ i.district_name }}/" class="btn btn-link btn-primary">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center" style="margin-top: 20px;">
+        <p>Total Number of Districts: {{ dis|length }}</p>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+{% endblock content %}

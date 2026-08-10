@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admins</title>
+    <style>
+      body {
+        background-color: #f8f9fa;
+        padding: 20px;
+      }
+      .admin-list {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .table-container {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      .table-container table {
+        width: 100%;
+      }
+      .create-admin-btn {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        animation-name: popup;
+        animation-duration: 0.4s;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .create-admin-btn button {
+        border: none;
+        background-color: #198754;
+        color: white;
+        padding: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 10px;
+      }
+      .modal-input-section label {
+        font-size: 14px;
+      }
+      .modal-input-section input {
+        width: 100%;
+        outline: none;
+        border: none;
+        background-color: #ffffff;
+        padding: 10px;
+        border-radius: 6px;
+        transition: all 0.2s ease-in;
+        border: 1px solid rgb(68, 68, 68);
+      }
+      .modal-input-section input:focus {
+        outline: none;
+        border: 1.5px solid black;
+        background-color: white;
+      }
+      .action-btns {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 15px;
+      }
+      .close-btn {
+        padding: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        background-color: #888;
+        color: white;
+        border: none;
+        border-radius: 10px;
+      }
+      .save-btn {
+        padding: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        background-color: #198754;
+        color: white;
+        border: none;
+        border-radius: 10px;
+      }
+      @keyframes popup {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container admin-list">
+      <p style="color: red">{{ error_message }}</p>
+
+      {% if admin_data %}
+      <div class="table-container">
+        <h3>{{ district_name }} ADMIN LIST</h3>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th>Sr.No.</th>
+              <th>User ID</th>
+              <th>Password</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for admin in admin_data %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ admin.user_id }}</td>
+              <td>{{ admin.generated_pass }}</td>
+              <td>{{ admin.first_name }} {{ admin.last_name }}</td>
+              <td>{{ admin.email_id }}</td>
+              <td style="text-align: center">
+                <a type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" href="/edit_admin/{{ admin.id }}/" class="create">
+                  <i class="bx bx-edit text-success"></i>
+                </a>
+                <a type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" href="/delete_admin/{{ admin.id }}/" class="create" onclick="confirmRemoval(event, '{{ admin.id }}')">
+                  <i class="bx bx-trash text-success"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>No admins found.</p>
+      {% endif %}
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function confirmRemoval(event, id) {
+      event.preventDefault(); // Prevent the default action of the link
+      console.log(id);
+
+      Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#198754',
+          cancelButtonColor: '#000000',
+          confirmButtonText: 'Remove'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              window.location.href = `/delete_admin/${id}/`; // Redirect to the link if confirmed
+          }
+      });
+    }
+  </script>
+   <!--  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var modal = document.getElementById("createAdminModal");
+        var openModalBtn = document.getElementById("openModalBtn");
+        var closeModalBtn = document.getElementById("closeModalBtn");
+        var closeModalFooterBtn = document.getElementById("closeModalFooterBtn");
+
+        openModalBtn.onclick = function () {
+          modal.style.display = "flex";
+        };
+
+        closeModalBtn.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        closeModalFooterBtn.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        };
+      });
+    </script> -->
+  </body>
+</html>
+{% endblock %}

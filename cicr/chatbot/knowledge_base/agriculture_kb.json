@@ -1,0 +1,57 @@
+{
+    "water": {
+        "cotton": "500-600mm (Drip irrigation recommended)\nकपास: 500-600मिमी (ड्रिप सिंचाई की सलाह)",
+        "soybean": "450-700mm (Critical stages: flowering & pod formation)\nसोयाबीन: 450-700मिमी (महत्वपूर्ण अवस्था: फूलना और फली बनना)",
+        "pigeonpea": "350-500mm (Drought-tolerant after establishment)\nअरहर: 350-500मिमी (स्थापना के बाद सूखा-सहनशील)",
+        "sorghum": "450-650mm (Most critical during flowering)\nज्वार: 450-650मिमी (फूलने के दौरान सबसे महत्वपूर्ण)",
+        "wheat": "400-600mm (Avoid waterlogging)\nगेहूँ: 400-600मिमी (जलभराव से बचें)",
+        "rice": "900-2500mm (Continuous flooding or alternate wetting-drying)\nचावल: 900-2500मिमी (लगातार जलभराव या वैकल्पिक गीला-सूखा)",
+        "maize": "500-800mm (Most sensitive during tasseling)\nमक्का: 500-800मिमी (टैसलिंग के दौरान सबसे संवेदनशील)",
+        "default": "Adjust based on: \n- Rainfall patterns\n- Soil type\n- Growth stage\n- Local evapotranspiration rates\n\nसमायोजन के आधार:\n- वर्षा पैटर्न\n- मिट्टी का प्रकार\n- विकास अवस्था\n- स्थानीय वाष्पोत्सर्जन दर"
+    },
+    "soil": {
+        "cotton": "Deep black soils (Vertisols) with pH 6-8\nGood drainage essential\n\nकपास: गहरी काली मिट्टी (वर्टिसोल) pH 6-8\nअच्छी जल निकासी आवश्यक",
+        "soybean": "Well-drained loams (pH 6.0-7.5)\nAvoid saline/alkaline soils\n\nसोयाबीन: अच्छी जल निकासी वाली दोमट (pH 6.0-7.5)\nलवणीय/क्षारीय मिट्टी से बचें",
+        "pigeonpea": "Sandy loam to clay loam (pH 5.0-8.5)\nHighly tolerant to poor soils\n\nअरहर: बलुई दोमट से चिकनी दोमट (pH 5.0-8.5)\nखराब मिट्टी के प्रति अत्यधिक सहनशील",
+        "sorghum": "Wide adaptability (pH 5.5-8.5)\nBest in clay loams with good water holding\n\nज्वार: व्यापक अनुकूलनशीलता (pH 5.5-8.5)\nअच्छी जल धारण क्षमता वाली चिकनी दोमट में सर्वोत्तम",
+        "wheat": "Medium-heavy textured soils (pH 6.0-7.5)\nAvoid acidic soils\n\nगेहूँ: मध्यम-भारी बनावट वाली मिट्टी (pH 6.0-7.5)\nअम्लीय मिट्टी से बचें",
+        "rice": "Clay/Clay-loam with good water retention\nCan tolerate pH 5-9.5\n\nचावल: अच्छी जल धारण क्षमता वाली चिकनी/चिकनी दोमट\npH 5-9.5 को सहन कर सकता है",
+        "default": "Essential checks:\n1. Soil test for NPK & micronutrients\n2. Check drainage capacity\n3. Test pH & EC levels\n\nआवश्यक जाँच:\n1. एनपीके और सूक्ष्म पोषक तत्वों के लिए मिट्टी परीक्षण\n2. जल निकासी क्षमता की जाँच\n3. pH और EC स्तर का परीक्षण"
+    },
+    "fertilizer": {
+        "cotton": "NPK: 60:30:30 + Secondary Nutrients:\n- Basal: DAP 130kg + MOP 50kg\n- Top dressing: Urea @30,45,60 DAS\nMicronutrients:\n- ZnSO4 25kg/ha (if deficient)\n- Borax 5kg/ha (pre-flowering)\n\nकपास:\nएनपीके: 60:30:30 + द्वितीयक पोषक तत्व:\n- बेसल: डीएपी 130किग्रा + एमओपी 50किग्रा\n- टॉप ड्रेसिंग: यूरिया @30,45,60 डीएएस\nसूक्ष्म पोषक तत्व:\n- ZnSO4 25किग्रा/हेक्टेयर (कमी होने पर)\n- बोरेक्स 5किग्रा/हेक्टेयर (पूर्व-फूलना)",
+        "soybean": "NPK: 20:60:20 + Biofertilizers:\n- Rhizobium culture seed treatment\n- PSB application @500g/acre\nSpecial Note:\n- Avoid excessive nitrogen\n- Sulphur @20kg improves oil content\n\nसोयाबीन:\nएनपीके: 20:60:20 + जैव उर्वरक:\n- राइजोबियम कल्चर बीज उपचार\n- पीएसबी अनुप्रयोग @500ग्राम/एकड़\nविशेष नोट:\n- अत्यधिक नाइट्रोजन से बचें\n- सल्फर @20किग्रा तेल की मात्रा को बेहतर बनाता है",
+        "default": "4R Nutrient Strategy:\n1. Right Source (balanced NPK)\n2. Right Rate (soil test based)\n3. Right Time (growth stage demand)\n4. Right Place (root zone placement)\n\n4R पोषक तत्व रणनीति:\n1. सही स्रोत (संतुलित एनपीके)\n2. सही दर (मिट्टी परीक्षण आधारित)\n3. सही समय (विकास अवस्था की मांग)\n4. सही स्थान (जड़ क्षेत्र में रखना)"
+    },
+    "sowing": {
+        "cotton": "Optimal Conditions:\n- Soil temp >18°C at sowing depth\n- After 75-100mm pre-monsoon rain\nSeed Rate:\n- Bt hybrids: 750g/acre\n- Desi varieties: 1.5kg/acre\nSpacing:\n- Hybrids: 90x60cm\n- Varieties: 60x45cm\n\nकपास बुवाई:\nइष्टतम स्थितियाँ:\n- बुवाई की गहराई पर मिट्टी का तापमान >18°C\n- 75-100मिमी पूर्व-मानसून वर्षा के बाद\nबीज दर:\n- बीटी संकर: 750ग्राम/एकड़\n- देसी किस्में: 1.5किग्रा/एकड़\nअंतराल:\n- संकर: 90x60सेमी\n- किस्में: 60x45सेमी",
+        "rice": "Transplanting:\n- 25-30 day old seedlings\n- 2-3 seedlings/hill at 20x15cm spacing\nDirect Seeding:\n- Pre-germinated seeds @40kg/acre\n- Maintain 2-3cm water depth\n\nचावल रोपाई:\n- 25-30 दिन पुराने पौध\n- 2-3 पौधे/हिल 20x15सेमी अंतराल पर\nसीधी बुवाई:\n- अंकुरित बीज @40किग्रा/एकड़\n- 2-3सेमी पानी की गहराई बनाए रखें",
+        "default": "General Best Practices:\n- Use certified treated seeds\n- Follow recommended planting geometry\n- Ensure proper seed-soil contact\n- Adjust for local agroclimatic conditions\n\nसामान्य सर्वोत्तम प्रथाएँ:\n- प्रमाणित उपचारित बीजों का उपयोग करें\n- अनुशंसित रोपण ज्यामिति का पालन करें\n- उचित बीज-मिट्टी संपर्क सुनिश्चित करें\n- स्थानीय कृषि-जलवायु परिस्थितियों के लिए समायोजित करें"
+    },
+    "weather": {
+        "dry_spell": {
+            "cotton": "Mitigation Measures:\n- Mulching with crop residues\n- Reduce plant population by 20%\n- Foliar spray of 2% KNO3\nResistant Varieties:\n- Narma, Suraj, Rajat\n\nशुष्क अवधि प्रबंधन:\n- फसल अवशेषों के साथ मल्चिंग\n- पौधों की संख्या 20% कम करें\n- 2% KNO3 का पर्ण स्प्रे\nप्रतिरोधी किस्में:\n- नरमा, सूरज, राजत",
+            "general": "All Crops:\n1. Schedule irrigation at critical stages\n2. Apply anti-transpirants (Kaolin 6%)\n3. Postpone fertilizer application\n4. Conserve soil moisture through tillage\n\nसभी फसलें:\n1. महत्वपूर्ण अवस्थाओं में सिंचाई का समय निर्धारित करें\n2. एंटी-ट्रांसपिरेंट्स लगाएं (काओलिन 6%)\n3. उर्वरक अनुप्रयोग को स्थगित करें\n4. जुताई के माध्यम से मिट्टी की नमी संरक्षित करें"
+        },
+        "excess_rain": "Waterlogging Management:\n- Create drainage channels\n- Apply FYM to improve soil structure\n- Foliar nutrition (NPK 19:19:19 @1%)\nDisease Prevention:\n- Prophylactic fungicide sprays\n\nअत्यधिक वर्षा प्रबंधन:\n- जल निकासी चैनल बनाएं\n- मिट्टी की संरचना सुधारने के लिए FYM लगाएं\n- पर्ण पोषण (NPK 19:19:19 @1%)\nरोग निवारण:\n- निवारक फफूंदनाशक स्प्रे"
+    },
+    "disease": {
+        "cotton": "Major Diseases:\n- Root rot (Drench with Carbendazim)\n- Leaf curl virus (Control whiteflies)\n- Grey mildew (Spray Mancozeb)\n\nप्रमुख रोग:\n- जड़ सड़न (कार्बेन्डाजिम से उपचार)\n- पत्ती मरोड़ वायरस (व्हाइटफ्लाइ नियंत्रण)\n- ग्रे मिल्ड्यू (मैंकोज़ेब स्प्रे)",
+        "rice": "Key Diseases:\n- Blast (Seed treatment with Tricyclazole)\n- Bacterial blight (Streptocycline spray)\n- Sheath blight (Validamycin application)\n\nप्रमुख रोग:\n- ब्लास्ट (ट्राइसाइक्लाजोल के साथ बीज उपचार)\n- जीवाणु झुलसा (स्ट्रेप्टोसाइक्लिन स्प्रे)\n- शीथ ब्लाइट (वैलिडामाइसिन अनुप्रयोग)"
+    },
+    "harvest": {
+        "cotton": "Optimal Timing:\n- When 60-70% bolls open\n- Pick in 3-4 intervals\nPost-Harvest:\n- Dry to 8% moisture\n- Store in well-ventilated godowns\n\nकपास कटाई:\nइष्टतम समय:\n- जब 60-70% बोल खुल जाएँ\n- 3-4 अंतराल में चुनाई करें\nकटाई के बाद:\n- 8% नमी तक सुखाएं\n- अच्छी वेंटिलेशन वाले गोदामों में भंडारण",
+        "wheat": "Harvest Indicators:\n- Grain moisture ~20%\n- Hard dough stage\nThreshing:\n- Within 3 days of cutting\n- Maintain <12% moisture for storage\n\nगेहूँ कटाई संकेतक:\n- दाने की नमी ~20%\n- कठोर आटा अवस्था\nमड़ाई:\n- कटाई के 3 दिनों के भीतर\n- भंडारण के लिए <12% नमी बनाए रखें"
+    },
+    "cost": {
+        "cotton": "💰 Cost of Cultivation (Per Acre):\n- Inputs (Seeds, Fertilizers, Pesticides): ₹15,000–20,000\n- Labor (Land preparation, sowing, harvesting): ₹8,000–12,000\n\n🌾 Expected Yield:\n- Bt Hybrids: 8–12 quintals/acre\n- Desi Varieties: 4–6 quintals/acre\n\n📌 कपास खेती लागत (प्रति एकड़ औसतन):\n- आदान (बीज, उर्वरक, कीटनाशक): ₹15,000–20,000\n- श्रम (भूमि तैयारी, बुवाई, कटाई): ₹8,000–12,000\n\n🌾 अपेक्षित उपज:\n- बीटी संकर: 8–12 क्विंटल/एकड़\n- देसी किस्में: 4–6 क्विंटल/एकड़",
+        "soybean": "📈 Market Considerations:\n- Covered under Minimum Support Price (MSP) scheme\n- Premiums may be offered based on:\n> Protein Content > 35%\n> Oil Content < 18%\n\n💼 सोयाबीन बाज़ार विचार:\n- न्यूनतम समर्थन मूल्य (MSP) के तहत आता है\n- गुणवत्ता आधारित प्रीमियम मिल सकता है:\n> प्रोटीन सामग्री > 35%\n> तेल सामग्री < 18%",
+        "pigeonpea": "💰 Cost of Cultivation (Per Acre):\n- Inputs: ₹9,000–12,000\n- Labor: ₹6,000–9,000\n\n🌾 Expected Yield:\n- Improved Varieties: 6–8 quintals/acre\n\n📌 अरहर (तुअर) खेती लागत (प्रति एकड़):\n- आदान: ₹9,000–12,000\n- श्रम: ₹6,000–9,000\n\n🌾 अपेक्षित उपज:\n- उन्नत किस्में: 6–8 क्विंटल/एकड़",
+        "sorghum": "💰 Cost of Cultivation (Per Acre):\n- Inputs: ₹8,000–10,000\n- Labor: ₹5,000–7,000\n\n🌾 Expected Yield:\n- Rainfed: 4–6 quintals/acre\n- Irrigated: 6–9 quintals/acre\n\n📌 ज्वार खेती लागत (प्रति एकड़):\n- आदान: ₹8,000–10,000\n- श्रम: ₹5,000–7,000\n\n🌾 अपेक्षित उपज:\n- वर्षा आधारित: 4–6 क्विंटल/एकड़\n- सिंचित: 6–9 क्विंटल/एकड़",
+        "wheat": "💰 Cost of Cultivation (Per Acre):\n- Inputs: ₹12,000–15,000\n- Labor: ₹7,000–10,000\n\n🌾 Expected Yield:\n- Irrigated: 18–22 quintals/acre\n- Rainfed: 12–15 quintals/acre\n\n📌 गेहूँ खेती लागत (प्रति एकड़):\n- आदान: ₹12,000–15,000\n- श्रम: ₹7,000–10,000\n\n🌾 अपेक्षित उपज:\n- सिंचित: 18–22 क्विंटल/एकड़\n- वर्षा आधारित: 12–15 क्विंटल/एकड़",
+        "rice": "💰 Cost of Cultivation (Per Acre):\n- Inputs (Seeds, Fertilizer, Pesticide): ₹14,000–18,000\n- Labor (Transplanting, Harvesting): ₹9,000–13,000\n\n🌾 Expected Yield:\n- Irrigated: 20–25 quintals/acre\n- Rainfed: 12–18 quintals/acre\n\n📌 धान (चावल) खेती लागत (प्रति एकड़):\n- आदान: ₹14,000–18,000\n- श्रम: ₹9,000–13,000\n\n🌾 अपेक्षित उपज:\n- सिंचित: 20–25 क्विंटल/एकड़\n- वर्षा आधारित: 12–18 क्विंटल/एकड़",
+        "maize": "💰 Cost of Cultivation (Per Acre):\n- Inputs: ₹10,000–13,000\n- Labor: ₹6,000–8,000\n\n🌾 Expected Yield:\n- Irrigated: 18–22 quintals/acre\n- Rainfed: 10–15 quintals/acre\n\n📌 मक्का खेती लागत (प्रति एकड़):\n- आदान: ₹10,000–13,000\n- श्रम: ₹6,000–8,000\n\n🌾 अपेक्षित उपज:\n- सिंचित: 18–22 क्विंटल/एकड़\n- वर्षा आधारित: 10–15 क्विंटल/एकड़",
+        "default": "General Cost Components:\n- Seeds: 15-20% total cost\n- Fertilizers: 25-30%\n- Labor: 30-40%\n- Pesticides: 10-15%\n\nसामान्य लागत घटक:\n- बीज: कुल लागत का 15-20%\n- उर्वरक: 25-30%\n- श्रम: 30-40%\n- कीटनाशक: 10-15%"
+    }
+    
+}

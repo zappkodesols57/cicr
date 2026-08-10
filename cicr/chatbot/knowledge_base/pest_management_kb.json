@@ -1,0 +1,366 @@
+{
+    "pest_details": {
+        "jassid": {
+            "scientific_name": "Amrasca biguttula biguttula (Ishida)",
+            "type": "Sucking",
+            "status": "Major",
+            "period_of_occurrence": "Throughout season, peaks July-August (Central India)",
+            "etl": "25% plants showing Grade II/III/IV symptoms",
+            "damage": "Nymphs and adults suck sap and inject toxins, causing 'hopper burn', leaf crinkling and curling.",
+            "management": {
+                "0-60": "Avoid chemical sprays (Bt-cotton protected). Seed treatment with Imidacloprid 70% WS @ 7g/kg if untreated. Emergency: Flonicamid 50 WG @ 4g/10L.",
+                "60-90": "Flonicamid 50 WG @ 4g or Dinotefuran 20% SG @ 3g/10L.",
+                "90-120": "Thiomethoxam 25% WG @ 2g/10L."
+            },
+            "image": "jassid.png",
+            "hi": {
+                "name": "जैसिड",
+                "scientific_name": "अम्रास्का बिगुटुला बिगुटुला",
+                "type": "चूसक कीट",
+                "status": "प्रमुख",
+                "period_of_occurrence": "पूरे मौसम में, जुलाई-अगस्त में चरम (मध्य भारत)",
+                "etl": "25% पौधों में ग्रेड II/III/IV लक्षण",
+                "damage": "निम्फ और वयस्क पौधों का रस चूसते हैं और विषाक्त पदार्थ छोड़ते हैं, जिससे 'हॉपर बर्न', पत्तियों का कर्लिंग और कुंचन होता है।",
+                "management": {
+                    "0-60": "रासायनिक छिड़काव से बचें (बीटी-कपास संरक्षित)। इमिडाक्लोप्रिड 70% WS @ 7g/kg से बीजोपचार करें। आपातकाल: फ्लोनिकामिड 50 WG @ 4g/10L।",
+                    "60-90": "फ्लोनिकामिड 50 WG @ 4g या डिनोटेफ्यूरन 20% SG @ 3g/10L।",
+                    "90-120": "थायोमेथोक्साम 25% WG @ 2g/10L।"
+                },
+                "image": "jassid.png"
+            }
+        },
+        "aphid": {
+            "scientific_name": "Aphis gossypii Glover",
+            "type": "Sucking",
+            "status": "Major",
+            "period_of_occurrence": "Peaks in winter (Nov-Jan)",
+            "etl": "10% infested plants",
+            "damage": "Feeds on phloem sap, secretes honeydew causing sooty mould, reduces fiber quality.",
+            "management": {
+                "0-60": "Avoid chemical sprays. Seed treatment with Imidacloprid 70% WS @ 7g/kg. Emergency: Flonicamid 50 WG @ 4g/10L.",
+                "60-120": "Controlled by sprays for other sucking pests."
+            },
+            "image": "aphid.png",
+            "hi": {
+                "name": "माहू",
+                "scientific_name": "एफिस गोस्सिपी",
+                "type": "चूसक कीट",
+                "status": "प्रमुख",
+                "period_of_occurrence": "सर्दियों में चरम (नवंबर-जनवरी)",
+                "etl": "10% संक्रमित पौधे",
+                "damage": "फ्लोएम का रस चूसता है, हनीड्यू स्रावित करता है जिससे काली फफूंद लगती है और रेशे की गुणवत्ता कम होती है।",
+                "management": {
+                    "0-60": "रासायनिक छिड़काव से बचें। इमिडाक्लोप्रिड 70% WS @ 7g/kg से बीजोपचार करें। आपातकाल: फ्लोनिकामिड 50 WG @ 4g/10L।",
+                    "60-120": "अन्य चूसक कीटों के लिए छिड़काव द्वारा नियंत्रित।"
+                },
+                "image": "aphid_hindi.png"
+            }
+        },
+        "thrips": {
+            "scientific_name": "Thrips palmi Karry, Thrips tabaci Lind.",
+            "type": "Sucking",
+            "status": "Major",
+            "period_of_occurrence": "July-August",
+            "etl": "20% plants with silvery patches on leaf undersides",
+            "damage": "Lacerates tissue, causes wrinkling, upward curling, white shiny patches.",
+            "management": {
+                "0-60": "Seed treatment with Imidacloprid 70% WS @ 7g/kg. Flonicamid 50 WG @ 4g/10L if 25% infestation.",
+                "60-90": "Flonicamid 50 WG @ 4g or Dinotefuran 20% SG @ 3g/10L.",
+                "90-120": "Thiomethoxam 25% WG @ 2g/10L."
+            },
+            "image": "thrips.png",
+            "hi": {
+                "name": "थ्रिप्स",
+                "scientific_name": "थ्रिप्स पाल्मी, थ्रिप्स टैबैसी",
+                "type": "चूसक कीट",
+                "status": "प्रमुख",
+                "period_of_occurrence": "जुलाई-अगस्त",
+                "etl": "20% पौधों पर चांदी जैसे धब्बे",
+                "damage": "ऊतकों को क्षति पहुंचाते हैं, पत्तियों में सिकुड़न, ऊपर की ओर मुड़ना और सफेद चमकदार धब्बे पैदा करते हैं।",
+                "management": {
+                    "0-60": "इमिडाक्लोप्रिड 70% WS @ 7g/kg से बीजोपचार करें। 25% संक्रमण होने पर फ्लोनिकामिड 50 WG @ 4g/10L का छिड़काव करें।",
+                    "60-90": "फ्लोनिकामिड 50 WG @ 4g या डायनोटेफ्यूरान 20% SG @ 3g/10L।",
+                    "90-120": "थायोमेथोक्साम 25% WG @ 2g/10L।"
+                },
+                "image": "thrips_hindi.png"
+            }
+        },
+        "whitefly": {
+            "scientific_name": "Bemisia tabaci (Gennadius)",
+            "type": "Sucking",
+            "status": "Major",
+            "period_of_occurrence": "Throughout season (worsens in warm, high RH)",
+            "etl": "6 adults/leaf",
+            "damage": "Reduces photosynthesis, transmits leaf curl disease, honeydew contaminates lint.",
+            "management": {
+                "0-60": "Seed treatment with Imidacloprid 70% WS @ 7g/kg.",
+                "60-90": "Yellow sticky traps. Sprays: Buprofezin 25% SC @ 10ml OR Diafenthiuron 50% WP @ 12g OR others.",
+                "90-120": "Diafenthiuron 50%SC @ 12g/10L."
+            },
+            "image": "whitefly.png",
+            "hi": {
+                "name": "सफेद मक्खी",
+                "scientific_name": "बेमिसिया टैबैसी",
+                "type": "चूसक कीट",
+                "status": "प्रमुख",
+                "period_of_occurrence": "पूरे मौसम में (गर्म, उच्च आर्द्रता में बढ़ता है)",
+                "etl": "6 वयस्क/पत्ता",
+                "damage": "प्रकाश संश्लेषण कम करती है, पत्ती मरोड़ रोग फैलाती है, हनीड्यू से रेशे दूषित होते हैं।",
+                "management": {
+                    "0-60": "इमिडाक्लोप्रिड 70% WS @ 7g/kg से बीजोपचार करें।",
+                    "60-90": "पीले स्टिकी ट्रैप (5/हेक्टेयर)। बुप्रोफेजिन 25% SC @ 10ml या डायफेन्थियूरॉन 50% WP @ 12g का छिड़काव।",
+                    "90-120": "डायफेन्थियूरॉन 50%SC @ 12g/10L।"
+                },
+                "image": "whitefly_hindi.png"
+            }
+        },
+        "mealybugs": {
+            "scientific_name": "Phenacoccus solenopsis, Paracoccus marginatus, Nipaecoccus viridis",
+            "type": "Sucking",
+            "status": "Minor",
+            "period_of_occurrence": "Variable",
+            "etl": ">20 plants/acre with Grade II/III/IV damage",
+            "damage": "Sucks sap from all parts, causes stem distortion, twisting, bushiness.",
+            "management": {
+                "0-60": "Destroy weeds. Avoid disturbing lightly infested plants.",
+                "60-90": "Remove infested plants. Conserve parasitoids (Aenasius arizonensis).",
+                "90-120": "Thiodicarb 75 WP @ 20g OR Quinalphos 20AF @ 25ml/10L."
+            },
+            "image": "mealybugs.png",
+            "hi": {
+                "name": "मिलीबग",
+                "scientific_name": "फेनाकोकस सोलेनोप्सिस",
+                "type": "चूसक",
+                "status": "गौण",
+                "period_of_occurrence": "परिवर्तनशील",
+                "etl": ">20 पौधे/एकड़ जिनमें ग्रेड II/III/IV क्षति हो",
+                "damage": "पौधे के सभी भागों से रस चूसते हैं, तने में विकृति, मरोड़ और झाड़ीनुमा वृद्धि करते हैं।",
+                "management": {
+                    "0-60": "खरपतवार नष्ट करें। हल्के संक्रमित पौधों को छेड़ने से बचें।",
+                    "60-90": "संक्रमित पौधे उखाड़कर नष्ट करें। परजीवी (एनासियस एरिजोनेन्सिस) को संरक्षित करें।",
+                    "90-120": "थायोडिकार्ब 75 WP @ 20g या क्विनालफॉस 20AF @ 25ml/10L।"
+                },
+                "image": "mealybug_hindi.png"
+            }
+        },
+        "american_bollworm": {
+            "scientific_name": "Helicoverpa armigera (Hubner)",
+            "type": "Bollworm",
+            "status": "Major (Non-Bt), Minor (Bt)",
+            "period_of_occurrence": "Extends to Nov-Dec",
+            "etl": "20% plants with 'flared up' squares",
+            "damage": "Bores into squares/bolls, feeds on seeds.",
+            "management": {
+                "0-60": "Clorantraniliprole 18.5 SC @ 3ml/10L (emergency).",
+                "60-90": "Clorantraniliprole 18.5 SC @ 3ml/10L if ETL reached.",
+                "90-120": "Flubendiamide 39.35% SC @ 3ml OR Indoxacarb 14.5 SC @ 5ml/10L."
+            },
+            "image": "american_bollworm.png",
+            "hi": {
+                "name": "अमेरिकन टिड्डा",
+                "scientific_name": "हेलिकोवर्पा आर्मिगेरा",
+                "type": "टिड्डा",
+                "status": "प्रमुख (गैर-बीटी कपास में), गौण (बीटी कपास में)",
+                "period_of_occurrence": "नवंबर-दिसंबर तक",
+                "etl": "20% पौधों में 'फ्लेयर्ड अप' कलियाँ",
+                "damage": "कलियों और बंडों में छेद करके बीज खाता है।",
+                "management": {
+                    "0-60": "क्लोरान्ट्रानिलिप्रोल 18.5% SC @ 3ml/10L (आपातकाल)।",
+                    "60-90": "ETL पहुंचने पर क्लोरान्ट्रानिलिप्रोल 18.5% SC @ 3ml/10L।",
+                    "90-120": "फ्लुबेंडियामाइड 39.35% SC @ 3ml या इंडोक्साकार्ब 14.5 SC @ 5ml/10L।"
+                },
+                "image": "american_bollworm_hindi.png"
+            }
+        },
+        "pink_bollworm": {
+            "scientific_name": "Pectinophora gossypiella (Saunders)",
+            "type": "Bollworm",
+            "status": "Major",
+            "period_of_occurrence": "Starts at 90 DAS (severe in Bt cotton)",
+            "etl": "10% infested flowers/bolls OR 8 moths/trap/night (3 nights)",
+            "damage": "Causes 'rosette flowers', destroys seeds inside bolls.",
+            "management": {
+                "0-60": "Pheromone traps @5/ha. Neem oil 5ml + 5% NSKE + detergent @1g/L at 50-60 DAS.",
+                "60-90": "Destroy rosette flowers. Thiodicarb 75 WP @ 20g OR Quinalphos 20AF @ 20ml/10L.",
+                "90-120": "Release Trichogramma bactrie (60,000/acre). Chlorpyriphos 20%EC @ 25ml OR Thiodicarb 75 WP @ 20g/10L.",
+                ">120": "Fenvalerate 20% EC @ 10ml OR others. Destroy crop residues."
+            },
+            "image": "pink_bollworm.png",
+            "hi": {
+                "name": "गुलाबी टिड्डा",
+                "scientific_name": "पेक्टिनोफोरा गोस्सिपिएला",
+                "type": "टिड्डा",
+                "status": "प्रमुख (बीटी कपास में भी)",
+                "period_of_occurrence": "90 DAS से शुरू (बीटी कपास में गंभीर)",
+                "etl": "10% संक्रमित फूल/बंड या 8 पतंगे/ट्रैप/रात (3 रात)",
+                "damage": "'रोज़ेट फूल' बनाता है, बंडों के अंदर बीज नष्ट करता है।",
+                "management": {
+                    "0-60": "फेरोमोन ट्रैप @5/हेक्टेयर। नीम तेल 5ml + 5% NSKE + डिटर्जेंट @1g/L 50-60 DAS पर।",
+                    "60-90": "रोज़ेट फूल नष्ट करें। थायोडिकार्ब 75 WP @ 20g या क्विनालफॉस 20AF @ 20ml/10L।",
+                    "90-120": "ट्राइकोग्रामा बैक्ट्री (60,000/एकड़) छोड़ें। क्लोरपायरीफॉस 20%EC @ 25ml या थायोडिकार्ब 75 WP @ 20g/10L।",
+                    ">120": "फेनवैलेरेट 20% EC @ 10ml या अन्य। फसल अवशेष नष्ट करें।"
+                },
+                "image": "pink_bollworm_hindi.png"
+            }
+        },
+        "tobacco_caterpillar": {
+            "scientific_name": "Spodoptera litura",
+            "type": "Leaf eater",
+            "status": "Minor",
+            "period_of_occurrence": "Early crop growth",
+            "etl": "≥2 egg masses OR ≥10 plants with ≥5 larvae",
+            "damage": "Voracious feeding causes severe defoliation.",
+            "management": {
+                "0-60": "Handpick egg masses/larvae. Neem oil 5ml + 5% NSKE + 1g detergent/L. Clorantraniliprole 18.5 SC @ 3ml/10L (emergency)."
+            },
+            "image": "tobacco_caterpillar.png",
+            "hi": {
+                "name": "तम्बाकू सूंडी",
+                "scientific_name": "स्पोडोप्टेरा लिटुरा",
+                "type": "पत्ता खाने वाला",
+                "status": "गौण",
+                "period_of_occurrence": "फसल की प्रारंभिक अवस्था",
+                "etl": "≥2 अंडे के समूह या ≥10 पौधे जिनमें ≥5 सूंडियाँ हों",
+                "damage": "भूखी सूंडियाँ पत्तियों को पूरी तरह खा जाती हैं।",
+                "management": {
+                    "0-60": "अंडे के समूह/सूंडियाँ हाथ से इकट्ठा कर नष्ट करें। नीम तेल 5ml + 5% NSKE + 1g डिटर्जेंट/L। क्लोरान्ट्रानिलिप्रोल 18.5 SC @ 3ml/10L (आपातकाल)।"
+                },
+                "image": "tobacco_caterpillar_hindi.png"
+            }
+        },
+        "spotted_bollworm": {
+            "scientific_name": "Earias vittella, E. insulana",
+            "type": "Bollworm",
+            "status": "Major (Non-Bt), Minor (Bt)",
+            "period_of_occurrence": "From 3 weeks old crop until harvest",
+            "etl": "20% plants with 'flared up' squares",
+            "damage": "Bores into terminal shoots, squares, and bolls; invites secondary infections.",
+            "management": {
+                "0-60": "Clorantraniliprole 18.5 SC @ 3ml/10L (if needed).",
+                "60-90": "Clorantraniliprole 18.5 SC @ 3ml/10L if ETL reached.",
+                "90-120": "Flubendiamide 39.35% SC @ 3ml OR Indoxacarb 14.5 SC @ 5ml/10L."
+            },
+            "image": "spotted_bollworm.png",
+            "hi": {
+                "name": "चित्तीदार टिड्डा",
+                "scientific_name": "इरियास विटेला, इ. इंसुलाना",
+                "type": "टिड्डा",
+                "status": "प्रमुख (गैर-बीटी कपास में), गौण (बीटी कपास में)",
+                "period_of_occurrence": "3 सप्ताह पुरानी फसल से लेकर कटाई तक",
+                "etl": "20% पौधों में 'फ्लेयर्ड अप' कलियाँ",
+                "damage": "शीर्ष प्ररोह, कलियों और बंडों में छेद करता है; द्वितीयक संक्रमण को आमंत्रित करता है।",
+                "management": {
+                    "0-60": "क्लोरान्ट्रानिलिप्रोल 18.5% SC @ 3ml/10L (आवश्यकता होने पर)।",
+                    "60-90": "ETL पहुंचने पर क्लोरान्ट्रानिलिप्रोल 18.5% SC @ 3ml/10L।",
+                    "90-120": "फ्लुबेंडियामाइड 39.35% SC @ 3ml या इंडोक्साकार्ब 14.5 SC @ 5ml/10L।"
+                },
+                "image": "spotted_bollworm_hindi.png"
+            }
+        },
+        "mirid_bugs": {
+            "scientific_name": "Creontiades biseratense, Campylomma livida, Hyalopeplus lineifer",
+            "type": "Sucking",
+            "status": "Minor",
+            "period_of_occurrence": "Peaks at 50-100 DAS",
+            "etl": "≥5 nymphs/adults per plant (C. livida)",
+            "damage": {
+                "C. biseratense": "Damages flower buds and bolls.",
+                "C. livida": "Causes shedding of flowers/small bolls.",
+                "H. lineifer": "Feeds on squares and young bolls."
+            },
+            "management": "Spray insecticides used for other sucking pests.",
+            "image": "mirid_bugs.png",
+            "hi": {
+                "name": "मिरिड बग",
+                "scientific_name": "क्रियोन्टाइड्स बिसेराटेंस, कैम्पीलोमा लिविडा, हायलोपेप्लस लाइनिफर",
+                "type": "चूसक",
+                "status": "गौण",
+                "period_of_occurrence": "50-100 DAS पर चरम",
+                "etl": "≥5 निम्फ/वयस्क प्रति पौधा (C. livida)",
+                "damage": {
+                    "C. biseratense": "फूल कलियों और बंडों को नुकसान पहुंचाता है।",
+                    "C. livida": "फूलों/छोटे बंडों का गिरना।",
+                    "H. lineifer": "कलियों और युवा बंडों को खाता है।"
+                },
+                "management": "अन्य चूसक कीटों के लिए प्रयुक्त कीटनाशकों का छिड़काव करें।",
+                "image": "mirid_bugs_hindi.png"
+            }
+        },
+        "cotton_semilooper": {
+            "scientific_name": "Anomis flava",
+            "type": "Leaf eater",
+            "status": "Minor",
+            "period_of_occurrence": "Peak vegetative stage",
+            "damage": "Creates holes in tender leaves; defoliates.",
+            "management": "No specific sprays needed (controlled by general pest sprays).",
+            "image": "semilooper.png",
+            "hi": {
+                "name": "कपास सेमीलूपर",
+                "scientific_name": "एनोमिस फ्लावा",
+                "type": "पत्ता खाने वाला",
+                "status": "गौण",
+                "period_of_occurrence": "चरम वानस्पतिक अवस्था",
+                "damage": "कोमल पत्तियों में छेद बनाता है; पत्तियों को खा जाता है।",
+                "management": "विशिष्ट छिड़काव की आवश्यकता नहीं (सामान्य कीटनाशक छिड़काव से नियंत्रित)।",
+                "image": "semilooper_hindi.png"
+            }
+        },
+        "red_cotton_bug": {
+            "scientific_name": "Dysdercus cingulatus",
+            "type": "Sucking",
+            "status": "Minor",
+            "period_of_occurrence": "Boll development/opening stage",
+            "damage": "Sucks sap from seeds; stains lint, causes defective boll opening.",
+            "management": "Minor pest; no specific management required.",
+            "image": "red_cotton_bug.png",
+            "hi": {
+                "name": "लाल कपास कीट",
+                "scientific_name": "डाइस्डरकस सिंगुलाटस",
+                "type": "चूसक",
+                "status": "गौण",
+                "period_of_occurrence": "बंड विकास/खुलने की अवस्था",
+                "damage": "बीजों से रस चूसता है; रेशे पर दाग लगाता है, बंडों के खुलने में दोष पैदा करता है।",
+                "management": "गौण कीट; विशिष्ट प्रबंधन की आवश्यकता नहीं।",
+                "image": "red_cotton_bug_hindi.png"
+            }
+        },
+        "dusky_cotton_bug": {
+            "scientific_name": "Oxycarenus hyalinipennis",
+            "type": "Sucking",
+            "status": "Minor",
+            "period_of_occurrence": "Boll maturity stage",
+            "damage": "Sucks sap from immature seeds, reducing weight/germination.",
+            "management": "Minor pest; no specific management required.",
+            "image": "dusky_bug.png",
+            "hi": {
+                "name": "धूसर कपास कीट",
+                "scientific_name": "ऑक्सीकेरेनस हायलिनिपेनिस",
+                "type": "चूसक",
+                "status": "गौण",
+                "period_of_occurrence": "बंड परिपक्वता अवस्था",
+                "damage": "अपरिपक्व बीजों से रस चूसता है, जिससे वजन/अंकुरण कम होता है।",
+                "management": "गौण कीट; विशिष्ट प्रबंधन की आवश्यकता नहीं।",
+                "image": "dusky_bug_hindi.png"
+            }
+        },
+        "cotton_grey_weevil": {
+            "scientific_name": "Myllocerus maculosus",
+            "type": "Leaf eater",
+            "status": "Minor",
+            "period_of_occurrence": "April to November",
+            "damage": "Adults eat leaves/buds; grubs feed on roots.",
+            "management": "Minor pest; no specific management required.",
+            "image": "grey_weevil.png",
+            "hi": {
+                "name": "धूसर वीविल",
+                "scientific_name": "माइलोसरस मैक्यूलोसस",
+                "type": "पत्ता खाने वाला",
+                "status": "गौण",
+                "period_of_occurrence": "अप्रैल से नवंबर",
+                "damage": "वयस्क पत्तियों/कलियों को खाते हैं; लार्वा जड़ों को खाते हैं।",
+                "management": "गौण कीट; विशिष्ट प्रबंधन की आवश्यकता नहीं।",
+                "image": "grey_weevil_hindi.png"
+            }
+        }
+    }
+}

@@ -1,0 +1,301 @@
+{% extends "base.html" %} 
+{% block content %}
+
+<div class="border-bottom w-100 text-center">
+	<h1 class="ms-3 fw-bold" style="font-size: 25px;">Create New Advisory</h1>
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="p-2">
+    	<div class="row mt-2 w-100">
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="week_en">Week No (English):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="week_en" name="week_en" required placeholder="XII">
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="week_hi">Week No (Hindi):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="week_hi" name="week_hi" placeholder="12" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="week_gu">Week No (Gujarati):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="week_gu" name="week_gu" placeholder="12" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="row mt-2 w-100">
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="date_range_en">Title (English):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="date_range_en" name="date_range_en" required placeholder="Weekly Advisory for Cotton Cultivation">
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="date_range_hi">Title (Hindi):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="date_range_hi" name="date_range_hi" placeholder="Hindi 12th Cotton Advisory">
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="date_range_gu">Title (Gujarati):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="date_range_gu" name="date_range_gu" placeholder="Gujarati 12th Cotton Advisory">
+    			</div>
+    		</div>
+    	</div>
+    	<div class="row mt-2 w-100">
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="month_en">Month (English):</label>
+    				<!-- <input class=" rounded p-1 form-control" type="text" id="month_en" name="month_en" placeholder="January"> -->
+    				<select class=" rounded p-1 form-select" id="month_en" name="month_en">
+    					<option default selected hidden>Select Month</option>
+    					<option value="January">January</option>
+    					<option value="February">February</option>
+    					<option value="March">March</option>
+    					<option value="April">April</option>
+    					<option value="May">May</option>
+    					<option value="June">June</option>
+    					<option value="July">July</option>
+    					<option value="August">August</option>
+    					<option value="September">September</option>
+    					<option value="October">October</option>
+    					<option value="November">November</option>
+    					<option value="December">December</option>
+    				</select>
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="month_hi">Month (Hindi):</label>
+    				<!-- <input class=" rounded p-1 form-control" type="text" id="month_hi" name="month_hi"> -->
+    				<select class=" rounded p-1 form-select" id="month_hi" name="month_hi">
+    					<option default selected hidden>Select Month</option>
+    					<option value="January">January</option>
+    					<option value="February">February</option>
+    					<option value="March">March</option>
+    					<option value="April">April</option>
+    					<option value="May">May</option>
+    					<option value="June">June</option>
+    					<option value="July">July</option>
+    					<option value="August">August</option>
+    					<option value="September">September</option>
+    					<option value="October">October</option>
+    					<option value="November">November</option>
+    					<option value="December">December</option>
+    				</select>
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="month_gu">Month (Gujarati):</label>
+    				<!-- <input class=" rounded p-1 form-control" type="text" id="month_gu" name="month_gu"> -->
+    				<select class=" rounded p-1 form-select" id="month_gu" name="month_gu">
+    					<option default selected hidden>Select Month</option>
+    					<option value="January">January</option>
+    					<option value="February">February</option>
+    					<option value="March">March</option>
+    					<option value="April">April</option>
+    					<option value="May">May</option>
+    					<option value="June">June</option>
+    					<option value="July">July</option>
+    					<option value="August">August</option>
+    					<option value="September">September</option>
+    					<option value="October">October</option>
+    					<option value="November">November</option>
+    					<option value="December">December</option>
+    				</select>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="row mt-2 w-100">
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="start_date_en">Start Date (English):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="start_date_en" name="start_date_en" placeholder="01-01-2024">
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="start_date_hi">Start Date (Hindi):</label>
+    				<input  class="rounded  p-1 form-control" type="text" id="start_date_hi" name="start_date_hi" placeholder="01-01-2024">
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="start_date_gu">Start Date (Gujarati):</label>
+    				<input class=" rounded p-1 form-control" type="text" id="start_date_gu" name="start_date_gu" placeholder="01-01-2024">
+    			</div>
+    		</div>
+    	</div>
+    	<div class="row mt-2 w-100">
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="path_pdf_en">Advisory PDF (English):</label>
+    				<input class=" rounded p-1 form-control" type="file" id="path_pdf_en" name="path_pdf_en">
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="path_pdf_hi">Advisory PDF (Hindi):</label>
+    				<input class=" rounded p-1 form-control" type="file" id="path_pdf_hi" name="path_pdf_hi">
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="p-2">
+    				<label class="form-label" for="path_pdf_gu">Advisory PDF (Gujarati):</label>
+    				<input class=" rounded p-1 form-control" type="file" id="path_pdf_gu" name="path_pdf_gu">
+    			</div>
+    		</div>
+    	</div>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">select language</label>
+                    <select class="form-select" name="lang_1">
+                        <option>Select language</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Odia">Odia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Add PDF</label>
+                    <input type="file" class="form-control" name="lang_1_pdf">
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">select language</label>
+                    <select class="form-select" name="lang_2">
+                        <option>Select language</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Odia">Odia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Add PDF</label>
+                    <input type="file" class="form-control" name="lang_2_pdf">
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">select language</label>
+                    <select class="form-select" name="lang_3">
+                        <option>Select language</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Odia">Odia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Add PDF</label>
+                    <input type="file" class="form-control" name="lang_3_pdf">
+                </div>
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">select language</label>
+                    <select class="form-select" name="lang_4">
+                        <option>Select language</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Odia">Odia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Add PDF</label>
+                    <input type="file" class="form-control" name="lang_4_pdf">
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">select language</label>
+                    <select class="form-select" name="lang_5">
+                        <option>Select language</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Odia">Odia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Add PDF</label>
+                    <input type="file" class="form-control" name="lang_5_pdf">
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">select language</label>
+                    <select class="form-select" name="lang_6">
+                        <option>Select language</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Odia">Odia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Add PDF</label>
+                    <input type="file" class="form-control" name="lang_6_pdf">
+                </div>
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">select language</label>
+                    <select class="form-select" name="lang_7">
+                        <option>Select language</option>
+                        <option value="Punjabi">Punjabi</option>
+                        <option value="Telugu">Telugu</option>
+                        <option value="Marathi">Marathi</option>
+                        <option value="Kannada">Kannada</option>
+                        <option value="Tamil">Tamil</option>
+                        <option value="Odia">Odia</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Add PDF</label>
+                    <input type="file" class="form-control" name="lang_7_pdf">
+                </div>
+            </div>
+        </div>
+        
+    	<div class="text-center w-100 mt-2"><button class="btn btn-success" type="submit">Create</button></div>
+    </div>
+    
+</form>
+
+
+{% endblock %}

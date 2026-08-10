@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Portal - OTP Login</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --primary-dark: #1b5e20;
+            --primary-light: #e8f5e9;
+            --accent-color: #81c784;
+            --text-color: #2c3e50;
+            --bg-gradient: linear-gradient(135deg, #1b5e20 0%, #4caf50 100%);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f4f7f6;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar-brand img {
+            max-height: 60px;
+        }
+
+        .header-panel {
+            background-color: #ffffff;
+            border-bottom: 3px solid var(--primary-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .login-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at top right, rgba(129, 199, 132, 0.2) 0%, rgba(244, 247, 246, 1) 70%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .brand-header h2 {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-top: 10px;
+            font-size: 24px;
+        }
+
+        .brand-header p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 18px;
+            border: 1px solid #dcdde1;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(46, 125, 50, 0.2);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 10px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        }
+
+        .step-transition {
+            transition: all 0.4s ease;
+        }
+
+        .d-none-temp {
+            display: none !important;
+        }
+
+        .otp-input-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .otp-box {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            border: 1px solid #dcdde1;
+            border-radius: 8px;
+            color: var(--primary-dark);
+        }
+
+        .otp-box:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(46, 125, 50, 0.3);
+        }
+
+        .simulated-badge {
+            background-color: #fff8e1;
+            color: #f57f17;
+            border: 1px dashed #ffe082;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 13px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .footer {
+            background-color: var(--primary-dark);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Panel -->
+    <div class="header-panel py-3">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <img src="/media/Logo/ICAR_logo.jpeg" alt="ICAR Logo" class="me-3" style="width: 60px; height: 60px; object-fit: contain;">
+                <div>
+                    <h5 class="m-0 fw-bold text-success">ICAR - Central Institute for Cotton Research</h5>
+                    <small class="text-muted">Ministry of Agriculture and Farmers Welfare, Govt. of India</small>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mt-2 mt-md-0">
+                <img src="/media/Logo/CICR_logo.png" alt="CICR Logo" style="width: 70px; height: 70px; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Area -->
+    <div class="login-section">
+        <div class="glass-card">
+            
+            <!-- Step 1: Mobile Number Input -->
+            <div id="step-mobile" class="step-transition">
+                <div class="brand-header">
+                    <div class="icon-circle">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <h2>Farmer Portal Login</h2>
+                    <p>Enter your mobile number to receive a secure login OTP</p>
+                </div>
+
+                <div class="alert alert-danger d-none" id="mobile-error-alert"></div>
+
+                <form id="mobile-form">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="mobile_number" class="form-label fw-semibold">Mobile Number</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-phone"></i></span>
+                            <input type="text" class="form-control border-start-0" id="mobile_number" placeholder="Enter 10-digit mobile number" required max_length="10" pattern="[0-9]{10}">
+                        </div>
+                        <div class="form-text">We'll verify this number via secure OTP.</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 py-3 d-flex justify-content-center align-items-center" id="send-otp-btn">
+                        <span>Send OTP</span>
+                        <div class="spinner-border spinner-border-sm ms-2 d-none" id="send-spinner" role="status"></div>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Step 2: OTP Verification -->
+            <div id="step-otp" class="step-transition d-none-temp">
+                <div class="brand-header">
+                    <div class="icon-circle">
+                        <i class="bi bi-shield-lock-fill"></i>
+                    </div>
+                    <h2>Verify OTP</h2>
+                    <p>We've sent a 6-digit OTP code to <strong id="display-mobile"></strong></p>
+                </div>
+
+                <div class="alert alert-danger d-none" id="otp-error-alert"></div>
+                <div class="alert alert-success d-none" id="otp-success-alert"></div>
+
+                <form id="otp-form">
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-center d-block">Enter Verification Code</label>
+                        <div class="otp-input-container">
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-3 d-flex justify-content-center align-items-center" id="verify-otp-btn">
+                        <span>Verify & Login</span>
+                        <div class="spinner-border spinner-border-sm ms-2 d-none" id="verify-spinner" role="status"></div>
+                    </button>
+
+                    <div class="text-center mt-3">
+                        <button type="button" class="btn btn-link text-success text-decoration-none fw-semibold" id="back-to-mobile">
+                            <i class="bi bi-arrow-left me-1"></i> Change Mobile Number
+                        </button>
+                    </div>
+
+                    <!-- Simulated OTP Badge for Easy Testing -->
+                    <div class="simulated-badge" id="testing-otp-box">
+                        <i class="bi bi-info-circle-fill me-1"></i> 
+                        Demo OTP: <strong id="simulated-otp" class="text-danger"></strong><br>
+                        <small>(In production, this OTP is sent to the user's mobile console/SMS gateway only)</small>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p class="m-0">&copy; 2026 Central Institute for Cotton Research (CICR). All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery/Vanilla JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileForm = document.getElementById('mobile-form');
+            const otpForm = document.getElementById('otp-form');
+            const stepMobile = document.getElementById('step-mobile');
+            const stepOtp = document.getElementById('step-otp');
+            
+            const mobileInput = document.getElementById('mobile_number');
+            const displayMobile = document.getElementById('display-mobile');
+            const simulatedOtpText = document.getElementById('simulated-otp');
+            
+            const mobileErrorAlert = document.getElementById('mobile-error-alert');
+            const otpErrorAlert = document.getElementById('otp-error-alert');
+            const otpSuccessAlert = document.getElementById('otp-success-alert');
+            
+            const sendOtpBtn = document.getElementById('send-otp-btn');
+            const verifyOtpBtn = document.getElementById('verify-otp-btn');
+            const sendSpinner = document.getElementById('send-spinner');
+            const verifySpinner = document.getElementById('verify-spinner');
+            const backToMobileBtn = document.getElementById('back-to-mobile');
+            
+            const otpInputs = document.querySelectorAll('.otp-box');
+
+            let currentMobileNumber = '';
+
+            // Handle OTP input navigation
+            otpInputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+                        otpInputs[index + 1].focus();
+                    }
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value.length === 0 && index > 0) {
+                        otpInputs[index - 1].focus();
+                    }
+                });
+            });
+
+            // Get CSRF Token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Step 1: Request OTP
+            mobileForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                mobileErrorAlert.classList.add('d-none');
+                
+                const mobileNum = mobileInput.value.trim();
+                if (!/^[0-9]{10,15}$/.test(mobileNum)) {
+                    mobileErrorAlert.textContent = "Please enter a valid 10 to 15 digit mobile number.";
+                    mobileErrorAlert.classList.remove('d-none');
+                    return;
+                }
+
+                // Show spinner
+                sendOtpBtn.disabled = true;
+                sendSpinner.classList.remove('d-none');
+
+                try {
+                    const response = await fetch('/farmer/api/send-otp/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ mobile_number: mobileNum })
+                    });
+
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        currentMobileNumber = mobileNum;
+                        displayMobile.textContent = mobileNum;
+                        simulatedOtpText.textContent = data.otp;
+                        
+                        // Switch steps
+                        stepMobile.classList.add('d-none-temp');
+                        stepOtp.classList.remove('d-none-temp');
+                        
+                        // Focus on first OTP block
+                        setTimeout(() => otpInputs[0].focus(), 100);
+                    } else {
+                        mobileErrorAlert.textContent = data.mobile_number ? data.mobile_number[0] : (data.error || "Failed to send OTP. Please try again.");
+                        mobileErrorAlert.classList.remove('d-none');
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    mobileErrorAlert.textContent = "A connection error occurred. Please try again.";
+                    mobileErrorAlert.classList.remove('d-none');
+                } finally {
+                    sendOtpBtn.disabled = false;
+                    sendSpinner.classList.add('d-none');
+                }
+            });
+
+            // Step 2: Verify OTP
+            otpForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                otpErrorAlert.classList.add('d-none');
+                otpSuccessAlert.classList.add('d-none');
+
+                // Combine OTP digit fields
+                let otpCode = '';
+                otpInputs.forEach(input => otpCode += input.value);
+
+                if (otpCode.length !== 6) {
+                    otpErrorAlert.textContent = "Please enter all 6 digits of the OTP code.";
+                    otpErrorAlert.classList.remove('d-none');
+                    return;
+                }
+
+                // Show spinner
+                verifyOtpBtn.disabled = true;
+                verifySpinner.classList.remove('d-none');
+
+                try {
+                    const response = await fetch('/farmer/api/verify-otp/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({
+                            mobile_number: currentMobileNumber,
+                            otp: otpCode
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        otpSuccessAlert.textContent = "Login Successful! Redirecting...";
+                        otpSuccessAlert.classList.remove('d-none');
+                        
+                        // Redirect to farmer dashboard
+                        setTimeout(() => {
+                            window.location.href = '/farmer/dashboard/';
+                        }, 1200);
+                    } else {
+                        otpErrorAlert.textContent = data.error || "Verification failed. Please double check the OTP.";
+                        otpErrorAlert.classList.remove('d-none');
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    otpErrorAlert.textContent = "A connection error occurred. Please try again.";
+                    otpErrorAlert.classList.remove('d-none');
+                } finally {
+                    verifyOtpBtn.disabled = false;
+                    verifySpinner.classList.add('d-none');
+                }
+            });
+
+            // Back button logic
+            backToMobileBtn.addEventListener('click', () => {
+                stepOtp.classList.add('d-none-temp');
+                stepMobile.classList.remove('d-none-temp');
+                otpErrorAlert.classList.add('d-none');
+                otpInputs.forEach(input => input.value = '');
+            });
+        });
+    </script>
+</body>
+</html>

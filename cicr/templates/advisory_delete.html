@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+{% block content %}
+
+
+<div class="border-bottom w-100">
+	<h1 class="ms-3 fw-bold" style="font-size: 25px;">Delete Advisory</h1>
+</div>
+
+
+<div class="p-2 ms-2">
+	<p>Are you sure you want to delete {{ advisory.week_en }}?</p>
+
+	<form method="POST">
+	    {% csrf_token %}
+	    <div class="d-flex ">
+	    	<button class="btn btn-danger" type="submit">Confirm</button>
+	    	<a class="btn btn-secondary ms-3" href="{% url 'advisory_list' %}">Cancel</a>
+	    </div>
+	</form>
+</div>
+
+{% endblock %}

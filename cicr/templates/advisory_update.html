@@ -1,0 +1,321 @@
+{% extends "base.html" %} 
+{% block content %}
+
+
+
+<div class="border-bottom w-100 text-center">
+    <h1 class="ms-3 fw-bold" style="font-size: 25px;">Update Advisory</h1>
+</div>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+     <div class="p-2">
+        <div class="row mt-2 w-100">
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="week_en">Week No (English):</label>
+                    <input class="rounded p-1 form-control" type="text" id="week_en" name="week_en" value="{{ advisory.week_en }}" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="week_hi">Week No (Hindi):</label>
+                    <input class="rounded p-1 form-control" type="text" id="week_hi" name="week_hi" value="{{ advisory.week_hi }}">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="week_gu">Week No (Gujarati):</label>
+                    <input class="rounded p-1 form-control" type="text" id="week_gu" name="week_gu" value="{{ advisory.week_gu }}">
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2 w-100">
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="date_range_en">Title (English):</label>
+                    <input class="rounded p-1 form-control" type="text" id="date_range_en" name="date_range_en" value="{{ advisory.date_range_en }}" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="date_range_hi">Title (Hindi):</label>
+                    <input class="rounded p-1 form-control" type="text" id="date_range_hi" name="date_range_hi" value="{{ advisory.date_range_hi }}">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="date_range_gu">Title (Gujarati):</label>
+                    <input class="rounded p-1 form-control" type="text" id="date_range_gu" name="date_range_gu" value="{{ advisory.date_range_gu }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100">
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="month_en">Month (English):</label>
+                    <input class="rounded p-1 form-control" type="text" id="month_en" name="month_en" value="{{ advisory.month_en }}" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="month_hi">Month (Hindi):</label>
+                    <input class="rounded p-1 form-control" type="text" id="month_hi" name="month_hi" value="{{ advisory.month_hi }}">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="month_gu">Month (Gujarati):</label>
+                    <input class="rounded p-1 form-control" type="text" id="month_gu" name="month_gu" value="{{ advisory.month_gu }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100">
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="start_date_en">Start Date (English):</label>
+                    <input class="rounded p-1 form-control" type="text" id="start_date_en" name="start_date_en" value="{{ advisory.start_date_en }}" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="start_date_hi">Start Date (Hindi):</label>
+                    <input class="rounded p-1 form-control" type="text" id="start_date_hi" name="start_date_hi" value="{{ advisory.start_date_hi }}">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="start_date_gu">Start Date (Gujarati):</label>
+                    <input class="rounded p-1 form-control" type="text" id="start_date_gu" name="start_date_gu" value="{{ advisory.start_date_gu }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2 w-100">
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="path_pdf_en">Advisory PDF (English):</label>
+                    {% if advisory.path_pdf_en %}
+                      <div class="mb-2">
+                        <a href="{{ advisory.path_pdf_en.url }}" target="_blank">View/Download current PDF</a> <!-- Link to the uploaded file -->
+                      </div>
+                    {% endif %}
+                    <input class="rounded p-1 form-control" type="file" id="path_pdf_en" name="path_pdf_en">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="path_pdf_hi">Advisory PDF (Hindi):</label>
+                    {% if advisory.path_pdf_hi %}
+                      <div class="mb-2">
+                        <a href="{{ advisory.path_pdf_hi.url }}" target="_blank">View/Download current PDF</a> <!-- Link to the uploaded file -->
+                      </div>
+                    {% endif %}
+                    <input class="rounded p-1 form-control" type="file" id="path_pdf_hi" name="path_pdf_hi">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="p-2">
+                    <label class="form-label" for="path_pdf_gu">Advisory PDF (Gujarati):</label>
+                    {% if advisory.path_pdf_gu %}
+                      <div class="mb-2">
+                        <a href="{{ advisory.path_pdf_gu.url }}" target="_blank">View/Download current PDF</a> <!-- Link to the uploaded file -->
+                      </div>
+                    {% endif %}
+                    <input class="rounded p-1 form-control" type="file" id="path_pdf_gu" name="path_pdf_gu">
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <br>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">Select language</label>
+                    <select class="form-select" name="lang_1">
+                    <option value="">Select language</option>
+                    <option value="Punjabi" {% if advisory.lang_1 == "Punjabi" %}selected{% endif %}>Punjabi</option>
+                    <option value="Telagu"  {% if advisory.lang_1 == "Telagu"  %}selected{% endif %}>Telagu</option>
+                    <option value="Marathi" {% if advisory.lang_1 == "Marathi"  %}selected{% endif %}>Marathi</option>
+                    <option value="Kannada" {% if advisory.lang_1 == "Kannada"  %}selected{% endif %}>Kannada</option>
+                    <option value="Tamil" {% if advisory.lang_1 == "Tamil"  %}selected{% endif %}>Tamil</option>
+                    <option value="Odia" {% if advisory.lang_1 == "Odia"  %}selected{% endif %}>Odia</option>
+                    </select>
+                </div>
+
+                <div class="mt-2">
+                    <label class="form-label">Add PDF</label>
+                    {% if advisory.lang_1_pdf %}
+                    <div class="mb-2">
+                        <a href="{{ advisory.lang_1_pdf.url }}" target="_blank">View/Download current PDF</a>
+                    </div>
+                    {% endif %}
+                    <input class="rounded p-1 form-control" type="file" id="lang_1_pdf" name="lang_1_pdf" accept="application/pdf">
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">Select language</label>
+                    <select class="form-select" name="lang_2">
+                    <option value="">Select language</option>
+                    <option value="Punjabi" {% if advisory.lang_2 == "Punjabi" %}selected{% endif %}>Punjabi</option>
+                    <option value="Telagu"  {% if advisory.lang_2 == "Telagu"  %}selected{% endif %}>Telagu</option>
+                    <option value="Marathi" {% if advisory.lang_2 == "Marathi"  %}selected{% endif %}>Marathi</option>
+                    <option value="Kannada" {% if advisory.lang_2 == "Kannada"  %}selected{% endif %}>Kannada</option>
+                    <option value="Tamil" {% if advisory.lang_2 == "Tamil"  %}selected{% endif %}>Tamil</option>
+                    <option value="Odia" {% if advisory.lang_2 == "Odia"  %}selected{% endif %}>Odia</option>
+                    </select>
+                </div>
+
+                <div class="mt-2">
+                    <label class="form-label">Add PDF</label>
+                    {% if advisory.lang_2_pdf %}
+                    <div class="mb-2">
+                        <a href="{{ advisory.lang_2_pdf.url }}" target="_blank">View/Download current PDF</a>
+                    </div>
+                    {% endif %}
+                    <input class="rounded p-1 form-control" type="file" id="lang_2_pdf" name="lang_2_pdf" accept="application/pdf">
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div>
+                    <label class="form-label">Select language</label>
+                    <select class="form-select" name="lang_3">
+                    <option value="">Select language</option>
+                    <option value="Punjabi" {% if advisory.lang_3 == "Punjabi" %}selected{% endif %}>Punjabi</option>
+                    <option value="Telagu"  {% if advisory.lang_3 == "Telagu"  %}selected{% endif %}>Telagu</option>
+                    <option value="Marathi" {% if advisory.lang_3 == "Marathi"  %}selected{% endif %}>Marathi</option>
+                    <option value="Kannada" {% if advisory.lang_3 == "Kannada"  %}selected{% endif %}>Kannada</option>
+                    <option value="Tamil" {% if advisory.lang_3 == "Tamil"  %}selected{% endif %}>Tamil</option>
+                    <option value="Odia" {% if advisory.lang_3 == "Odia"  %}selected{% endif %}>Odia</option>
+                    </select>
+                </div>
+
+                <div class="mt-2">
+                    <label class="form-label">Add PDF</label>
+                    {% if advisory.lang_3_pdf %}
+                    <div class="mb-2">
+                        <a href="{{ advisory.lang_3_pdf.url }}" target="_blank">View/Download current PDF</a>
+                    </div>
+                    {% endif %}
+                    <input class="rounded p-1 form-control" type="file" id="lang_3_pdf" name="lang_3_pdf" accept="application/pdf">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div>
+                        <label class="form-label">Select language</label>
+                        <select class="form-select" name="lang_4">
+                        <option value="">Select language</option>
+                        <option value="Punjabi" {% if advisory.lang_4 == "Punjabi" %}selected{% endif %}>Punjabi</option>
+                        <option value="Telagu"  {% if advisory.lang_4 == "Telagu"  %}selected{% endif %}>Telagu</option>
+                        <option value="Marathi" {% if advisory.lang_4 == "Marathi"  %}selected{% endif %}>Marathi</option>
+                        <option value="Kannada" {% if advisory.lang_4 == "Kannada"  %}selected{% endif %}>Kannada</option>
+                        <option value="Tamil" {% if advisory.lang_4 == "Tamil"  %}selected{% endif %}>Tamil</option>
+                        <option value="Odia" {% if advisory.lang_4 == "Odia"  %}selected{% endif %}>Odia</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="form-label">Add PDF</label>
+                        {% if advisory.lang_4_pdf %}
+                        <div class="mb-2">
+                            <a href="{{ advisory.lang_4_pdf.url }}" target="_blank">View/Download current PDF</a>
+                        </div>
+                        {% endif %}
+                        <input class="rounded p-1 form-control" type="file" id="lang_4_pdf" name="lang_4_pdf" accept="application/pdf">
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div>
+                        <label class="form-label">Select language</label>
+                        <select class="form-select" name="lang_5">
+                        <option value="">Select language</option>
+                        <option value="Punjabi" {% if advisory.lang_5 == "Punjabi" %}selected{% endif %}>Punjabi</option>
+                        <option value="Telagu"  {% if advisory.lang_5 == "Telagu"  %}selected{% endif %}>Telagu</option>
+                        <option value="Marathi" {% if advisory.lang_5 == "Marathi"  %}selected{% endif %}>Marathi</option>
+                        <option value="Kannada" {% if advisory.lang_5 == "Kannada"  %}selected{% endif %}>Kannada</option>
+                        <option value="Tamil" {% if advisory.lang_5 == "Tamil"  %}selected{% endif %}>Tamil</option>
+                        <option value="Odia" {% if advisory.lang_5 == "Odia"  %}selected{% endif %}>Odia</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="form-label">Add PDF</label>
+                        {% if advisory.lang_5_pdf %}
+                        <div class="mb-2">
+                            <a href="{{ advisory.lang_5_pdf.url }}" target="_blank">View/Download current PDF</a>
+                        </div>
+                        {% endif %}
+                        <input class="rounded p-1 form-control" type="file" id="lang_5_pdf" name="lang_5_pdf" accept="application/pdf">
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <div>
+                        <label class="form-label">Select language</label>
+                        <select class="form-select" name="lang_6">
+                        <option value="">Select language</option>
+                        <option value="Punjabi" {% if advisory.lang_6 == "Punjabi" %}selected{% endif %}>Punjabi</option>
+                        <option value="Telagu"  {% if advisory.lang_6 == "Telagu"  %}selected{% endif %}>Telagu</option>
+                        <option value="Marathi" {% if advisory.lang_6 == "Marathi"  %}selected{% endif %}>Marathi</option>
+                        <option value="Kannada" {% if advisory.lang_6 == "Kannada"  %}selected{% endif %}>Kannada</option>
+                        <option value="Tamil" {% if advisory.lang_6 == "Tamil"  %}selected{% endif %}>Tamil</option>
+                        <option value="Odia" {% if advisory.lang_6 == "Odia"  %}selected{% endif %}>Odia</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="form-label">Add PDF</label>
+                        {% if advisory.lang_6_pdf %}
+                        <div class="mb-2">
+                            <a href="{{ advisory.lang_6_pdf.url }}" target="_blank">View/Download current PDF</a>
+                        </div>
+                        {% endif %}
+                        <input class="rounded p-1 form-control" type="file" id="lang_6_pdf" name="lang_6_pdf" accept="application/pdf">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div>
+                        <label class="form-label">Select language</label>
+                        <select class="form-select" name="lang_7">
+                        <option value="">Select language</option>
+                        <option value="Punjabi" {% if advisory.lang_7 == "Punjabi" %}selected{% endif %}>Punjabi</option>
+                        <option value="Telagu"  {% if advisory.lang_7 == "Telagu"  %}selected{% endif %}>Telagu</option>
+                        <option value="Marathi" {% if advisory.lang_7 == "Marathi"  %}selected{% endif %}>Marathi</option>
+                        <option value="Kannada" {% if advisory.lang_7 == "Kannada"  %}selected{% endif %}>Kannada</option>
+                        <option value="Tamil" {% if advisory.lang_7 == "Tamil"  %}selected{% endif %}>Tamil</option>
+                        <option value="Odia" {% if advisory.lang_7 == "Odia"  %}selected{% endif %}>Odia</option>
+                        </select>
+                    </div>
+
+                    <div class="mt-2">
+                        <label class="form-label">Add PDF</label>
+                        {% if advisory.lang_7_pdf %}
+                        <div class="mb-2">
+                            <a href="{{ advisory.lang_7_pdf.url }}" target="_blank">View/Download current PDF</a>
+                        </div>
+                        {% endif %}
+                        <input class="rounded p-1 form-control" type="file" id="lang_7_pdf" name="lang_7_pdf" accept="application/pdf">
+                    </div>
+                </div>
+            </div>
+            
+        <div class="text-center w-100 mt-2"><button class="btn btn-success" type="submit">Update</button></div>
+    </div>
+
+
+</form>
+
+{% endblock %}
