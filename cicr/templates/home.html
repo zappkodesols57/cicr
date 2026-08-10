@@ -46,11 +46,11 @@
             position: relative;
             flex: 1;
             overflow: hidden;
-            min-height: 470px;
+            min-height: 360px;
             display: grid;
             grid-template-columns: minmax(320px, 1fr) minmax(360px, 0.92fr);
             align-items: center;
-            padding: 56px clamp(28px, 5.5vw, 76px) 38px;
+            padding: 38px clamp(36px, 4.8vw, 62px) 34px;
             background: #ffffff;
         }
 
@@ -58,10 +58,10 @@
             content: "";
             position: absolute;
             right: 0;
-            bottom: -68px;
-            width: 42%;
-            height: 120px;
-            border-top: 4px solid var(--green-700);
+            bottom: -54px;
+            width: 43%;
+            height: 96px;
+            border-top: 3px solid var(--green-700);
             border-radius: 70% 0 0 0;
             opacity: 0.8;
         }
@@ -76,21 +76,21 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
+            padding: 6px 13px;
             border: 1px solid #b7dfbf;
             border-radius: 999px;
             color: var(--green-800);
             background: #f3fbf4;
             font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 22px;
+            font-size: 11px;
+            margin-bottom: 16px;
         }
 
         .badge svg,
         .role-icon svg,
         .feature-icon svg {
-            width: 22px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
             stroke: currentColor;
             fill: none;
             stroke-width: 2;
@@ -99,38 +99,38 @@
         }
 
         h1 {
-            max-width: 540px;
-            margin: 0 0 18px;
+            max-width: 430px;
+            margin: 0 0 14px;
             color: var(--green-900);
-            font-size: clamp(44px, 6vw, 76px);
-            line-height: 0.98;
+            font-size: clamp(38px, 4.6vw, 58px);
+            line-height: 1.03;
             font-weight: 800;
             letter-spacing: 0;
         }
 
         .subtitle {
-            max-width: 610px;
-            margin: 0 0 34px;
+            max-width: 560px;
+            margin: 0 0 26px;
             color: var(--muted);
-            font-size: 18px;
-            line-height: 1.6;
+            font-size: 14px;
+            line-height: 1.55;
             font-weight: 500;
         }
 
         .role-actions {
             display: grid;
-            grid-template-columns: repeat(2, minmax(230px, 1fr));
-            gap: 24px;
-            max-width: 720px;
+            grid-template-columns: repeat(2, minmax(205px, 1fr));
+            gap: 16px;
+            max-width: 560px;
         }
 
         .role-card {
-            min-height: 106px;
+            min-height: 70px;
             display: grid;
             grid-template-columns: auto 1fr auto;
             align-items: center;
-            gap: 18px;
-            padding: 20px;
+            gap: 14px;
+            padding: 14px;
             color: #ffffff;
             text-decoration: none;
             background: linear-gradient(135deg, var(--green-700), var(--green-900));
@@ -148,8 +148,8 @@
         .arrow {
             display: inline-grid;
             place-items: center;
-            width: 58px;
-            height: 58px;
+            width: 46px;
+            height: 46px;
             border-radius: 50%;
             background: #ffffff;
             color: var(--green-800);
@@ -157,40 +157,47 @@
         }
 
         .arrow {
-            width: 46px;
-            height: 46px;
+            width: 36px;
+            height: 36px;
         }
 
         .role-title {
             display: block;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 800;
-            margin-bottom: 7px;
+            margin-bottom: 5px;
         }
 
         .role-text {
             display: block;
-            max-width: 180px;
+            max-width: 140px;
             color: rgba(255, 255, 255, 0.9);
-            font-size: 13px;
+            font-size: 10px;
             line-height: 1.35;
             font-weight: 500;
         }
 
         .visual {
             position: absolute;
-            top: 38px;
-            right: clamp(28px, 5.5vw, 76px);
-            width: min(47vw, 700px);
-            height: min(42vw, 390px);
-            min-height: 310px;
+            inset: 0 0 auto auto;
+            width: min(47vw, 640px);
+            height: 100%;
+            min-height: 360px;
             overflow: hidden;
-            border-radius: 14px;
-            box-shadow: 0 18px 45px rgba(0, 77, 18, 0.18);
+            border-radius: 0 0 0 48% / 0 0 0 72%;
+            box-shadow: none;
         }
 
         .visual::before {
-            display: none;
+            content: "";
+            display: block;
+            position: absolute;
+            inset: -5px 0 0 -24px;
+            border-left: 2px solid var(--green-700);
+            border-bottom: 2px solid var(--green-700);
+            border-bottom-left-radius: 48% 72%;
+            pointer-events: none;
+            z-index: 2;
         }
 
         .visual img {
@@ -201,11 +208,11 @@
 
         .icar-logo {
             position: absolute;
-            top: 86px;
-            right: clamp(44px, 7vw, 104px);
+            top: 58px;
+            right: clamp(44px, 7vw, 92px);
             z-index: 3;
-            width: 126px;
-            height: 126px;
+            width: 92px;
+            height: 92px;
             display: grid;
             place-items: center;
             border-radius: 50%;
@@ -214,16 +221,16 @@
         }
 
         .icar-logo img {
-            width: 82px;
-            height: 82px;
+            width: 62px;
+            height: 62px;
             object-fit: contain;
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 26px;
-            padding: 34px clamp(28px, 5.5vw, 76px);
+            gap: 16px;
+            padding: 24px clamp(36px, 4.8vw, 62px);
             background: rgba(246, 250, 246, 0.96);
             border-top: 1px solid var(--line);
         }
@@ -231,10 +238,10 @@
         .feature {
             display: grid;
             grid-template-columns: auto 1fr;
-            gap: 18px;
-            min-height: 116px;
+            gap: 14px;
+            min-height: 92px;
             align-items: center;
-            padding: 22px;
+            padding: 16px;
             background: var(--surface);
             border: 1px solid var(--line);
             border-radius: 8px;
@@ -242,8 +249,8 @@
         }
 
         .feature-icon {
-            width: 56px;
-            height: 56px;
+            width: 44px;
+            height: 44px;
             display: grid;
             place-items: center;
             border-radius: 50%;
@@ -254,14 +261,14 @@
         .feature h2 {
             margin: 0 0 7px;
             color: var(--green-800);
-            font-size: 15px;
+            font-size: 12px;
             line-height: 1.2;
         }
 
         .feature p {
             margin: 0;
             color: var(--muted);
-            font-size: 13px;
+            font-size: 11px;
             line-height: 1.45;
         }
 
@@ -269,10 +276,10 @@
             display: flex;
             justify-content: space-between;
             gap: 20px;
-            padding: 19px clamp(28px, 5.5vw, 76px);
+            padding: 15px clamp(36px, 4.8vw, 62px);
             color: rgba(255, 255, 255, 0.86);
             background: var(--green-900);
-            font-size: 13px;
+            font-size: 11px;
         }
 
         footer a {
@@ -283,19 +290,24 @@
 
         @media (max-width: 900px) {
             .hero {
-                min-height: 720px;
+                min-height: 640px;
                 grid-template-columns: 1fr;
                 align-items: end;
-                padding-top: 270px;
+                padding-top: 260px;
             }
 
             .visual {
-                top: 24px;
-                left: 22px;
-                right: 22px;
-                width: auto;
-                height: 300px;
-                min-height: 300px;
+                top: 0;
+                left: auto;
+                right: 0;
+                width: 100%;
+                height: 280px;
+                min-height: 280px;
+                border-radius: 0 0 0 44% / 0 0 0 40%;
+            }
+
+            .visual::before {
+                border-bottom-left-radius: 44% 40%;
             }
 
             .icar-logo {
@@ -317,7 +329,7 @@
 
         @media (max-width: 640px) {
             .hero {
-                min-height: 760px;
+                min-height: 690px;
                 padding: 250px 22px 32px;
             }
 
@@ -330,7 +342,7 @@
             }
 
             h1 {
-                font-size: 42px;
+                font-size: 38px;
             }
 
             .subtitle {
