@@ -49,6 +49,37 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
 
+            # One-time repair for servers that already applied django.contrib.admin
+            # before the custom login.User model was introduced.
+            python cicr/manage.py shell <<'PY'
+            from django.db import connection
+
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    """
+                    SELECT COUNT(*)
+                    FROM django_migrations
+                    WHERE app = 'admin' AND name = '0001_initial'
+                    """
+                )
+                admin_applied = cursor.fetchone()[0] > 0
+
+                cursor.execute(
+                    """
+                    SELECT COUNT(*)
+                    FROM django_migrations
+                    WHERE app = 'login' AND name = '0001_initial'
+                    """
+                )
+                login_applied = cursor.fetchone()[0] > 0
+
+                if admin_applied and not login_applied:
+                    cursor.execute("DELETE FROM django_migrations WHERE app = 'admin'")
+                    print("Removed stale admin migration records; login migrations will run first.")
+            PY
+
+            python cicr/manage.py migrate login --noinput
+            python cicr/manage.py migrate admin --fake-initial --noinput
             python cicr/manage.py migrate --noinput
             python cicr/manage.py collectstatic --noinput
 
