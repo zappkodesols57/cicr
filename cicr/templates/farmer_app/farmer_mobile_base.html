@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Farmer Dashboard{% endblock %} | CICR IRM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green: #008b24;
+            --text: #111111;
+            --muted: #696969;
+            --bg: #f2f2f2;
+            --card: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Inter", Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .mobile-app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+        }
+
+        .top-appbar {
+            height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 28px;
+            color: #ffffff;
+            background: #000000;
+            font-size: clamp(24px, 4vw, 38px);
+            font-weight: 500;
+            position: relative;
+        }
+
+        .logout {
+            position: absolute;
+            right: 28px;
+            color: #ffffff;
+            text-decoration: none;
+            display: grid;
+            place-items: center;
+        }
+
+        .content {
+            flex: 1;
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            padding: 44px 38px 118px;
+        }
+
+        .section-title {
+            margin: 0 0 28px;
+            text-align: center;
+            font-size: clamp(26px, 3vw, 34px);
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 20;
+            height: 92px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: center;
+            background: #ffffff;
+            border-top: 1px solid #eeeeee;
+            box-shadow: 0 -8px 22px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-item {
+            height: 100%;
+            color: #6b6b6b;
+            display: grid;
+            place-items: center;
+            align-content: center;
+            gap: 6px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .nav-icon {
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+        }
+
+        .nav-item.active {
+            color: #000000;
+        }
+
+        .nav-item.active .nav-icon {
+            color: #ffffff;
+            background: #000000;
+        }
+
+        svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .accessibility {
+            position: fixed;
+            right: 28px;
+            bottom: 124px;
+            z-index: 18;
+            width: 62px;
+            height: 62px;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            background: #000000;
+            border-radius: 50%;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+        }
+
+        @media (min-width: 900px) {
+            .mobile-app {
+                background: #ffffff;
+            }
+
+            .top-appbar {
+                height: 74px;
+                font-size: 30px;
+            }
+
+            .content {
+                padding-top: 38px;
+            }
+
+            .bottom-nav {
+                left: 50%;
+                width: min(760px, 100%);
+                transform: translateX(-50%);
+                border-radius: 24px 24px 0 0;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .top-appbar {
+                height: 92px;
+                font-size: 28px;
+            }
+
+            .content {
+                padding: 36px 22px 112px;
+            }
+
+            .bottom-nav {
+                height: 88px;
+            }
+
+            .nav-item {
+                font-size: 14px;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="mobile-app">
+        <header class="top-appbar">
+            {% block app_title %}Farmer Dashboard{% endblock %}
+            <a class="logout" href="/web_aap/" aria-label="Exit">
+                <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+            </a>
+        </header>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <button class="accessibility" type="button" aria-label="Accessibility">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"/><path d="M4 9h16"/><path d="M12 9v12"/><path d="m8 21 4-7 4 7"/></svg>
+        </button>
+
+        <nav class="bottom-nav" aria-label="Farmer tabs">
+            <a class="nav-item {% if active_tab == 'home' %}active{% endif %}" href="/farmer/dashboard/">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+                Home
+            </a>
+            <a class="nav-item {% if active_tab == 'advisories' %}active{% endif %}" href="/farmer/advisories/">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg></span>
+                Advisories
+            </a>
+            <a class="nav-item {% if active_tab == 'calculator' %}active{% endif %}" href="/farmer/calculator/">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h2"/><path d="M14 12h2"/><path d="M8 16h2"/><path d="M14 16h2"/></svg></span>
+                Calculator
+            </a>
+            <a class="nav-item {% if active_tab == 'pest' %}active{% endif %}" href="/farmer/pest/">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg></span>
+                Pest
+            </a>
+        </nav>
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

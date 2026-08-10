@@ -1,0 +1,96 @@
+{% extends "farmer_app/farmer_mobile_base.html" %}
+
+{% block title %}All Advisories{% endblock %}
+{% block app_title %}All Advisories{% endblock %}
+
+{% block extra_css %}
+<style>
+    .advisory-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 36px;
+    }
+
+    .advisory-card {
+        overflow: hidden;
+        color: #000000;
+        text-decoration: none;
+        background: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .advisory-image {
+        height: 260px;
+        background: linear-gradient(135deg, #dceddf, #eff8f1);
+    }
+
+    .advisory-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .advisory-body {
+        padding: 32px;
+    }
+
+    .advisory-body h2 {
+        margin: 0 0 28px;
+        font-size: 27px;
+        line-height: 1.25;
+        text-transform: uppercase;
+    }
+
+    .advisory-body p {
+        margin: -16px 0 24px;
+        color: #666666;
+        font-size: 16px;
+    }
+
+    .read-more {
+        display: inline-grid;
+        place-items: center;
+        min-width: 168px;
+        min-height: 72px;
+        padding: 0 24px;
+        color: #ffffff;
+        background: #000000;
+        border-radius: 14px;
+        font-size: 22px;
+        font-weight: 700;
+    }
+
+    .empty {
+        padding: 52px;
+        text-align: center;
+        color: #666666;
+        background: #ffffff;
+        border-radius: 16px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="advisory-list">
+    {% if cards %}
+        {% for card in cards %}
+            <a class="advisory-card" href="{{ card.url }}">
+                <div class="advisory-image">
+                    {% if carousel_images.0.url %}
+                        <img src="{{ carousel_images.0.url }}" alt="">
+                    {% endif %}
+                </div>
+                <div class="advisory-body">
+                    <h2>{{ card.title }}</h2>
+                    {% if card.subtitle %}<p>{{ card.subtitle }}</p>{% endif %}
+                    <span class="read-more">Read More</span>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <div class="empty">No advisories available from API yet.</div>
+    {% endif %}
+</section>
+{% endblock %}
