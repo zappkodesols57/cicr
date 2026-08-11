@@ -7,7 +7,7 @@
     <title>{% block title %}Farmer Dashboard{% endblock %} | CICR IRM</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --green: #008b24;
@@ -22,7 +22,7 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: "Inter", Arial, sans-serif;
+            font-family: var(--font-family);
             color: var(--text);
             background: var(--bg);
         }
@@ -182,12 +182,13 @@
         }
     </style>
     {% block extra_css %}{% endblock %}
+    {% include "includes/global_typography.html" %}
 </head>
 <body>
     <div class="mobile-app">
         <header class="top-appbar">
             {% block app_title %}Farmer Dashboard{% endblock %}
-            <a class="logout" href="/web_aap/" aria-label="Exit">
+            <a class="logout" href="/web_panel_logout/" aria-label="Exit">
                 <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
             </a>
         </header>

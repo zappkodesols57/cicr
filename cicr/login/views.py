@@ -103,8 +103,13 @@ def super_login(request):
     return render(request, 'login/admin_login.html')
 
 
-def web_aap(request):
+def web_app(request):
     return render(request, 'home.html')
+
+
+def web_panel_logout(request):
+    logout(request)
+    return redirect("/web_app/")
 
 
 # comment on 30july 2025 after implement financial year functionality
@@ -354,15 +359,36 @@ def investigator_weekly_report(request):
 
 @login_required(login_url='/login_investigator/')
 def investigator_monthly_progress(request):
-    return render(request, 'login/investigator_monthly_progress.html', {
+    return redirect('/investigator/monthly-progress/physical/')
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_physical_progress(request):
+    return render(request, 'login/investigator_physical_progress.html', {
         'investigator_id': request.user.user_id,
         'investigator_district': request.user.user_district or '',
     })
 
 
 @login_required(login_url='/login_investigator/')
-def investigator_physical_progress(request):
-    return render(request, 'login/investigator_physical_progress.html', {
+def investigator_extension_activities(request):
+    return render(request, 'login/investigator_extension_activities.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_representative_photographs(request):
+    return render(request, 'login/investigator_representative_photographs.html', {
+        'investigator_id': request.user.user_id,
+        'investigator_district': request.user.user_district or '',
+    })
+
+
+@login_required(login_url='/login_investigator/')
+def investigator_assessment_season(request):
+    return render(request, 'login/investigator_assessment_season.html', {
         'investigator_id': request.user.user_id,
         'investigator_district': request.user.user_district or '',
     })
