@@ -7,7 +7,7 @@
     <title>CICR IRM | Pink Bollworm Monitor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --green-900: #004d12;
@@ -28,7 +28,7 @@
         body {
             margin: 0;
             min-height: 100vh;
-            font-family: "Inter", Arial, sans-serif;
+            font-family: var(--font-family);
             color: var(--text);
             background: var(--soft);
         }
@@ -389,6 +389,7 @@
             }
         }
     </style>
+    {% include "includes/global_typography.html" %}
 </head>
 <body>
     <main class="page">
@@ -398,7 +399,7 @@
             </div>
 
             <div class="icar-logo">
-                <img src="{% static 'images/CICR_logo.png' %}" alt="CICR">
+                <img src="{% static 'images/CICR_logo.png' %}?v=20260811" alt="CICR">
             </div>
 
             <div class="content">

@@ -1,10 +1,9 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physical Progress Report | CICR IRM</title>
+    <title>Assessment at the End of Season | CICR IRM</title>
     <style>
         :root {
             --green-950: #003d0d;
@@ -39,21 +38,34 @@
             background: #000000;
         }
 
-        .back {
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .back,
+        .icon-button {
             width: 42px;
             height: 42px;
+            flex: 0 0 auto;
             display: grid;
             place-items: center;
             color: #ffffff;
             text-decoration: none;
             border: 1px solid rgba(255,255,255,0.24);
             border-radius: 50%;
+            background: transparent;
         }
 
         .topbar h1 {
             margin: 0;
             font-size: 24px;
             line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         svg {
@@ -68,13 +80,13 @@
 
         .page {
             width: min(980px, calc(100% - 40px));
-            margin: 28px auto 38px;
+            margin: 28px auto 42px;
         }
 
         .stepper {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
             margin-bottom: 22px;
             padding: 16px;
             background: #ffffff;
@@ -86,20 +98,24 @@
         .step {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
+            min-width: 0;
             color: var(--muted);
+            font-size: 14px;
             font-weight: 800;
         }
 
         .step::before {
-            content: "";
-            width: 30px;
-            height: 30px;
+            content: attr(data-step);
+            width: 31px;
+            height: 31px;
+            flex: 0 0 auto;
             display: grid;
             place-items: center;
             color: #ffffff;
             background: #9ca39e;
             border-radius: 50%;
+            font-size: 13px;
         }
 
         .step.active,
@@ -124,7 +140,15 @@
             margin: 0 0 24px;
             color: #000000;
             font-size: 28px;
-            line-height: 1.2;
+            line-height: 1.25;
+        }
+
+        .section-title {
+            grid-column: 1 / -1;
+            margin: 8px 0 0;
+            color: #000000;
+            font-size: 18px;
+            font-weight: 800;
         }
 
         .form-grid {
@@ -161,7 +185,7 @@
         }
 
         .field textarea {
-            min-height: 112px;
+            min-height: 118px;
             resize: vertical;
         }
 
@@ -172,18 +196,11 @@
             box-shadow: 0 0 0 4px rgba(0, 114, 13, 0.1);
         }
 
-        .section-label {
-            margin: 8px 0 0;
-            color: #000000;
-            font-size: 15px;
-            font-weight: 800;
-        }
-
         .actions {
             display: flex;
             justify-content: flex-end;
             gap: 12px;
-            margin-top: 24px;
+            margin-top: 26px;
         }
 
         .button {
@@ -281,26 +298,32 @@
 </head>
 <body>
     {% include "includes/investigator_sidebar.html" %}
-    {% csrf_token %}
     {{ investigator_id|json_script:"investigator-id" }}
+    {{ investigator_district|json_script:"investigator-district" }}
 
     <header class="topbar">
-        <a class="back" href="/investigator/monthly-progress/" aria-label="Back to monthly progress">
-            <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        <div class="topbar-left">
+            <a class="back" href="/investigator/monthly-progress/" aria-label="Back to monthly progress">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            </a>
+            <h1>Assessment End of Season</h1>
+        </div>
+        <a class="icon-button" href="/web_panel_logout/" aria-label="Logout">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
         </a>
-        <h1>Physical Progress Report</h1>
-        <span aria-hidden="true"></span>
     </header>
 
     <main class="page">
-        <nav class="stepper" aria-label="Physical progress steps">
-            <span class="step active" id="stepLabel1">Details</span>
-            <span class="step" id="stepLabel2">Confirm</span>
+        <nav class="stepper" aria-label="Assessment steps">
+            <span class="step active" data-step="1" id="stepLabel1">Details</span>
+            <span class="step" data-step="2" id="stepLabel2">Yield</span>
+            <span class="step" data-step="3" id="stepLabel3">Confirm</span>
         </nav>
 
-        <form id="progressForm">
+        <form id="assessmentForm">
+            {% csrf_token %}
             <section class="card" data-panel="1">
-                <h2>A . Physical Progress</h2>
+                <h2>D . Assessment at the end of the season</h2>
                 <div class="form-grid">
                     <div class="field">
                         <label for="date_field">Date</label>
@@ -312,46 +335,31 @@
                             <option value="">Loading districts...</option>
                         </select>
                     </div>
-                    <div class="full section-label">Critical Input Distributed</div>
+                    <div class="section-title">Total No. of Sprays</div>
                     <div class="field">
-                        <label for="pheromone_traps">Pheromone traps No</label>
-                        <input id="pheromone_traps" name="pheromone_traps" type="text">
+                        <label for="number_sucking">Sucking Pest</label>
+                        <input id="number_sucking" name="number_sucking" type="text" inputmode="numeric">
                     </div>
                     <div class="field">
-                        <label for="splat">SPLAT (Pheromone Lure) (kg)</label>
-                        <input id="splat" name="splat" type="text">
+                        <label for="number_bollworms">Bollworms</label>
+                        <input id="number_bollworms" name="number_bollworms" type="text" inputmode="numeric">
+                    </div>
+                    <div class="section-title">Cost of spray for plant protection</div>
+                    <div class="field">
+                        <label for="cost_spray_sucking">Sucking Pest</label>
+                        <input id="cost_spray_sucking" name="cost_spray_sucking" type="text" inputmode="decimal">
                     </div>
                     <div class="field">
-                        <label for="pb_rope">PB rope (Number)</label>
-                        <input id="pb_rope" name="pb_rope" type="text">
+                        <label for="cost_spray_bollworms">Bollworms</label>
+                        <input id="cost_spray_bollworms" name="cost_spray_bollworms" type="text" inputmode="decimal">
                     </div>
                     <div class="field">
-                        <label for="neem_insecticides">Neem based insecticides (L)</label>
-                        <input id="neem_insecticides" name="neem_insecticides" type="text">
+                        <label for="pesticide_reduction_cost">% Pesticide reduction in terms of cost</label>
+                        <input id="pesticide_reduction_cost" name="pesticide_reduction_cost" type="text" inputmode="decimal">
                     </div>
                     <div class="field">
-                        <label for="flonicamid">Flonicamid 50 WG (kg)</label>
-                        <input id="flonicamid" name="flonicamid" type="text">
-                    </div>
-                    <div class="field">
-                        <label for="trichocards">Trichocards (Parasitoid Trichogramma)</label>
-                        <input id="trichocards" name="trichocards" type="text">
-                    </div>
-                    <div class="field">
-                        <label for="quinalphos">Quinalphos 20% AF (L)</label>
-                        <input id="quinalphos" name="quinalphos" type="text">
-                    </div>
-                    <div class="field">
-                        <label for="chlorpyriphos">Chlorpyriphos 20% EC (L)</label>
-                        <input id="chlorpyriphos" name="chlorpyriphos" type="text">
-                    </div>
-                    <div class="field">
-                        <label for="profenophos">Profenophos 50%EC (L)</label>
-                        <input id="profenophos" name="profenophos" type="text">
-                    </div>
-                    <div class="field">
-                        <label for="additional_info">Additional Information</label>
-                        <textarea id="additional_info" name="additional_info"></textarea>
+                        <label for="pesticide_reduction_volume">% Pesticide reduction in terms of volume</label>
+                        <input id="pesticide_reduction_volume" name="pesticide_reduction_volume" type="text" inputmode="decimal">
                     </div>
                 </div>
                 <div class="actions">
@@ -360,23 +368,70 @@
             </section>
 
             <section class="card" data-panel="2" hidden>
-                <h2>Confirm Physical Progress</h2>
+                <h2>Seed Cotton Yield (kg/ha)</h2>
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="picking_1">1st Picking</label>
+                        <input id="picking_1" name="picking_1" type="text" inputmode="decimal">
+                    </div>
+                    <div class="field">
+                        <label for="picking_2">2nd Picking</label>
+                        <input id="picking_2" name="picking_2" type="text" inputmode="decimal">
+                    </div>
+                    <div class="field">
+                        <label for="picking_3">3rd Picking</label>
+                        <input id="picking_3" name="picking_3" type="text" inputmode="decimal">
+                    </div>
+                    <div class="field">
+                        <label for="picking_4">4th Picking</label>
+                        <input id="picking_4" name="picking_4" type="text" inputmode="decimal">
+                    </div>
+                    <div class="field">
+                        <label for="picking_5">5th Picking</label>
+                        <input id="picking_5" name="picking_5" type="text" inputmode="decimal">
+                    </div>
+                    <div class="field">
+                        <label for="picking_6">6th Picking</label>
+                        <input id="picking_6" name="picking_6" type="text" inputmode="decimal">
+                    </div>
+                    <div class="field full">
+                        <label for="cost_ratio">Benefit: Cost Ratio</label>
+                        <input id="cost_ratio" name="cost_ratio" type="text" inputmode="decimal">
+                    </div>
+                    <div class="field full">
+                        <label for="farmer_feedback">Farmers Feedback</label>
+                        <textarea id="farmer_feedback" name="farmer_feedback"></textarea>
+                    </div>
+                    <div class="field full">
+                        <label for="success_stories">Success Stories</label>
+                        <textarea id="success_stories" name="success_stories"></textarea>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="button secondary" type="button" data-back>Back</button>
+                    <button class="button" type="button" data-next>Continue</button>
+                </div>
+            </section>
+
+            <section class="card" data-panel="3" hidden>
+                <h2>Confirm Details</h2>
                 <div class="review" id="review"></div>
                 <div class="actions">
                     <button class="button secondary" type="button" data-back>Back</button>
                     <button class="button" type="submit" id="submitButton">Submit</button>
                 </div>
-                <div class="message success" id="successMessage" hidden>Physical progress submitted successfully.</div>
-                <div class="message error" id="errorMessage" hidden>Unable to submit physical progress.</div>
+                <div class="message success" id="successMessage" hidden>Assessment submitted successfully.</div>
+                <div class="message error" id="errorMessage" hidden>Unable to submit assessment.</div>
             </section>
         </form>
     </main>
 
     <script>
-        const investigatorId = JSON.parse(document.getElementById('investigator-id').textContent);
-        const form = document.getElementById('progressForm');
+        const INVESTIGATOR_ID = JSON.parse(document.getElementById('investigator-id').textContent);
+        const INVESTIGATOR_DISTRICT = JSON.parse(document.getElementById('investigator-district').textContent);
+        const form = document.getElementById('assessmentForm');
         const panels = Array.from(document.querySelectorAll('[data-panel]'));
-        const labels = [document.getElementById('stepLabel1'), document.getElementById('stepLabel2')];
+        const labels = Array.from(document.querySelectorAll('.step'));
         const review = document.getElementById('review');
         const successMessage = document.getElementById('successMessage');
         const errorMessage = document.getElementById('errorMessage');
@@ -386,21 +441,36 @@
         const reviewFields = [
             ['Date', 'date_field'],
             ['District', 'district'],
-            ['Pheromone traps No', 'pheromone_traps'],
-            ['SPLAT (Pheromone Lure) (kg)', 'splat'],
-            ['PB rope (Number)', 'pb_rope'],
-            ['Neem based insecticides (L)', 'neem_insecticides'],
-            ['Flonicamid 50 WG (kg)', 'flonicamid'],
-            ['Trichocards', 'trichocards'],
-            ['Quinalphos 20% AF (L)', 'quinalphos'],
-            ['Chlorpyriphos 20% EC (L)', 'chlorpyriphos'],
-            ['Profenophos 50%EC (L)', 'profenophos'],
-            ['Additional Information', 'additional_info'],
+            ['No of Spray Sucking Pest', 'number_sucking'],
+            ['No of Spray Bollworms', 'number_bollworms'],
+            ['Cost of Spray Sucking Pest', 'cost_spray_sucking'],
+            ['Cost of Spray Bollworms', 'cost_spray_bollworms'],
+            ['Pesticide Reduction in Terms of Cost', 'pesticide_reduction_cost'],
+            ['Pesticide Reduction in Terms of Volume', 'pesticide_reduction_volume'],
+            ['First Picking', 'picking_1'],
+            ['Second Picking', 'picking_2'],
+            ['Third Picking', 'picking_3'],
+            ['Fourth Picking', 'picking_4'],
+            ['Fifth Picking', 'picking_5'],
+            ['Sixth Picking', 'picking_6'],
+            ['Cost Ratio', 'cost_ratio'],
+            ['Farmers Feedback', 'farmer_feedback'],
+            ['Success Stories', 'success_stories'],
         ];
 
         function csrfToken() {
             const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
             return input ? input.value : '';
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            }[char]));
         }
 
         function fieldValue(name) {
@@ -420,29 +490,6 @@
             return String(date.getFullYear());
         }
 
-        function payload() {
-            const date = fieldValue('date_field');
-            return {
-                user_id: investigatorId,
-                date_field: date,
-                physical_date: date,
-                name_of_investigator: investigatorId,
-                month: monthName(date),
-                year: yearValue(date),
-                district: fieldValue('district'),
-                pheromone_traps: fieldValue('pheromone_traps'),
-                splat: fieldValue('splat'),
-                pb_rope: fieldValue('pb_rope'),
-                neem_insecticides: fieldValue('neem_insecticides'),
-                flonicamid: fieldValue('flonicamid'),
-                trichocards: fieldValue('trichocards'),
-                quinalphos: fieldValue('quinalphos'),
-                chlorpyriphos: fieldValue('chlorpyriphos'),
-                profenophos: fieldValue('profenophos'),
-                additional_info: fieldValue('additional_info'),
-            };
-        }
-
         function updateStep(step) {
             currentStep = step;
             panels.forEach((panel) => {
@@ -453,7 +500,7 @@
                 label.classList.toggle('active', labelStep === step);
                 label.classList.toggle('done', labelStep < step);
             });
-            if (step === 2) renderReview();
+            if (step === 3) renderReview();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -461,6 +508,27 @@
             const panel = panels[step - 1];
             const required = Array.from(panel.querySelectorAll('[required]'));
             return required.every((field) => field.reportValidity());
+        }
+
+        function buildPayload() {
+            const date = fieldValue('date_field');
+            const payload = {
+                user_id: INVESTIGATOR_ID,
+                date_field: date,
+                physical_date: date,
+                week: '',
+                name_of_investigator: INVESTIGATOR_ID,
+                month: monthName(date),
+                year: yearValue(date),
+                district: fieldValue('district'),
+            };
+
+            reviewFields.forEach(([, name]) => {
+                if (name !== 'date_field' && name !== 'district') {
+                    payload[name] = fieldValue(name);
+                }
+            });
+            return payload;
         }
 
         function renderReview() {
@@ -472,37 +540,39 @@
             `).join('');
         }
 
-        function escapeHtml(value) {
-            return String(value).replace(/[&<>"']/g, (char) => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;',
-            }[char]));
-        }
-
         async function loadDistricts() {
             const select = document.getElementById('district');
             try {
                 const response = await fetch('/api/districts/', { headers: { 'Accept': 'application/json' } });
                 if (!response.ok) throw new Error(`District API ${response.status}`);
                 const districts = await response.json();
-                select.innerHTML = '<option value="">Select district</option>' + districts.map((item) => {
-                    const value = item.district_name || item.name || item.district || '';
-                    return value ? `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>` : '';
+                const options = districts.map((item) => item.district_name || item.name || item.district || '').filter(Boolean);
+                const hasInvestigatorDistrict = INVESTIGATOR_DISTRICT && options.includes(INVESTIGATOR_DISTRICT);
+                select.innerHTML = '<option value="">Select district</option>' + options.map((value) => {
+                    const selected = value === INVESTIGATOR_DISTRICT ? ' selected' : '';
+                    return `<option value="${escapeHtml(value)}"${selected}>${escapeHtml(value)}</option>`;
                 }).join('');
+                if (INVESTIGATOR_DISTRICT && !hasInvestigatorDistrict) {
+                    select.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(INVESTIGATOR_DISTRICT)}" selected>${escapeHtml(INVESTIGATOR_DISTRICT)}</option>`);
+                }
             } catch (error) {
                 select.innerHTML = '<option value="">District unavailable</option>';
+                if (INVESTIGATOR_DISTRICT) {
+                    select.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(INVESTIGATOR_DISTRICT)}" selected>${escapeHtml(INVESTIGATOR_DISTRICT)}</option>`);
+                }
                 console.error(error);
             }
         }
 
-        document.querySelector('[data-next]').addEventListener('click', () => {
-            if (validateStep(currentStep)) updateStep(2);
+        document.querySelectorAll('[data-next]').forEach((button) => {
+            button.addEventListener('click', () => {
+                if (validateStep(currentStep)) updateStep(currentStep + 1);
+            });
         });
 
-        document.querySelector('[data-back]').addEventListener('click', () => updateStep(1));
+        document.querySelectorAll('[data-back]').forEach((button) => {
+            button.addEventListener('click', () => updateStep(Math.max(1, currentStep - 1)));
+        });
 
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -511,21 +581,21 @@
             submitButton.disabled = true;
 
             try {
-                const response = await fetch('/api/monthly_physical_progress/', {
+                const response = await fetch('/api/assessment_season/', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         'X-CSRFToken': csrfToken(),
                     },
-                    body: JSON.stringify(payload()),
+                    body: JSON.stringify(buildPayload()),
                 });
                 const data = await response.json().catch(() => ({}));
                 if (!response.ok) throw new Error(JSON.stringify(data));
-                successMessage.textContent = `Physical progress submitted successfully. Record ID: ${data.id || '-'}`;
+                successMessage.textContent = `Assessment submitted successfully. Record ID: ${data.id || '-'}`;
                 successMessage.hidden = false;
             } catch (error) {
-                errorMessage.textContent = 'Unable to submit physical progress. Please check required fields and try again.';
+                errorMessage.textContent = 'Unable to submit assessment. Please check fields and try again.';
                 errorMessage.hidden = false;
                 console.error(error);
             } finally {

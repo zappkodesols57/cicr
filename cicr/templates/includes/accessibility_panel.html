@@ -1,3 +1,4 @@
+{% include "includes/global_typography.html" %}
 <style>
     html.cicr-a11y-reduce-motion *,
     html.cicr-a11y-reduce-motion *::before,
@@ -23,12 +24,19 @@
     }
 
     html.cicr-a11y-dark {
+        --green-950: #f7fff8;
+        --green-900: #1fb34d;
+        --green-800: #58d178;
+        --green-700: #39bd5d;
+        --green-100: #203126;
         --green-50: #0f1511;
         --bg: #0f1511;
         --card: #171d19;
         --text: #f7fff8;
         --muted: #d3ded6;
         --line: #435047;
+        --surface: #171d19;
+        --soft: #0f1511;
     }
 
     html.cicr-a11y-dark body {
@@ -36,14 +44,73 @@
         background: #0f1511 !important;
     }
 
-    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .login-card, .content, .main, .mobile-app) {
+    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .main, .mobile-app) {
         color: #f7fff8 !important;
         background: #171d19 !important;
         border-color: #435047 !important;
     }
 
+    html.cicr-a11y-dark :where(.page, .hero, .features, .welcome, .stepper, .activity-card, .review-card, .review-item, .image-slot, .drawer, .drawer-body, .filter-card, .table-wrap, .empty-state) {
+        color: #f7fff8 !important;
+        background: #171d19 !important;
+        border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark .hero .content {
+        background: transparent !important;
+        border-color: transparent !important;
+    }
+
+    html.cicr-a11y-dark :where(.login-side, .welcome) {
+        color: #f7fff8 !important;
+        background: #0f1511 !important;
+        border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark .login-card {
+        color: #f7fff8 !important;
+        background: transparent !important;
+        border-color: transparent !important;
+    }
+
+    html.cicr-a11y-dark :where(.login-title, .welcome h1, .panel h2, .form-title, .section-heading) {
+        color: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark :where(.login-subtitle, .welcome p, .message, .footer, .subtitle) {
+        color: #d3ded6 !important;
+    }
+
+    html.cicr-a11y-dark .back-link {
+        color: #58d178 !important;
+    }
+
     html.cicr-a11y-dark :where(h1, h2, h3, h4, h5, p, span, label, strong, td, th, .head-value, .card-title, .section-title) {
         color: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark :where(.badge, .status-pill, .role-icon, .feature-icon, .arrow, .chip, .pill, .tag, .average-badge) {
+        color: #f7fff8 !important;
+        background: #203126 !important;
+        border-color: #54725d !important;
+    }
+
+    html.cicr-a11y-dark .role-card {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #08701f, #003d0d) !important;
+        border-color: #2c8c45 !important;
+    }
+
+    html.cicr-a11y-dark .role-card :where(.role-title, .role-text) {
+        color: #ffffff !important;
+    }
+
+    html.cicr-a11y-dark :where(.visual, .visual img, .icar-logo, .brand img, .main-logo, .main-logo img) {
+        background: transparent !important;
+    }
+
+    html.cicr-a11y-dark :where(.icar-logo img, .brand img, .main-logo img) {
+        filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.18));
     }
 
     html.cicr-a11y-dark :where(input, select, textarea) {
@@ -52,8 +119,26 @@
         border-color: #8fbf98 !important;
     }
 
+    html.cicr-a11y-dark :where(input, textarea)::placeholder {
+        color: #b8c9bd !important;
+        opacity: 1 !important;
+    }
+
+    html.cicr-a11y-dark select option {
+        color: #ffffff !important;
+        background: #0b0f0c !important;
+    }
+
     html.cicr-a11y-dark :where(.topbar, .top-appbar, .drawer-head, .cicr-a11y-header) {
         background: #000000 !important;
+    }
+
+    html.cicr-a11y-dark :where(.axis-label) {
+        fill: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark :where(.grid-line, .month-line) {
+        stroke: #7f8d83 !important;
     }
 
     html.cicr-a11y-touch-feedback .cicr-a11y-button:active,
@@ -121,7 +206,7 @@
         border: 1px solid #d8d8d8;
         border-radius: 8px;
         box-shadow: 0 20px 55px rgba(0, 0, 0, 0.28);
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: var(--font-family);
     }
 
     .cicr-a11y-header {
@@ -139,7 +224,7 @@
         text-align: center;
         color: #ffffff;
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 700;
     }
 
     .cicr-a11y-close {
@@ -182,7 +267,7 @@
         margin: 0 0 4px;
         color: inherit;
         font-size: 15px;
-        font-weight: 800;
+        font-weight: 600;
     }
 
     .cicr-a11y-copy p {
@@ -195,7 +280,7 @@
     .cicr-a11y-value {
         color: #222222;
         font-size: 13px;
-        font-weight: 700;
+        font-weight: 600;
     }
 
     .cicr-a11y-switch {
@@ -400,7 +485,8 @@
         if (window.__cicrAccessibilityReady) return;
         window.__cicrAccessibilityReady = true;
 
-        const storageKey = 'cicrAccessibilitySettings';
+        const storageKey = 'cicrAccessibilitySettingsV2';
+        const legacyStorageKey = 'cicrAccessibilitySettings';
         const defaults = {
             readAloud: false,
             highContrast: false,
@@ -422,6 +508,7 @@
 
         function readSettings() {
             try {
+                localStorage.removeItem(legacyStorageKey);
                 return Object.assign({}, defaults, JSON.parse(localStorage.getItem(storageKey) || '{}'));
             } catch (error) {
                 return Object.assign({}, defaults);

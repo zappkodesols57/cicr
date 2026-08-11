@@ -8,13 +8,16 @@
     <style>
         :root {
             --green-950: #003d0d;
-            --green-900: #00720d;
-            --green-800: #07831a;
+            --green-900: #006313;
+            --green-850: #005417;
+            --green-800: #08701f;
             --green-100: #e9f6ec;
             --green-50: #f7fbf8;
             --line: #dfe9e1;
-            --text: #131a14;
-            --muted: #647168;
+            --text: #111b13;
+            --muted: #6b756d;
+            --surface: #ffffff;
+            --shadow: 0 10px 28px rgba(21, 33, 24, 0.08);
         }
 
         * {
@@ -25,64 +28,13 @@
             margin: 0;
             min-height: 100vh;
             color: var(--text);
-            background: var(--green-50);
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .topbar {
-            min-height: 76px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 22px;
-            padding: 18px clamp(24px, 4vw, 54px);
-            color: #ffffff;
-            background: #000000;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            min-width: 0;
-        }
-
-        .brand img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            background: #ffffff;
-            border-radius: 50%;
-        }
-
-        .brand strong {
-            display: block;
-            font-size: 22px;
-            line-height: 1.1;
-        }
-
-        .brand span {
-            display: block;
-            margin-top: 4px;
-            color: rgba(255,255,255,0.72);
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .logout {
-            width: 42px;
-            height: 42px;
-            display: grid;
-            place-items: center;
-            color: #ffffff;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.22);
-            border-radius: 50%;
+            background: #f8faf8;
+            font-family: var(--font-family);
         }
 
         svg {
-            width: 22px;
-            height: 22px;
+            width: 21px;
+            height: 21px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2.2;
@@ -90,9 +42,178 @@
             stroke-linejoin: round;
         }
 
-        .page {
-            width: min(1180px, calc(100% - 40px));
-            margin: 28px auto 34px;
+        .dashboard-shell {
+            min-height: 100vh;
+            display: block;
+            background: #f8faf8;
+        }
+
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 40;
+            width: 176px;
+            height: 100vh;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 22px 12px 20px;
+            background: #ffffff;
+            border-right: 1px solid var(--line);
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: #9ccfa7 transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #9ccfa7;
+            border-radius: 999px;
+        }
+
+        .sidebar-brand {
+            display: grid;
+            justify-items: center;
+            gap: 9px;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .sidebar-brand img {
+            width: 66px;
+            height: 66px;
+            object-fit: contain;
+        }
+
+        .sidebar-brand strong {
+            color: var(--green-900);
+            font-size: 19px;
+            line-height: 1.1;
+        }
+
+        .sidebar-brand span {
+            color: #111111;
+            font-size: 12px;
+            line-height: 1.2;
+            font-weight: 600;
+        }
+
+        .nav {
+            display: grid;
+            gap: 8px;
+        }
+
+        .nav-link,
+        .logout-link {
+            min-height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 0 12px;
+            color: #0d170f;
+            text-decoration: none;
+            text-align: left;
+            background: transparent;
+            border: 0;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: var(--font-family);
+            cursor: pointer;
+        }
+
+        .nav-link svg,
+        .logout-link svg {
+            width: 18px;
+            height: 18px;
+            flex: 0 0 auto;
+        }
+
+        .nav-link.active,
+        .nav-link:hover,
+        .logout-link:hover {
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--green-800), var(--green-950));
+            box-shadow: 0 8px 18px rgba(0, 84, 18, 0.2);
+        }
+
+        .nav-submenu {
+            display: none;
+            gap: 6px;
+            margin: -2px 0 2px 28px;
+            padding: 2px 0 4px 10px;
+            border-left: 2px solid #cfe5d4;
+        }
+
+        .nav-submenu.open {
+            display: grid;
+        }
+
+        .nav-sub-link {
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            padding: 7px 8px;
+            color: #334238;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 11.5px;
+            line-height: 1.25;
+            font-weight: 600;
+        }
+
+        .nav-sub-link:hover {
+            color: var(--green-900);
+            background: var(--green-100);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+        }
+
+        .main-panel {
+            min-width: 0;
+            min-height: 100vh;
+            margin-left: 176px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            min-height: 82px;
+            display: flex;
+            align-items: center;
+            padding: 18px 28px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--green-950), var(--green-850));
+        }
+
+        .topbar strong {
+            display: block;
+            font-size: 22px;
+            line-height: 1.05;
+        }
+
+        .topbar span {
+            display: block;
+            margin-top: 5px;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .content {
+            width: min(100%, 1120px);
+            margin: 0 auto;
+            padding: 18px 22px 16px;
         }
 
         .welcome {
@@ -100,184 +221,226 @@
             grid-template-columns: 1fr auto;
             align-items: center;
             gap: 18px;
-            margin-bottom: 22px;
-            padding: 24px;
+            margin-bottom: 16px;
+            padding: 18px 30px;
             background: #ffffff;
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            box-shadow: 0 14px 28px rgba(19, 26, 20, 0.07);
+            border: 1px solid #edf2ee;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
         }
 
         .welcome h1 {
             margin: 0;
             color: var(--green-950);
-            font-size: clamp(28px, 4vw, 44px);
+            font-size: clamp(28px, 3.2vw, 36px);
             line-height: 1.1;
         }
 
         .welcome p {
-            margin: 8px 0 0;
-            color: var(--muted);
-            font-size: 15px;
-            font-weight: 700;
+            margin: 9px 0 0;
+            color: #8a9190;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .status-pill {
-            padding: 10px 14px;
-            color: var(--green-900);
+            padding: 11px 17px;
+            color: var(--green-800);
             background: var(--green-100);
-            border: 1px solid #c7e6cc;
+            border: 1px solid #d9ecdc;
             border-radius: 999px;
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 22px;
-            margin-bottom: 24px;
+            gap: 16px;
+            margin-bottom: 16px;
         }
 
         .panel {
-            padding: 22px;
+            min-width: 0;
+            padding: 18px 20px 14px;
             background: #ffffff;
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            box-shadow: 0 14px 28px rgba(19, 26, 20, 0.07);
+            border: 1px solid #edf2ee;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
         }
 
         .panel h2 {
-            margin: 0 0 16px;
-            color: #000000;
-            font-size: 20px;
-            line-height: 1.25;
+            margin: 0 0 10px;
+            color: #101810;
+            font-size: 15px;
+            line-height: 1.2;
         }
 
         .chart {
             width: 100%;
-            height: 238px;
+            height: 145px;
             display: block;
             overflow: visible;
         }
 
         .axis-label {
             fill: #111111;
-            font-size: 11px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .grid-line {
-            stroke: #d5ddd7;
+            stroke: #d8dfda;
             stroke-width: 1;
         }
 
         .month-line {
-            stroke: #c8d3cc;
+            stroke: #cbd5ce;
             stroke-dasharray: 5 5;
         }
 
         .series-line {
             fill: none;
-            stroke: #4fbd5d;
-            stroke-width: 2.5;
+            stroke: #07943c;
+            stroke-width: 3;
         }
 
         .series-point {
-            fill: #4fbd5d;
+            fill: #07943c;
             stroke: #ffffff;
-            stroke-width: 1.5;
+            stroke-width: 1.8;
+        }
+
+        .message {
+            margin-top: 8px;
+            color: #495850;
+            font-size: 13px;
+            font-weight: 400;
         }
 
         .action-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 18px;
+            gap: 14px;
         }
 
         .action-card {
-            min-height: 172px;
+            min-height: 78px;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 22px;
+            display: grid;
+            grid-template-columns: 34px 1fr 34px;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
             color: #ffffff;
             text-decoration: none;
-            background: var(--green-900);
-            border-radius: 10px;
-            box-shadow: 0 16px 26px rgba(0, 114, 13, 0.22);
+            background: linear-gradient(135deg, var(--green-800), var(--green-950));
+            border-radius: 7px;
+            box-shadow: 0 13px 22px rgba(0, 84, 18, 0.2);
         }
 
         .action-card.wide {
             grid-column: span 2;
-            min-height: 86px;
-            flex-direction: row;
-            align-items: center;
+        }
+
+        .action-card:hover {
+            background: linear-gradient(135deg, #0a8525, #002f0a);
         }
 
         .action-card h3 {
             margin: 0;
-            font-size: 18px;
-            line-height: 1.35;
+            font-size: 14px;
+            line-height: 1.3;
+            font-weight: 600;
         }
 
         .action-card .icon {
-            width: 34px;
-            height: 34px;
+            width: 27px;
+            height: 27px;
         }
 
         .arrow {
-            width: 36px;
-            height: 36px;
+            width: 31px;
+            height: 31px;
             display: grid;
             place-items: center;
-            align-self: flex-end;
-            color: #000000;
+            color: var(--green-800);
             background: #ffffff;
             border-radius: 50%;
+            justify-self: end;
+        }
+
+        .arrow svg {
+            width: 18px;
+            height: 18px;
         }
 
         .footer {
-            margin-top: 26px;
-            color: var(--muted);
+            margin-top: 12px;
+            color: #7f8983;
             text-align: center;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 400;
         }
 
-        .message {
-            margin-top: 10px;
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 700;
-        }
+        @media (max-width: 1020px) {
+            .dashboard-shell {
+                display: block;
+            }
 
-        @media (max-width: 1000px) {
-            .chart-grid,
-            .action-grid {
+            .sidebar {
+                position: static;
+                inset: auto;
+                width: auto;
+                height: auto;
+                min-height: auto;
+                padding: 14px;
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+                overflow: visible;
+            }
+
+            .main-panel {
+                margin-left: 0;
+            }
+
+            .sidebar-brand {
+                grid-template-columns: auto 1fr;
+                justify-items: start;
+                align-items: center;
+                text-align: left;
+                margin-bottom: 14px;
+            }
+
+            .sidebar-brand img {
+                width: 52px;
+                height: 52px;
+            }
+
+            .nav {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+
+            .nav-submenu {
+                grid-column: 1 / -1;
+                margin: -4px 0 4px 62px;
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
+            .sidebar-footer {
+                margin-top: 12px;
+                padding-top: 12px;
+            }
         }
 
-        @media (max-width: 680px) {
-            .topbar {
-                min-height: 82px;
+        @media (max-width: 760px) {
+            .content {
+                padding: 14px 12px 18px;
             }
 
-            .brand img {
-                display: none;
-            }
-
-            .page {
-                width: min(100% - 20px, 560px);
-                margin-top: 0;
-            }
-
-            .welcome {
-                grid-template-columns: 1fr;
-                border-radius: 0 0 10px 10px;
-            }
-
+            .welcome,
             .chart-grid,
             .action-grid {
                 grid-template-columns: 1fr;
@@ -286,87 +449,151 @@
             .action-card.wide {
                 grid-column: span 1;
             }
+
+            .nav {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .nav-submenu {
+                margin-left: 0;
+                grid-template-columns: 1fr;
+            }
         }
     </style>
+    {% include "includes/global_typography.html" %}
 </head>
 <body>
     {{ investigator_id|json_script:"investigator-id" }}
     {{ investigator_district|json_script:"investigator-district" }}
 
-    <header class="topbar">
-        <div class="brand">
-            <img src="{% static 'images/CICR_logo.png' %}" alt="CICR IRM">
-            <div>
-                <strong>Dashboard</strong>
-                <span>CICR - IRM Investigator Panel</span>
+    <div class="dashboard-shell">
+        <aside class="sidebar" aria-label="Investigator navigation">
+            <div class="sidebar-brand">
+                <img src="{% static 'images/CICR_logo.png' %}?v=20260811" alt="CICR IRM">
+                <div>
+                    <strong>CICR - IRM</strong>
+                    <span>Investigator Panel</span>
+                </div>
             </div>
+
+            <nav class="nav">
+                <a class="nav-link active" href="/investigator_dashboard/">
+                    <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a class="nav-link" href="/investigator/basic-survey/">
+                    <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3z"/><path d="M13 3h8v5h-8z"/><path d="M13 10h8v11h-8z"/><path d="M3 13h8v8H3z"/></svg>
+                    <span>Basic Survey</span>
+                </a>
+                <a class="nav-link" href="/investigator/weekly-report/">
+                    <svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>
+                    <span>Weekly Report</span>
+                </a>
+                <button class="nav-link" type="button" id="dashboardMonthlyToggle" aria-expanded="false" aria-controls="dashboardMonthlySubmenu">
+                    <svg viewBox="0 0 24 24"><path d="m4 17 5-5 4 4 7-8"/><path d="M20 8v6"/><path d="M14 8h6"/></svg>
+                    <span>Monthly Report</span>
+                </button>
+                <div class="nav-submenu" id="dashboardMonthlySubmenu">
+                    <a class="nav-sub-link" href="/investigator/monthly-progress/physical/">A . Physical Progress Report</a>
+                    <a class="nav-sub-link" href="/investigator/monthly-progress/extension-activities/">B . Extension Activities Carried out</a>
+                    <a class="nav-sub-link" href="/investigator/monthly-progress/representative-photographs/">C . Representative Photographs</a>
+                    <a class="nav-sub-link" href="/investigator/monthly-progress/assessment-season/">D . Assessment at the end of Season</a>
+                </div>
+                <a class="nav-link" href="/investigator/yearly-progress/">
+                    <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5"/><rect x="12" y="8" width="3" height="8"/><rect x="17" y="5" width="3" height="11"/></svg>
+                    <span>Yearly Report</span>
+                </a>
+                <a class="nav-link" href="/investigator/manage-surveys/">
+                    <svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+                    <span>Manage Surveys</span>
+                </a>
+                <a class="nav-link" href="/investigator/manage-reports/">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+                    <span>Manage Reports</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a class="logout-link" href="/web_panel_logout/">
+                    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-panel">
+            <header class="topbar">
+                <div>
+                    <strong>Dashboard</strong>
+                    <span>CICR - IRM Investigator Panel</span>
+                </div>
+            </header>
+
+            <main class="content">
+                <section class="welcome">
+                    <div>
+                        <h1>Welcome, {{ investigator_id }}</h1>
+                        <p>{{ investigator_district|default:"Investigator" }}</p>
+                    </div>
+                    <span class="status-pill">Signed in</span>
+                </section>
+
+                <section class="chart-grid" aria-label="Investigator activity charts">
+                    <article class="panel">
+                        <h2>Basic Survey</h2>
+                        <svg class="chart" id="basicChart" viewBox="0 0 620 238" role="img" aria-label="Basic survey chart"></svg>
+                        <div class="message" id="basicMeta">Loading basic survey data...</div>
+                    </article>
+
+                    <article class="panel">
+                        <h2>Weekly Report</h2>
+                        <svg class="chart" id="weeklyChart" viewBox="0 0 620 238" role="img" aria-label="Weekly report chart"></svg>
+                        <div class="message" id="weeklyMeta">Loading weekly report data...</div>
+                    </article>
+                </section>
+
+                <section class="action-grid" aria-label="Investigator shortcuts">
+                    <a class="action-card" href="/investigator/basic-survey/">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M3 3h8v8H3z"/><path d="M13 3h8v5h-8z"/><path d="M13 10h8v11h-8z"/><path d="M3 13h8v8H3z"/></svg>
+                        <h3>Basic Survey</h3>
+                        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </a>
+
+                    <a class="action-card" href="/investigator/weekly-report/">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>
+                        <h3>Weekly progress report</h3>
+                        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </a>
+
+                    <a class="action-card" href="/investigator/monthly-progress/">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="m4 17 5-5 4 4 7-8"/><path d="M20 8v6"/><path d="M14 8h6"/></svg>
+                        <h3>Monthly progress report</h3>
+                        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </a>
+
+                    <a class="action-card" href="/investigator/yearly-progress/">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5"/><rect x="12" y="8" width="3" height="8"/><rect x="17" y="5" width="3" height="11"/></svg>
+                        <h3>Yearly progress report</h3>
+                        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </a>
+
+                    <a class="action-card wide" href="/investigator/manage-surveys/">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+                        <h3>Manage Surveys</h3>
+                        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </a>
+
+                    <a class="action-card wide" href="/investigator/manage-reports/">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+                        <h3>Manage Reports</h3>
+                        <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </a>
+                </section>
+
+                <div class="footer">CICR - IRM Developed By Zappkode Solutions.</div>
+            </main>
         </div>
-        <a class="logout" href="/logout_admin/" aria-label="Logout">
-            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
-        </a>
-    </header>
-
-    <main class="page">
-        <section class="welcome">
-            <div>
-                <h1>Welcome, {{ investigator_id }}</h1>
-                <p>{{ investigator_district|default:"Investigator" }}</p>
-            </div>
-            <span class="status-pill">Signed in</span>
-        </section>
-
-        <section class="chart-grid" aria-label="Investigator activity charts">
-            <article class="panel">
-                <h2>Basic Survey</h2>
-                <svg class="chart" id="basicChart" viewBox="0 0 620 238" role="img" aria-label="Basic survey chart"></svg>
-                <div class="message" id="basicMeta">Loading basic survey data...</div>
-            </article>
-
-            <article class="panel">
-                <h2>Weekly Report</h2>
-                <svg class="chart" id="weeklyChart" viewBox="0 0 620 238" role="img" aria-label="Weekly report chart"></svg>
-                <div class="message" id="weeklyMeta">Loading weekly report data...</div>
-            </article>
-        </section>
-
-        <section class="action-grid" aria-label="Investigator shortcuts">
-            <a class="action-card" href="/investigator/basic-survey/">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M3 3h8v8H3z"/><path d="M13 3h8v5h-8z"/><path d="M13 10h8v11h-8z"/><path d="M3 13h8v8H3z"/></svg>
-                <h3>Basic Survey</h3>
-                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-            </a>
-
-            <a class="action-card" href="/investigator/weekly-report/">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>
-                <h3>Weekly progress report</h3>
-                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-            </a>
-
-            <a class="action-card" href="/investigator/monthly-progress/">
-                <svg class="icon" viewBox="0 0 24 24"><path d="m4 17 5-5 4 4 7-8"/><path d="M20 8v6"/><path d="M14 8h6"/></svg>
-                <h3>Monthly progress report</h3>
-                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-            </a>
-
-            <a class="action-card" href="/investigator/yearly-progress/">
-                <svg class="icon" viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5"/><rect x="12" y="8" width="3" height="8"/><rect x="17" y="5" width="3" height="11"/></svg>
-                <h3>Yearly progress report</h3>
-                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-            </a>
-
-            <a class="action-card wide" href="/investigator/manage-surveys/">
-                <h3>Manage Surveys</h3>
-                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-            </a>
-
-            <a class="action-card wide" href="/investigator/manage-reports/">
-                <h3>Manage Reports</h3>
-                <span class="arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-            </a>
-        </section>
-
-        <div class="footer">CICR - IRM Developed By Zappkode Solutions.</div>
-    </main>
+    </div>
 
     <script>
         const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -450,6 +677,25 @@
                 weeklyMeta.textContent = 'Weekly report data unavailable';
                 console.error(error);
             }
+        }
+
+        const monthlyToggle = document.getElementById('dashboardMonthlyToggle');
+        const monthlySubmenu = document.getElementById('dashboardMonthlySubmenu');
+        if (monthlyToggle && monthlySubmenu) {
+            monthlyToggle.addEventListener('click', () => {
+                const isOpen = monthlySubmenu.classList.toggle('open');
+                monthlyToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+        }
+
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar) {
+            sidebar.addEventListener('wheel', (event) => {
+                if (window.matchMedia('(max-width: 1020px)').matches) return;
+                event.preventDefault();
+                event.stopPropagation();
+                sidebar.scrollTop += event.deltaY;
+            }, { passive: false });
         }
 
         loadDashboard();

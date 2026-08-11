@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Representative Photographs | CICR IRM</title>
+    <style>
+        :root {
+            --green-950: #003d0d;
+            --green-900: #00720d;
+            --green-800: #07831a;
+            --green-100: #e9f6ec;
+            --green-50: #f7fbf8;
+            --line: #dbe8dd;
+            --text: #111811;
+            --muted: #657168;
+            --danger: #aa1f1f;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            background: var(--green-50);
+            font-family: var(--font-family);
+        }
+
+        .topbar {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 18px clamp(20px, 4vw, 54px);
+            color: #ffffff;
+            background: #000000;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .back,
+        .icon-button {
+            width: 42px;
+            height: 42px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            color: #ffffff;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.24);
+            border-radius: 50%;
+            background: transparent;
+        }
+
+        .topbar h1 {
+            margin: 0;
+            font-size: 24px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        svg {
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .page {
+            width: min(980px, calc(100% - 40px));
+            margin: 28px auto 42px;
+        }
+
+        .card {
+            padding: clamp(22px, 3vw, 34px);
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(17, 24, 17, 0.08);
+        }
+
+        .card h2 {
+            margin: 0 0 24px;
+            color: #000000;
+            font-size: 28px;
+            line-height: 1.35;
+            font-weight: 700;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        .field label,
+        .image-label {
+            display: block;
+            margin: 0 0 8px;
+            color: #000000;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 14px;
+            color: #111111;
+            background: #ffffff;
+            border: 1.6px solid #1a9a35;
+            border-radius: 5px;
+            outline: none;
+            font: inherit;
+            font-size: 15px;
+        }
+
+        .field textarea {
+            min-height: 190px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--green-900);
+            box-shadow: 0 0 0 4px rgba(0, 114, 13, 0.1);
+        }
+
+        .image-section {
+            margin-top: 22px;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .image-slot {
+            position: relative;
+            min-height: 160px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            color: var(--green-900);
+            background: #ffffff;
+            border: 1.6px solid #39a94b;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .image-slot input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .image-slot img {
+            width: 100%;
+            height: 100%;
+            display: none;
+            object-fit: cover;
+        }
+
+        .image-slot.has-image img {
+            display: block;
+        }
+
+        .plus {
+            color: var(--green-900);
+            font-size: 64px;
+            line-height: 1;
+            font-weight: 400;
+        }
+
+        .image-slot.has-image .plus {
+            display: none;
+        }
+
+        .file-name {
+            position: absolute;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            display: none;
+            padding: 6px 8px;
+            overflow: hidden;
+            color: #ffffff;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            background: rgba(0, 0, 0, 0.68);
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .image-slot.has-image .file-name {
+            display: block;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .button {
+            min-width: 128px;
+            min-height: 48px;
+            padding: 12px 22px;
+            color: #ffffff;
+            background: var(--green-900);
+            border: 0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button.secondary {
+            color: var(--green-900);
+            background: var(--green-100);
+            border: 1px solid #c4e5ca;
+        }
+
+        .button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .message {
+            margin-top: 18px;
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-weight: 800;
+        }
+
+        .message.success {
+            color: var(--green-950);
+            background: var(--green-100);
+            border: 1px solid #bfdfc5;
+        }
+
+        .message.error {
+            color: var(--danger);
+            background: #fff2f2;
+            border: 1px solid #f0c6c6;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 760px) {
+            .page {
+                width: min(100% - 20px, 560px);
+                margin-top: 0;
+            }
+
+            .card {
+                border-radius: 0 0 10px 10px;
+            }
+
+            .form-grid,
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                justify-content: stretch;
+            }
+
+            .button {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include "includes/investigator_sidebar.html" %}
+    {{ investigator_id|json_script:"investigator-id" }}
+    {{ investigator_district|json_script:"investigator-district" }}
+
+    <header class="topbar">
+        <div class="topbar-left">
+            <a class="back" href="/investigator/monthly-progress/" aria-label="Back to monthly progress">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            </a>
+            <h1>Representative Photographs</h1>
+        </div>
+        <a class="icon-button" href="/web_panel_logout/" aria-label="Logout">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+        </a>
+    </header>
+
+    <main class="page">
+        <form class="card" id="photoForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>C . A brief write along with representative photographs (Minimum 1 or 2) of each activity to be included in the report</h2>
+            <div class="form-grid">
+                <div class="field">
+                    <label for="date_field">Date</label>
+                    <input id="date_field" name="date_field" type="date" required>
+                </div>
+                <div class="field">
+                    <label for="district">District</label>
+                    <select id="district" name="district" required>
+                        <option value="">Loading districts...</option>
+                    </select>
+                </div>
+                <div class="field full">
+                    <label for="brief_activity_description_1">Brief Activity Description</label>
+                    <textarea id="brief_activity_description_1" name="brief_activity_description_1" required></textarea>
+                </div>
+            </div>
+
+            <section class="image-section" aria-labelledby="addImagesTitle">
+                <span class="image-label" id="addImagesTitle">Add Images</span>
+                <div class="image-grid" id="imageGrid"></div>
+            </section>
+
+            <div class="actions">
+                <a class="button secondary" href="/investigator/monthly-progress/">Back</a>
+                <button class="button" type="submit" id="submitButton">Submit</button>
+            </div>
+            <div class="message success" id="successMessage" hidden>Representative photographs submitted successfully.</div>
+            <div class="message error" id="errorMessage" hidden>Unable to submit representative photographs.</div>
+        </form>
+    </main>
+
+    <script>
+        const INVESTIGATOR_ID = JSON.parse(document.getElementById('investigator-id').textContent);
+        const INVESTIGATOR_DISTRICT = JSON.parse(document.getElementById('investigator-district').textContent);
+        const form = document.getElementById('photoForm');
+        const imageGrid = document.getElementById('imageGrid');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const submitButton = document.getElementById('submitButton');
+
+        function csrfToken() {
+            const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            return input ? input.value : '';
+        }
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;',
+            }[char]));
+        }
+
+        function fieldValue(name) {
+            const field = form.elements[name];
+            return field ? field.value.trim() : '';
+        }
+
+        function monthName(dateValue) {
+            const date = new Date(dateValue);
+            if (Number.isNaN(date.getTime())) return '';
+            return date.toLocaleString('en-US', { month: 'long' });
+        }
+
+        function yearValue(dateValue) {
+            const date = new Date(dateValue);
+            if (Number.isNaN(date.getTime())) return '';
+            return String(date.getFullYear());
+        }
+
+        function renderImageSlots() {
+            imageGrid.innerHTML = Array.from({ length: 6 }, (_, index) => {
+                const number = index + 1;
+                return `
+                    <label class="image-slot" for="image_${number}" id="slot_${number}">
+                        <input id="image_${number}" name="image_${number}" type="file" accept="image/*">
+                        <img alt="Selected photograph ${number}" id="preview_${number}">
+                        <span class="plus" aria-hidden="true">+</span>
+                        <span class="file-name" id="fileName_${number}"></span>
+                    </label>
+                `;
+            }).join('');
+
+            imageGrid.querySelectorAll('input[type="file"]').forEach((input) => {
+                input.addEventListener('change', () => updatePreview(input));
+            });
+        }
+
+        function updatePreview(input) {
+            const number = input.name.split('_')[1];
+            const slot = document.getElementById(`slot_${number}`);
+            const image = document.getElementById(`preview_${number}`);
+            const fileName = document.getElementById(`fileName_${number}`);
+            const file = input.files && input.files[0];
+
+            if (!file) {
+                slot.classList.remove('has-image');
+                image.removeAttribute('src');
+                fileName.textContent = '';
+                return;
+            }
+
+            image.src = URL.createObjectURL(file);
+            fileName.textContent = file.name;
+            slot.classList.add('has-image');
+        }
+
+        async function loadDistricts() {
+            const select = document.getElementById('district');
+            try {
+                const response = await fetch('/api/districts/', { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) throw new Error(`District API ${response.status}`);
+                const districts = await response.json();
+                const options = districts.map((item) => item.district_name || item.name || item.district || '').filter(Boolean);
+                const hasInvestigatorDistrict = INVESTIGATOR_DISTRICT && options.includes(INVESTIGATOR_DISTRICT);
+                select.innerHTML = '<option value="">Select district</option>' + options.map((value) => {
+                    const selected = value === INVESTIGATOR_DISTRICT ? ' selected' : '';
+                    return `<option value="${escapeHtml(value)}"${selected}>${escapeHtml(value)}</option>`;
+                }).join('');
+                if (INVESTIGATOR_DISTRICT && !hasInvestigatorDistrict) {
+                    select.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(INVESTIGATOR_DISTRICT)}" selected>${escapeHtml(INVESTIGATOR_DISTRICT)}</option>`);
+                }
+            } catch (error) {
+                select.innerHTML = '<option value="">District unavailable</option>';
+                if (INVESTIGATOR_DISTRICT) {
+                    select.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(INVESTIGATOR_DISTRICT)}" selected>${escapeHtml(INVESTIGATOR_DISTRICT)}</option>`);
+                }
+                console.error(error);
+            }
+        }
+
+        function buildFormData() {
+            const date = fieldValue('date_field');
+            const data = new FormData();
+            data.append('user_id', INVESTIGATOR_ID);
+            data.append('date_field', date);
+            data.append('physical_date', date);
+            data.append('week', '');
+            data.append('name_of_investigator', INVESTIGATOR_ID);
+            data.append('month', monthName(date));
+            data.append('year', yearValue(date));
+            data.append('district', fieldValue('district'));
+            data.append('brief_activity_description_1', fieldValue('brief_activity_description_1'));
+            data.append('brief_activity_description_2', '');
+            data.append('brief_activity_description_3', '');
+
+            for (let number = 1; number <= 6; number += 1) {
+                const input = form.elements[`image_${number}`];
+                if (input && input.files && input.files[0]) {
+                    data.append(`image_${number}`, input.files[0]);
+                }
+            }
+            return data;
+        }
+
+        function hasImage() {
+            return Array.from({ length: 6 }, (_, index) => form.elements[`image_${index + 1}`])
+                .some((input) => input && input.files && input.files.length);
+        }
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            successMessage.hidden = true;
+            errorMessage.hidden = true;
+
+            if (!form.reportValidity()) return;
+            if (!hasImage()) {
+                errorMessage.textContent = 'Please add at least one image before submitting.';
+                errorMessage.hidden = false;
+                return;
+            }
+
+            submitButton.disabled = true;
+            try {
+                const response = await fetch('/api/represented_photographs/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRFToken': csrfToken(),
+                    },
+                    body: buildFormData(),
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(JSON.stringify(data));
+                successMessage.textContent = `Representative photographs submitted successfully. Record ID: ${data.id || '-'}`;
+                successMessage.hidden = false;
+                form.reset();
+                document.querySelectorAll('.image-slot').forEach((slot) => slot.classList.remove('has-image'));
+                document.querySelectorAll('.image-slot img').forEach((image) => image.removeAttribute('src'));
+                document.querySelectorAll('.file-name').forEach((name) => { name.textContent = ''; });
+            } catch (error) {
+                errorMessage.textContent = 'Unable to submit representative photographs. Please check fields and images, then try again.';
+                errorMessage.hidden = false;
+                console.error(error);
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        renderImageSlots();
+        loadDistricts();
+    </script>
+    {% include "includes/accessibility_panel.html" %}
+</body>
+</html>

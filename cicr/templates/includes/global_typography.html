@@ -1,0 +1,37 @@
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+    :root {
+        --font-family: 'Inter', sans-serif;
+    }
+
+    html,
+    body {
+        font-family: var(--font-family);
+        font-weight: 400;
+    }
+
+    body :where(*):not(i):not(svg):not(path):not(.bx):not([class^="bx"]):not([class*=" bx-"]):not(.fa):not([class^="fa"]):not([class*=" fa-"]):not(.bi):not([class^="bi-"]):not([class*=" bi-"]):not(.uil):not([class^="uil-"]):not([class*=" uil-"]):not(.material-icons):not(.material-symbols-outlined) {
+        font-family: var(--font-family) !important;
+    }
+
+    body :where(p, li, td, input, select, textarea, small, .description, .supporting-text, .meta, .muted, .caption, .role-text, .feature-text, .card-description, .helper-text, .error-text, .welcome-text, .item-value, .head-value, .review-value) {
+        font-weight: 400 !important;
+    }
+
+    body :where(h1, h2, h3, .title, .heading, .page-title, .hero-title, .screen-title, .dashboard-title, .form-title, .modal-title, .drawer-title, .main-title, .topbar h1, .header h2, .brand h1) {
+        font-weight: 700 !important;
+    }
+
+    body :where(h4, h5, h6, th, .subheading, .section-heading, .section-title, .card-title, .report-title, .survey-title, .nav a, .nav-label, .link_name, .menu-title, .role-title, .feature-title, .field-label, .label, .table-title, .step, .metric-title, .item-label, .status-pill, .badge, .tag, .chip, .pill, .cicr-a11y-copy h3, .cicr-a11y-value) {
+        font-weight: 600 !important;
+    }
+
+    body :where(button, button *, .btn, .btn *, .button, .button *, .cta, .cta *, .nav-button, .nav-button *, .primary-btn, .primary-btn *, .secondary-btn, .secondary-btn *, .submit-btn, .submit-btn *, .action-button, .action-button *, .read-more, .read-more *, input[type="button"], input[type="submit"], input[type="reset"]) {
+        font-weight: 600 !important;
+    }
+
+    body :where(svg text, .axis-label, .chart-label, .chart-title) {
+        font-family: var(--font-family) !important;
+    }
+</style>

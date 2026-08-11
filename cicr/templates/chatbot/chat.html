@@ -30,7 +30,7 @@
 
   body {
     margin: 0;
-    font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    font-family: var(--font-family);
     background: var(--background);
     color: #333;
   }
@@ -247,7 +247,7 @@
   <div class="chat-container">
     <div class="chat-header">
       <div class="hospital-logo">
-        <img src="{% static 'images/CICR_logo.png' %}" alt="CICR logo" />
+        <img src="{% static 'images/CICR_logo.png' %}?v=20260811" alt="CICR logo" />
       </div>
       <div class="header-title">
         <h1>CICR Chat Assistant</h1>
@@ -540,6 +540,7 @@ document.addEventListener('click', () => {
 // Optional: test line
 speakText("Welcome! This is your crop assistant.", "en-IN");
 </script>
+{% include "includes/global_typography.html" %}
 </body>
 </html>
 

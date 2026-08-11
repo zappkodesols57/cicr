@@ -25,7 +25,7 @@
             min-height: 100vh;
             color: var(--text);
             background: var(--green-50);
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: var(--font-family);
         }
 
         .topbar {
@@ -387,6 +387,7 @@
     </style>
 </head>
 <body>
+    {% include "includes/investigator_sidebar.html" %}
     <header class="topbar">
         <div class="topbar-title">
             <a class="back" href="/investigator_dashboard/" aria-label="Back to dashboard">
@@ -394,7 +395,7 @@
             </a>
             <h1>Weekly Progress Report</h1>
         </div>
-        <a class="icon-button" href="/logout_admin/" aria-label="Logout">
+        <a class="icon-button" href="/web_panel_logout/" aria-label="Logout">
             <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
         </a>
     </header>

@@ -7,7 +7,7 @@
     <title>{% block title %}Farmer Panel{% endblock %} | CICR IRM</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --green-950: #003d0d;
@@ -28,7 +28,7 @@
             min-height: 100vh;
             color: var(--text);
             background: var(--green-50);
-            font-family: "Inter", Arial, sans-serif;
+            font-family: var(--font-family);
         }
 
         .panel {
@@ -268,12 +268,13 @@
         }
     </style>
     {% block extra_css %}{% endblock %}
+    {% include "includes/global_typography.html" %}
 </head>
 <body>
     <div class="panel">
         <aside class="sidebar">
             <div class="brand">
-                <img src="{% static 'images/CICR_logo.png' %}" alt="CICR IRM">
+                <img src="{% static 'images/CICR_logo.png' %}?v=20260811" alt="CICR IRM">
                 <h1>CICR - IRM</h1>
                 <p>Pink Bollworm Monitor</p>
             </div>
@@ -288,7 +289,7 @@
         <main class="main">
             <header class="header">
                 <h2>{% block page_heading %}Farmer Panel{% endblock %}</h2>
-                <a class="back" href="/web_aap/" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></a>
+                <a class="back" href="/web_panel_logout/" aria-label="Exit"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></a>
             </header>
             {% block content %}{% endblock %}
         </main>

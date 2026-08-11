@@ -8,7 +8,8 @@ from .views import get_csrf_token
 
 urlpatterns = [
     path('', super_login, name='super_login'),
-    path('web_aap/', web_aap, name='web_aap'),
+    path('web_app/', web_app, name='web_app'),
+    path('web_aap/', web_app, name='web_aap'),
     path('super_dashboard/', super_dashboard, name='super_dashboard'),
     path('create-investigator/', create_investigator, name='create_investigator'),
     path('login_investigator/', login_investigator, name='login_investigator'),
@@ -18,6 +19,9 @@ urlpatterns = [
     path('investigator/weekly-report/', investigator_weekly_report, name='investigator_weekly_report'),
     path('investigator/monthly-progress/', investigator_monthly_progress, name='investigator_monthly_progress'),
     path('investigator/monthly-progress/physical/', investigator_physical_progress, name='investigator_physical_progress'),
+    path('investigator/monthly-progress/extension-activities/', investigator_extension_activities, name='investigator_extension_activities'),
+    path('investigator/monthly-progress/representative-photographs/', investigator_representative_photographs, name='investigator_representative_photographs'),
+    path('investigator/monthly-progress/assessment-season/', investigator_assessment_season, name='investigator_assessment_season'),
     path('investigator/yearly-progress/', investigator_yearly_progress, name='investigator_yearly_progress'),
     path('investigator/manage-surveys/', investigator_manage_surveys, name='investigator_manage_surveys'),
     path('investigator/manage-reports/', investigator_manage_reports, name='investigator_manage_reports'),
@@ -25,6 +29,7 @@ urlpatterns = [
     path('dashboard_admin/', dashboard_admin, name='dashboard_admin'),
     path('logout/', logout_view,name="logout"),
     path('logout_admin/', logout_admin,name="logout_admin"),
+    path('web_panel_logout/', web_panel_logout, name='web_panel_logout'),
 
 
     path('admin_profile/', admin_profile,name="admin_profile"),

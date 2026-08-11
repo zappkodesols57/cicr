@@ -1,0 +1,306 @@
+{% load static %}
+<style>
+    body {
+        padding-left: 176px;
+    }
+
+    .investigator-side-nav {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 40;
+        width: 176px;
+        height: 100vh;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 22px 12px 20px;
+        color: #101810;
+        background: #ffffff;
+        border-right: 1px solid #dfe9e1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+        scrollbar-color: #9ccfa7 transparent;
+    }
+
+    .investigator-side-nav::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .investigator-side-nav::-webkit-scrollbar-thumb {
+        background: #9ccfa7;
+        border-radius: 999px;
+    }
+
+    .investigator-side-brand {
+        display: grid;
+        justify-items: center;
+        gap: 9px;
+        margin-bottom: 28px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .investigator-side-brand img {
+        width: 66px;
+        height: 66px;
+        object-fit: contain;
+    }
+
+    .investigator-side-brand strong {
+        color: #006313;
+        font-size: 19px;
+        line-height: 1.1;
+        font-weight: 700;
+    }
+
+    .investigator-side-brand span {
+        color: #111111;
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: 600;
+    }
+
+    .investigator-side-links {
+        display: grid;
+        gap: 8px;
+    }
+
+    .investigator-side-link {
+        min-height: 42px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 0 12px;
+        color: #0d170f;
+        text-decoration: none;
+        text-align: left;
+        background: transparent;
+        border: 0;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: var(--font-family);
+        cursor: pointer;
+    }
+
+    .investigator-side-link svg {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .investigator-side-link.active,
+    .investigator-side-link:hover {
+        color: #ffffff;
+        background: linear-gradient(135deg, #08701f, #003d0d);
+        box-shadow: 0 8px 18px rgba(0, 84, 18, 0.2);
+    }
+
+    .investigator-side-submenu {
+        display: none;
+        gap: 6px;
+        margin: -2px 0 2px 28px;
+        padding: 2px 0 4px 10px;
+        border-left: 2px solid #cfe5d4;
+    }
+
+    .investigator-side-submenu.open {
+        display: grid;
+    }
+
+    .investigator-side-sub-link {
+        min-height: 34px;
+        display: flex;
+        align-items: center;
+        padding: 7px 8px;
+        color: #334238;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 11.5px;
+        line-height: 1.25;
+        font-weight: 600;
+    }
+
+    .investigator-side-sub-link.active,
+    .investigator-side-sub-link:hover {
+        color: #006313;
+        background: #e9f6ec;
+    }
+
+    .investigator-side-footer {
+        margin-top: auto;
+        padding-top: 16px;
+        border-top: 1px solid #dfe9e1;
+    }
+
+    html.cicr-a11y-dark .investigator-side-nav {
+        color: #f7fff8;
+        background: #171d19;
+        border-color: #435047;
+    }
+
+    html.cicr-a11y-dark .investigator-side-brand span,
+    html.cicr-a11y-dark .investigator-side-link,
+    html.cicr-a11y-dark .investigator-side-sub-link {
+        color: #f7fff8;
+    }
+
+    html.cicr-a11y-dark .investigator-side-brand strong {
+        color: #58d178;
+    }
+
+    html.cicr-a11y-dark .investigator-side-footer {
+        border-color: #435047;
+    }
+
+    html.cicr-a11y-dark .investigator-side-submenu {
+        border-color: #435047;
+    }
+
+    html.cicr-a11y-dark .investigator-side-sub-link.active,
+    html.cicr-a11y-dark .investigator-side-sub-link:hover {
+        color: #f7fff8;
+        background: #203126;
+    }
+
+    @media (max-width: 1020px) {
+        body {
+            padding-left: 0;
+        }
+
+        .investigator-side-nav {
+            position: static;
+            width: auto;
+            height: auto;
+            min-height: auto;
+            padding: 14px;
+            border-right: 0;
+            border-bottom: 1px solid #dfe9e1;
+            overflow: visible;
+        }
+
+        .investigator-side-brand {
+            grid-template-columns: auto 1fr;
+            justify-items: start;
+            align-items: center;
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .investigator-side-brand img {
+            width: 52px;
+            height: 52px;
+        }
+
+        .investigator-side-links {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .investigator-side-submenu {
+            grid-column: 1 / -1;
+            margin: -4px 0 4px 62px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .investigator-side-footer {
+            margin-top: 12px;
+            padding-top: 12px;
+        }
+    }
+
+    @media (max-width: 720px) {
+        .investigator-side-links {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .investigator-side-submenu {
+            margin-left: 0;
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<aside class="investigator-side-nav" aria-label="Investigator navigation">
+    <a class="investigator-side-brand" href="/investigator_dashboard/">
+        <img src="{% static 'images/CICR_logo.png' %}?v=20260811" alt="CICR IRM">
+        <span>
+            <strong>CICR - IRM</strong>
+            <span>Investigator Panel</span>
+        </span>
+    </a>
+
+    <nav class="investigator-side-links">
+        <a class="investigator-side-link {% if request.path == '/investigator_dashboard/' %}active{% endif %}" href="/investigator_dashboard/">
+            <svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+            <span>Dashboard</span>
+        </a>
+        <a class="investigator-side-link {% if request.path == '/investigator/basic-survey/' %}active{% endif %}" href="/investigator/basic-survey/">
+            <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3z"/><path d="M13 3h8v5h-8z"/><path d="M13 10h8v11h-8z"/><path d="M3 13h8v8H3z"/></svg>
+            <span>Basic Survey</span>
+        </a>
+        <a class="investigator-side-link {% if request.path == '/investigator/weekly-report/' %}active{% endif %}" href="/investigator/weekly-report/">
+            <svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>
+            <span>Weekly Report</span>
+        </a>
+        <button class="investigator-side-link investigator-side-toggle {% if '/investigator/monthly-progress/' in request.path %}active{% endif %}" type="button" aria-expanded="{% if '/investigator/monthly-progress/' in request.path %}true{% else %}false{% endif %}" aria-controls="investigatorMonthlySubmenu">
+            <svg viewBox="0 0 24 24"><path d="m4 17 5-5 4 4 7-8"/><path d="M20 8v6"/><path d="M14 8h6"/></svg>
+            <span>Monthly Report</span>
+        </button>
+        <div class="investigator-side-submenu {% if '/investigator/monthly-progress/' in request.path %}open{% endif %}" id="investigatorMonthlySubmenu">
+            <a class="investigator-side-sub-link {% if request.path == '/investigator/monthly-progress/physical/' %}active{% endif %}" href="/investigator/monthly-progress/physical/">A . Physical Progress Report</a>
+            <a class="investigator-side-sub-link {% if request.path == '/investigator/monthly-progress/extension-activities/' %}active{% endif %}" href="/investigator/monthly-progress/extension-activities/">B . Extension Activities Carried out</a>
+            <a class="investigator-side-sub-link {% if request.path == '/investigator/monthly-progress/representative-photographs/' %}active{% endif %}" href="/investigator/monthly-progress/representative-photographs/">C . Representative Photographs</a>
+            <a class="investigator-side-sub-link {% if request.path == '/investigator/monthly-progress/assessment-season/' %}active{% endif %}" href="/investigator/monthly-progress/assessment-season/">D . Assessment at the end of Season</a>
+        </div>
+        <a class="investigator-side-link {% if request.path == '/investigator/yearly-progress/' %}active{% endif %}" href="/investigator/yearly-progress/">
+            <svg viewBox="0 0 24 24"><path d="M4 19V5"/><path d="M4 19h16"/><rect x="7" y="11" width="3" height="5"/><rect x="12" y="8" width="3" height="8"/><rect x="17" y="5" width="3" height="11"/></svg>
+            <span>Yearly Report</span>
+        </a>
+        <a class="investigator-side-link {% if request.path == '/investigator/manage-surveys/' %}active{% endif %}" href="/investigator/manage-surveys/">
+            <svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+            <span>Manage Surveys</span>
+        </a>
+        <a class="investigator-side-link {% if request.path == '/investigator/manage-reports/' %}active{% endif %}" href="/investigator/manage-reports/">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
+            <span>Manage Reports</span>
+        </a>
+    </nav>
+
+    <div class="investigator-side-footer">
+        <a class="investigator-side-link" href="/web_panel_logout/">
+            <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
+
+<script>
+    (function () {
+        const toggle = document.querySelector('.investigator-side-toggle');
+        const submenu = document.getElementById('investigatorMonthlySubmenu');
+        if (!toggle || !submenu) return;
+
+        toggle.addEventListener('click', () => {
+            const isOpen = submenu.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        const sidebar = document.querySelector('.investigator-side-nav');
+        if (sidebar) {
+            sidebar.addEventListener('wheel', (event) => {
+                if (window.matchMedia('(max-width: 1020px)').matches) return;
+                event.preventDefault();
+                event.stopPropagation();
+                sidebar.scrollTop += event.deltaY;
+            }, { passive: false });
+        }
+    }());
+</script>
