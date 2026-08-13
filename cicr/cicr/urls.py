@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.shortcuts import redirect
 from django.views.static import serve
 from login import views as login_views
 from farmer_app import views as farmer_views
@@ -34,6 +35,7 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
+    path("", lambda request: redirect("/web_app/"), name="root_web_app"),
     path("admin/", admin.site.urls),
     path("advisories/", farmer_views.farmer_advisories_view, name="farmer_advisories_short"),
     path("advisories/<int:advisory_id>/", farmer_views.farmer_advisory_detail_view, name="farmer_advisory_detail_short"),
@@ -43,7 +45,6 @@ urlpatterns = [
 
     # Migrated CICR 2 apps
     path("", include("login.urls")),
-    path("", login_views.super_login, name="super_login"),
     path("", include("investigator_app.urls")),
     path("", include("owner_settings.urls")),
     path("", include("chatbot.urls")),
