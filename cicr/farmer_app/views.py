@@ -115,7 +115,7 @@ def farmer_translate_api(request):
 
     clean_texts = []
     seen = set()
-    for text in texts[:120]:
+    for text in texts[:80]:
         if not isinstance(text, str):
             continue
         clean = ' '.join(text.split()).strip()

@@ -435,8 +435,9 @@
     {% include "includes/accessibility_panel.html" %}
     <script>
         (function () {
-            const storageKey = 'cicrFarmerLanguage';
-            const cacheKeyPrefix = 'cicrTranslateCache:v2:';
+            const storageKey = 'farmer_language';
+            const legacyStorageKey = 'cicrFarmerLanguage';
+            const cacheKeyPrefix = 'cicrTranslateCache:v3:';
             const select = document.getElementById('languageSelect');
             if (!select) return;
             const translations = {
@@ -622,6 +623,7 @@
 
             let translateTimer = null;
             let translateController = null;
+            const chunkSize = 40;
             function fetchFullTranslation(nodes, lang) {
                 if (lang === 'en') return;
                 window.clearTimeout(translateTimer);
@@ -631,20 +633,28 @@
                     if (!missing.length) return;
                     if (translateController) translateController.abort();
                     translateController = new AbortController();
-                    fetch('/farmer/api/translate/', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ target: lang, texts: missing }),
-                        signal: translateController.signal
-                    })
-                        .then((response) => response.ok ? response.json() : Promise.reject(response))
-                        .then((data) => {
-                            Object.entries(data.translations || {}).forEach(([source, translated]) => {
-                                if (source && translated) localStorage.setItem(cacheKey(lang, source), translated);
-                            });
-                            applyCachedTranslation(collectTextNodes(), lang);
+                    const chunks = [];
+                    for (let index = 0; index < missing.length; index += chunkSize) {
+                        chunks.push(missing.slice(index, index + chunkSize));
+                    }
+                    Promise.all(chunks.map((chunk) => fetch('/farmer/api/translate/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ target: lang, texts: chunk }),
+                            signal: translateController.signal
                         })
-                        .catch(() => {});
+                            .then((response) => response.ok ? response.json() : Promise.reject(response))
+                            .catch(() => ({ translations: {} }))))
+                        .then((responses) => {
+                            responses.forEach((data) => {
+                                Object.entries(data.translations || {}).forEach(([source, translated]) => {
+                                    if (source && translated) localStorage.setItem(cacheKey(lang, source), translated);
+                                });
+                            });
+                            if ((localStorage.getItem(storageKey) || 'en') === lang) {
+                                applyCachedTranslation(collectTextNodes(), lang);
+                            }
+                        });
                 }, 120);
             }
 
@@ -668,6 +678,10 @@
                 translatePage(select.value);
             });
 
+            const legacyLang = localStorage.getItem(legacyStorageKey);
+            if (!localStorage.getItem(storageKey) && ['en', 'hi', 'mr'].includes(legacyLang)) {
+                localStorage.setItem(storageKey, legacyLang);
+            }
             const saved = localStorage.getItem(storageKey) || 'en';
             resetLanguageLabels();
             select.value = saved;
