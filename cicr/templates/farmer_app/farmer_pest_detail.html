@@ -1,76 +1,280 @@
 {% extends "farmer_app/farmer_panel_base.html" %}
 
 {% block title %}Pest Detail{% endblock %}
-{% block page_heading %}Pest Detail{% endblock %}
+{% block page_heading %}Pest Management{% endblock %}
 
 {% block extra_css %}
 <style>
-    .detail-layout {
+    .detail-shell {
         display: grid;
-        gap: 22px;
+        gap: 18px;
     }
 
-    .detail-card {
-        padding: 28px;
-    }
-
-    .detail-title {
-        margin: 0 0 10px;
-        color: var(--green-950);
-        font-size: 30px;
-        line-height: 1.2;
-    }
-
-    .detail-meta {
-        margin: 0;
+    .breadcrumb {
         color: var(--muted);
-        font-weight: 600;
-    }
-
-    .metric-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 14px;
-    }
-
-    .metric,
-    .field {
-        padding: 16px;
-        background: var(--green-50);
-        border: 1px solid var(--line);
-        border-radius: 8px;
-    }
-
-    .metric strong,
-    .field strong {
-        display: block;
-        margin-bottom: 6px;
-        color: var(--green-900);
-        font-size: 13px;
-        text-transform: uppercase;
-    }
-
-    .metric span {
-        color: #000000;
-        font-size: 22px;
+        font-size: 12px;
         font-weight: 800;
     }
 
-    .field-grid {
+    .detail-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        align-items: end;
+    }
+
+    .detail-head h3 {
+        margin: 0;
+        color: var(--green-950);
+        font-size: 32px;
+        line-height: 1.1;
+        font-weight: 900;
+    }
+
+    .detail-head p {
+        margin: 8px 0 0;
+        max-width: 760px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .badge {
+        min-height: 28px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 12px;
+        color: var(--green-900);
+        background: #e4f7e8;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 900;
+        white-space: nowrap;
+    }
+
+    .overview-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1.8fr) minmax(280px, 0.8fr);
+        gap: 18px;
+    }
+
+    .hero-photo,
+    .info-card,
+    .section-card,
+    .tips-card {
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        box-shadow: 0 10px 24px rgba(23, 33, 24, 0.07);
+    }
+
+    .hero-photo {
+        overflow: hidden;
+        min-height: 300px;
+    }
+
+    .hero-photo img {
+        width: 100%;
+        height: 100%;
+        min-height: 300px;
+        display: block;
+        object-fit: cover;
+    }
+
+    .info-card {
+        padding: 18px;
+        display: grid;
+        align-content: start;
+        gap: 12px;
+    }
+
+    .info-row {
+        display: grid;
+        grid-template-columns: 24px 92px 1fr;
+        gap: 8px;
+        align-items: center;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #edf4ef;
+        color: #243329;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .info-row:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .info-row svg {
+        width: 17px;
+        height: 17px;
+        color: var(--green-900);
+    }
+
+    .info-row span {
+        color: var(--muted);
+        font-size: 12px;
+    }
+
+    .content-grid {
+        display: grid;
+        gap: 16px;
+    }
+
+    .section-card {
+        overflow: hidden;
+    }
+
+    .section-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+        gap: 18px;
+        padding: 18px;
+        align-items: stretch;
+    }
+
+    .section-card.text-only .section-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        margin: 0 0 12px;
+        color: #203126;
+        font-size: 18px;
+        line-height: 1.25;
+        font-weight: 900;
+    }
+
+    .point-list {
+        display: grid;
+        gap: 10px;
+    }
+
+    .point-row {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: start;
+        color: #2f3f34;
+        font-size: 14px;
+        line-height: 1.45;
+        font-weight: 600;
+    }
+
+    .point-icon {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        color: var(--green-900);
+        background: #eaf7ed;
+        border-radius: 50%;
+    }
+
+    .point-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .section-media {
+        overflow: hidden;
+        min-height: 210px;
+        background: #eaf7ed;
+        border-radius: 8px;
+    }
+
+    .section-media img {
+        width: 100%;
+        height: 100%;
+        min-height: 210px;
+        display: block;
+        object-fit: cover;
+    }
+
+    .management-card .point-row {
+        padding: 11px 0;
+        border-bottom: 1px solid #edf4ef;
+    }
+
+    .management-card .point-row:last-child {
+        border-bottom: 0;
+    }
+
+    .tips-card {
+        padding: 16px;
+    }
+
+    .tips-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .tip {
+        min-height: 76px;
+        padding: 12px;
+        color: #214127;
+        background: #f0faf2;
+        border: 1px solid #d8efde;
+        border-radius: 8px;
+        font-size: 12px;
+        line-height: 1.35;
+        font-weight: 800;
+    }
+
+    .detail-actions {
+        display: flex;
+        justify-content: space-between;
         gap: 14px;
     }
 
-    @media (max-width: 1100px) {
-        .metric-grid {
+    .detail-button {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 16px;
+        color: var(--green-900);
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 900;
+    }
+
+    .detail-button.primary {
+        color: #ffffff;
+        background: var(--green-900);
+        border-color: var(--green-900);
+    }
+
+    @media (max-width: 980px) {
+        .overview-grid,
+        .section-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .tips-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
     @media (max-width: 760px) {
-        .metric-grid,
-        .field-grid {
+        .detail-head {
+            display: grid;
+        }
+
+        .detail-head h3 {
+            font-size: 24px;
+        }
+
+        .hero-photo,
+        .hero-photo img {
+            min-height: 220px;
+        }
+
+        .tips-grid {
             grid-template-columns: 1fr;
         }
     }
@@ -78,94 +282,195 @@
 {% endblock %}
 
 {% block content %}
-<div id="loading" class="message">Loading pest detail...</div>
-<div id="errorState" class="message" hidden>Pest detail not found.</div>
-<section id="detail" class="detail-layout" hidden></section>
+{{ pest_id|json_script:"pest-id" }}
+<article class="detail-shell" id="pestDetail"></article>
 {% endblock %}
 
 {% block scripts %}
-{{ pest_id|json_script:"record-id" }}
 <script>
-    const recordId = JSON.parse(document.getElementById('record-id').textContent);
-    const API_URL = `/api/pest_incidence_data/${encodeURIComponent(recordId)}/`;
-    const loading = document.getElementById('loading');
-    const errorState = document.getElementById('errorState');
-    const detail = document.getElementById('detail');
+    const pestId = JSON.parse(document.getElementById('pest-id').textContent);
+    const metaMap = {
+        'whitefly': { category: 'Whitefly', type: 'Insect Pest', risk: 'Moderate', crop: 'Cotton', date: '19 Aug 2024' },
+        'whitefly-north-india': { category: 'Whitefly', type: 'Insect Pest', risk: 'High', crop: 'Cotton', date: '19 Aug 2024' },
+        'jassid': { category: 'Jassid', type: 'Insect Pest', risk: 'Moderate', crop: 'Cotton', date: '18 Aug 2024' },
+        'thrips': { category: 'Thrips', type: 'Insect Pest', risk: 'Moderate', crop: 'Cotton', date: '18 Aug 2024' },
+        'mealybug': { category: 'Mealybug', type: 'Insect Pest', risk: 'Moderate', crop: 'Cotton', date: '17 Aug 2024' },
+        'aphid': { category: 'Aphid', type: 'Insect Pest', risk: 'Moderate', crop: 'Cotton', date: '17 Aug 2024' },
+        'pink-bollworm': { category: 'Pink Bollworm', type: 'Insect Pest', risk: 'High', crop: 'Cotton', date: '21 Aug 2024' },
+        'window-based-pest-management': { category: 'Window Advisory', type: 'Insect Pest', risk: 'Seasonal', crop: 'Cotton', date: '13 Aug 2024' },
+        'necrosis': { category: 'Necrosis', type: 'Disease', risk: 'Moderate', crop: 'Cotton', date: '15 Aug 2024' },
+        'window-based-disease-management': { category: 'Window Advisory', type: 'Disease', risk: 'Seasonal', crop: 'Cotton', date: '11 Aug 2024' },
+        'boll-rot': { category: 'Boll Rot', type: 'Disease', risk: 'Moderate', crop: 'Cotton', date: '14 Aug 2024' },
+        'leaf-reddening': { category: 'Leaf Reddening', type: 'Physiological Disorder', risk: 'Moderate', crop: 'Cotton', date: '12 Aug 2024' },
+        'parawilt-new-wilt': { category: 'Parawilt', type: 'Physiological Disorder', risk: 'Moderate', crop: 'Cotton', date: '12 Aug 2024' },
+    };
+
+    const fallbackImages = {
+        'whitefly': '/static/farmer_live/images/whiteflyIcon.png',
+        'whitefly-north-india': '/static/farmer_live/images/whiteflyAdvisoryImgv2.png',
+        'jassid': '/static/farmer_live/images/jassidIcon.png',
+        'thrips': '/static/farmer_live/images/thripsIcon.png',
+        'mealybug': '/static/farmer_live/images/mealybugProfileImage.png',
+        'aphid': '/static/farmer_live/images/aphidIcon.png',
+        'pink-bollworm': '/static/farmer_live/images/pinkBollwormAdvisoryImgv2.png',
+        'window-based-pest-management': '/static/farmer_live/images/pestBanner.png',
+        'necrosis': '/static/farmer_live/images/necrosisAdvisoryImgv2.png',
+        'window-based-disease-management': '/static/farmer_live/images/diseaseBanner.png',
+        'boll-rot': '/static/farmer_live/images/bollRotBacteria.png',
+        'leaf-reddening': '/static/farmer_live/images/leafReddening.jpg',
+        'parawilt-new-wilt': '/static/farmer_live/images/parawiltbann.jpg',
+    };
 
     function escapeHtml(value) {
-        return String(value).replace(/[&<>"']/g, (char) => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;',
-        }[char]));
+        return String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
     }
 
-    function labelFor(key) {
-        return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+    function cleanText(value) {
+        return String(value || '')
+            .replace(/â€¢/g, '•')
+            .replace(/Â/g, '')
+            .replace(/\r/g, '')
+            .trim();
     }
 
-    function numberText(value) {
-        if (value === undefined || value === null || value === '') return '-';
-        const numeric = Number(value);
-        if (Number.isFinite(numeric)) return numeric.toFixed(2).replace(/\.00$/, '');
-        return String(value);
+    function titleCase(value) {
+        return cleanText(value).toLowerCase().replace(/\b[a-z]/g, (char) => char.toUpperCase());
+    }
+
+    function isHeading(value) {
+        const text = cleanText(value);
+        return text.length <= 58 && !text.includes('\n') && !/[.!?]$/.test(text);
+    }
+
+    function splitPoints(value) {
+        const text = cleanText(value);
+        if (text.includes('•')) {
+            return text.split('•').map((item) => item.trim()).filter(Boolean);
+        }
+        return text.split(/\n{2,}|\n(?=[A-Z])/).map((item) => item.trim()).filter(Boolean);
+    }
+
+    function iconSvg() {
+        return '<span class="point-icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>';
+    }
+
+    function sectionHtml(section) {
+        const classes = ['section-card'];
+        if (!section.image) classes.push('text-only');
+        if (section.title.toLowerCase().includes('management')) classes.push('management-card');
+        const points = splitPoints(section.text).map((point) => `<div class="point-row">${iconSvg()}<span>${escapeHtml(point)}</span></div>`).join('');
+        const media = section.image ? `<div class="section-media"><img src="${escapeHtml(section.image)}" alt="${escapeHtml(section.title)}"></div>` : '';
+        return `
+            <section class="${classes.join(' ')}">
+                <div class="section-inner">
+                    <div>
+                        <h4 class="section-title">${escapeHtml(section.title)}</h4>
+                        <div class="point-list">${points}</div>
+                    </div>
+                    ${media}
+                </div>
+            </section>
+        `;
+    }
+
+    function parseSections(items) {
+        const sections = [];
+        let current = null;
+        let pendingImages = [];
+        const tableHeaders = new Set([
+            'disease name',
+            'cotton growing zone',
+            'crop growth stage',
+            'duration of crop growth stage (das*)',
+            'advisory for management',
+        ]);
+
+        items.forEach((item, index) => {
+            if (index === 0 && item.type === 'text') return;
+            if (item.type === 'image') {
+                pendingImages.push(item.src);
+                return;
+            }
+            const value = cleanText(item.value);
+            if (!value) return;
+            if (tableHeaders.has(value.toLowerCase())) return;
+            if (isHeading(value)) {
+                if (current) sections.push(current);
+                current = { title: titleCase(value), text: '', image: pendingImages.shift() || '' };
+                return;
+            }
+            if (!current) current = { title: 'Overview', text: '', image: pendingImages.shift() || '' };
+            current.text = current.text ? `${current.text}\n\n${value}` : value;
+            if (!current.image && pendingImages.length) current.image = pendingImages.shift();
+        });
+
+        if (current) sections.push(current);
+        pendingImages.forEach((src) => {
+            if (sections.length && !sections[sections.length - 1].image) {
+                sections[sections.length - 1].image = src;
+            }
+        });
+        return sections.filter((section) => section.text);
     }
 
     function renderDetail(record) {
-        const title = [record.district, record.standard_week || record.week].filter(Boolean).join(' - ') || `Pest Record ${recordId}`;
-        const meta = [record.month, record.year, record.pest_date || record.date_field].filter(Boolean).join(' | ');
-        const metricKeys = Object.keys(record)
-            .filter((key) => key.endsWith('_average') && record[key] !== undefined && record[key] !== null);
-        const metrics = metricKeys
-            .map((key) => `
-                <div class="metric">
-                    <strong>${escapeHtml(labelFor(key))}</strong>
-                    <span>${escapeHtml(numberText(record[key]))}</span>
-                </div>
-            `).join('');
-        const skip = new Set(['id', ...metricKeys]);
-        const fields = Object.entries(record)
-            .filter(([key, value]) => !skip.has(key) && value !== null && value !== undefined && String(value).trim() !== '')
-            .map(([key, value]) => `
-                <div class="field">
-                    <strong>${escapeHtml(labelFor(key))}</strong>
-                    <span>${escapeHtml(value)}</span>
-                </div>
-            `).join('');
+        const detail = document.getElementById('pestDetail');
+        const title = titleCase(record.title || pestId.replaceAll('-', ' '));
+        const meta = metaMap[pestId] || { category: title, type: 'Advisory', risk: 'Moderate', crop: 'Cotton', date: 'Updated' };
+        const allImages = record.items.filter((item) => item.type === 'image').map((item) => item.src);
+        const hero = allImages[0] || fallbackImages[pestId] || '/static/farmer_live/images/pestBanner.png';
+        const sections = parseSections(record.items);
+        const summary = sections.find((section) => section.text)?.text.split(/\n{2,}/)[0] || 'Follow recommended advisory and management practices for cotton crop protection.';
 
         detail.innerHTML = `
-            <article class="card detail-card">
-                <h3 class="detail-title">${escapeHtml(title)}</h3>
-                <p class="detail-meta">${escapeHtml(meta || 'Pest incidence record')}</p>
-            </article>
-            <article class="card detail-card">
-                <h3 class="card-title">Incidence Summary</h3>
-                <div class="metric-grid">${metrics}</div>
-            </article>
-            <article class="card detail-card">
-                <h3 class="card-title">Details</h3>
-                <div class="field-grid">${fields}</div>
-            </article>
+            <div class="breadcrumb">All Advisories / ${escapeHtml(title)}</div>
+            <div class="detail-head">
+                <div>
+                    <h3>${escapeHtml(title)}</h3>
+                    <p>${escapeHtml(summary)}</p>
+                </div>
+                <span class="badge">${escapeHtml(meta.category)}</span>
+            </div>
+            <div class="overview-grid">
+                <figure class="hero-photo"><img src="${escapeHtml(hero)}" alt="${escapeHtml(title)}"></figure>
+                <aside class="info-card">
+                    ${[
+                        ['Crop', meta.crop],
+                        ['Date', meta.date],
+                        ['Category', meta.category],
+                        ['Type', meta.type],
+                        ['Risk Level', meta.risk],
+                    ].map(([label, value]) => `<div class="info-row"><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12c5 0 7 3 7 7"/><path d="M19 5c-5 0-7 3-7 7"/></svg><span>${escapeHtml(label)}</span>${escapeHtml(value)}</div>`).join('')}
+                </aside>
+            </div>
+            <div class="content-grid">
+                ${sections.map(sectionHtml).join('')}
+            </div>
+            <section class="tips-card">
+                <h4 class="section-title">Additional Tips</h4>
+                <div class="tips-grid">
+                    <div class="tip">Regularly monitor the underside of leaves</div>
+                    <div class="tip">Maintain proper field hygiene</div>
+                    <div class="tip">Use advisory only after symptoms appear</div>
+                    <div class="tip">Use recommended insecticides only</div>
+                </div>
+            </section>
+            <div class="detail-actions">
+                <a class="detail-button" href="/farmer/pest/">&larr; Back to Pest Guide</a>
+                <a class="detail-button primary" href="/farmer/advisories/">View All Advisories &rarr;</a>
+            </div>
         `;
-        detail.hidden = false;
+        if (window.cicrRefreshTranslation) window.setTimeout(window.cicrRefreshTranslation, 150);
     }
 
-    async function loadDetail() {
-        try {
-            const response = await fetch(API_URL, { headers: { 'Accept': 'application/json' } });
-            if (!response.ok) throw new Error(`API ${response.status}`);
-            const record = await response.json();
-            loading.hidden = true;
-            renderDetail(record);
-        } catch (error) {
-            loading.hidden = true;
-            errorState.hidden = false;
-            console.error('Pest detail API failed:', error);
-        }
-    }
-
-    loadDetail();
+    fetch('/static/farmer_live/data/farmer_detail_content.json', { headers: { 'Accept': 'application/json' } })
+        .then((response) => response.ok ? response.json() : Promise.reject(new Error('detail json failed')))
+        .then((records) => renderDetail(records[pestId] || records.whitefly))
+        .catch(() => renderDetail({ title: pestId.replaceAll('-', ' '), items: [
+            { type: 'text', value: pestId.replaceAll('-', ' ') },
+            { type: 'text', value: 'Management' },
+            { type: 'text', value: 'Follow recommended advisory and management practices for cotton crop protection.' },
+            { type: 'image', src: fallbackImages[pestId] || '/static/farmer_live/images/pestBanner.png' },
+        ] }));
 </script>
 {% endblock %}

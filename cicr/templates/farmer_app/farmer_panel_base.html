@@ -25,27 +25,46 @@
 
         body {
             margin: 0;
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
             color: var(--text);
             background: var(--green-50);
             font-family: var(--font-family);
         }
 
         .panel {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: var(--sidebar) 1fr;
+            height: 100vh;
+            overflow: hidden;
         }
 
         .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 30;
+            width: var(--sidebar);
+            height: 100vh;
             padding: 24px 18px;
             background: #ffffff;
             border-right: 1px solid var(--line);
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: #9ccfa7 transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #9ccfa7;
+            border-radius: 999px;
         }
 
         .brand {
             text-align: center;
-            margin-bottom: 34px;
+            margin-bottom: 24px;
         }
 
         .brand img {
@@ -71,7 +90,7 @@
 
         .nav {
             display: grid;
-            gap: 10px;
+            gap: 8px;
         }
 
         .nav a {
@@ -103,8 +122,34 @@
         }
 
         .main {
+            margin-left: var(--sidebar);
             min-width: 0;
-            padding: 32px clamp(28px, 4vw, 56px) 56px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 32px clamp(28px, 4vw, 56px) 0;
+            overflow-x: hidden;
+            overflow-y: hidden;
+        }
+
+        .content-scroll {
+            flex: 1;
+            min-height: 0;
+            padding-bottom: 56px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: #9ccfa7 transparent;
+        }
+
+        .content-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content-scroll::-webkit-scrollbar-thumb {
+            background: #9ccfa7;
+            border-radius: 999px;
         }
 
         .header {
@@ -122,6 +167,45 @@
             color: var(--green-950);
             font-size: 34px;
             line-height: 1.2;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 0 0 auto;
+        }
+
+        .language-select {
+            min-height: 40px;
+            padding: 0 12px;
+            color: var(--green-900);
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            outline: 0;
+        }
+
+        #google_translate_element,
+        .goog-te-banner-frame,
+        .goog-te-gadget,
+        iframe.goog-te-banner-frame,
+        iframe.skiptranslate,
+        body > .skiptranslate {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            min-height: 0 !important;
+            max-height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        html,
+        body {
+            top: 0 !important;
         }
 
         .back {
@@ -234,6 +318,15 @@
             border-radius: 10px;
         }
 
+        .site-footer {
+            margin-top: 28px;
+            padding: 18px 0 0;
+            color: var(--muted);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
         @media (max-width: 1100px) {
             .grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -241,13 +334,25 @@
         }
 
         @media (max-width: 760px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
             .panel {
-                grid-template-columns: 1fr;
+                height: auto;
+                min-height: 100vh;
+                overflow: visible;
             }
 
             .sidebar {
+                position: static;
+                width: auto;
+                height: auto;
                 border-right: 0;
                 border-bottom: 1px solid var(--line);
+                overflow: visible;
             }
 
             .brand {
@@ -259,11 +364,33 @@
             }
 
             .main {
+                margin-left: 0;
+                height: auto;
+                display: block;
                 padding: 24px 20px 42px;
+                overflow: visible;
+            }
+
+            .content-scroll {
+                padding-bottom: 0;
+                overflow: visible;
             }
 
             .header h2 {
                 font-size: 28px;
+            }
+
+            .header {
+                align-items: start;
+            }
+
+            .header-actions {
+                flex-direction: column;
+                align-items: end;
+            }
+
+            .language-select {
+                max-width: 132px;
             }
         }
     </style>
@@ -282,19 +409,125 @@
                 <a class="{% if active_tab == 'home' %}active{% endif %}" href="/farmer/dashboard/"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>Home</a>
                 <a class="{% if active_tab == 'advisories' %}active{% endif %}" href="/farmer/advisories/"><svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>Advisories</a>
                 <a class="{% if active_tab == 'calculator' %}active{% endif %}" href="/farmer/calculator/"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h2"/><path d="M14 12h2"/><path d="M8 16h2"/><path d="M14 16h2"/></svg>Calculator</a>
-                <a class="{% if active_tab == 'pest' %}active{% endif %}" href="/farmer/pest/"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>Pest</a>
+                <a class="{% if active_tab == 'pest' %}active{% endif %}" href="/farmer/pest/"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/><path d="M5 13h14"/><path d="M7 21h10"/></svg>Pest Guide</a>
             </nav>
         </aside>
 
         <main class="main">
             <header class="header">
                 <h2>{% block page_heading %}Farmer Panel{% endblock %}</h2>
-                <a class="back" href="/web_panel_logout/" aria-label="Exit"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></a>
+                <div class="header-actions">
+                    <select class="language-select notranslate" id="languageSelect" aria-label="Translate language" translate="no">
+                        <option value="en" translate="no">English</option>
+                        <option value="hi" translate="no">Hindi</option>
+                        <option value="mr" translate="no">Marathi</option>
+                    </select>
+                    <a class="back" href="/web_panel_logout/" aria-label="Exit"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></a>
+                </div>
             </header>
-            {% block content %}{% endblock %}
+            <div class="content-scroll">
+                {% block content %}{% endblock %}
+                <footer class="site-footer">CICR - IRM Devloped By Zappkode Solutions.</footer>
+            </div>
         </main>
     </div>
+    <div id="google_translate_element" aria-hidden="true"></div>
     {% include "includes/accessibility_panel.html" %}
+    <script>
+        window.googleTranslateElementInit = function () {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,mr',
+                autoDisplay: false
+            }, 'google_translate_element');
+            window.dispatchEvent(new Event('cicrTranslateReady'));
+        };
+
+        (function () {
+            const storageKey = 'cicrFarmerLanguage';
+            const select = document.getElementById('languageSelect');
+            if (!select) return;
+            let lastAppliedLanguage = '';
+
+            function resetLanguageLabels() {
+                const labels = { en: 'English', hi: 'Hindi', mr: 'Marathi' };
+                Array.from(select.options).forEach((option) => {
+                    option.textContent = labels[option.value] || option.textContent;
+                    option.setAttribute('translate', 'no');
+                    option.classList.add('notranslate');
+                });
+            }
+
+            function setCookieLanguage(lang) {
+                const value = lang === 'en' ? '/en/en' : `/en/${lang}`;
+                document.cookie = `googtrans=${value}; path=/`;
+                document.cookie = `googtrans=${value}; path=/; domain=${location.hostname}`;
+            }
+
+            function hideGoogleTranslateChrome() {
+                document.documentElement.style.top = '0px';
+                document.body.style.top = '0px';
+                document.querySelectorAll('iframe.goog-te-banner-frame, iframe.skiptranslate, body > .skiptranslate').forEach((node) => {
+                    node.style.display = 'none';
+                    node.style.visibility = 'hidden';
+                    node.style.height = '0';
+                });
+                resetLanguageLabels();
+            }
+
+            function applyLanguage(lang) {
+                resetLanguageLabels();
+                select.value = lang;
+                localStorage.setItem(storageKey, lang);
+                setCookieLanguage(lang);
+                const combo = document.querySelector('.goog-te-combo');
+                if (combo) {
+                    if (combo.value === lang && lastAppliedLanguage === lang) {
+                        hideGoogleTranslateChrome();
+                        return true;
+                    }
+                    combo.value = lang;
+                    combo.dispatchEvent(new Event('change'));
+                    lastAppliedLanguage = lang;
+                    hideGoogleTranslateChrome();
+                    return true;
+                }
+                return false;
+            }
+
+            function applyWhenReady(lang) {
+                let attempts = 0;
+                const timer = window.setInterval(() => {
+                    attempts += 1;
+                    if (applyLanguage(lang) || attempts >= 30) {
+                        window.clearInterval(timer);
+                    }
+                    hideGoogleTranslateChrome();
+                }, 150);
+            }
+
+            window.cicrRefreshTranslation = function () {
+                const lang = localStorage.getItem(storageKey) || 'en';
+                if (lang !== 'en') applyWhenReady(lang);
+            };
+
+            select.addEventListener('change', () => {
+                applyWhenReady(select.value);
+            });
+
+            const saved = localStorage.getItem(storageKey) || 'en';
+            resetLanguageLabels();
+            select.value = saved;
+            setCookieLanguage(saved);
+            window.addEventListener('cicrTranslateReady', () => {
+                if (saved !== 'en') applyWhenReady(saved);
+                hideGoogleTranslateChrome();
+            });
+            hideGoogleTranslateChrome();
+            window.setInterval(hideGoogleTranslateChrome, 700);
+        }());
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

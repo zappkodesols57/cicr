@@ -5,174 +5,418 @@
 
 {% block extra_css %}
 <style>
-    .state-grid {
+    .advisory-page {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 26px;
+        gap: 20px;
     }
 
-    .skeleton {
-        height: 440px;
-        border-radius: 10px;
-        background:
-            linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent) -120px 0 / 120px 100% no-repeat,
-            #e6f0e8;
-        animation: shimmer 1.1s infinite linear;
+    .advisory-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 20px;
     }
 
-    @keyframes shimmer {
-        to { background-position: calc(100% + 120px) 0, 0 0; }
+    .advisory-subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .advisory-search {
+        position: relative;
+        width: min(360px, 100%);
+    }
+
+    .advisory-search svg {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        width: 17px;
+        height: 17px;
+        color: #68766b;
+        transform: translateY(-50%);
+    }
+
+    .advisory-search input {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 16px 0 42px;
+        color: #172118;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        outline: 0;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 8px 18px rgba(23, 33, 24, 0.05);
+    }
+
+    .advisory-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .filter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .filter-tab {
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 14px;
+        color: #26382a;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .filter-tab.active {
+        color: #ffffff;
+        background: var(--green-900);
+        border-color: var(--green-900);
+    }
+
+    .filter-tab svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .sort-select {
+        min-height: 38px;
+        padding: 0 34px 0 14px;
+        color: #26382a;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .advisory-list {
+        display: grid;
+        gap: 16px;
     }
 
     .advisory-card {
-        min-height: 440px;
+        min-height: 178px;
+        display: grid;
+        grid-template-columns: minmax(250px, 38%) 1fr;
+        overflow: hidden;
+        color: inherit;
+        text-decoration: none;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        box-shadow: 0 10px 24px rgba(23, 33, 24, 0.07);
+    }
+
+    .advisory-card[hidden] {
+        display: none;
+    }
+
+    .advisory-image {
+        min-height: 178px;
+        background: #eaf7ed;
+    }
+
+    .advisory-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .advisory-body {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 18px;
+        align-items: center;
+        padding: 22px 24px;
+    }
+
+    .badge {
+        width: max-content;
+        display: inline-flex;
+        align-items: center;
+        min-height: 26px;
+        padding: 0 12px;
+        color: var(--badge-color, #005414);
+        background: var(--badge-bg, #eaf7ed);
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 900;
     }
 
     .advisory-title {
-        text-transform: uppercase;
+        margin: 14px 0 7px;
+        color: #1d2920;
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 900;
     }
 
-    @media (max-width: 1100px) {
-        .state-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+    .advisory-copy {
+        max-width: 620px;
+        margin: 0;
+        color: #526158;
+        font-size: 13px;
+        line-height: 1.45;
+        font-weight: 600;
+    }
+
+    .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 18px;
+        color: #5d6b62;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .meta-row span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .meta-row svg {
+        width: 14px;
+        height: 14px;
+        color: var(--green-900);
+    }
+
+    .read-more {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 16px;
+        color: var(--green-900);
+        background: #ffffff;
+        border: 1px solid var(--green-800);
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 900;
+        white-space: nowrap;
+    }
+
+    .empty-state {
+        display: none;
+        padding: 34px;
+        color: var(--muted);
+        text-align: center;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        font-weight: 700;
+    }
+
+    .empty-state.show {
+        display: block;
+    }
+
+    @media (max-width: 980px) {
+        .advisory-top,
+        .advisory-controls {
+            display: grid;
+        }
+
+        .advisory-search {
+            width: 100%;
         }
     }
 
     @media (max-width: 760px) {
-        .state-grid {
+        .advisory-card {
             grid-template-columns: 1fr;
+        }
+
+        .advisory-image {
+            min-height: 168px;
+        }
+
+        .advisory-body {
+            grid-template-columns: 1fr;
+            padding: 18px;
+        }
+
+        .read-more {
+            width: max-content;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<section id="loading" class="state-grid" aria-label="Loading advisories">
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
+<section class="advisory-page" aria-label="All advisories">
+    <div class="advisory-top">
+        <p class="advisory-subtitle">Browse all pest and crop advisories to protect your field and improve yield.</p>
+        <label class="advisory-search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+            <input id="advisorySearch" type="search" placeholder="Search advisories..." autocomplete="off">
+        </label>
+    </div>
+
+    <div class="advisory-controls">
+        <div class="filter-tabs" aria-label="Advisory filters">
+            <button class="filter-tab active" type="button" data-filter="all"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>All</button>
+            <button class="filter-tab" type="button" data-filter="pink bollworm"><svg viewBox="0 0 24 24"><path d="M12 3c4 4 4 8 0 12-4-4-4-8 0-12"/><path d="M12 15v6"/></svg>Pink Bollworm</button>
+            <button class="filter-tab" type="button" data-filter="whitefly"><svg viewBox="0 0 24 24"><path d="M12 12c-4-5-7-5-8-2-1 4 4 7 8 2Z"/><path d="M12 12c4-5 7-5 8-2 1 4-4 7-8 2Z"/><path d="M12 12v7"/></svg>Whitefly</button>
+            <button class="filter-tab" type="button" data-filter="aphid"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/></svg>Aphid</button>
+            <button class="filter-tab" type="button" data-filter="fungus"><svg viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M12 20V9"/><path d="M5 10c0-4 14-4 14 0 0 2-2 4-7 4s-7-2-7-4Z"/></svg>Fungus</button>
+            <button class="filter-tab" type="button" data-filter="general"><svg viewBox="0 0 24 24"><path d="M4 5h16v12H7l-3 3V5Z"/></svg>General</button>
+        </div>
+        <select class="sort-select" id="advisorySort" aria-label="Sort advisories">
+            <option value="latest">Latest First</option>
+            <option value="oldest">Oldest First</option>
+        </select>
+    </div>
+
+    <div class="advisory-list" id="advisoryList">
+        <a class="advisory-card" href="/farmer/advisories/pink-bollworm/" data-category="pink bollworm" data-title="Pink Bollworm Advisory" data-date="2024-08-21">
+            <div class="advisory-image"><img src="/static/farmer_live/images/pinkBollwormAdvisoryImgv2.png" alt="Pink Bollworm Advisory"></div>
+            <div class="advisory-body">
+                <div>
+                    <span class="badge" style="--badge-color:#c51f47;--badge-bg:#ffe8ef;">Pink Bollworm</span>
+                    <h3 class="advisory-title">Pink Bollworm Advisory</h3>
+                    <p class="advisory-copy">Monitor traps regularly and take timely action to protect your crop from pink bollworm infestation.</p>
+                    <div class="meta-row"><span><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12c5 0 7 3 7 7"/></svg>Crop: Cotton</span><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>21 Aug 2024</span></div>
+                </div>
+                <span class="read-more">Read More <span aria-hidden="true">&rarr;</span></span>
+            </div>
+        </a>
+
+        <a class="advisory-card" href="/farmer/advisories/whitefly-north-india/" data-category="whitefly" data-title="Whitefly Control Advisory Whitefly in North India" data-date="2024-08-19">
+            <div class="advisory-image"><img src="/static/farmer_live/images/whiteflyAdvisoryImgv2.png" alt="Whitefly in North India"></div>
+            <div class="advisory-body">
+                <div>
+                    <span class="badge" style="--badge-color:#08701f;--badge-bg:#e4f7e8;">Whitefly</span>
+                    <h3 class="advisory-title">Whitefly Control Advisory</h3>
+                    <p class="advisory-copy">Follow recommended spray schedule and use proper insecticides to control whitefly effectively.</p>
+                    <div class="meta-row"><span><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12c5 0 7 3 7 7"/></svg>Crop: Cotton</span><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>19 Aug 2024</span></div>
+                </div>
+                <span class="read-more">Read More <span aria-hidden="true">&rarr;</span></span>
+            </div>
+        </a>
+
+        <a class="advisory-card" href="/farmer/pest/aphid/" data-category="aphid" data-title="Aphid Infestation Alert" data-date="2024-08-17">
+            <div class="advisory-image"><img src="/static/farmer_live/images/aphid-bann.png" alt="Aphid Infestation Alert"></div>
+            <div class="advisory-body">
+                <div>
+                    <span class="badge" style="--badge-color:#9a6500;--badge-bg:#fff2cf;">Aphid</span>
+                    <h3 class="advisory-title">Aphid Infestation Alert</h3>
+                    <p class="advisory-copy">Early detection and proper management can prevent yield loss caused by aphids.</p>
+                    <div class="meta-row"><span><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12c5 0 7 3 7 7"/></svg>Crop: Cotton</span><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>17 Aug 2024</span></div>
+                </div>
+                <span class="read-more">Read More <span aria-hidden="true">&rarr;</span></span>
+            </div>
+        </a>
+
+        <a class="advisory-card" href="/farmer/advisories/necrosis-disease/" data-category="fungus" data-title="Leaf Spot Management Necrosis Disease" data-date="2024-08-15">
+            <div class="advisory-image"><img src="/static/farmer_live/images/necrosisAdvisoryImgv2.png" alt="Leaf Spot Management"></div>
+            <div class="advisory-body">
+                <div>
+                    <span class="badge" style="--badge-color:#4d36a6;--badge-bg:#ece8ff;">Fungal Disease Advisory</span>
+                    <h3 class="advisory-title">Leaf Spot Management</h3>
+                    <p class="advisory-copy">Use protective fungicides and follow good agricultural practices to manage leaf spot disease.</p>
+                    <div class="meta-row"><span><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12c5 0 7 3 7 7"/></svg>Crop: Cotton</span><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>15 Aug 2024</span></div>
+                </div>
+                <span class="read-more">Read More <span aria-hidden="true">&rarr;</span></span>
+            </div>
+        </a>
+
+        <a class="advisory-card" href="/farmer/advisories/window-based-pest-management/" data-category="general" data-title="Advisory for Crop Window Based Insect Pest Management" data-date="2024-08-13">
+            <div class="advisory-image"><img src="/static/farmer_live/images/pestBanner.png" alt="Window Based Pest Management"></div>
+            <div class="advisory-body">
+                <div>
+                    <span class="badge" style="--badge-color:#005414;--badge-bg:#eaf7ed;">General</span>
+                    <h3 class="advisory-title">Window Based Pest Management</h3>
+                    <p class="advisory-copy">Crop stage wise advisory for insect pest monitoring and management in cotton.</p>
+                    <div class="meta-row"><span><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12c5 0 7 3 7 7"/></svg>Crop: Cotton</span><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>13 Aug 2024</span></div>
+                </div>
+                <span class="read-more">Read More <span aria-hidden="true">&rarr;</span></span>
+            </div>
+        </a>
+
+        <a class="advisory-card" href="/farmer/advisories/window-based-disease-management/" data-category="fungus general" data-title="Advisory for Crop Window Based Disease Management" data-date="2024-08-11">
+            <div class="advisory-image"><img src="/static/farmer_live/images/diseaseBanner.png" alt="Window Based Disease Management"></div>
+            <div class="advisory-body">
+                <div>
+                    <span class="badge" style="--badge-color:#4d36a6;--badge-bg:#ece8ff;">Fungal Disease Advisory</span>
+                    <h3 class="advisory-title">Window Based Disease Management</h3>
+                    <p class="advisory-copy">Window based disease advisory for boll rot, necrosis and cotton disease management.</p>
+                    <div class="meta-row"><span><svg viewBox="0 0 24 24"><path d="M12 22V8"/><path d="M5 12c5 0 7 3 7 7"/></svg>Crop: Cotton</span><span><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>11 Aug 2024</span></div>
+                </div>
+                <span class="read-more">Read More <span aria-hidden="true">&rarr;</span></span>
+            </div>
+        </a>
+    </div>
+    <div class="empty-state" id="emptyState">No advisory found for this search.</div>
 </section>
-<section id="advisoryGrid" class="grid" aria-label="All advisories" hidden></section>
-<div id="emptyState" class="message" hidden>No advisories available.</div>
-<div id="errorState" class="message" hidden>Unable to load advisories. Please try again.</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    const API_URL = '/api/advisory/';
-    const grid = document.getElementById('advisoryGrid');
-    const loading = document.getElementById('loading');
+    const searchInput = document.getElementById('advisorySearch');
+    const filterButtons = Array.from(document.querySelectorAll('.filter-tab'));
+    const sortSelect = document.getElementById('advisorySort');
+    const list = document.getElementById('advisoryList');
     const emptyState = document.getElementById('emptyState');
-    const errorState = document.getElementById('errorState');
+    let activeFilter = 'all';
 
-    function absoluteUrl(url) {
-        if (!url) return '';
-        try {
-            return new URL(url, window.location.origin).href;
-        } catch (_) {
-            return '';
-        }
+    function applyAdvisoryFilters() {
+        const query = searchInput.value.trim().toLowerCase();
+        const cards = Array.from(list.querySelectorAll('.advisory-card'));
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+            const category = card.dataset.category || '';
+            const title = (card.dataset.title || '').toLowerCase();
+            const matchesFilter = activeFilter === 'all' || category.includes(activeFilter);
+            const matchesSearch = !query || title.includes(query) || category.includes(query);
+            const visible = matchesFilter && matchesSearch;
+            card.hidden = !visible;
+            if (visible) visibleCount += 1;
+        });
+
+        emptyState.classList.toggle('show', visibleCount === 0);
     }
 
-    function firstValue(record, keys) {
-        for (const key of keys) {
-            if (record[key] !== undefined && record[key] !== null && String(record[key]).trim() !== '') {
-                return String(record[key]).trim();
-            }
-        }
-        return '';
+    function sortAdvisories() {
+        const cards = Array.from(list.querySelectorAll('.advisory-card'));
+        cards.sort((a, b) => {
+            const first = new Date(a.dataset.date).getTime();
+            const second = new Date(b.dataset.date).getTime();
+            return sortSelect.value === 'oldest' ? first - second : second - first;
+        });
+        cards.forEach((card) => list.appendChild(card));
+        applyAdvisoryFilters();
     }
 
-    function normalize(record, index) {
-        const title = firstValue(record, [
-            'title', 'name', 'advisory_title', 'pest_name', 'issue_title',
-            'week_en', 'week_hi', 'week_gu', 'issue_no'
-        ]);
-        const date = firstValue(record, [
-            'date', 'date_range_en', 'date_range_hi', 'date_range_gu',
-            'start_date_en', 'month_en', 'month'
-        ]);
-        const description = firstValue(record, [
-            'description', 'content', 'details', 'short_description', 'body'
-        ]);
-        const image = absoluteUrl(firstValue(record, [
-            'image', 'image_url', 'advisory_image', 'thumbnail', 'thumbnail_url',
-            'photo', 'photo_url', 'banner', 'banner_image'
-        ]));
-        const id = firstValue(record, ['id', 'pk', 'advisory_id']);
-        const pdf = absoluteUrl(firstValue(record, [
-            'pdf', 'path_pdf_en', 'path_pdf_hi', 'path_pdf_gu', 'lang_1_pdf',
-            'lang_2_pdf', 'lang_3_pdf', 'lang_4_pdf', 'lang_5_pdf', 'lang_6_pdf',
-            'lang_7_pdf'
-        ]));
+    filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            activeFilter = button.dataset.filter;
+            filterButtons.forEach((item) => item.classList.toggle('active', item === button));
+            applyAdvisoryFilters();
+        });
+    });
 
-        return {
-            id,
-            title: title || 'Untitled advisory',
-            date,
-            description,
-            image,
-            pdf,
-            link: id ? `/farmer/advisories/${encodeURIComponent(id)}/` : '#',
-        };
-    }
-
-    function escapeHtml(value) {
-        return String(value).replace(/[&<>"']/g, (char) => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;',
-        }[char]));
-    }
-
-    function escapeAttr(value) {
-        return escapeHtml(value).replace(/`/g, '&#096;');
-    }
-
-    function cardTemplate(item) {
-        const imageMarkup = item.image
-            ? `<img src="${escapeAttr(item.image)}" alt="${escapeAttr(item.title)}" onerror="this.remove(); this.parentElement.querySelector('.image-fallback').hidden=false;">`
-            : '';
-        return `
-            <a class="card advisory-card" href="${escapeAttr(item.link)}" data-id="${escapeAttr(item.id)}">
-                <div class="card-image">
-                    ${imageMarkup}
-                    <div class="image-fallback" ${item.image ? 'hidden' : ''}>${escapeHtml(item.title)}</div>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title advisory-title">${escapeHtml(item.title)}</h3>
-                    <p class="card-meta">${escapeHtml(item.date || item.description || '')}</p>
-                    <span class="button">Read More</span>
-                </div>
-            </a>
-        `;
-    }
-
-    async function loadAdvisories() {
-        try {
-            const response = await fetch(API_URL, { headers: { 'Accept': 'application/json' } });
-            if (!response.ok) throw new Error(`API ${response.status}`);
-            const payload = await response.json();
-            const records = Array.isArray(payload) ? payload : (payload.results || payload.data || payload.advisories || []);
-            const items = records.map(normalize);
-
-            loading.hidden = true;
-            if (!items.length) {
-                emptyState.hidden = false;
-                return;
-            }
-
-            grid.innerHTML = items.map(cardTemplate).join('');
-            grid.hidden = false;
-        } catch (error) {
-            loading.hidden = true;
-            errorState.hidden = false;
-            console.error('Advisory API failed:', error);
-        }
-    }
-
-    loadAdvisories();
+    searchInput.addEventListener('input', applyAdvisoryFilters);
+    sortSelect.addEventListener('change', sortAdvisories);
+    sortAdvisories();
 </script>
 {% endblock %}

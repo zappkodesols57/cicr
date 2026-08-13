@@ -5,159 +5,385 @@
 
 {% block extra_css %}
 <style>
+    .pest-shell {
+        display: grid;
+        gap: 18px;
+    }
+
+    .pest-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: start;
+    }
+
+    .pest-subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .pest-search {
+        position: relative;
+        width: min(360px, 100%);
+    }
+
+    .pest-search svg {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        width: 17px;
+        height: 17px;
+        color: #68766b;
+        transform: translateY(-50%);
+    }
+
+    .pest-search input {
+        width: 100%;
+        min-height: 46px;
+        padding: 0 16px 0 42px;
+        color: #172118;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        outline: 0;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 8px 18px rgba(23, 33, 24, 0.05);
+    }
+
+    .section-intro {
+        text-align: center;
+    }
+
+    .section-intro h3 {
+        margin: 0;
+        color: #203126;
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .section-intro p {
+        margin: 8px 0 0;
+        color: #526158;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .pest-category {
+        display: grid;
+        gap: 14px;
+    }
+
+    .pest-category[hidden] {
+        display: none;
+    }
+
+    .category-title {
+        margin: 8px 0 0;
+        color: #203126;
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 900;
+    }
+
+    .pest-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+    }
+
     .pest-card {
-        min-height: 360px;
+        position: relative;
+        overflow: hidden;
+        min-height: 288px;
+        display: flex;
+        flex-direction: column;
+        color: inherit;
+        text-decoration: none;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        box-shadow: 0 10px 24px rgba(23, 33, 24, 0.07);
+    }
+
+    .pest-card[hidden] {
+        display: none;
+    }
+
+    .pest-image {
+        height: 150px;
+        background: #eaf7ed;
+    }
+
+    .pest-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+    }
+
+    .pest-icon {
+        position: absolute;
+        left: 16px;
+        top: 128px;
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        color: var(--icon-color, var(--green-900));
+        background: var(--icon-bg, #eaf7ed);
+        border: 4px solid #ffffff;
+        border-radius: 50%;
+        box-shadow: 0 8px 16px rgba(23, 33, 24, 0.14);
+    }
+
+    .pest-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .pest-body {
+        flex: 1;
+        display: grid;
+        align-content: space-between;
+        gap: 14px;
+        padding: 28px 16px 14px;
     }
 
     .pest-name {
-        text-transform: none;
+        margin: 0 0 8px;
+        color: #203126;
+        font-size: 16px;
+        line-height: 1.2;
+        font-weight: 900;
     }
 
-    .pest-data {
+    .pest-copy {
+        margin: 0;
+        color: #526158;
+        font-size: 12px;
+        line-height: 1.4;
+        font-weight: 600;
+    }
+
+    .guide-row {
+        min-height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--icon-color, var(--green-900));
+        font-size: 12px;
+        font-weight: 900;
+    }
+
+    .guide-arrow {
+        width: 32px;
+        height: 30px;
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px 14px;
-        margin-bottom: 22px;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.35;
+        place-items: center;
+        background: var(--icon-bg, #eaf7ed);
+        border-radius: 7px;
     }
 
-    .state-grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 26px;
-    }
-
-    .skeleton {
-        height: 360px;
-        border-radius: 10px;
+    .tip-strip {
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 14px 18px;
+        color: #214127;
         background:
-            linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent) -120px 0 / 120px 100% no-repeat,
-            #e6f0e8;
-        animation: shimmer 1.1s infinite linear;
+            linear-gradient(90deg, rgba(240,250,242,0.98), rgba(240,250,242,0.78)),
+            url("/static/farmer_live/images/onboarding-s4.png") right bottom / 210px auto no-repeat;
+        border: 1px solid #d8efde;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 800;
     }
 
-    @keyframes shimmer {
-        to { background-position: calc(100% + 120px) 0, 0 0; }
+    .tip-badge {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        color: #ffffff;
+        background: var(--green-900);
+        border-radius: 50%;
+    }
+
+    .empty-state {
+        display: none;
+        padding: 34px;
+        color: var(--muted);
+        text-align: center;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        font-weight: 700;
+    }
+
+    .empty-state.show {
+        display: block;
+    }
+
+    @media (max-width: 1220px) {
+        .pest-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 900px) {
+        .pest-top {
+            display: grid;
+        }
+
+        .pest-search {
+            width: 100%;
+        }
+
+        .pest-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 560px) {
+        .pest-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<section id="loading" class="state-grid" aria-label="Loading pest data">
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
+<section class="pest-shell" aria-label="Pest guide">
+    <div class="pest-top">
+        <p class="pest-subtitle">Know your crop pests and manage them with the right practices.</p>
+        <label class="pest-search">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
+            <input id="pestSearch" type="search" placeholder="Search pests..." autocomplete="off">
+        </label>
+    </div>
+
+    <div class="section-intro">
+        <h3>Explore Crop Protection Guide</h3>
+        <p>Click on any pest to get detailed management guide and best practices.</p>
+    </div>
+
+    <section class="pest-category" data-category-section>
+    <h3 class="category-title">Pest Management Advisory</h3>
+    <div class="pest-grid">
+        <a class="pest-card" style="--icon-color:#08701f;--icon-bg:#e4f7e8;" href="/farmer/pest/whitefly/" data-title="Whitefly insect pest">
+            <div class="pest-image"><img src="/static/farmer_live/images/whiteflyIcon.png" alt="Whitefly"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19c9 0 15-6 15-15Z"/><path d="M5 19 19 5"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Whitefly</h4><p class="pest-copy">Suck sap from leaves, causes yellowing and sooty mould.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#08701f;--icon-bg:#e4f7e8;" href="/farmer/pest/whitefly-north-india/" data-title="Whitefly in North India insect pest">
+            <div class="pest-image"><img src="/static/farmer_live/images/whiteflyAdvisoryImgv2.png" alt="Whitefly in North India"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M12 21s7-4.4 7-11A7 7 0 1 0 5 10c0 6.6 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Whitefly in North India</h4><p class="pest-copy">Major pest in cotton crops during warm and humid weather.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#1266a3;--icon-bg:#e8f3ff;" href="/farmer/pest/jassid/" data-title="Jassid insect pest">
+            <div class="pest-image"><img src="/static/farmer_live/images/jassidIcon.png" alt="Jassid"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Jassid</h4><p class="pest-copy">Sucks sap from leaves and causes leaf yellowing.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#6d36a6;--icon-bg:#f0e8ff;" href="/farmer/pest/thrips/" data-title="Thrips insect pest">
+            <div class="pest-image"><img src="/static/farmer_live/images/thripsIcon.png" alt="Thrips"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Thrips</h4><p class="pest-copy">Feeds on flowers and leaves, reduces crop quality.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#d46a00;--icon-bg:#fff1dd;" href="/farmer/pest/mealybug/" data-title="Mealybug insect pest">
+            <div class="pest-image"><img src="/static/farmer_live/images/mealybugProfileImage.png" alt="Mealybug"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Mealybug</h4><p class="pest-copy">Sucks sap and weakens plants, affects growth.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#c51f47;--icon-bg:#ffe8ef;" href="/farmer/pest/aphid/" data-title="Aphid insect pest">
+            <div class="pest-image"><img src="/static/farmer_live/images/aphidIcon.png" alt="Aphid"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><path d="M7 9h10"/><path d="M12 6v15"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Aphid</h4><p class="pest-copy">Colonies on shoots and leaves can cause sooty mould.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#0f766e;--icon-bg:#e1f5f2;" href="/farmer/pest/pink-bollworm/" data-title="Pink Bollworm insect pest">
+            <div class="pest-image"><img src="/static/farmer_live/images/pinkBollwormAdvisoryImgv2.png" alt="Pink Bollworm"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M19 7c-6 0-10 4-10 10"/><path d="M5 17c4 2 8 2 12-2"/><path d="M7 10c4-4 8-5 12-3"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Pink Bollworm</h4><p class="pest-copy">Bores into bolls and flowers, causing yield loss.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#005414;--icon-bg:#e4f7e8;" href="/farmer/pest/window-based-pest-management/" data-title="Window Based Pest Management">
+            <div class="pest-image"><img src="/static/farmer_live/images/pestBanner.png" alt="Window Based Pest Management"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Window Based Pest Management</h4><p class="pest-copy">Crop stage wise pest management advisory.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+    </div>
+    </section>
+
+    <section class="pest-category" data-category-section>
+    <h3 class="category-title">Disease Management Advisory</h3>
+    <div class="pest-grid">
+        <a class="pest-card" style="--icon-color:#9a6500;--icon-bg:#fff2cf;" href="/farmer/pest/necrosis/" data-title="Necrosis disease leaf spot">
+            <div class="pest-image"><img src="/static/farmer_live/images/necrosisAdvisoryImgv2.png" alt="Necrosis"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19c9 0 15-6 15-15Z"/><path d="M5 19 19 5"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Necrosis</h4><p class="pest-copy">Disease symptoms include spots, bronzing and necrosis.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#9a6500;--icon-bg:#fff2cf;" href="/farmer/pest/boll-rot/" data-title="Boll Rot disease">
+            <div class="pest-image"><img src="/static/farmer_live/images/bollRotBacteria.png" alt="Boll Rot"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19c9 0 15-6 15-15Z"/><path d="M5 19 19 5"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Boll Rot</h4><p class="pest-copy">Affects developing bolls and reduces lint quality.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#4d36a6;--icon-bg:#ece8ff;" href="/farmer/pest/window-based-disease-management/" data-title="Window Based Disease Management">
+            <div class="pest-image"><img src="/static/farmer_live/images/diseaseBanner.png" alt="Window Based Disease Management"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Window Based Disease Management</h4><p class="pest-copy">Crop stage wise cotton disease advisory.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+    </div>
+    </section>
+
+    <section class="pest-category" data-category-section>
+    <h3 class="category-title">Physiological Disorder</h3>
+    <div class="pest-grid">
+        <a class="pest-card" style="--icon-color:#9a6500;--icon-bg:#fff2cf;" href="/farmer/pest/leaf-reddening/" data-title="Leaf Reddening physiological disorder">
+            <div class="pest-image"><img src="/static/farmer_live/images/leafReddening.jpg" alt="Leaf Reddening"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19c9 0 15-6 15-15Z"/><path d="M5 19 19 5"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Leaf Reddening</h4><p class="pest-copy">Physiological disorder linked with stress and nutrition.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+        <a class="pest-card" style="--icon-color:#08701f;--icon-bg:#e4f7e8;" href="/farmer/pest/parawilt-new-wilt/" data-title="Parawilt New wilt physiological disorder">
+            <div class="pest-image"><img src="/static/farmer_live/images/parawiltbann.jpg" alt="Parawilt New wilt"></div>
+            <span class="pest-icon"><svg viewBox="0 0 24 24"><path d="M20 4C11 4 5 10 5 19c9 0 15-6 15-15Z"/><path d="M5 19 19 5"/></svg></span>
+            <div class="pest-body"><div><h4 class="pest-name">Parawilt/ New wilt</h4><p class="pest-copy">Sudden wilting linked with field and root-zone stress.</p></div><span class="guide-row">View Guide <span class="guide-arrow">&rarr;</span></span></div>
+        </a>
+    </div>
+    </section>
+    <div class="empty-state" id="emptyState">No pest guide found for this search.</div>
+
+    <div class="tip-strip">
+        <span class="tip-badge"><svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12c1 1 1 2 1 3h6c0-1 0-2 1-3a7 7 0 0 0-4-12Z"/></svg></span>
+        <span><strong>Tip for Farmers</strong> &nbsp; Regular monitoring, timely action and use of recommended practices can help protect your crop and increase yield.</span>
+    </div>
 </section>
-<section id="pestGrid" class="grid" aria-label="Pest management records" hidden></section>
-<div id="emptyState" class="message" hidden>No pest data available.</div>
-<div id="errorState" class="message" hidden>Unable to load pest data. Please try again.</div>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    const API_URL = '/api/pest_incidence_data/';
-    const grid = document.getElementById('pestGrid');
-    const loading = document.getElementById('loading');
+    const pestSearch = document.getElementById('pestSearch');
+    const pestCards = Array.from(document.querySelectorAll('.pest-card'));
     const emptyState = document.getElementById('emptyState');
-    const errorState = document.getElementById('errorState');
 
-    function firstValue(record, keys) {
-        for (const key of keys) {
-            if (record[key] !== undefined && record[key] !== null && String(record[key]).trim() !== '') {
-                return String(record[key]).trim();
-            }
-        }
-        return '';
-    }
-
-    function escapeHtml(value) {
-        return String(value).replace(/[&<>"']/g, (char) => ({
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;',
-        }[char]));
-    }
-
-    function numberText(value) {
-        if (value === undefined || value === null || value === '') return '-';
-        const numeric = Number(value);
-        if (Number.isFinite(numeric)) return numeric.toFixed(2).replace(/\.00$/, '');
-        return String(value);
-    }
-
-    function labelFor(key) {
-        return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
-    }
-
-    function averageValues(record) {
-        return Object.entries(record)
-            .filter(([key, value]) => key.endsWith('_average') && value !== null && value !== undefined && value !== '')
-            .slice(0, 4)
-            .reduce((values, [key, value]) => {
-                values[labelFor(key)] = value;
-                return values;
-            }, {});
-    }
-
-    function normalize(record, index) {
-        const district = firstValue(record, ['district']) || 'CICR IRM';
-        const week = firstValue(record, ['standard_week', 'week']);
-        const month = firstValue(record, ['month']);
-        const year = firstValue(record, ['year']);
-        return {
-            id: firstValue(record, ['id', 'pk']) || String(index + 1),
-            title: [district, week].filter(Boolean).join(' - ') || `Pest Record ${index + 1}`,
-            meta: [month, year].filter(Boolean).join(' '),
-            values: averageValues(record),
-        };
-    }
-
-    function cardTemplate(item) {
-        const values = Object.entries(item.values).map(([label, value]) => (
-            `<span><strong>${escapeHtml(label)}:</strong> ${escapeHtml(numberText(value))}</span>`
-        )).join('');
-        return `
-            <a class="card pest-card" href="/farmer/pest/${encodeURIComponent(item.id)}/" data-id="${escapeHtml(item.id)}">
-                <div class="card-image">
-                    <div class="image-fallback">${escapeHtml(item.title)}</div>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title pest-name">${escapeHtml(item.title)}</h3>
-                    <p class="card-meta">${escapeHtml(item.meta || 'Pest incidence data')}</p>
-                    <div class="pest-data">${values}</div>
-                    <span class="button">Read More</span>
-                </div>
-            </a>
-        `;
-    }
-
-    async function loadPestData() {
-        try {
-            const response = await fetch(API_URL, { headers: { 'Accept': 'application/json' } });
-            if (!response.ok) throw new Error(`API ${response.status}`);
-            const payload = await response.json();
-            const records = Array.isArray(payload) ? payload : (payload.results || payload.data || payload.pest_data || []);
-            const items = records.map(normalize);
-
-            loading.hidden = true;
-            if (!items.length) {
-                emptyState.hidden = false;
-                return;
-            }
-
-            grid.innerHTML = items.map(cardTemplate).join('');
-            grid.hidden = false;
-        } catch (error) {
-            loading.hidden = true;
-            errorState.hidden = false;
-            console.error('Pest API failed:', error);
-        }
-    }
-
-    loadPestData();
+    pestSearch.addEventListener('input', () => {
+        const query = pestSearch.value.trim().toLowerCase();
+        let visibleCount = 0;
+        pestCards.forEach((card) => {
+            const visible = !query || (card.dataset.title || '').toLowerCase().includes(query);
+            card.hidden = !visible;
+            if (visible) visibleCount += 1;
+        });
+        document.querySelectorAll('[data-category-section]').forEach((section) => {
+            const hasVisibleCard = Array.from(section.querySelectorAll('.pest-card')).some((card) => !card.hidden);
+            section.hidden = !hasVisibleCard;
+        });
+        emptyState.classList.toggle('show', visibleCount === 0);
+    });
 </script>
 {% endblock %}

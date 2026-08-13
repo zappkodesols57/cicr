@@ -62,6 +62,13 @@ def farmer_calculator_view(request):
     })
 
 
+def farmer_calculator_detail_view(request, calculator_type):
+    return render(request, 'farmer_app/farmer_calculator_detail.html', {
+        'active_tab': 'calculator',
+        'calculator_type': calculator_type,
+    })
+
+
 def farmer_pest_view(request):
     return render(request, 'farmer_app/farmer_pest.html', {
         'active_tab': 'pest',

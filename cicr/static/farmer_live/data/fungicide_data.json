@@ -1,0 +1,80 @@
+{
+  "Carbendazim 50% WP": {
+    "Leaf spot": [
+      250.0,
+      250.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Kresoxim-methyl 44.3% SC": {
+    "Leaf spot": [
+      500.0,
+      500.0,
+      500.0,
+      500.0
+    ],
+    "Grey mildew": [
+      500.0,
+      500.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Propiconazole 25% EC": {
+    "Alternaria leaf spot": [
+      500.0,
+      500.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Propineb 70%WP": {
+    "Alternaria leaf spot": [
+      1500.0,
+      1500.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Pyraclostrobin 20% WG": {
+    "Alternaria Leaf blight": [
+      500.0,
+      500.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Azoxystrobin 18.2% w/w + Difenoconazole 11.4% w/w SC": {
+    "Leaf spot and Grey mildew": [
+      500.0,
+      500.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Carbendazim12%+ Mancozeb 63%WP": {
+    "Alternaria leaf spot & Grey mildew": [
+      1500.0,
+      1500.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Fluxapyroxad 167 g/l + Pyraclostrobin 333 g/l SC": {
+    "Alternaria leaf": [
+      300.0,
+      300.0,
+      500.0,
+      500.0
+    ]
+  },
+  "Metiram 55% + Pyraclostrobin 5% WG": {
+    "Alternaria leaf spot": [
+      1750.0,
+      1750.0,
+      500.0,
+      500.0
+    ]
+  }
+}

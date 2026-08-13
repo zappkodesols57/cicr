@@ -5,64 +5,234 @@
 
 {% block extra_css %}
 <style>
-    .calc-card {
-        min-height: 360px;
+    .calculator-page {
+        display: grid;
+        gap: 18px;
+    }
+
+    .calculator-subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .calculator-stack {
+        display: grid;
+        gap: 18px;
+    }
+
+    .calculator-card {
+        min-height: 230px;
+        display: grid;
+        grid-template-columns: minmax(260px, 0.9fr) minmax(360px, 1.25fr) minmax(210px, 0.6fr);
+        gap: 28px;
+        align-items: center;
+        padding: 24px;
+        color: inherit;
+        text-decoration: none;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        box-shadow: 0 10px 24px rgba(23, 33, 24, 0.07);
+    }
+
+    .calculator-visual {
+        height: 180px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: var(--visual-bg, #eef8f0);
+        border-radius: 10px;
+    }
+
+    .calculator-visual img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+    }
+
+    .calculator-info {
+        min-width: 0;
+    }
+
+    .calculator-title {
+        margin: 0 0 8px;
+        color: #203126;
+        font-size: 26px;
+        line-height: 1.16;
+        font-weight: 900;
+    }
+
+    .calculator-copy {
+        max-width: 430px;
+        margin: 0 0 22px;
+        color: #526158;
+        font-size: 14px;
+        line-height: 1.45;
+        font-weight: 600;
     }
 
     .steps {
         display: grid;
-        grid-template-columns: 1fr auto 1fr auto 1fr;
-        align-items: center;
-        gap: 18px;
-        margin: 18px 0 30px;
+        grid-template-columns: repeat(3, minmax(90px, 1fr));
+        align-items: start;
+        gap: 22px;
     }
 
     .step {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        gap: 6px;
         text-align: center;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.4;
-        font-weight: 700;
+        min-width: 0;
+    }
+
+    .step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 25px;
+        left: calc(50% + 36px);
+        width: calc(100% - 72px);
+        height: 1px;
+        background: #cfdcd2;
     }
 
     .step-icon {
-        width: 66px;
-        height: 66px;
+        width: 50px;
+        height: 50px;
         display: grid;
         place-items: center;
-        margin: 0 auto 12px;
-        color: var(--green-800);
-        background: var(--green-100);
+        color: var(--accent, var(--green-900));
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        box-shadow: 0 8px 18px rgba(23, 33, 24, 0.06);
+    }
+
+    .step-icon img {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+    }
+
+    .step strong {
+        color: var(--accent, var(--green-900));
+        font-size: 15px;
+        line-height: 1;
+        font-weight: 900;
+    }
+
+    .step span {
+        color: #29382e;
+        font-size: 11px;
+        line-height: 1.15;
+        font-weight: 800;
+    }
+
+    .step-line {
+        display: none;
+    }
+
+    .calculator-action {
+        height: 100%;
+        min-height: 148px;
+        display: grid;
+        place-items: center;
+        border-left: 1px solid var(--line);
+    }
+
+    .calculator-button {
+        min-height: 52px;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 0 26px;
+        color: #ffffff;
+        text-decoration: none;
+        background: var(--accent, var(--green-900));
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 900;
+        box-shadow: 0 10px 18px rgba(0, 84, 20, 0.22);
+    }
+
+    .note-card {
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 18px;
+        color: #26382a;
+        background: #ffffff;
+        border: 1px solid #d8efde;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .note-icon {
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        color: #ffffff;
+        background: var(--green-900);
         border-radius: 50%;
     }
 
-    .step-icon svg {
-        width: 34px;
-        height: 34px;
-    }
-
-    .chev {
+    .note-card strong {
         color: var(--green-900);
     }
 
-    .chev svg {
-        width: 26px;
-        height: 26px;
-        stroke-width: 3;
-    }
-
-    .calculate {
-        width: 100%;
-        justify-content: center;
-        margin-top: auto;
-    }
-
-    @media (max-width: 920px) {
-        .steps {
-            grid-template-columns: 1fr;
+    @media (max-width: 1150px) {
+        .calculator-card {
+            grid-template-columns: 220px 1fr;
         }
 
-        .chev {
+        .calculator-action {
+            grid-column: 1 / -1;
+            min-height: auto;
+            justify-content: start;
+            place-items: center start;
+            padding-top: 18px;
+            border-left: 0;
+            border-top: 1px solid var(--line);
+        }
+    }
+
+    @media (max-width: 760px) {
+        .calculator-card {
+            grid-template-columns: 1fr;
+            gap: 18px;
+            padding: 16px;
+        }
+
+        .calculator-visual {
+            height: 150px;
+        }
+
+        .calculator-title {
+            font-size: 22px;
+        }
+
+        .steps {
+            grid-template-columns: 1fr;
+            justify-items: start;
+        }
+
+        .step {
+            grid-template-columns: 50px 28px 1fr;
+            align-items: center;
+            justify-items: start;
+            text-align: left;
+        }
+
+        .step::after,
+        .step-line {
             display: none;
         }
     }
@@ -70,53 +240,50 @@
 {% endblock %}
 
 {% block content %}
-<section class="grid">
-    <article class="card calc-card">
-        <div class="card-body">
-            <h3 class="card-title">Insecticide Dose Calculator</h3>
-            <p class="card-meta">Select insecticide, select pest, and calculate dosage per acre.</p>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M6 9 3 12l3 3 3-3Z"/><path d="M13 3 9 7l8 8 4-4Z"/><path d="m10 14-5 5"/><path d="M4 20h7"/><path d="M14 7l3 3"/></svg></div>
-                    Select Insecticide
-                </div>
-                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-                <div class="step">
-                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M4 15c4-5 8-7 16-8"/><path d="M9 14c2 3 5 4 9 2"/><path d="M8 11a3 3 0 1 0 0 6"/></svg></div>
-                    Select Pest
-                </div>
-                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-                <div class="step">
-                    <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2"/><path d="M14 8h2"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 18h8"/></svg></div>
-                    Calculate Dose / Acres
-                </div>
-            </div>
-            <button class="button calculate" type="button">Calculate Dose</button>
-        </div>
-    </article>
+<section class="calculator-page" aria-label="Dose calculators">
+    <p class="calculator-subtitle">Calculate the right dose of insecticides and fungicides for effective pest and disease control.</p>
 
-    <article class="card calc-card">
-        <div class="card-body">
-            <h3 class="card-title">Fungicide Dose Calculator</h3>
-            <p class="card-meta">Select fungicide, select plant disease, and calculate dosage per acre.</p>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M6 9 3 12l3 3 3-3Z"/><path d="M13 3 9 7l8 8 4-4Z"/><path d="m10 14-5 5"/><path d="M4 20h7"/><path d="M14 7l3 3"/></svg></div>
-                    Select Fungicide
-                </div>
-                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-                <div class="step">
-                    <div class="step-icon"><svg viewBox="0 0 24 24"><path d="M5 21c8-4 12-10 13-18"/><path d="M7 12c4-3 7-4 11-3"/><path d="M13 9c2 2 3 4 3 7"/></svg></div>
-                    Select Plant Disease
-                </div>
-                <div class="chev"><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></div>
-                <div class="step">
-                    <div class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h2"/><path d="M14 8h2"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 18h8"/></svg></div>
-                    Calculate Dose / Acres
+    <div class="calculator-stack">
+        <article class="calculator-card" style="--accent:#00720f;--visual-bg:#eef8f0;">
+            <div class="calculator-visual">
+                <img src="/static/farmer_live/images/insecticideCalBg.png" alt="Insecticide dose calculator">
+            </div>
+            <div class="calculator-info">
+                <h3 class="calculator-title">Insecticide Dose Calculator</h3>
+                <p class="calculator-copy">Calculate the recommended insecticide dosage based on pest and area.</p>
+                <div class="steps" aria-label="Insecticide calculation steps">
+                    <div class="step"><span class="step-icon"><img src="/static/farmer_live/images/insecticideCalBg.png" alt=""></span><strong>1</strong><span>Select Insecticide</span></div>
+                    <div class="step"><span class="step-icon"><img src="/static/farmer_live/images/jassidIcon.png" alt=""></span><strong>2</strong><span>Select Pest</span></div>
+                    <div class="step"><span class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h2"/><path d="M14 12h2"/><path d="M8 16h2"/><path d="M14 16h2"/></svg></span><strong>3</strong><span>Get Calculated Dosage / Acres</span></div>
                 </div>
             </div>
-            <button class="button calculate" type="button">Calculate Dose</button>
-        </div>
-    </article>
+            <div class="calculator-action">
+                <a class="calculator-button" href="/farmer/calculator/insecticide/">Calculate Dose <span aria-hidden="true">&rarr;</span></a>
+            </div>
+        </article>
+
+        <article class="calculator-card" style="--accent:#7440a8;--visual-bg:#f4effb;">
+            <div class="calculator-visual">
+                <img src="/static/farmer_live/images/fungicideCalBg.png" alt="Fungicide dose calculator">
+            </div>
+            <div class="calculator-info">
+                <h3 class="calculator-title">Fungicide Dose Calculator</h3>
+                <p class="calculator-copy">Calculate the recommended fungicide dosage based on plant disease and area.</p>
+                <div class="steps" aria-label="Fungicide calculation steps">
+                    <div class="step"><span class="step-icon"><img src="/static/farmer_live/images/fungicideCalBg.png" alt=""></span><strong>1</strong><span>Select Fungicide</span></div>
+                    <div class="step"><span class="step-icon"><img src="/static/farmer_live/images/necrosisAdvisoryImgv2.png" alt=""></span><strong>2</strong><span>Select Plant Disease</span></div>
+                    <div class="step"><span class="step-icon"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h2"/><path d="M14 12h2"/><path d="M8 16h2"/><path d="M14 16h2"/></svg></span><strong>3</strong><span>Get Calculated Dosage / Acres</span></div>
+                </div>
+            </div>
+            <div class="calculator-action">
+                <a class="calculator-button" href="/farmer/calculator/fungicide/">Calculate Dose <span aria-hidden="true">&rarr;</span></a>
+            </div>
+        </article>
+    </div>
+
+    <div class="note-card">
+        <span class="note-icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+        <span><strong>Note:</strong> Follow recommended dosage and safety guidelines. Always read the label before use.</span>
+    </div>
 </section>
 {% endblock %}

@@ -151,10 +151,11 @@ class Advisory(models.Model):
 
 
 class Banner(models.Model):
+    name = models.CharField(max_length=120, blank=True, default="")
     image = models.ImageField(upload_to='banners/')
 
     def __str__(self):
-        return f"Banner {self.id}"
+        return self.name or f"Banner {self.id}"
 
 
 class Financial_Year(models.Model):

@@ -44,7 +44,7 @@
         background: #0f1511 !important;
     }
 
-    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .main, .mobile-app) {
+    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .main, .mobile-app, .advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .hero-photo, .pest-card, .calculator-card, .calculator-visual, .note-card, .stat-card, .section-panel, .quick-card, .quick-visual, .hero-overlay-card, .recent-item, .tip-strip, .empty-state, .tip) {
         color: #f7fff8 !important;
         background: #171d19 !important;
         border-color: #435047 !important;
@@ -89,10 +89,55 @@
         color: #f7fff8 !important;
     }
 
+    html.cicr-a11y-dark :where(.advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .pest-card, .calculator-card, .note-card, .stat-card, .section-panel, .quick-card) :where(h1, h2, h3, h4, p, span, strong, label, div) {
+        color: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark :where(.advisory-card img, .section-card img, .hero-photo img, .pest-card img, .calculator-card img, .hero-image img, .section-media img, .pest-image img, .calculator-visual img) {
+        background: transparent !important;
+    }
+
     html.cicr-a11y-dark :where(.badge, .status-pill, .role-icon, .feature-icon, .arrow, .chip, .pill, .tag, .average-badge) {
         color: #f7fff8 !important;
         background: #203126 !important;
         border-color: #54725d !important;
+    }
+
+    html.cicr-a11y-dark :where(.stat-icon, .step-icon, .pest-icon, .point-icon, .info-icon, .strategy-icon, .strategy-num, .note-icon, .tip-badge, .guide-arrow, .quick-badge, .quick-action) {
+        color: #58d178 !important;
+        background: #203126 !important;
+        border-color: #54725d !important;
+        box-shadow: none !important;
+    }
+
+    html.cicr-a11y-dark :where(.stat-icon svg, .step-icon svg, .pest-icon svg, .point-icon svg, .info-icon svg, .strategy-icon svg, .note-icon svg, .tip-badge svg, .guide-arrow svg, .quick-badge svg, .quick-action svg) {
+        color: #58d178 !important;
+        stroke: #58d178 !important;
+    }
+
+    html.cicr-a11y-dark :where(.step-icon img, .quick-visual img) {
+        filter: none !important;
+        opacity: 1 !important;
+    }
+
+    html.cicr-a11y-dark :where(.tips-card .tip, .tip) {
+        color: #dff7e5 !important;
+        background: #203126 !important;
+        border-color: #54725d !important;
+    }
+
+    html.cicr-a11y-dark :where(.strategy-row) {
+        border-bottom-color: #54725d !important;
+    }
+
+    html.cicr-a11y-dark .calculator-card .step-icon {
+        background: #f7fff8 !important;
+        border-color: #8fbf98 !important;
+    }
+
+    html.cicr-a11y-dark .calculator-card .step-icon svg {
+        color: #005414 !important;
+        stroke: #005414 !important;
     }
 
     html.cicr-a11y-dark .role-card {
@@ -117,6 +162,36 @@
         color: #ffffff !important;
         background: #0b0f0c !important;
         border-color: #8fbf98 !important;
+    }
+
+    html.cicr-a11y-dark :where(.calculator-form-card, .calc-result) {
+        color: #f7fff8 !important;
+        background: #171d19 !important;
+        border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark :where(.calculator-form-card label, .calc-result h3, .result-row, .result-value, .doseLabel, .doseValue, .litreValue) {
+        color: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark .calc-result {
+        background: #203126 !important;
+        border-color: #58d178 !important;
+    }
+
+    html.cicr-a11y-dark :where(.read-more, .detail-button:not(.primary), .small-button:not(.primary)) {
+        color: #f7fff8 !important;
+        background: #203126 !important;
+        border-color: #58d178 !important;
+    }
+
+    html.cicr-a11y-dark :where(.read-more *, .detail-button:not(.primary) *, .small-button:not(.primary) *) {
+        color: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark :where(.calculator-button, .detail-button.primary, .small-button) {
+        color: #ffffff !important;
+        border-color: transparent !important;
     }
 
     html.cicr-a11y-dark :where(input, textarea)::placeholder {
@@ -553,6 +628,11 @@
             return `${headingText}. ${bodyText}`.replace(/\s+/g, ' ').slice(0, 700);
         }
 
+        function speakCurrentPage() {
+            if (!settings.readAloud) return;
+            window.setTimeout(() => speak(pageSummary()), 450);
+        }
+
         function panelIsOpen() {
             return !overlay.hasAttribute('hidden');
         }
@@ -638,5 +718,6 @@
         }, true);
 
         applySettings();
+        speakCurrentPage();
     }());
 </script>

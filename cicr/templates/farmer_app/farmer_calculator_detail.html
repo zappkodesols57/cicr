@@ -1,0 +1,233 @@
+{% extends "farmer_app/farmer_panel_base.html" %}
+
+{% block title %}Calculator{% endblock %}
+{% block page_heading %}{% if calculator_type == "fungicide" %}Fungicide Calculator{% else %}Insecticide Calculator{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .calculator-form-card {
+        max-width: 760px;
+        padding: 22px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+    }
+
+    .calc-field {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .calc-field label {
+        color: #202020;
+        font-size: 18px;
+        font-weight: 900;
+    }
+
+    .calc-field select,
+    .calc-field input {
+        width: 100%;
+        min-height: 52px;
+        padding: 0 16px;
+        color: #222222;
+        background: #ffffff;
+        border: 1px solid #9faaa2;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+    }
+
+    .calc-field select:focus,
+    .calc-field input:focus {
+        border-color: var(--green-800);
+        box-shadow: 0 0 0 2px rgba(8, 112, 31, 0.12);
+    }
+
+    .calc-field input:disabled,
+    .calc-field select:disabled {
+        color: #888888;
+        background: #f5f5f5;
+    }
+
+    .calc-result {
+        display: none;
+        padding: 18px;
+        background: #eaf7ed;
+        border: 1px solid var(--green-800);
+        border-radius: 10px;
+    }
+
+    .calc-result.show {
+        display: block;
+    }
+
+    .calc-result h3 {
+        margin: 0 0 14px;
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    .result-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 10px 0;
+        border-top: 1px solid #b7d9bf;
+        font-size: 16px;
+    }
+
+    .result-row:first-of-type {
+        border-top: 0;
+    }
+
+    .result-value {
+        font-weight: 900;
+        text-align: right;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{{ calculator_type|json_script:"calculator-type" }}
+<section class="calculator-form-card">
+    <div class="calc-field">
+        <label id="chemicalLabel" for="chemicalSelect">Select Insecticide:</label>
+        <select id="chemicalSelect">
+            <option value="">Select Insecticide</option>
+        </select>
+    </div>
+    <div class="calc-field">
+        <label id="targetLabel" for="targetSelect">Select Pest:</label>
+        <select id="targetSelect" disabled>
+            <option value="">Select Pest</option>
+        </select>
+    </div>
+    <div class="calc-field">
+        <label for="acreInput">Enter area in acres:</label>
+        <input id="acreInput" type="number" min="0" step="0.01" placeholder="Enter area in acres" disabled>
+    </div>
+    <div class="calc-result" id="calcResult">
+        <h3>Calculated Quantities</h3>
+        <div class="result-row">
+            <span id="doseLabel">Dose calculated</span>
+            <span class="result-value" id="doseValue"></span>
+        </div>
+        <div class="result-row">
+            <span>Dose per litre water</span>
+            <span class="result-value" id="litreValue"></span>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const calculatorType = JSON.parse(document.getElementById('calculator-type').textContent);
+    const isFungicide = calculatorType === 'fungicide';
+    let data = {};
+    const chemicalSelect = document.getElementById('chemicalSelect');
+    const targetSelect = document.getElementById('targetSelect');
+    const acreInput = document.getElementById('acreInput');
+    const calcResult = document.getElementById('calcResult');
+    const doseLabel = document.getElementById('doseLabel');
+    const doseValue = document.getElementById('doseValue');
+    const litreValue = document.getElementById('litreValue');
+
+    document.getElementById('chemicalLabel').textContent = isFungicide ? 'Select Fungicide:' : 'Select Insecticide:';
+    document.getElementById('targetLabel').textContent = isFungicide ? 'Select Disease:' : 'Select Pest:';
+    chemicalSelect.firstElementChild.textContent = isFungicide ? 'Select Fungicide' : 'Select Insecticide';
+    targetSelect.firstElementChild.textContent = isFungicide ? 'Select Disease' : 'Select Pest';
+
+    function populateChemicals() {
+        chemicalSelect.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
+        Object.keys(data).forEach((name) => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            chemicalSelect.appendChild(option);
+        });
+    }
+
+    async function loadCalculatorData() {
+        const fileName = isFungicide ? 'fungicide_data.json' : 'insecticide_data.json';
+        const response = await fetch(`/static/farmer_live/data/${fileName}`, { headers: { 'Accept': 'application/json' } });
+        if (!response.ok) throw new Error(`Unable to load ${fileName}`);
+        data = await response.json();
+        populateChemicals();
+    }
+
+    Object.keys(data).forEach((name) => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        chemicalSelect.appendChild(option);
+    });
+
+    function unitFor(name) {
+        return ['SP', 'WSG', 'WP', 'SG', 'WG'].some((suffix) => name.includes(suffix)) ? 'gm' : 'ml';
+    }
+
+    function formatRange(min, max, unit) {
+        const roundedMin = Math.round(min);
+        const roundedMax = Math.round(max);
+        return roundedMin === roundedMax ? `${roundedMin} ${unit}` : `${roundedMin} - ${roundedMax} ${unit}`;
+    }
+
+    function calculate() {
+        const chemical = chemicalSelect.value;
+        const target = targetSelect.value;
+        const acres = Number(acreInput.value);
+        if (!chemical || !target || !Number.isFinite(acres) || acres <= 0) {
+            calcResult.classList.remove('show');
+            return;
+        }
+
+        const [formulationMin, formulationMax, dilutionMin, dilutionMax] = data[chemical][target];
+        const dosePerAcreMin = formulationMin / 2.5;
+        const dosePerAcreMax = formulationMax / 2.5;
+        const resultDoseMin = dosePerAcreMin * acres;
+        const resultDoseMax = dosePerAcreMax * acres;
+        const unit = unitFor(chemical);
+
+        doseLabel.textContent = `Dose calculated for ${acreInput.value} acre${acres === 1 ? '' : 's'}`;
+        doseValue.textContent = formatRange(resultDoseMin, resultDoseMax, unit);
+        litreValue.textContent = dosePerAcreMin === dosePerAcreMax
+            ? `${(dosePerAcreMin / 200).toFixed(1)} ${unit}`
+            : `${(dosePerAcreMin / 200).toFixed(1)} - ${(dosePerAcreMax / 200).toFixed(1)} ${unit}`;
+        calcResult.classList.add('show');
+    }
+
+    chemicalSelect.addEventListener('change', () => {
+        const chemical = chemicalSelect.value;
+        targetSelect.innerHTML = `<option value="">${isFungicide ? 'Select Disease' : 'Select Pest'}</option>`;
+        acreInput.value = '';
+        acreInput.disabled = true;
+        calcResult.classList.remove('show');
+        if (!chemical) {
+            targetSelect.disabled = true;
+            return;
+        }
+        Object.keys(data[chemical]).forEach((target) => {
+            const option = document.createElement('option');
+            option.value = target;
+            option.textContent = target;
+            targetSelect.appendChild(option);
+        });
+        targetSelect.disabled = false;
+    });
+
+    targetSelect.addEventListener('change', () => {
+        acreInput.value = '';
+        acreInput.disabled = !targetSelect.value;
+        calcResult.classList.remove('show');
+    });
+
+    acreInput.addEventListener('input', calculate);
+    loadCalculatorData().catch((error) => {
+        console.error(error);
+        chemicalSelect.innerHTML = '<option value="">Unable to load data</option>';
+        chemicalSelect.disabled = true;
+    });
+</script>
+{% endblock %}

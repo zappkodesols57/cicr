@@ -1498,33 +1498,43 @@ from django.conf import settings
 import os
 
 def banner_list(request):
-    banners = Banner.objects.all()
+    banners = Banner.objects.all().order_by('-id')
 
     if request.method == 'POST':
         banner_id = request.POST.get('banner_id')
+        name = request.POST.get('name', '').strip()
         image = request.FILES.get('image')
 
         if banner_id:  # EDIT
             banner = get_object_or_404(Banner, id=banner_id)
-            if banner.image and os.path.isfile(banner.image.path):
-                os.remove(banner.image.path)
-            banner.image = image
+            banner.name = name
+            if image:
+                if banner.image and os.path.isfile(banner.image.path):
+                    os.remove(banner.image.path)
+                banner.image = image
             banner.save()
         else:  # ADD
             if image:
-                Banner.objects.create(image=image)
+                Banner.objects.create(name=name, image=image)
 
         return redirect('banner_list')
 
-    return render(request, 'banners/list.html', {'banners': banners})
+    is_farmer_panel = request.path.startswith('/farmer/')
+    return render(request, 'banners/list.html', {
+        'banners': banners,
+        'active_tab': 'banners' if is_farmer_panel else None,
+        'base_template': 'farmer_app/farmer_panel_base.html' if is_farmer_panel else 'base.html',
+        'page_heading': 'Manage Banners',
+    })
 
 
 
 def banner_add(request):
     if request.method == 'POST':
+        name = request.POST.get('name', '').strip()
         image = request.FILES.get('image')
         if image:
-            Banner.objects.create(image=image)
+            Banner.objects.create(name=name, image=image)
             return redirect('banner_list')
     return render(request, 'banners/add.html')
 
@@ -1532,6 +1542,7 @@ def banner_add(request):
 def banner_edit(request, banner_id):
     banner = get_object_or_404(Banner, id=banner_id)
     if request.method == 'POST':
+        banner.name = request.POST.get('name', '').strip()
         if 'image' in request.FILES:
             # Delete old image
             if banner.image:
@@ -1554,12 +1565,14 @@ def banner_delete(request, banner_id):
 
 
 def banner_list_api(request):
-    banners = Banner.objects.all().order_by('-id')
+    banners = Banner.objects.all().order_by('-id')[:7]
     data = []
     for banner in banners:
+        image_url = request.build_absolute_uri(banner.image.url) if banner.image else None
         data.append({
             "id": banner.id,
-            "image_url": banner.image.url if banner.image else None,
+            "name": banner.name,
+            "image_url": image_url,
         })
     return JsonResponse({"banners": data}, safe=False)
 

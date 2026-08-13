@@ -1,0 +1,939 @@
+{
+  "whitefly": {
+    "title": "WHITEFLY",
+    "items": [
+      {
+        "type": "text",
+        "value": "WHITEFLY"
+      },
+      {
+        "type": "text",
+        "value": "Identification"
+      },
+      {
+        "type": "text",
+        "value": "Nymph: Wingless, oval in shape, creamy white to pale yellow colour\n Adult: Minute flying insects with yellowish body covered with waxy bloom, pair of white wings covering the body, 1-2 mm in length"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/whiteFlyExImageBanner1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/whiteFlyExImageBanner2.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Nature of Damage"
+      },
+      {
+        "type": "text",
+        "value": "Both nymphs and adults suck the sap from leaf tissue\n\nIn severe cases overall plant growth and vigour is hampered and results in downward curling of leaves\n\nExcretion of honeydew after feeding results in development of sooty mould that reduces photosynthesis\n\nIndirect damage by transmitting cotton leaf curl disease (CLCuD)"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/whiteFlyExImageBanner3.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Favourable Environment"
+      },
+      {
+        "type": "text",
+        "value": "The pest occurs throughout the season, but warmer period, high relative humidity and scanty rainfall situation aggravate the severity of this pest"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/whiteFlyExImageBanner4.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/whiteFlyExImageBanner5.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/whiteFlyExImageBanner6.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Management"
+      },
+      {
+        "type": "text",
+        "value": "•   Economic threshold level (ETL): 6 whiteflies/leaf\n\n•   Install yellow sticky traps @ 8 traps/acre for monitoring\n\n•   At ETL foliar application of Pyriproxyfen 10 EC @ 2.0 ml or Spiromesifen 22.9 EC @ 1.2 ml/litre water in case of nymphal population is high. In order to manage high adult population, spray Dinotefuran 20 SG @ 0.3 g or Afidopyropen 50 g/L DC @ 2.0 ml or Diafenthiuron 50 WP @ 1.2 g or Flonicamid 50 WG @ 0.4 g/l water is recommended\n\n•   Prophylactic spraying of Neem Seed Kernel Extract (50 ml) + Neem oil (5ml) + detergent powder (1g) per litre of water at 45 DAS\n\n•   In case of sooty mould initiation/development, give three prophylactic sprays of Propiconazole 25 EC @ 1 ml or Copper Oxychloride 50 WP @ 2.5 g/l of water at 15 days interval"
+      }
+    ]
+  },
+  "whitefly-north-india": {
+    "title": "WHITEFLY IN NORTH INDIA",
+    "items": [
+      {
+        "type": "text",
+        "value": "WHITEFLY IN NORTH INDIA"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/whiteflyAdvisoryImgv2.png"
+      },
+      {
+        "type": "text",
+        "value": "Whitefly Information"
+      },
+      {
+        "type": "text",
+        "value": "Whitefly is small insect measuring about 1 mm long, body and both pairs of wings are covered with a white, powdery, waxy secretion. Whitefly cause both direct and indirect damage to cotton plant. The direct damage is caused by sucking the sap. Damage from direct feeding reduces the photosynthetic activities of the plant and hence yield get reduced. Indirect damage results from honey dew contamination of lint and associated fungi and through transmission of cotton leaf curl disease (CLCuD). Warmer climate, high RH and scanty rainfall situation aggravate the severity of the pest."
+      },
+      {
+        "type": "text",
+        "value": "Whitefly Monitoring"
+      },
+      {
+        "type": "text",
+        "value": "Monitoring of whitefly should be done on alternate hosts such as vegetables, ornamentals, weeds and plantation crops starting from pre-sowing."
+      },
+      {
+        "type": "text",
+        "value": "Recommendations"
+      },
+      {
+        "type": "text",
+        "value": "• Grow recommended high yielding cotton genotype approved by the SAU/ICAR/department of Agriculture having tolerance to whitefly and cotton leaf curl virus disease (CLCuD).\n\n• Ensure timely sowing (up to 15 May for the hirsutum cotton hybrid/varieties and up to 30 April for Desi cotton varieties) of the crop as timely sown crop tolerates whitefly and CLCuD. Maintain optimum population of 8,000 –10,000 plants per acre of the hirsutum cotton hybrids in the field.\n\n• Grow two dense rows of sorghum or pearl-millet or maize as a border crop around cotton fields. Create ecological diversity by growing Desi cotton and other non-host crops between the cotton fields.\n\n• Desi cotton varieties/hybrids are tolerant to the whitefly and immune to the CLCuD.\n\n• Avoid excessive urea application during early vegetative phase of the crop.\n\n• Maintain field sanitation by keeping fields, bunds and the vicinity free of weeds before and after sowing of cotton.\n\n• Destroy volunteer/ratoon cotton plants as well as weed hosts growing near the irrigation channel/canal and fallow lands.\n\n• Install yellow sticky traps @20/ha during July to August for monitoring.\n\n• Vacuum suction pumps can be used during August coinciding with the high whitefly population.\n\n• Apply two sprays of neem oil at initial stage of crop or up to 60 DAS.\n\n• Avoid using synthetic pyrethroids or organophosphates before 120 DAS or any insecticide mixtures. These insecticides are known to cause and aggravate the resurgence of whitefly when used indiscriminately.\n\n• Chemical insecticide spray suggested – Afidopyropen 50G/L, Diafenthiuron 50%WP, Dinotefuran 20SG, Flonicamid 50%WG, Clothianidin 50%WDG, Buprofezin 25%SC, Spiromesifen 22.9%SC, Pyriproxyfen 10%EC, August onwards."
+      }
+    ]
+  },
+  "jassid": {
+    "title": "JASSID",
+    "items": [
+      {
+        "type": "text",
+        "value": "JASSID"
+      },
+      {
+        "type": "text",
+        "value": "Jassid"
+      },
+      {
+        "type": "text",
+        "value": "Identification"
+      },
+      {
+        "type": "text",
+        "value": "Nymph: Green, translucent, wingless\nAdult: Light green, wedge shaped, black spots on wings, jumping/ sideward walking"
+      },
+      {
+        "type": "text",
+        "value": "Nature of Damage"
+      },
+      {
+        "type": "text",
+        "value": "•   Nymphs and adults sucks sap from the underside of leaves\n•   Downward curling of leaves\n•   Marginal yellowing of leaves.\n•   Stunted plant growth and hopper burn symptoms due to severe infestation"
+      },
+      {
+        "type": "text",
+        "value": "Congenial Environment"
+      },
+      {
+        "type": "text",
+        "value": "•   July-September\n•   30-90 days old crop\n•   Continuous rain and/or cloudy weather\n•   Hot and humid climate"
+      },
+      {
+        "type": "text",
+        "value": "Management"
+      },
+      {
+        "type": "text",
+        "value": "•   ETL: 2 nymphs/adults per leaf\n\n•   Install yellow sticky traps @ 8 traps/ acre\n\n•   Prophylactic spraying of Neem Seed/ Kernel Extract @ 50 ml/litre + Neem/ oil @ 5ml/litre + Laundry Detergent @1gm/litre water at 45 DAS\n\n•   Once ETL reached - Spraying of Flonicamid 50 WG@ 0.4gm/litre water OR Dinotefuran 20 SG@ 0.3gm/litre water is recommended"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/jasssidBannerImage1.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/jasssidBannerImage2.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/jasssidBannerImage3.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/jasssidBannerImage4.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/jasssidBannerImage5.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/jasssidBannerImage6.png"
+      }
+    ]
+  },
+  "thrips": {
+    "title": "THRIPS",
+    "items": [
+      {
+        "type": "text",
+        "value": "THRIPS"
+      },
+      {
+        "type": "text",
+        "value": "Identification"
+      },
+      {
+        "type": "text",
+        "value": "Nymph: Wingless, creamy to pale yellow colour, smaller than adults..\nAdult: Yellow to dark brown colour, fully functional or rudimentary wings, 1-2 mm in length.."
+      },
+      {
+        "type": "text",
+        "value": "Nature of Damage"
+      },
+      {
+        "type": "text",
+        "value": "•   Nymphs and adults lacerate the leaf tissue on both the surfaces of the leaves and de-sap.\n•   Silvery and brown necrotic spots.\n•   Severe infestation causes premature dropping of buds, delayed crop maturity etc..\n•   Hampered plant growth, loss of vigour, wrinkled, distorted and rusty leaves with upward curling.\n•   Indirect damage by transmitting Tobacco Streak Virus (TSV) virus."
+      },
+      {
+        "type": "text",
+        "value": "Congenial Environment"
+      },
+      {
+        "type": "text",
+        "value": "• July-September \n• First 45 days crop period \n• Hot and humid climate"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/ThripsBannerImage1.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/ThripsBannerImage2.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/ThripsBannerImage3.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/ThripsBannerImage5.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/ThripsBannerImage6.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/ThripsBannerImage7.jpg"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/ThripsBannerImage8.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Management"
+      },
+      {
+        "type": "text",
+        "value": "•   ETL: 10 thrips/leaf. \n•   Install blue sticky traps @ 8 traps/acre. \n•   Prophylactic spraying of Neem Seed Kernel Extract (50 ml) + Neem oil (5ml) + detergent powder. \n•   (1g) per litre of water at 45 DAS. \n•   At ETL (>60 DAS) foliar application of Dinotefuran 20 SG @ 0.3gm or Spinetoram 11.7 SC @ 0.85 ml. \n•   or profenophos 50 EC @ 3 ml/litre water is recommended."
+      }
+    ]
+  },
+  "mealybug": {
+    "title": "MEALYBUG",
+    "items": [
+      {
+        "type": "text",
+        "value": "MEALYBUG"
+      },
+      {
+        "type": "text",
+        "value": "Mealybug"
+      },
+      {
+        "type": "text",
+        "value": "Identification"
+      },
+      {
+        "type": "text",
+        "value": "Adult female body yellowish green, body covered with white wax, short to medium sized waxy filaments with two short anal filaments and two dark strips on either side of the middle ridge of the body."
+      },
+      {
+        "type": "text",
+        "value": "Nature of Damage"
+      },
+      {
+        "type": "text",
+        "value": "Both nymphs and adults suck sap from all parts of the plant. Plants infested with show stem distortion, twisting and bushiness of the affected portion. Sooty mould develops.  Infestation cause reduced vigor early senescence and significant yield loss."
+      },
+      {
+        "type": "text",
+        "value": "Congenial Environment"
+      },
+      {
+        "type": "text",
+        "value": "High temperatures along with low humidity are congenial for its rapid growth and multiplication, while high intensity rains and wet spells adversely affect its infestation."
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/mealybugBannerImage1.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/mealybugBannerImage2.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/mealybugBannerImage3.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/mealybugBannerImage4.png"
+      },
+      {
+        "type": "text",
+        "value": "Management"
+      },
+      {
+        "type": "text",
+        "value": "•\tRegular monitoring of the pest, removal and destruction of congress grass. Use of physical barriers like  pigeonpea /jowar /maize around cotton fields and as a strip after five to six rows of cotton may also prevent mealybug infestation and spread. Timely detection and removal of infested plants along borders prevents further spread. \n\n•\tDo not allow physical contact with the infested plant. Do not disturb the plant vigorously. \n\n•\tConservation and release of parasitoids Aenasius arizonensis\n\n•\tIf ≥ 20 plants/ acre exceed Grade-II (at least one stem completely colonized with mealybugs) by mealybug infestation chemical control measures may be initiated spray Buprofezin 25% SC 400 ml/acre or  Chlorpyrifos 20% EC 500ml/acre."
+      }
+    ]
+  },
+  "aphid": {
+    "title": "APHID",
+    "items": [
+      {
+        "type": "text",
+        "value": "APHID"
+      },
+      {
+        "type": "text",
+        "value": "Aphid"
+      },
+      {
+        "type": "text",
+        "value": "Identification"
+      },
+      {
+        "type": "text",
+        "value": "Aphids are soft-bodied insects, measuring about 1–2 mm, yellowish green to black, with or without wings."
+      },
+      {
+        "type": "text",
+        "value": "Nature of Damage"
+      },
+      {
+        "type": "text",
+        "value": "Aphids cause direct damage by feeding on the phloem sap and indirect damage by excretion of honeydew which attracts sooty mould fungus resulting in reduced photosynthesis, plant vigor and deterioration in cotton fiber quality due to deposition of honeydew on open bolls."
+      },
+      {
+        "type": "text",
+        "value": "Congenial Environment"
+      },
+      {
+        "type": "text",
+        "value": "Aphid infestation is favored by cloudy weather."
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/AphidBannerImage1.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/AphidBannerImage4.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/AphidBannerImage2.png"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/AphidBannerImage3.png"
+      },
+      {
+        "type": "text",
+        "value": "Management"
+      },
+      {
+        "type": "text",
+        "value": "•   If infestation crossed ETL, spray any one of the following insecticides: Buprofezin 25% SC 400 ml/acre or Diafenthiuron 50%WP 240 g/acre or Thiacloprid 21.7%SC 40-50 ml/acre or Flonicamid 50% WG 80 g/acre or Thiamethoxam 25% WG 40 g/acre or Dimethoate 30 % EC 264 ml/acre."
+      }
+    ]
+  },
+  "pink-bollworm": {
+    "title": "Pink Bollworm Advisory",
+    "items": [
+      {
+        "type": "text",
+        "value": "Pink Bollworm Advisory"
+      },
+      {
+        "type": "text",
+        "value": "PINK BOLLWORM"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/pinkBollwormAdvisoryImgv2.png"
+      },
+      {
+        "type": "text",
+        "value": "Pink Bollworm Information"
+      },
+      {
+        "type": "text",
+        "value": "The pink bollworm (Pectinophora gossypiella) is an insect known for being a major pest in cotton-growing regions. It is notorious for causing significant damage to cotton crops, affecting yield and quality."
+      },
+      {
+        "type": "text",
+        "value": "Management strategy"
+      },
+      {
+        "type": "text",
+        "value": "• Crop rotation to be followed to break the life cycle of pink bollworm.\n\n• Procure seeds of authentic Bt-cotton hybrids or variety \n\n• Timely sowing of short to medium duration Bt-cotton hybrids/ varieties recommended for the region.\n\n• Do not use the higher doses of nitrogenous (urea) fertilizer as top dressing or basal dose to avoid over growth of plants.\n\n• Install pheromone traps near ginneries and cotton stack of stalk in field to trap suicidal emergence, if any.\n\n• Avoid pre-season sowing of cotton crop as it would be susceptible to pink bollworm.\n\n• Fields that have suffered heavy damage due to pink bollworm last year may be closely monitored during the current season.\n\n• Monitoring of pink bollworm using pheromone traps may be initiated at 45 days after sowing. Install pheromone traps @ 5 per hectare for monitoring moth activity of pink bollworm.\n\n• Inspect the crop at squaring and flowering stage of the crop for the presence of pink bollworm larvae within flowers. Remove and destroy rosette flowers whenever seen.\n\n• At boll formation stage, farmers are advised to inspect cotton crop for presence and damage of pink bollworm by plucking and dissecting 20 green bolls per acre from different plants randomly.\n\n• Economic threshold level (ETL) at flowering stage is 10% damaged flowers (Rosette flowers) or at boll development stage is 10% damaged green bolls (at least two bolls out of 20 bolls having white or pink larvae/ exit holes), ETL for adults male moths trapped in pheromone trap (Average of 2 traps/acre) is 8 moths catch per pheromone trap for consecutive 3 days. On crossing ETL spraying of recommended insecticides is advocated.\n\n• Strictly avoid spraying pyrethroids before 120 days of sowing or any insecticide mixtures at any time to prevent whitefly/aphid outbreaks.\n\n• Picking of clean and infested cotton may be carried out separately. Clean cotton may be stored or marketed. Do not store infested or stained seed cotton or cotton seed in Godowns.\n\n• Advised to use only label claim insecticides for pest control.\n\n• Never use tank mixtures of any agrochemicals along with insecticides.\n\n• Use protective aids while handling chemical pesticides.\n\n• Do not extend cotton crop beyond 180 days.\n\n• Clean up residual stalks and partially opened bolls from fields. Do not stack cotton stalks in fields to reduce the carryover population.\n\n• Stack cotton stalks away from the field preferably in village and use before March. In North zone, stacked cotton stalks retained after 30th March may be covered properly with help of mosquito net or plastic sheets after beating and dislodging the unopened bolls. Destroy the residues/trash."
+      }
+    ]
+  },
+  "window-based-pest-management": {
+    "title": "ADVISORY FOR CROP WINDOW BASED INSECT PEST MANAGEMENT",
+    "items": [
+      {
+        "type": "text",
+        "value": "ADVISORY FOR CROP WINDOW BASED INSECT PEST MANAGEMENT"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/pestBanner.png"
+      },
+      {
+        "type": "text",
+        "value": "Crop growth stage: 0-60 Days After Sowing (DAS)"
+      },
+      {
+        "type": "text",
+        "value": "Pink bollworm"
+      },
+      {
+        "type": "text",
+        "value": "At 45 DAS, install pheromone traps @5 per hectare"
+      },
+      {
+        "type": "text",
+        "value": "Pink bollworm & sucking pests"
+      },
+      {
+        "type": "text",
+        "value": "Spray NSKE 5% + Neem oil 5 ml /litre or neem oil-based formulation 5 ml /litre (300 or 1500 ppm) + 0.05% Surfectant (Initial 1-2 sprays). (NSKE 25L + Neem oil 2.5L +0.5kg laundry detergent emulsion per hectare). Use 150-200 litres of water /acre or 375-500 litre/ ha for dilution of the insecticides"
+      },
+      {
+        "type": "text",
+        "value": "Crop Growth Stage: 60-90 DAS"
+      },
+      {
+        "type": "text",
+        "value": "Pink bollworm"
+      },
+      {
+        "type": "text",
+        "value": "Observe for rosette flowers, pluck and destroy them At boll formation stage, farmers are advised to inspect the presence and damage of pink bollworm by plucking and dissecting 20 green bolls from different plants randomly (one boll per plant). If ETL crossed i.e. >10% damaged flowers (Rosette flowers) or 10% damaged green bolls (at least two out of 20 bolls having white or pink larvae or exit holes) and or 8 moths catch per pheromone trap for consecutive 3 days, spray Profenofos 50%EC @ 30ml/10L (1500 ml/ha) Or Emamectin benzoate 5%SG @ 5g/10L (250 g/ha) Or Indoxacarb 14.5%SC @10ml/10L (500ml/ha) Or Chlorpyriphos 20 % EC @ 25ml/10L (1250 ml/ha). (10L= Ten liter of water)"
+      },
+      {
+        "type": "text",
+        "value": "Bollworms (Cotton and Spotted)"
+      },
+      {
+        "type": "text",
+        "value": "Spray Chlorantraniliprole 18.5%SC @ 3ml/10L (150ml/ha) for Cotton bollworm Or Flubendiamide 39.35%SC @ 2.5 ml/10L (125ml/ha) Or Indoxacarb 14.5%SC @ 10 ml/10L (500ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "Jassid"
+      },
+      {
+        "type": "text",
+        "value": "Spray Flonicamid 50%WG @ 4g/10L (200g/ha) Or Dinotefuran 20%SG @ 3g/10L (150g/ha) Or Imidacloprid 17.8%SL @ 3ml/10L (150ml/ha) Or Tolfenpyrod 15%EC 20ml/10L (1000ml/ha) Or Fenpyroximate 5%EC 15ml/10L (750ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "Whitefly"
+      },
+      {
+        "type": "text",
+        "value": "Install yellow sticky traps @ 20/ha during July to August for monitoring and @ 100/ha for management. Insecticides effective against whitefly adult population: Diafenthiuron 50%WP @ 12g/10L (600 g/ha) Or Afidopyropen 50g/L @ 20ml/10L (1000 ml/ha) Or Dinotefuran 20%SG @ 3g/10L (150g/ha) Or Flonicamid 50%WG @4g/10L (200 g/ha) or Clothianidin 50%WDG 1ml/10L (50ml/ha). Insecticides effective against the Whitefly nymphs: Pyriproxyfen 10%EC @ 20ml/10L (1000 ml) /ha Or Buprofezin 25%SC @ 20ml/10L (1000 ml/ha) or Spiromesifen 22.9%SC @ 12ml/10L (600 ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "Thrips"
+      },
+      {
+        "type": "text",
+        "value": "Spray Thiamethoxam 25%WG @ 2 gm/10L (100g/ha) Or Spinetoram 11.7%SC @ 8.4ml/10L (420 ml/ha) Or Profenofos 50%EC 30ml/10L (1500ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "Sucking pests ( Mixed population)"
+      },
+      {
+        "type": "text",
+        "value": "If mixed infestations of whitefly and thrips either or both are observed above ETL after 70 days old crop, spray Diafenthiuron 50%WP @12g/10L (600g/ha) Or Spinetoram 11.7%SC @ 8.4ml/10L (420 ml/ha) Or Profenophos 50%EC @ 20 ml/10L (1000 ml/ha). If the mixed infestation of whitefly and leafhopper/jassid either or both are observed above ETL, apply Flonicamid 50%WG @4g/10L (200 g/ha) Or Dinotefuran 20%SG @ 3g/10L (150g/ha). In case Sooty mould develop: Three prophylactic/therapeutic sprays of Propiconazole 25%EC @10ml/10L (500ml/ha) Or Copper oxychloride (COC) 50"
+      },
+      {
+        "type": "text",
+        "value": "Crop Growth Stage: 90-120 DAS"
+      },
+      {
+        "type": "text",
+        "value": "Pink bollworm"
+      },
+      {
+        "type": "text",
+        "value": "If ETL crossed i.e. >10% damaged flowers (Rosette flowers) or 10% damaged green bolls (at least two out of 20 bolls having white or pink larvae or exit holes) and or 8 moths catch per pheromone trap for consecutive 3 days, release parasitoid Trichogramma bactrae@ 60000 per acre or spray cotton crop with Profenofos 50%EC @ 30 ml/10L (1500 ml/ha) Or Emamectin benzoate 5SG @ 5g/10L (250 g/ha) Or Indoxacarb 14.5%SC @10ml/10L (500ml/ha) Or Chlorpyriphos 20 % EC @ 25ml/10L (1250 ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "American and Spotted bollworms"
+      },
+      {
+        "type": "text",
+        "value": "For Non-Bt/ in Desi (arboreum) cotton, spray Flubendiamide 39.35 SC @ 3ml/10L (150ml/ha) Or Indoxacarb 14.5%SC @ 10ml/10L (500 ml/ha) Or Spinosad 45%SC 4 ml/10L (200ml/ha)"
+      },
+      {
+        "type": "text",
+        "value": "Jassid, thrips"
+      },
+      {
+        "type": "text",
+        "value": "Spray Thiamethoxam 25%WG @ 2g/10L (100g/ha) Or Tolfenpyrod 15%EC 20ml/10L (1000ml/ha)"
+      },
+      {
+        "type": "text",
+        "value": "Thrips"
+      },
+      {
+        "type": "text",
+        "value": "Spray Thiomethoxam 25%WG @ 2 gm (100g/ha) Or Spinetoram 1.7%SC @ @ 8.4 ml/10L (420 ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "Whitefly"
+      },
+      {
+        "type": "text",
+        "value": "In central and south Zone, spray Dinotefuran 20SG @ 3g/10L (150g/ha) Or Spiromesifen 22.9%EC @12ml/10L (600 ml/ha) Or Pyriproxyfen 10EC @ 20ml/L (1000ml) Or Diafenthiuron 50%WP @ 12g/10L (600 g/ha) or Profenofos 50 EC 30ml/10L (1500ml/ha). In North zone : For whitefly adults: Diafenthiuron 50% WP @ 12g/10L (600 g/ha) Or Afidopyropen50g/L@ 20ml/10L (1000 ml/ha) Or Dinotefuran 20%SG @ 3g/10L (150g/ha) Or Flonicamid 50%WG @4g/10L (200 g/ha) or Clothianidin 50%WDG 1ml/10L (50ml/ha) whereas for Whitefly nymphs: Pyriproxyfen 10%EC@ 20ml/10L (1000 ml /ha) Or Buprofezin 25%SC @ 20ml/10L (1000 ml/ha) Rr Spiromesifen 22.9% SC @ 12ml/10L (600 ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "Crop Growth Stage: >120 DAS"
+      },
+      {
+        "type": "text",
+        "value": "Pink bollworm"
+      },
+      {
+        "type": "text",
+        "value": "Spray Cypermethrin 10%EC @ 10-15ml/10L (550-760 ml/ha) Or cypermethrin 25%EC @ 4-6ml (160-280 ml/ha) Or Lambda cyhalothrin 5%EC @ 10ml/10L (500 ml/ha) Or deltamethrin 2.8 EC @ 10ml (500 ml/ha) Or Fenpropathrin 10% EC @ 15-20ml/10L (750-1000 ml/ha) or Fenvalerate 20%EC @ 10ml/10L (500 ml/ha) Or alphacypermethrin 10% EC @ 6ml/10L (300 ml/ha)."
+      },
+      {
+        "type": "text",
+        "value": "Crop Growth Stage: 180 DAS"
+      },
+      {
+        "type": "text",
+        "value": "Terminate the crop as early as economically feasible. For this purpose, give last irrigation by end of September in case of north Zone. It would reduce bollworms damage and their carryover to the next cropping season. • Allow sheep and goat grazing in field after picking to reduce the carryover of bollworms. • Stack cotton stalks away from the field vertically. If possible, shredding of cotton stalks in soil is advisable."
+      }
+    ]
+  },
+  "necrosis": {
+    "title": "NECROSIS DISEASE",
+    "items": [
+      {
+        "type": "text",
+        "value": "NECROSIS DISEASE"
+      },
+      {
+        "type": "text",
+        "value": "NECROSIS DISEASE (TOBACCO STREAK VIRUS) IN SOUTH ZONE"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/necrosisAdvisoryImgv2.png"
+      },
+      {
+        "type": "text",
+        "value": "TSV Information"
+      },
+      {
+        "type": "text",
+        "value": "This disease is prevalent in the Southern part of India but also found in Marathwada and Vidarbha region of Maharashtra.  TSV disease is caused by an RNA virus which is transmitted by thrips. Chlorosis of young leaves at the growing tip, discoloration, bronzing, necrosis, curling and dwarfing of affected leaves are the visible symptoms of this disease. Infection severity is dependent on thrips multiplication on weeds like parthenium and movement on the cotton crop."
+      },
+      {
+        "type": "text",
+        "value": "Recommendations"
+      },
+      {
+        "type": "text",
+        "value": "• Field and field bunds should be weed free especially Parthenium weed should timely be managed. \n\n• Monitor crop during early stage (40-75 DAS) to avoid the transmission of TSV.\n\n• Installation of Blue sticky traps @ 20/ha for monitoring.\n\n• Need-based foliar spray of Spinetoram 11.7%SC, Flonicamid 50%WG, Dinotefuran 20%SG, Diafenthiuron 50%WP, Profenofos 50%EC is recommended for the management of thrips infestation to avoid the transmission of TSV."
+      }
+    ]
+  },
+  "window-based-disease-management": {
+    "title": "ADVISORY FOR CROP WINDOW BASED DISEASE MANAGEMENT",
+    "items": [
+      {
+        "type": "text",
+        "value": "ADVISORY FOR CROP WINDOW BASED DISEASE MANAGEMENT"
+      },
+      {
+        "type": "text",
+        "value": "ADVISORY FOR CROP WINDOW BASED DISEASE MANAGEMENT"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/diseaseBanner.png"
+      },
+      {
+        "type": "text",
+        "value": "Disease Name"
+      },
+      {
+        "type": "text",
+        "value": "Cotton growing Zone"
+      },
+      {
+        "type": "text",
+        "value": "Crop Growth Stage"
+      },
+      {
+        "type": "text",
+        "value": "Duration of Crop Growth stage (DAS*)"
+      },
+      {
+        "type": "text",
+        "value": "Advisory for management"
+      },
+      {
+        "type": "text",
+        "value": "Root rot, wilt, bacterial leaf blight (All the three zones)"
+      },
+      {
+        "type": "text",
+        "value": "All the three zones"
+      },
+      {
+        "type": "text",
+        "value": "Seedling"
+      },
+      {
+        "type": "text",
+        "value": "0-60"
+      },
+      {
+        "type": "text",
+        "value": "• Seed treatment with Carboxin 37.5% + Thiram 37.5% DS @3.5 g per kg of seeds for root rot and bacterial leaf blight (BLB) disease Or Pseudomonas fluorescens WP @10 g/kg seeds for bacterial leaf blight (BLB) disease Or Fluxapyroxad (333 g/L FS) @1.5 ml/kg seed for seedling disease Or Tetraconazole 11.6% W/W (12.5% w/v) SL @1.5 ml/ kg of seeds for seed-borne fungal disease management\n\n • Drenching early symptomatic plants and surrounding plants with Trichoderma spp. (T. harzianum or T. viride) 1% WP @50g Or Carbendazim 50%WP @ 20 g/ 10 L of water"
+      },
+      {
+        "type": "text",
+        "value": "Necrosis disease (Tobacco streak virus) (Central and South Zone)"
+      },
+      {
+        "type": "text",
+        "value": "Central and South Zone"
+      },
+      {
+        "type": "text",
+        "value": "Vegetative and flowering stage ."
+      },
+      {
+        "type": "text",
+        "value": "45-120"
+      },
+      {
+        "type": "text",
+        "value": "• Alternate weed hosts like parthenium and others to be eradicated. Keep weed-free bunds and fields. \n\n • Continuous monitoring of the crop during early stage (40-75 DAS) to avoid the transmission of TSV. \n\n • In the early crop stage (40 -60 DAS) spraying of insecticides such as Spinetoram 11.7% SC @ 8.4 ml/10L (420ml/ha) Flonicamid 50% WG @ 4 g/10L (200g/ha) or Dinotefuran 20% SG @ 3g/10L (150 g/ha) or Diafenthiuron 50 WP @ 12 g/10L (600 g/ha) or Profenofos 50%EC @ 20ml/10L (1000 ml/ha) is recommended for the management of thrips infestation to avoid the transmission of TSV."
+      },
+      {
+        "type": "text",
+        "value": "Cotton leafcurl viraldisease(CLCuD)(North zone)"
+      },
+      {
+        "type": "text",
+        "value": "North  zone"
+      },
+      {
+        "type": "text",
+        "value": "Vegetative and flowering stage"
+      },
+      {
+        "type": "text",
+        "value": "45 -120"
+      },
+      {
+        "type": "text",
+        "value": "• Grow recommended Bt hybrids/varieties which are resistant/tolerant to CLCuD. • To minimize CLCuD incidence, weed sanitation, cultivation of Desi cotton/sorghum/Perl millet/maize as border rows, and optimal use of nitrogenous fertilizers are advocated as per crop conditions and soil test report. 3-5 foliar spray of salicylic acid (200 ppm) or butter milk 5% or Cow urine + Calcium nitrate (6.6%+0.5%) or mustard oil (3.0%) at 15 days interval starting from 30 days after sowing. Measures suggested for whitefly vector control should be followed."
+      },
+      {
+        "type": "text",
+        "value": "Parawilt (All the three zones)"
+      },
+      {
+        "type": "text",
+        "value": "All the three zones"
+      },
+      {
+        "type": "text",
+        "value": "Vegetative and flowering stage"
+      },
+      {
+        "type": "text",
+        "value": "45 -120"
+      },
+      {
+        "type": "text",
+        "value": "• Proper soil health management strategies for better root development and soil aeration should be followed. • Follow crop rotation, deep ploughing, timely irrigation, avoid water stagnation in the field.  • 2-3 drenching with solution of Copper oxychloride 50 % WP @ 250 g or Carbendazim 50%WP @ 120 g plus Urea 2 kg per 100 liter of water at one week interval starting immediately after symptom development."
+      },
+      {
+        "type": "text",
+        "value": "Bacterial leaf\n                                blight\n                                (All the three\n                                zones)"
+      },
+      {
+        "type": "text",
+        "value": "All the three zones"
+      },
+      {
+        "type": "text",
+        "value": "Vegetative to\nboll\ndevelopment"
+      },
+      {
+        "type": "text",
+        "value": "45 -120"
+      },
+      {
+        "type": "text",
+        "value": "• 1-2 foliar spray of Copper oxychloride 50 % WP @ 25 g Or Carbendazim 12+ Mancozeb 63% WP@25 g Or Copper sulphate 47.15% + Mancozeb 30% WDG @ 5 interval."
+      },
+      {
+        "type": "text",
+        "value": "Target leaf\nspot, Alternaria\nleaf spot,\nMyrothecim\nleaf spot, (All\nthe three\nzones)"
+      },
+      {
+        "type": "text",
+        "value": "All the three zones"
+      },
+      {
+        "type": "text",
+        "value": "Vegetative to\nboll development"
+      },
+      {
+        "type": "text",
+        "value": "60-120"
+      },
+      {
+        "type": "text",
+        "value": "• Prophylactic spray of Propineb 70 WP@25-30 g  Or Azoxystrobin 18.2%w/w + Difenoconazole 11.4% w/w SC@ 10 ml Or Fluxapyroxad 167 g/l + Pyraclostrobin333 g/l SC@ 6g Or Carbendazim 50% WP@20 g Or Propiconazole 25% EC @10 ml Or Pyraclostrobin 5% + Metiram 55% WG @20 g per 10 litres water"
+      },
+      {
+        "type": "text",
+        "value": "Boll rot\n(External\nfungal boll\nrot\n(All the three\nzones)"
+      },
+      {
+        "type": "text",
+        "value": "All the three zones"
+      },
+      {
+        "type": "text",
+        "value": "Boll\ndevelopment\nto boll\nmaturity\nstage"
+      },
+      {
+        "type": "text",
+        "value": "90-140"
+      },
+      {
+        "type": "text",
+        "value": "• Foliar spay with Fluxapyroxad 167 g/Litre + Pyraclostrobin 333 g/Litre SC @ 6 g Or Metiram 55% + Pyraclostrobin 5% WG @ 20 g Or Propineb 70% WP @ 25 g per 10 litre of water"
+      },
+      {
+        "type": "text",
+        "value": "Internal Boll\nrot disease\n(All the three\nzones)"
+      },
+      {
+        "type": "text",
+        "value": "All the three zones"
+      },
+      {
+        "type": "text",
+        "value": "Vegetative to\nboll\ndevelopment\nstate"
+      },
+      {
+        "type": "text",
+        "value": "60-120"
+      },
+      {
+        "type": "text",
+        "value": "• The dried petals sticking to the developing bolls should be removed. • Avoid indiscriminate use of nitrogenous fertilizers. Restrict excess vegetative growth of the cotton crop. Facilitate proper drainage in the field to avoid water logging in the field. • Prophylactic sprays of Copper oxychloride 50%WP @25 g/10L Or Carbendazim 12+ Mancozeb 63% WP@ 25 g/10L is suggested during early boll developmental stages at 15 days interval if cloudy weather, high relative humidity, flash and drizzle rain occurred during squaring, flowering and boll development stage. • Manage sucking pests with recommended insecticides."
+      },
+      {
+        "type": "text",
+        "value": "Grey Mildew\n(Central and\nSouth zones)"
+      },
+      {
+        "type": "text",
+        "value": "Central and South zones"
+      },
+      {
+        "type": "text",
+        "value": "Boll\ndevelopment\nto boll\nmaturity\nstage"
+      },
+      {
+        "type": "text",
+        "value": "90-140"
+      },
+      {
+        "type": "text",
+        "value": "• Spray with Kresoxim-methyl 44.3% SC @1 ml Or Azoxystrobin 18.2% w/w + Difenoconazole 11.4% w/w SC @ 10 ml /10 litres of water."
+      },
+      {
+        "type": "text",
+        "value": "Rust\n(South zone)"
+      },
+      {
+        "type": "text",
+        "value": "South zone"
+      },
+      {
+        "type": "text",
+        "value": "Boll\ndevelopment\nto boll\nmaturity\nstage"
+      },
+      {
+        "type": "text",
+        "value": "90-140"
+      },
+      {
+        "type": "text",
+        "value": "• Foliar spray of Fluxapyroxad 167 g/Litre + Pyraclostrobin 333 g/Litre SC @ 6 g Or Metiram 55% + Pyraclostrobin 5% WG @ 20 g Or Propiconazole 25%EC @ 10 ml Or Azoxystrobin 18.2% w/w + Difenoconazole 11.4% w/w SC @ 10 ml per 10 litre of water."
+      }
+    ]
+  },
+  "boll-rot": {
+    "title": "Boll Rot",
+    "items": [
+      {
+        "type": "text",
+        "value": "Boll Rot"
+      },
+      {
+        "type": "text",
+        "value": "Internal / Bacterial Boll Rot"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/bollRotBacteria.png"
+      },
+      {
+        "type": "text",
+        "value": "Symptoms"
+      },
+      {
+        "type": "text",
+        "value": "•\tThe developing fibers and immature seeds in locules of green bolls are discoloured with light yellow to brown coloured, occasionally with slimy appearance. \n•\tIn some cases, seeds are swollen, discoloured with necrotic patches and rotted. \n•\tIn general, infections are restricted to one or two locules of diseased bolls."
+      },
+      {
+        "type": "text",
+        "value": "Management"
+      },
+      {
+        "type": "text",
+        "value": "Prophylactic spray of copper oxychloride 50 WP/WG @25-30 g followed by foliar spray of propiconazole 25 EC @10 ml or carbendazim 50 WP @4 g or carbendazim 12%+mancozeb 63% WP @ 30 g or Propineb 70 WP @ 25 g per 10 litres of water after seven days of first spray. Spray should be done during 60-90 days of crop growth and as per weather conditions."
+      },
+      {
+        "type": "text",
+        "value": "External / Fungal Boll Rot"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/bollRotFungal.png"
+      },
+      {
+        "type": "text",
+        "value": "Symptoms"
+      },
+      {
+        "type": "text",
+        "value": "•\tFructifications and/or mycelial growth of white, brownish purple to blackish colour on bolls. \n•\tBolls are with light brown to grey coloured spot/lesions, that further extend and covers whole boll that results in rotted and decayed bolls with mycelial growth. \n•\tWater soaked, oily spots appear on surface of bolls.\n•\tDevelopment of necrotic patch, later enter internally in bolls."
+      },
+      {
+        "type": "text",
+        "value": "Management"
+      },
+      {
+        "type": "text",
+        "value": "Foliar spray any of the following fungicide per 10 litres of water. Propiconazole 25% EC @10 ml, Carbendazim 12%+Mancozeb 63% WP @30 g, Propineb 70% WP @ 25-30g, Pyraclostrobin 5%+ Metiram 55% WG @ 20 g, Carbendazim 50% WP @ 4 g, Azoxystrobin 18.2% w/w+ Difenoconazole 11.4% w/w SC @ 10 ml, Pyraclostrobin 20% WP @10 g, Kresoxim-methyl 44.3% SC @10 ml, Fluxapyroxad 167 g/l + Pyraclostrobin 333 g/l SC @ 6 g. /n"
+      }
+    ]
+  },
+  "leaf-reddening": {
+    "title": "Leaf Reddening",
+    "items": [
+      {
+        "type": "text",
+        "value": "Leaf Reddening"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/leafReddening.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Leaf reddening is a physiological disorder and this phenomenon has been reported to occur in upland (G. hirsutum) cotton ever since it was introduced into India. This disorder is caused by factors such as cloudy weather, water deficit / water logging/ high temperature, nutrient imbalance, genotype etc."
+      },
+      {
+        "type": "text",
+        "value": "Leaf reddening is initially seen in mature leaves and gradually spreads throughout the canopy. To begin with the leaf margins turn yellow, red colour is developed on the fringes of the leaves or patches or intervascular portions. Later red pigmentation is formed over the whole leaf area. The affected leaves start drying from the edges and prematurely shed. Red leaf generally appeared during flowering or early boll filling stage of growth and arrested further development of bolls, which cracked prematurely. As the red leaf affected crops ceased to grow further, reduction in yield occurs."
+      },
+      {
+        "type": "text",
+        "value": "Why more leaf reddening in Bt-cotton"
+      },
+      {
+        "type": "text",
+        "value": "Under rainfed conditions, cotton is prone to environmental adversities such as cloudy weather, water deficit / water logging/ high temperature, etc. These stresses reduce photosynthesis and availability of photo-assimilates to the developing bolls. Since boll development is more synchronous in Bt cotton and occurs in a shorter time span, any adversity would culminate in physiological disorders like leaf reddening, shedding of fruiting parts and sudden wilt."
+      },
+      {
+        "type": "text",
+        "value": "Management:"
+      },
+      {
+        "type": "text",
+        "value": "•\tFoliar application of DAP 2 % or Urea 1-2 % during boll development stage. \n•\tPreventing water logging, providing protective irrigation to avoid stress. \n•\tApplication of MgSO4 at 20-25 kg/ha to the soil or foliar spray with 1 percent MgSO4 and 2% urea as soon as the reddening symptoms appear in leaf reduces this disorder."
+      }
+    ]
+  },
+  "parawilt-new-wilt": {
+    "title": "Parawilt/ New wilt",
+    "items": [
+      {
+        "type": "text",
+        "value": "Parawilt/ New wilt"
+      },
+      {
+        "type": "image",
+        "src": "/static/farmer_live/images/parawiltbann.jpg"
+      },
+      {
+        "type": "text",
+        "value": "Unlike pathogenic wilt, which occurs in groups of plants in fields, parawilt/new wilt/sudden wilt was noticed to be sporadic (random) in distribution, and does not show discoloration of root vascular bundles."
+      },
+      {
+        "type": "text",
+        "value": "Leaves show wilt like drooping, became chlorotic and turn bronze or red followed by drying and premature abscission of leaves and fruiting parts. Wilted plants sometimes gradually recover and produce new flush, however their contribution to yield is negligible. Environmental conditions like high temperature, bright sunlight followed by heavy rainfall were found to favor the occurrence of wilt. It is a disorder in which soil-plant-atmosphere continuum is broken due to adverse environmental factors like flooding or soil saturation or poor root development. Plants at grand growth phase i.e. squaring, flowering and early boll development are more sensitive to wilt in central and south zone."
+      },
+      {
+        "type": "text",
+        "value": "Management:"
+      },
+      {
+        "type": "text",
+        "value": "•\tProper soil health management strategies for better root development and soil aeration should be followed. \n•\tFollow crop rotation, deep ploughing, timely irrigation, avoid water stagnation in the field. \n•\t2-3 drenching with solution of Copper oxychloride 50 % WP @ 250 g or Carbendazim 50%WP @ 120 g plus Urea 2 kg per 100 liter of water at one week interval starting immediately after symptom development."
+      }
+    ]
+  }
+}
