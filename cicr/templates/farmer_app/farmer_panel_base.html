@@ -194,7 +194,8 @@
         .goog-te-gadget,
         iframe.goog-te-banner-frame,
         iframe.skiptranslate,
-        body > .skiptranslate {
+        body > .skiptranslate,
+        .skiptranslate {
             display: none !important;
             visibility: hidden !important;
             height: 0 !important;
@@ -418,9 +419,9 @@
                 <h2>{% block page_heading %}Farmer Panel{% endblock %}</h2>
                 <div class="header-actions">
                     <select class="language-select notranslate" id="languageSelect" aria-label="Translate language" translate="no">
-                        <option value="en" translate="no">English</option>
-                        <option value="hi" translate="no">Hindi</option>
-                        <option value="mr" translate="no">Marathi</option>
+                        <option value="en" translate="no" data-label="English">English</option>
+                        <option value="hi" translate="no" data-label="Hindi">Hindi</option>
+                        <option value="mr" translate="no" data-label="Marathi">Marathi</option>
                     </select>
                     <a class="back" href="/web_panel_logout/" aria-label="Exit"><svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></a>
                 </div>
@@ -431,103 +432,190 @@
             </div>
         </main>
     </div>
-    <div id="google_translate_element" aria-hidden="true"></div>
     {% include "includes/accessibility_panel.html" %}
     <script>
-        window.googleTranslateElementInit = function () {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,hi,mr',
-                autoDisplay: false
-            }, 'google_translate_element');
-            window.dispatchEvent(new Event('cicrTranslateReady'));
-        };
-
         (function () {
             const storageKey = 'cicrFarmerLanguage';
             const select = document.getElementById('languageSelect');
             if (!select) return;
-            let lastAppliedLanguage = '';
+            const translations = {
+                hi: {
+                    'Home': 'घर',
+                    'Advisories': 'सलाह',
+                    'Calculator': 'कैलकुलेटर',
+                    'Pest Guide': 'कीट गाइड',
+                    'Farmer Dashboard': 'किसान डैशबोर्ड',
+                    'Welcome back': 'वापसी पर स्वागत है',
+                    'Stay updated with latest advisories, manage pests and protect your crops.': 'नई सलाह देखें, कीटों का प्रबंधन करें और अपनी फसल बचाएं।',
+                    'All Advisories': 'सभी सलाह',
+                    'Advisory Detail': 'सलाह विवरण',
+                    'Pest Management': 'कीट प्रबंधन',
+                    'Dose Calculator': 'डोज कैलकुलेटर',
+                    'Calculate the right dose of insecticides and fungicides for effective pest and disease control.': 'कीट और रोग नियंत्रण के लिए सही दवा मात्रा निकालें।',
+                    'Pest & Disease Management': 'कीट और रोग प्रबंधन',
+                    'View pest advisories and management practices': 'कीट सलाह और प्रबंधन तरीके देखें',
+                    'Insecticide Calculator': 'कीटनाशक कैलकुलेटर',
+                    'Fungicide Calculator': 'फफूंदनाशक कैलकुलेटर',
+                    'Calculate dosage per acre easily': 'प्रति एकड़ मात्रा आसानी से निकालें',
+                    'Calculate Now': 'अभी गणना करें',
+                    'Calculate Dose': 'डोज निकालें',
+                    'Read More': 'और पढ़ें',
+                    'View All': 'सभी देखें',
+                    'View Guide': 'गाइड देखें',
+                    'Explore': 'देखें',
+                    'Recent Advisories': 'हाल की सलाह',
+                    'Quick Access': 'त्वरित पहुंच',
+                    'Management Strategy': 'प्रबंधन रणनीति',
+                    'Important Tip': 'महत्वपूर्ण सुझाव',
+                    'Additional Tips': 'अतिरिक्त सुझाव',
+                    'Back to Pest Guide': 'कीट गाइड पर वापस',
+                    'View All Advisories': 'सभी सलाह देखें',
+                    'Select Insecticide:': 'कीटनाशक चुनें:',
+                    'Select Pest:': 'कीट चुनें:',
+                    'Select Fungicide:': 'फफूंदनाशक चुनें:',
+                    'Select Disease:': 'रोग चुनें:',
+                    'Enter area in acres:': 'एकड़ में क्षेत्र लिखें:',
+                    'Calculated Quantities': 'निकाली गई मात्रा',
+                    'Dose per litre water': 'प्रति लीटर पानी में मात्रा',
+                    'Whitefly': 'सफेद मक्खी',
+                    'Whitefly in North India': 'उत्तर भारत में सफेद मक्खी',
+                    'Jassid': 'जैसिड',
+                    'Thrips': 'थ्रिप्स',
+                    'Mealybug': 'मिलीबग',
+                    'Aphid': 'एफिड',
+                    'Pink Bollworm': 'गुलाबी बॉलवर्म',
+                    'Necrosis': 'नेक्रोसिस',
+                    'Boll Rot': 'बोल रॉट',
+                    'Leaf Reddening': 'पत्ती लाल होना',
+                    'Parawilt / New wilt': 'पैराविल्ट / नया विल्ट',
+                    'Pest Management Advisory': 'कीट प्रबंधन सलाह',
+                    'Disease Management Advisory': 'रोग प्रबंधन सलाह',
+                    'Physiological Disorder': 'शारीरिक विकार',
+                    'CICR - IRM Devloped By Zappkode Solutions.': 'CICR - IRM Zappkode Solutions द्वारा विकसित।'
+                },
+                mr: {
+                    'Home': 'मुख्यपृष्ठ',
+                    'Advisories': 'सल्ले',
+                    'Calculator': 'कॅल्क्युलेटर',
+                    'Pest Guide': 'कीड मार्गदर्शक',
+                    'Farmer Dashboard': 'शेतकरी डॅशबोर्ड',
+                    'Welcome back': 'पुन्हा स्वागत आहे',
+                    'Stay updated with latest advisories, manage pests and protect your crops.': 'नवीन सल्ले पाहा, कीड व्यवस्थापन करा आणि पिकांचे संरक्षण करा.',
+                    'All Advisories': 'सर्व सल्ले',
+                    'Advisory Detail': 'सल्ला तपशील',
+                    'Pest Management': 'कीड व्यवस्थापन',
+                    'Dose Calculator': 'डोस कॅल्क्युलेटर',
+                    'Calculate the right dose of insecticides and fungicides for effective pest and disease control.': 'कीड व रोग नियंत्रणासाठी योग्य औषध मात्रा काढा.',
+                    'Pest & Disease Management': 'कीड व रोग व्यवस्थापन',
+                    'View pest advisories and management practices': 'कीड सल्ले आणि व्यवस्थापन पद्धती पाहा',
+                    'Insecticide Calculator': 'कीटकनाशक कॅल्क्युलेटर',
+                    'Fungicide Calculator': 'बुरशीनाशक कॅल्क्युलेटर',
+                    'Calculate dosage per acre easily': 'प्रति एकर मात्रा सहज काढा',
+                    'Calculate Now': 'आता गणना करा',
+                    'Calculate Dose': 'डोस काढा',
+                    'Read More': 'अधिक वाचा',
+                    'View All': 'सर्व पाहा',
+                    'View Guide': 'मार्गदर्शक पाहा',
+                    'Explore': 'पाहा',
+                    'Recent Advisories': 'अलीकडील सल्ले',
+                    'Quick Access': 'त्वरित प्रवेश',
+                    'Management Strategy': 'व्यवस्थापन धोरण',
+                    'Important Tip': 'महत्त्वाची सूचना',
+                    'Additional Tips': 'अतिरिक्त सूचना',
+                    'Back to Pest Guide': 'कीड मार्गदर्शकाकडे परत',
+                    'View All Advisories': 'सर्व सल्ले पाहा',
+                    'Select Insecticide:': 'कीटकनाशक निवडा:',
+                    'Select Pest:': 'कीड निवडा:',
+                    'Select Fungicide:': 'बुरशीनाशक निवडा:',
+                    'Select Disease:': 'रोग निवडा:',
+                    'Enter area in acres:': 'एकरमध्ये क्षेत्र लिहा:',
+                    'Calculated Quantities': 'काढलेली मात्रा',
+                    'Dose per litre water': 'प्रति लिटर पाण्यात मात्रा',
+                    'Whitefly': 'पांढरी माशी',
+                    'Whitefly in North India': 'उत्तर भारतातील पांढरी माशी',
+                    'Jassid': 'जासिड',
+                    'Thrips': 'थ्रिप्स',
+                    'Mealybug': 'मिलीबग',
+                    'Aphid': 'मावा',
+                    'Pink Bollworm': 'गुलाबी बोंडअळी',
+                    'Necrosis': 'नेक्रोसिस',
+                    'Boll Rot': 'बोंड कुज',
+                    'Leaf Reddening': 'पान लाल होणे',
+                    'Parawilt / New wilt': 'पॅराविल्ट / नवीन विल्ट',
+                    'Pest Management Advisory': 'कीड व्यवस्थापन सल्ला',
+                    'Disease Management Advisory': 'रोग व्यवस्थापन सल्ला',
+                    'Physiological Disorder': 'शारीरिक विकार',
+                    'CICR - IRM Devloped By Zappkode Solutions.': 'CICR - IRM Zappkode Solutions द्वारे विकसित.'
+                }
+            };
 
             function resetLanguageLabels() {
                 const labels = { en: 'English', hi: 'Hindi', mr: 'Marathi' };
                 Array.from(select.options).forEach((option) => {
-                    option.textContent = labels[option.value] || option.textContent;
+                    option.textContent = labels[option.value] || option.dataset.label || option.textContent;
                     option.setAttribute('translate', 'no');
                     option.classList.add('notranslate');
                 });
             }
 
-            function setCookieLanguage(lang) {
-                const value = lang === 'en' ? '/en/en' : `/en/${lang}`;
-                document.cookie = `googtrans=${value}; path=/`;
-                document.cookie = `googtrans=${value}; path=/; domain=${location.hostname}`;
+            function normalized(text) {
+                return String(text || '').replace(/\s+/g, ' ').trim();
             }
 
-            function hideGoogleTranslateChrome() {
+            function removeGoogleTranslateChrome() {
                 document.documentElement.style.top = '0px';
                 document.body.style.top = '0px';
                 document.querySelectorAll('iframe.goog-te-banner-frame, iframe.skiptranslate, body > .skiptranslate').forEach((node) => {
-                    node.style.display = 'none';
-                    node.style.visibility = 'hidden';
-                    node.style.height = '0';
+                    node.remove();
                 });
                 resetLanguageLabels();
             }
 
-            function applyLanguage(lang) {
+            function rememberOriginalText(node) {
+                if (!node.dataset.originalText) node.dataset.originalText = normalized(node.textContent);
+            }
+
+            function translateText(value, lang) {
+                const text = normalized(value);
+                if (!text || lang === 'en') return text;
+                const dict = translations[lang] || {};
+                return dict[text] || text.replace(/\b[A-Za-z][A-Za-z &/.-]{1,60}\b/g, (match) => dict[normalized(match)] || match);
+            }
+
+            function translatePage(lang) {
                 resetLanguageLabels();
                 select.value = lang;
                 localStorage.setItem(storageKey, lang);
-                setCookieLanguage(lang);
-                const combo = document.querySelector('.goog-te-combo');
-                if (combo) {
-                    if (combo.value === lang && lastAppliedLanguage === lang) {
-                        hideGoogleTranslateChrome();
-                        return true;
-                    }
-                    combo.value = lang;
-                    combo.dispatchEvent(new Event('change'));
-                    lastAppliedLanguage = lang;
-                    hideGoogleTranslateChrome();
-                    return true;
-                }
-                return false;
-            }
-
-            function applyWhenReady(lang) {
-                let attempts = 0;
-                const timer = window.setInterval(() => {
-                    attempts += 1;
-                    if (applyLanguage(lang) || attempts >= 30) {
-                        window.clearInterval(timer);
-                    }
-                    hideGoogleTranslateChrome();
-                }, 150);
+                document.documentElement.lang = lang;
+                document.querySelectorAll('body *').forEach((node) => {
+                    if (node.closest('.notranslate, script, style, svg, select, option, input, textarea')) return;
+                    if (node.children.length) return;
+                    const original = node.dataset.originalText || normalized(node.textContent);
+                    if (!original) return;
+                    rememberOriginalText(node);
+                    node.textContent = lang === 'en' ? node.dataset.originalText : translateText(node.dataset.originalText, lang);
+                });
+                removeGoogleTranslateChrome();
             }
 
             window.cicrRefreshTranslation = function () {
                 const lang = localStorage.getItem(storageKey) || 'en';
-                if (lang !== 'en') applyWhenReady(lang);
+                window.setTimeout(() => translatePage(lang), 30);
             };
 
             select.addEventListener('change', () => {
-                applyWhenReady(select.value);
+                translatePage(select.value);
             });
 
             const saved = localStorage.getItem(storageKey) || 'en';
             resetLanguageLabels();
             select.value = saved;
-            setCookieLanguage(saved);
-            window.addEventListener('cicrTranslateReady', () => {
-                if (saved !== 'en') applyWhenReady(saved);
-                hideGoogleTranslateChrome();
-            });
-            hideGoogleTranslateChrome();
-            window.setInterval(hideGoogleTranslateChrome, 700);
+            translatePage(saved);
+            const observer = new MutationObserver(() => window.cicrRefreshTranslation());
+            observer.observe(document.querySelector('.content-scroll') || document.body, { childList: true, subtree: true });
+            window.setInterval(removeGoogleTranslateChrome, 1200);
         }());
     </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>
