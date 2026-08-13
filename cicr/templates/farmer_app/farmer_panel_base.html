@@ -436,7 +436,7 @@
     <script>
         (function () {
             const storageKey = 'cicrFarmerLanguage';
-            const cacheKeyPrefix = 'cicrTranslateCache:';
+            const cacheKeyPrefix = 'cicrTranslateCache:v2:';
             const select = document.getElementById('languageSelect');
             if (!select) return;
             const translations = {
@@ -583,6 +583,14 @@
                 return dict[text] || text.replace(/\b[A-Za-z][A-Za-z &/.-]{1,60}\b/g, (match) => dict[normalized(match)] || match);
             }
 
+            function looksTranslated(value, original, lang) {
+                if (lang === 'en') return true;
+                const text = normalized(value);
+                if (!text || text === original) return false;
+                if (lang === 'hi' || lang === 'mr') return /[\u0900-\u097F]/.test(text);
+                return true;
+            }
+
             function cacheKey(lang, text) {
                 return cacheKeyPrefix + lang + ':' + text;
             }
@@ -607,7 +615,8 @@
                         node.textContent = original;
                         return;
                     }
-                    node.textContent = localStorage.getItem(cacheKey(lang, original)) || translateText(original, lang);
+                    const cached = localStorage.getItem(cacheKey(lang, original));
+                    node.textContent = looksTranslated(cached, original, lang) ? cached : translateText(original, lang);
                 });
             }
 
@@ -618,7 +627,7 @@
                 window.clearTimeout(translateTimer);
                 translateTimer = window.setTimeout(() => {
                     const missing = Array.from(new Set(nodes.map((node) => node.dataset.originalText)))
-                        .filter((text) => text && !localStorage.getItem(cacheKey(lang, text)));
+                        .filter((text) => text && !looksTranslated(localStorage.getItem(cacheKey(lang, text)), text, lang));
                     if (!missing.length) return;
                     if (translateController) translateController.abort();
                     translateController = new AbortController();
