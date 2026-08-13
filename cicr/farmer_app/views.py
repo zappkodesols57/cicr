@@ -134,10 +134,11 @@ def farmer_translate_api(request):
         else:
             missing.append(text)
 
-    for text in missing:
-        translated = _translate_text(text, target)
-        translations[text] = translated
-        cache.set(_translation_cache_key(target, text), translated, 60 * 60 * 24 * 30)
+    if missing:
+        translated_missing = _translate_texts(missing, target)
+        for text, translated in translated_missing.items():
+            translations[text] = translated
+            cache.set(_translation_cache_key(target, text), translated, 60 * 60 * 24 * 30)
 
     return JsonResponse({'translations': translations})
 
@@ -145,6 +146,16 @@ def farmer_translate_api(request):
 def _translation_cache_key(target, text):
     digest = hashlib.sha256(text.encode('utf-8')).hexdigest()
     return f'farmer_translate:{target}:{digest}'
+
+
+def _translate_texts(texts, target):
+    separator = '\n<<<CICR_TRANSLATE_SPLIT>>>\n'
+    joined = separator.join(texts)
+    translated_joined = _translate_text(joined, target)
+    parts = [part.strip() for part in translated_joined.split('<<<CICR_TRANSLATE_SPLIT>>>')]
+    if len(parts) != len(texts):
+        parts = [_translate_text(text, target) for text in texts]
+    return {source: translated or source for source, translated in zip(texts, parts)}
 
 
 def _translate_text(text, target):

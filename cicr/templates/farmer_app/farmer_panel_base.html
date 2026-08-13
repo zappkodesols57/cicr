@@ -437,7 +437,7 @@
         (function () {
             const storageKey = 'farmer_language';
             const legacyStorageKey = 'cicrFarmerLanguage';
-            const cacheKeyPrefix = 'cicrTranslateCache:v3:';
+            const cacheKeyPrefix = 'cicrTranslateCache:v4:';
             const select = document.getElementById('languageSelect');
             if (!select) return;
             const translations = {
@@ -599,7 +599,9 @@
             function collectTextNodes() {
                 const nodes = [];
                 document.querySelectorAll('body *').forEach((node) => {
-                    if (node.closest('.notranslate, script, style, svg, select, option, input, textarea')) return;
+                    if (node.closest('.notranslate, script, style, svg, input, textarea')) return;
+                    if ((node.tagName === 'SELECT' || node.tagName === 'OPTION') && node.closest('#languageSelect')) return;
+                    if (node.tagName === 'SELECT') return;
                     if (node.children.length) return;
                     const original = node.dataset.originalText || normalized(node.textContent);
                     if (!original) return;
@@ -623,11 +625,18 @@
 
             let translateTimer = null;
             let translateController = null;
+            let translationRunId = 0;
+            let isApplyingTranslation = false;
             const chunkSize = 40;
-            function fetchFullTranslation(nodes, lang) {
-                if (lang === 'en') return;
+            function fetchFullTranslation(nodes, lang, runId) {
+                if (lang === 'en') {
+                    window.clearTimeout(translateTimer);
+                    if (translateController) translateController.abort();
+                    return;
+                }
                 window.clearTimeout(translateTimer);
                 translateTimer = window.setTimeout(() => {
+                    if (runId !== translationRunId || (localStorage.getItem(storageKey) || 'en') !== lang) return;
                     const missing = Array.from(new Set(nodes.map((node) => node.dataset.originalText)))
                         .filter((text) => text && !looksTranslated(localStorage.getItem(cacheKey(lang, text)), text, lang));
                     if (!missing.length) return;
@@ -646,6 +655,7 @@
                             .then((response) => response.ok ? response.json() : Promise.reject(response))
                             .catch(() => ({ translations: {} }))))
                         .then((responses) => {
+                            if (runId !== translationRunId || (localStorage.getItem(storageKey) || 'en') !== lang) return;
                             responses.forEach((data) => {
                                 Object.entries(data.translations || {}).forEach(([source, translated]) => {
                                     if (source && translated) localStorage.setItem(cacheKey(lang, source), translated);
@@ -663,9 +673,15 @@
                 select.value = lang;
                 localStorage.setItem(storageKey, lang);
                 document.documentElement.lang = lang;
+                translationRunId += 1;
+                const runId = translationRunId;
+                window.clearTimeout(translateTimer);
+                if (translateController) translateController.abort();
                 const nodes = collectTextNodes();
+                isApplyingTranslation = true;
                 applyCachedTranslation(nodes, lang);
-                fetchFullTranslation(nodes, lang);
+                window.setTimeout(() => { isApplyingTranslation = false; }, 0);
+                fetchFullTranslation(nodes, lang, runId);
                 removeGoogleTranslateChrome();
             }
 
@@ -686,8 +702,6 @@
             resetLanguageLabels();
             select.value = saved;
             translatePage(saved);
-            const observer = new MutationObserver(() => window.cicrRefreshTranslation());
-            observer.observe(document.querySelector('.content-scroll') || document.body, { childList: true, subtree: true });
             window.setInterval(removeGoogleTranslateChrome, 1200);
         }());
     </script>

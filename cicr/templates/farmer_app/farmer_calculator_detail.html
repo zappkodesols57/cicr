@@ -134,10 +134,19 @@
     const doseValue = document.getElementById('doseValue');
     const litreValue = document.getElementById('litreValue');
 
-    document.getElementById('chemicalLabel').textContent = isFungicide ? 'Select Fungicide:' : 'Select Insecticide:';
-    document.getElementById('targetLabel').textContent = isFungicide ? 'Select Disease:' : 'Select Pest:';
-    chemicalSelect.firstElementChild.textContent = isFungicide ? 'Select Fungicide' : 'Select Insecticide';
-    targetSelect.firstElementChild.textContent = isFungicide ? 'Select Disease' : 'Select Pest';
+    function refreshTranslation() {
+        if (window.cicrRefreshTranslation) window.setTimeout(window.cicrRefreshTranslation, 30);
+    }
+
+    function setTranslatedText(element, text) {
+        element.dataset.originalText = text;
+        element.textContent = text;
+    }
+
+    setTranslatedText(document.getElementById('chemicalLabel'), isFungicide ? 'Select Fungicide:' : 'Select Insecticide:');
+    setTranslatedText(document.getElementById('targetLabel'), isFungicide ? 'Select Disease:' : 'Select Pest:');
+    setTranslatedText(chemicalSelect.firstElementChild, isFungicide ? 'Select Fungicide' : 'Select Insecticide');
+    setTranslatedText(targetSelect.firstElementChild, isFungicide ? 'Select Disease' : 'Select Pest');
 
     function populateChemicals() {
         chemicalSelect.querySelectorAll('option:not(:first-child)').forEach((option) => option.remove());
@@ -147,6 +156,7 @@
             option.textContent = name;
             chemicalSelect.appendChild(option);
         });
+        refreshTranslation();
     }
 
     async function loadCalculatorData() {
@@ -190,12 +200,13 @@
         const resultDoseMax = dosePerAcreMax * acres;
         const unit = unitFor(chemical);
 
-        doseLabel.textContent = `Dose calculated for ${acreInput.value} acre${acres === 1 ? '' : 's'}`;
+        setTranslatedText(doseLabel, `Dose calculated for ${acreInput.value} acre${acres === 1 ? '' : 's'}`);
         doseValue.textContent = formatRange(resultDoseMin, resultDoseMax, unit);
         litreValue.textContent = dosePerAcreMin === dosePerAcreMax
             ? `${(dosePerAcreMin / 200).toFixed(1)} ${unit}`
             : `${(dosePerAcreMin / 200).toFixed(1)} - ${(dosePerAcreMax / 200).toFixed(1)} ${unit}`;
         calcResult.classList.add('show');
+        refreshTranslation();
     }
 
     chemicalSelect.addEventListener('change', () => {
@@ -215,6 +226,7 @@
             targetSelect.appendChild(option);
         });
         targetSelect.disabled = false;
+        refreshTranslation();
     });
 
     targetSelect.addEventListener('change', () => {
@@ -228,6 +240,8 @@
         console.error(error);
         chemicalSelect.innerHTML = '<option value="">Unable to load data</option>';
         chemicalSelect.disabled = true;
+        refreshTranslation();
     });
+    refreshTranslation();
 </script>
 {% endblock %}
