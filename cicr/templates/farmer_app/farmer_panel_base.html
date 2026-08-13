@@ -436,6 +436,7 @@
     <script>
         (function () {
             const storageKey = 'cicrFarmerLanguage';
+            const cacheKeyPrefix = 'cicrTranslateCache:';
             const select = document.getElementById('languageSelect');
             if (!select) return;
             const translations = {
@@ -582,19 +583,70 @@
                 return dict[text] || text.replace(/\b[A-Za-z][A-Za-z &/.-]{1,60}\b/g, (match) => dict[normalized(match)] || match);
             }
 
-            function translatePage(lang) {
-                resetLanguageLabels();
-                select.value = lang;
-                localStorage.setItem(storageKey, lang);
-                document.documentElement.lang = lang;
+            function cacheKey(lang, text) {
+                return cacheKeyPrefix + lang + ':' + text;
+            }
+
+            function collectTextNodes() {
+                const nodes = [];
                 document.querySelectorAll('body *').forEach((node) => {
                     if (node.closest('.notranslate, script, style, svg, select, option, input, textarea')) return;
                     if (node.children.length) return;
                     const original = node.dataset.originalText || normalized(node.textContent);
                     if (!original) return;
                     rememberOriginalText(node);
-                    node.textContent = lang === 'en' ? node.dataset.originalText : translateText(node.dataset.originalText, lang);
+                    nodes.push(node);
                 });
+                return nodes;
+            }
+
+            function applyCachedTranslation(nodes, lang) {
+                nodes.forEach((node) => {
+                    const original = node.dataset.originalText;
+                    if (lang === 'en') {
+                        node.textContent = original;
+                        return;
+                    }
+                    node.textContent = localStorage.getItem(cacheKey(lang, original)) || translateText(original, lang);
+                });
+            }
+
+            let translateTimer = null;
+            let translateController = null;
+            function fetchFullTranslation(nodes, lang) {
+                if (lang === 'en') return;
+                window.clearTimeout(translateTimer);
+                translateTimer = window.setTimeout(() => {
+                    const missing = Array.from(new Set(nodes.map((node) => node.dataset.originalText)))
+                        .filter((text) => text && !localStorage.getItem(cacheKey(lang, text)));
+                    if (!missing.length) return;
+                    if (translateController) translateController.abort();
+                    translateController = new AbortController();
+                    fetch('/farmer/api/translate/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ target: lang, texts: missing }),
+                        signal: translateController.signal
+                    })
+                        .then((response) => response.ok ? response.json() : Promise.reject(response))
+                        .then((data) => {
+                            Object.entries(data.translations || {}).forEach(([source, translated]) => {
+                                if (source && translated) localStorage.setItem(cacheKey(lang, source), translated);
+                            });
+                            applyCachedTranslation(collectTextNodes(), lang);
+                        })
+                        .catch(() => {});
+                }, 120);
+            }
+
+            function translatePage(lang) {
+                resetLanguageLabels();
+                select.value = lang;
+                localStorage.setItem(storageKey, lang);
+                document.documentElement.lang = lang;
+                const nodes = collectTextNodes();
+                applyCachedTranslation(nodes, lang);
+                fetchFullTranslation(nodes, lang);
                 removeGoogleTranslateChrome();
             }
 

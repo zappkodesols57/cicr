@@ -1,13 +1,20 @@
 import random
 import string
+import json
+import hashlib
+import urllib.parse
+import urllib.request
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from datetime import timedelta
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.contrib import messages
+from django.core.cache import cache
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 # REST Framework imports
 from rest_framework.views import APIView
@@ -89,6 +96,74 @@ def farmer_logout_view(request):
     logout(request)
     messages.success(request, "Logged out successfully.")
     return redirect('farmer_login')
+
+
+@csrf_exempt
+@require_POST
+def farmer_translate_api(request):
+    try:
+        payload = json.loads(request.body.decode('utf-8'))
+    except (TypeError, ValueError, UnicodeDecodeError):
+        return JsonResponse({'error': 'Invalid JSON payload.'}, status=400)
+
+    target = payload.get('target')
+    texts = payload.get('texts', [])
+    if target not in {'hi', 'mr'}:
+        return JsonResponse({'translations': {text: text for text in texts if isinstance(text, str)}})
+    if not isinstance(texts, list):
+        return JsonResponse({'error': 'texts must be a list.'}, status=400)
+
+    clean_texts = []
+    seen = set()
+    for text in texts[:120]:
+        if not isinstance(text, str):
+            continue
+        clean = ' '.join(text.split()).strip()
+        if not clean or clean in seen:
+            continue
+        seen.add(clean)
+        clean_texts.append(clean)
+
+    translations = {}
+    missing = []
+    for text in clean_texts:
+        cache_key = _translation_cache_key(target, text)
+        cached = cache.get(cache_key)
+        if cached:
+            translations[text] = cached
+        else:
+            missing.append(text)
+
+    for text in missing:
+        translated = _translate_text(text, target)
+        translations[text] = translated
+        cache.set(_translation_cache_key(target, text), translated, 60 * 60 * 24 * 30)
+
+    return JsonResponse({'translations': translations})
+
+
+def _translation_cache_key(target, text):
+    digest = hashlib.sha256(text.encode('utf-8')).hexdigest()
+    return f'farmer_translate:{target}:{digest}'
+
+
+def _translate_text(text, target):
+    query = urllib.parse.urlencode({
+        'client': 'gtx',
+        'sl': 'en',
+        'tl': target,
+        'dt': 't',
+        'q': text,
+    })
+    url = f'https://translate.googleapis.com/translate_a/single?{query}'
+    try:
+        request = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(request, timeout=4) as response:
+            data = json.loads(response.read().decode('utf-8'))
+        translated = ''.join(part[0] for part in data[0] if part and part[0])
+        return translated or text
+    except Exception:
+        return text
 
 
 # =====================================================================

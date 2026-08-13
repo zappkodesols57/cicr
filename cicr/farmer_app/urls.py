@@ -15,6 +15,7 @@ urlpatterns = [
     path('pest/<slug:pest_id>/', views.farmer_pest_detail_view, name='farmer_pest_detail'),
     path('banners/', login_views.banner_list, name='farmer_banner_list'),
     path('logout/', views.farmer_logout_view, name='farmer_logout'),
+    path('api/translate/', views.farmer_translate_api, name='farmer_translate_api'),
 
     # REST API Paths
     path('api/send-otp/', views.SendOTPAPIView.as_view(), name='farmer_api_send_otp'),
