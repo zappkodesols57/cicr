@@ -191,6 +191,31 @@
         object-fit: cover;
     }
 
+    .image-gallery {
+        padding: 18px;
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .gallery-item {
+        overflow: hidden;
+        min-height: 190px;
+        background: #eaf7ed;
+        border-radius: 8px;
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        min-height: 190px;
+        display: block;
+        object-fit: cover;
+    }
+
     .management-card .point-row {
         padding: 11px 0;
         border-bottom: 1px solid #edf4ef;
@@ -258,6 +283,10 @@
         .tips-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+
+        .gallery-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
     }
 
     @media (max-width: 760px) {
@@ -275,6 +304,10 @@
         }
 
         .tips-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-grid {
             grid-template-columns: 1fr;
         }
     }
@@ -373,6 +406,22 @@
         `;
     }
 
+    function galleryHtml(images, title) {
+        if (!images.length) return '';
+        return `
+            <section class="section-card image-gallery">
+                <h4 class="section-title">All Images</h4>
+                <div class="gallery-grid">
+                    ${images.map((src, index) => `
+                        <figure class="gallery-item">
+                            <img src="${escapeHtml(src)}" alt="${escapeHtml(title)} image ${index + 1}" loading="lazy">
+                        </figure>
+                    `).join('')}
+                </div>
+            </section>
+        `;
+    }
+
     function parseSections(items) {
         const sections = [];
         let current = null;
@@ -420,6 +469,7 @@
         const allImages = record.items.filter((item) => item.type === 'image').map((item) => item.src);
         const hero = allImages[0] || fallbackImages[pestId] || '/static/farmer_live/images/pestBanner.png';
         const sections = parseSections(record.items);
+        const galleryImages = allImages.filter((src, index) => index === allImages.indexOf(src));
         const summary = sections.find((section) => section.text)?.text.split(/\n{2,}/)[0] || 'Follow recommended advisory and management practices for cotton crop protection.';
 
         detail.innerHTML = `
@@ -445,6 +495,7 @@
             </div>
             <div class="content-grid">
                 ${sections.map(sectionHtml).join('')}
+                ${galleryHtml(galleryImages, title)}
             </div>
             <section class="tips-card">
                 <h4 class="section-title">Additional Tips</h4>
