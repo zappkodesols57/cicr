@@ -8,6 +8,7 @@ from .views import get_csrf_token
 
 urlpatterns = [
     path('', super_login, name='super_login'),
+    path('super-login/', super_login, name='super_admin_login'),
     path('web_app/', web_app, name='web_app'),
     path('web_aap/', web_app, name='web_aap'),
     path('super_dashboard/', super_dashboard, name='super_dashboard'),
