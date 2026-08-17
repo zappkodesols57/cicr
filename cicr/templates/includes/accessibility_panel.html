@@ -45,16 +45,46 @@
         background: #0f1511 !important;
     }
 
-    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .main, .mobile-app, .advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .hero-photo, .pest-card, .calculator-card, .calculator-visual, .note-card, .stat-card, .section-panel, .quick-card, .quick-visual, .hero-overlay-card, .recent-item, .tip-strip, .empty-state, .tip) {
+    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .report-list, .survey-list, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .main, .mobile-app, .advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .hero-photo, .pest-card, .calculator-card, .calculator-visual, .note-card, .stat-card, .section-panel, .quick-card, .quick-visual, .hero-overlay-card, .recent-item, .tip-strip, .empty-state, .tip) {
         color: #f7fff8 !important;
         background: #171d19 !important;
         border-color: #435047 !important;
     }
 
-    html.cicr-a11y-dark :where(.page, .hero, .features, .welcome, .stepper, .activity-card, .review-card, .review-item, .image-slot, .drawer, .drawer-body, .filter-card, .table-wrap, .empty-state) {
+    html.cicr-a11y-dark :where(.page, .hero, .features, .welcome, .stepper, .activity-card, .review-card, .review-item, .image-slot, .drawer, .drawer-body, .filter-card, .table-wrap, .empty-state, details, summary, .detail-grid, .meta-grid, .metric-grid, .extra-grid, .items-grid, .input-grid, .edit-set-grid, .metric-block, .set-block, .edit-metric, .edit-set, .field-card, .input-card, .record-card, .record-row, .detail-panel, .details-panel) {
         color: #f7fff8 !important;
         background: #171d19 !important;
         border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark :where(form, fieldset, .form-card, .form-panel, .form-section, .section, .section-panel, .panel-body, .field, .field-row, .field-grid, .radio-group, .radio-row, .option, .step, .stepper .step, .review-grid, .review-section, .review-row, .spray-card, .spray-row) {
+        color: #f7fff8 !important;
+        background-color: #171d19 !important;
+        border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark :where(.stepper .step, .step) {
+        color: #f7fff8 !important;
+        background: #171d19 !important;
+        border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark :where(.step.active, .step.done, .stepper .step.active, .stepper .step.done) {
+        color: #ffffff !important;
+        background: #203126 !important;
+        border-color: #58d178 !important;
+    }
+
+    html.cicr-a11y-dark :where(.step-dot, .step::before) {
+        color: #ffffff !important;
+        background: #6f7d73 !important;
+        border-color: #8fbf98 !important;
+    }
+
+    html.cicr-a11y-dark :where(.step.active .step-dot, .step.done .step-dot, .step.active::before, .step.done::before) {
+        color: #ffffff !important;
+        background: #1fb34d !important;
+        border-color: #1fb34d !important;
     }
 
     html.cicr-a11y-dark .hero .content {
@@ -86,12 +116,20 @@
         color: #58d178 !important;
     }
 
-    html.cicr-a11y-dark :where(h1, h2, h3, h4, h5, p, span, label, strong, td, th, .head-value, .card-title, .section-title) {
+    html.cicr-a11y-dark :where(h1, h2, h3, h4, h5, h6, p, span, label, strong, small, legend, td, th, div, summary, .head-label, .head-value, .card-title, .section-title, .field label, .radio-group, .radio-row, .radio-row label, .option, .step, .step span, .review-label, .review-value, .count, .footer, .site-footer) {
         color: #f7fff8 !important;
     }
 
-    html.cicr-a11y-dark :where(.advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .pest-card, .calculator-card, .note-card, .stat-card, .section-panel, .quick-card) :where(h1, h2, h3, h4, p, span, strong, label, div) {
+    html.cicr-a11y-dark :where(.advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .pest-card, .calculator-card, .note-card, .stat-card, .section-panel, .quick-card, .report-card, .survey-card, .metric-block, .set-block, .edit-metric, .edit-set, .detail-item, .meta-item, .metric-value, .item-value) :where(h1, h2, h3, h4, h5, p, span, strong, label, div) {
         color: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark :where(.head-label, .meta-item span, .metric-value span, .item-value span, .detail-item span, .muted, .meta, .helper, .helper-text, .description, .caption, .empty-note, .subtext, .footer, .site-footer) {
+        color: #d3ded6 !important;
+    }
+
+    html.cicr-a11y-dark :where(.meta-item strong, .metric-value strong, .item-value strong, .detail-item strong) {
+        color: #ffffff !important;
     }
 
     html.cicr-a11y-dark :where(.advisory-card img, .section-card img, .hero-photo img, .pest-card img, .calculator-card img, .hero-image img, .section-media img, .pest-image img, .calculator-visual img) {
@@ -102,6 +140,12 @@
         color: #f7fff8 !important;
         background: #203126 !important;
         border-color: #54725d !important;
+    }
+
+    html.cicr-a11y-dark :where(.average-pill) {
+        color: #ffffff !important;
+        background: #08a33a !important;
+        border-color: #22c55e !important;
     }
 
     html.cicr-a11y-dark :where(.stat-icon, .step-icon, .pest-icon, .point-icon, .info-icon, .strategy-icon, .strategy-num, .note-icon, .tip-badge, .guide-arrow, .quick-badge, .quick-action) {
@@ -163,6 +207,32 @@
         color: #ffffff !important;
         background: #0b0f0c !important;
         border-color: #8fbf98 !important;
+        caret-color: #ffffff !important;
+        color-scheme: dark;
+    }
+
+    html.cicr-a11y-dark :where(input[type="radio"], input[type="checkbox"]) {
+        accent-color: #1fb34d !important;
+        background: transparent !important;
+        border-color: #8fbf98 !important;
+    }
+
+    html.cicr-a11y-dark :where(input[readonly], input:disabled, select:disabled, textarea:disabled) {
+        color: #d3ded6 !important;
+        background: #111713 !important;
+        opacity: 1 !important;
+    }
+
+    html.cicr-a11y-dark :where(table, thead, tbody, tfoot, tr, th, td) {
+        color: #f7fff8 !important;
+        background: #171d19 !important;
+        border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark :where(.button.secondary, .btn.secondary, .btn-outline, .secondary, .ghost, .edit-btn, .view-btn) {
+        color: #f7fff8 !important;
+        background: #203126 !important;
+        border-color: #58d178 !important;
     }
 
     html.cicr-a11y-dark :where(.calculator-form-card, .calc-result) {
