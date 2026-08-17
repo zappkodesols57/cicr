@@ -545,7 +545,7 @@
 
     <main class="page">
         <section class="toolbar">
-            <input id="search" type="search" placeholder="Search by district, month, week, year">
+            <input id="search" type="search" placeholder="Search by district or date">
             <span class="count" id="count">Loading...</span>
         </section>
 
@@ -668,7 +668,7 @@
 
         function matches(record, query) {
             if (!query) return true;
-            return ['id', 'district', 'month', 'year', 'week', 'standard_week', 'pest_date', 'date_field']
+            return ['id', 'district', 'pest_date', 'date_field']
                 .some((key) => String(record[key] || '').toLowerCase().includes(query));
         }
 
@@ -676,10 +676,6 @@
             return [
                 ['Report ID', `#${record.id}`],
                 ['Date', record.date_field || record.pest_date],
-                ['Week', record.week],
-                ['Standard Week', record.standard_week],
-                ['Month', record.month],
-                ['Year', record.year],
                 ['District', record.district],
                 ['Investigator', record.name_of_investigator || record.user_id]
             ];
@@ -691,8 +687,7 @@
                     <div class="report-head">
                         <div><span class="head-label">Report</span><span class="tag">#${escapeHtml(record.id)}</span></div>
                         <div><span class="head-label">District</span><span class="head-value">${escapeHtml(record.district || '-')}</span></div>
-                        <div><span class="head-label">Week</span><span class="head-value">${escapeHtml(record.standard_week || record.week || '-')}</span></div>
-                        <div><span class="head-label">Month / Year</span><span class="head-value">${escapeHtml([record.month, record.year].filter(Boolean).join(' ') || '-')}</span></div>
+                        <div><span class="head-label">Date</span><span class="head-value">${escapeHtml(record.date_field || record.pest_date || '-')}</span></div>
                         <div class="card-actions">
                             <button class="button secondary" type="button" data-view-id="${escapeHtml(record.id)}">View Full Data</button>
                             <button class="button" type="button" data-edit-id="${escapeHtml(record.id)}">
@@ -829,10 +824,6 @@
                     <div class="form-grid">
                         ${inputField('date_field', 'Date', record.date_field, 'date')}
                         ${inputField('pest_date', 'Pest Date', record.pest_date, 'date')}
-                        ${inputField('week', 'Week', record.week)}
-                        ${inputField('standard_week', 'Standard Week', record.standard_week)}
-                        ${inputField('month', 'Month', record.month)}
-                        ${inputField('year', 'Year', record.year)}
                         ${inputField('district', 'District', record.district)}
                         ${inputField('name_of_investigator', 'Investigator', record.name_of_investigator || record.user_id)}
                     </div>

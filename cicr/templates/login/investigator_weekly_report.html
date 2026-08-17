@@ -424,22 +424,10 @@
                             <option value="">Select standard week</option>
                         </select>
                     </label>
-                    <label>
-                        Week No.
-                        <input type="text" name="week" id="weekField" readonly required>
-                    </label>
-                    <label>
-                        Standard Week Range
-                        <input type="text" name="standard_week" id="standardWeekField" readonly>
-                    </label>
-                    <label>
-                        Month
-                        <input type="text" name="month" id="monthField" readonly>
-                    </label>
-                    <label>
-                        Year
-                        <input type="text" name="year" id="yearField" readonly>
-                    </label>
+                    <input type="hidden" name="week" id="weekField" required>
+                    <input type="hidden" name="standard_week" id="standardWeekField">
+                    <input type="hidden" name="month" id="monthField">
+                    <input type="hidden" name="year" id="yearField">
                     <label>
                         District
                         <select name="district" id="districtField" required>
@@ -749,10 +737,6 @@
 
             const metaItems = [
                 { label: 'Date', value: payload.date_field },
-                { label: 'Week', value: payload.week },
-                { label: 'Standard Week', value: payload.standard_week },
-                { label: 'Month', value: payload.month },
-                { label: 'Year', value: payload.year },
                 { label: 'District', value: payload.district }
             ];
 
