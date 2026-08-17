@@ -831,12 +831,15 @@ def basic_servery_report(request, district_name):
 
 
 
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from datetime import datetime
 
 def edit_servey_report(request,district_name, id):
-    # Get the survey report data based on the ID
-    data = basic_servey_info.objects.get(id=id)
+    data = basic_servey_info.objects.filter(id=id).first()
+    if not data:
+        messages.error(request, f'Survey report #{id} was not found.')
+        return redirect(reverse('basic_servery_report', args=[district_name]))
     
     if request.method == 'POST':
         # Update the object manually from the POST data
@@ -871,7 +874,14 @@ def edit_servey_report(request,district_name, id):
         data.crop_rotation_followed = True if request.POST.get('crop_rotation_followed') == 'Yes' else False
         data.advisory_received_from = request.POST.get('advisory_received_from')
         data.total_farmers_ecommunication = request.POST.get('total_farmers_ecommunication')
-        data.servey_date = request.POST.get('servey_date')
+        servey_date_str = request.POST.get('servey_date')
+        if servey_date_str:
+            try:
+                data.servey_date = datetime.strptime(servey_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                return render(request, 'owner/edit_servey_report.html', {'data': data, 'error': 'Invalid survey date format, please use YYYY-MM-DD'})
+        else:
+            data.servey_date = None
         data.year = request.POST.get('year')
         data.landarea = request.POST.get('landarea')
         data.aadhar_number = request.POST.get('aadhar_number')
