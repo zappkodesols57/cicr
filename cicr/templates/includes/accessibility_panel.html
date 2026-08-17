@@ -371,6 +371,9 @@
         width: 22px;
         height: 22px;
         object-fit: contain;
+        pointer-events: none;
+        user-select: none;
+        -webkit-user-drag: none;
     }
 
     .cicr-a11y-button img {
@@ -582,12 +585,12 @@
 </style>
 
 <button class="cicr-a11y-button" type="button" id="cicrA11yOpen" aria-label="Open accessibility settings">
-    <img src="{% static 'images/accessibility png.png' %}" alt="" aria-hidden="true">
+    <img src="{% static 'images/accessibility png.png' %}" alt="" aria-hidden="true" draggable="false">
 </button>
 
 <section class="cicr-a11y-overlay" id="cicrA11yOverlay" hidden>
     <button class="cicr-a11y-button cicr-a11y-floating-close" type="button" id="cicrA11yFloatingClose" aria-label="Close accessibility settings">
-        <img src="{% static 'images/accessibility png.png' %}" alt="" aria-hidden="true">
+        <img src="{% static 'images/accessibility png.png' %}" alt="" aria-hidden="true" draggable="false">
     </button>
     <div class="cicr-a11y-panel" role="dialog" aria-modal="true" aria-labelledby="cicrA11yTitle">
         <header class="cicr-a11y-header">
@@ -922,6 +925,7 @@
         applyButtonPosition();
         window.addEventListener('resize', applyButtonPosition);
         [openButton, floatingCloseButton].forEach(button => {
+            button.addEventListener('dragstart', event => event.preventDefault());
             button.addEventListener('pointerdown', startButtonDrag);
             button.addEventListener('pointermove', moveButtonDrag);
             button.addEventListener('pointerup', endButtonDrag);
