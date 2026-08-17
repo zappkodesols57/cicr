@@ -314,6 +314,48 @@
             gap: 12px;
         }
 
+        #summaryGrid {
+            display: block;
+        }
+
+        .summary-block {
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fbfdfb;
+        }
+
+        .summary-block:first-child {
+            margin-top: 0;
+        }
+
+        .summary-block h3 {
+            margin: 0 0 14px;
+            color: var(--green-950);
+            font-size: 18px;
+        }
+
+        .summary-set {
+            margin-top: 14px;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        .summary-set h4 {
+            margin: 0 0 12px;
+            color: var(--green-950);
+            font-size: 15px;
+        }
+
+        .summary-set-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
         .summary-item {
             padding: 14px;
             border: 1px solid var(--line);
@@ -332,6 +374,27 @@
             display: block;
             margin-top: 6px;
             font-size: 16px;
+        }
+
+        .summary-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+        }
+
+        .summary-average {
+            max-width: 280px;
+            margin-top: 12px;
+            padding: 12px 14px;
+            color: #ffffff;
+            background: var(--green-900);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        #confirmPanel {
+            overflow: hidden;
         }
 
         .message {
@@ -357,6 +420,8 @@
             .meta-grid,
             .pair-grid,
             .extra-grid,
+            .summary-set-grid,
+            .summary-values,
             .summary-grid {
                 grid-template-columns: 1fr;
             }
@@ -726,24 +791,73 @@
 
         function renderSummary() {
             const payload = collectPayload();
-            const averageItems = reportSections.flatMap(section => section.metrics.flatMap(metric => {
-                return metric.sets.map(set => ({
-                    label: `${metric.label} ${set.label}`,
-                    value: payload[averageName(set)]
-                }));
-            })).filter(item => item.value !== undefined && item.value !== null && item.value !== '');
-
             const metaItems = [
                 { label: 'Date', value: payload.date_field },
-                { label: 'District', value: payload.district }
+                { label: 'Standard Week No.', value: payload.week },
+                { label: 'Standard Week Range', value: payload.standard_week },
+                { label: 'Month', value: payload.month },
+                { label: 'Year', value: payload.year },
+                { label: 'District', value: payload.district },
+                { label: 'Investigator', value: payload.name_of_investigator },
+                { label: 'Number of messages', value: payload.number_of_message },
+                { label: 'Delivered to farmers', value: payload.delivered_to_number_of_farmer },
+                { label: 'Relevant information', value: payload.any_relevant_information }
             ];
 
-            summaryGrid.innerHTML = [...metaItems, ...averageItems].map(item => `
-                <div class="summary-item">
-                    <span>${escapeHtml(item.label)}</span>
-                    <strong>${escapeHtml(item.value || '-')}</strong>
-                </div>
+            const metaHtml = `
+                <section class="summary-block">
+                    <h3>Report Details</h3>
+                    <div class="summary-grid">
+                        ${metaItems.map(item => summaryItem(item.label, item.value)).join('')}
+                    </div>
+                </section>
+            `;
+
+            const sectionsHtml = reportSections.map(section => `
+                <section class="summary-block">
+                    <h3>${escapeHtml(section.title)}</h3>
+                    ${section.metrics.map(metric => `
+                        <div class="summary-set">
+                            <h4>${escapeHtml(metric.label)}</h4>
+                            <div class="summary-set-grid">
+                                ${metric.sets.map(set => renderSummarySet(set, payload)).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </section>
             `).join('');
+
+            summaryGrid.innerHTML = metaHtml + sectionsHtml;
+        }
+
+        function renderSummarySet(set, payload) {
+            const values = Array.from({ length: 10 }, (_, idx) => {
+                const number = idx + 1;
+                return {
+                    label: `${set.label} ${fieldLabel(number)}`,
+                    value: payload[itemName(set, number)]
+                };
+            });
+            const average = payload[averageName(set)];
+
+            return `
+                <div class="summary-set">
+                    <h4>${escapeHtml(set.label)}</h4>
+                    <div class="summary-values">
+                        ${values.map(item => summaryItem(item.label, item.value)).join('')}
+                    </div>
+                    <div class="summary-average">Average: ${escapeHtml(average || '0.00')}</div>
+                </div>
+            `;
+        }
+
+        function summaryItem(label, value) {
+            return `
+                <div class="summary-item">
+                    <span>${escapeHtml(label)}</span>
+                    <strong>${escapeHtml(value === undefined || value === null || value === '' ? '-' : value)}</strong>
+                </div>
+            `;
         }
 
         function escapeHtml(value) {

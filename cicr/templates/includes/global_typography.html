@@ -34,4 +34,36 @@
     body :where(svg text, .axis-label, .chart-label, .chart-title) {
         font-family: var(--font-family) !important;
     }
+
+    .required-marker {
+        color: #dc2626;
+        font-weight: 700;
+        margin-left: 4px;
+    }
 </style>
+<script>
+    (function () {
+        function addRequiredMarkers() {
+            const fields = document.querySelectorAll('input[required], select[required], textarea[required]');
+            fields.forEach((field) => {
+                if (!field.id && !field.closest('label')) return;
+
+                const label = field.closest('label') || document.querySelector(`label[for="${CSS.escape(field.id)}"]`);
+                if (!label || label.dataset.requiredMarker === 'true') return;
+
+                const marker = document.createElement('span');
+                marker.className = 'required-marker';
+                marker.textContent = '*';
+                marker.setAttribute('aria-hidden', 'true');
+                label.appendChild(marker);
+                label.dataset.requiredMarker = 'true';
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', addRequiredMarkers);
+        } else {
+            addRequiredMarkers();
+        }
+    })();
+</script>
