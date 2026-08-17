@@ -44,6 +44,20 @@ from django.db.models import Avg
 from django.db.models import Sum
 
 
+def safe_numeric_sums(queryset, fields):
+    totals = {f'sum_{field}': 0 for field in fields}
+    for row in queryset.values(*fields):
+        for field in fields:
+            value = row.get(field)
+            if value in (None, ''):
+                continue
+            try:
+                totals[f'sum_{field}'] += int(float(value))
+            except (TypeError, ValueError):
+                continue
+    return totals
+
+
 # Create your views here.
 @login_required(login_url='/')
 def view_district(request):
@@ -423,74 +437,31 @@ def monthly_progress_report(request, district_name, month):
         date_field__month=target_month,            # Month
     )
 
-    activities_sums = activities_data.aggregate(
-        sum_popular_artical_number=Sum(ExpressionWrapper(F('popular_artical_number'), output_field=IntegerField())),
-        sum_popular_artical_beneficiary_male=Sum(ExpressionWrapper(F('popular_artical_beneficiary_male'), output_field=IntegerField())),
-        sum_popular_artical_beneficiary_female=Sum(ExpressionWrapper(F('popular_artical_beneficiary_female'), output_field=IntegerField())),
-        sum_press_release_number=Sum(ExpressionWrapper(F('press_release_number'), output_field=IntegerField())),
-        sum_press_release_beneficiary_male=Sum(ExpressionWrapper(F('press_release_beneficiary_male'), output_field=IntegerField())),
-        sum_press_release_beneficiary_female=Sum(ExpressionWrapper(F('press_release_beneficiary_female'), output_field=IntegerField())),
-        sum_extension_material_booklet_number=Sum(ExpressionWrapper(F('extension_material_booklet_number'), output_field=IntegerField())),
-        sum_extension_material_booklet_beneficiary_male=Sum(ExpressionWrapper(F('extension_material_booklet_beneficiary_male'), output_field=IntegerField())),
-        sum_extension_material_booklet_beneficiary_female=Sum(ExpressionWrapper(F('extension_material_booklet_beneficiary_female'), output_field=IntegerField())),
-        sum_extension_material_leaflet_number=Sum(ExpressionWrapper(F('extension_material_leaflet_number'), output_field=IntegerField())),
-        sum_extension_material_leaflet_beneficiary_male=Sum(ExpressionWrapper(F('extension_material_leaflet_beneficiary_male'), output_field=IntegerField())),
-        sum_extension_material_leaflet_beneficiary_female=Sum(ExpressionWrapper(F('extension_material_leaflet_beneficiary_female'), output_field=IntegerField())),
-        sum_extension_material_pamphlet_number=Sum(ExpressionWrapper(F('extension_material_pamphlet_number'), output_field=IntegerField())),
-        sum_extension_material_pamphlet_beneficiary_male=Sum(ExpressionWrapper(F('extension_material_pamphlet_beneficiary_male'), output_field=IntegerField())),
-        sum_extension_material_pamphlet_beneficiary_female=Sum(ExpressionWrapper(F('extension_material_pamphlet_beneficiary_female'), output_field=IntegerField())),
-        sum_extension_material_poster_number=Sum(ExpressionWrapper(F('extension_material_poster_number'), output_field=IntegerField())),
-        sum_extension_material_poster_beneficiary_male=Sum(ExpressionWrapper(F('extension_material_poster_beneficiary_male'), output_field=IntegerField())),
-        sum_extension_material_poster_beneficiary_female=Sum(ExpressionWrapper(F('extension_material_poster_beneficiary_female'), output_field=IntegerField())),
-        sum_literature_distributed_booklet_number=Sum(ExpressionWrapper(F('literature_distributed_booklet_number'), output_field=IntegerField())),
-        sum_literature_distributed_booklet_beneficiary_male=Sum(ExpressionWrapper(F('literature_distributed_booklet_beneficiary_male'), output_field=IntegerField())),
-        sum_literature_distributed_booklet_beneficiary_female=Sum(ExpressionWrapper(F('literature_distributed_booklet_beneficiary_female'), output_field=IntegerField())),
-        sum_literature_distributed_leaflet_number=Sum(ExpressionWrapper(F('literature_distributed_leaflet_number'), output_field=IntegerField())),
-        sum_literature_distributed_leaflet_beneficiary_male=Sum(ExpressionWrapper(F('literature_distributed_leaflet_beneficiary_male'), output_field=IntegerField())),
-        sum_literature_distributed_leaflet_beneficiary_female=Sum(ExpressionWrapper(F('literature_distributed_leaflet_beneficiary_female'), output_field=IntegerField())),
-        sum_literature_distributed_pamphlet_number=Sum(ExpressionWrapper(F('literature_distributed_pamphlet_number'), output_field=IntegerField())),
-        sum_literature_distributed_pamphlet_beneficiary_male=Sum(ExpressionWrapper(F('literature_distributed_pamphlet_beneficiary_male'), output_field=IntegerField())),
-        sum_literature_distributed_pamphlet_beneficiary_female=Sum(ExpressionWrapper(F('literature_distributed_pamphlet_beneficiary_female'), output_field=IntegerField())),
-        sum_voice_messages_number=Sum(ExpressionWrapper(F('voice_messages_number'), output_field=IntegerField())),
-        sum_voice_messages_beneficiary_male=Sum(ExpressionWrapper(F('voice_messages_beneficiary_male'), output_field=IntegerField())),
-        sum_voice_messages_beneficiary_female=Sum(ExpressionWrapper(F('voice_messages_beneficiary_female'), output_field=IntegerField())),
-        sum_field_visit_number=Sum(ExpressionWrapper(F('field_visit_number'), output_field=IntegerField())),
-        sum_field_visit_beneficiary_male=Sum(ExpressionWrapper(F('field_visit_beneficiary_male'), output_field=IntegerField())),
-        sum_field_visit_beneficiary_female=Sum(ExpressionWrapper(F('field_visit_beneficiary_female'), output_field=IntegerField())),
-        sum_farmer_mela_number=Sum(ExpressionWrapper(F('farmer_mela_number'), output_field=IntegerField())),
-        sum_farmer_mela_beneficiary_male=Sum(ExpressionWrapper(F('farmer_mela_beneficiary_male'), output_field=IntegerField())),
-        sum_farmer_mela_beneficiary_female=Sum(ExpressionWrapper(F('farmer_mela_beneficiary_female'), output_field=IntegerField())),
-        sum_exhibition_arranged_number=Sum(ExpressionWrapper(F('exhibition_arranged_number'), output_field=IntegerField())),
-        sum_exhibition_arranged_beneficiary_male=Sum(ExpressionWrapper(F('exhibition_arranged_beneficiary_male'), output_field=IntegerField())),
-        sum_exhibition_arranged_beneficiary_female=Sum(ExpressionWrapper(F('exhibition_arranged_beneficiary_female'), output_field=IntegerField())),
-        sum_farmer_training_number=Sum(ExpressionWrapper(F('farmer_training_number'), output_field=IntegerField())),
-        sum_farmer_training_beneficiary_male=Sum(ExpressionWrapper(F('farmer_training_beneficiary_male'), output_field=IntegerField())),
-        sum_farmer_training_beneficiary_female=Sum(ExpressionWrapper(F('farmer_training_beneficiary_female'), output_field=IntegerField())),
-        sum_training_number=Sum(ExpressionWrapper(F('training_number'), output_field=IntegerField())),
-        sum_training_beneficiary_male=Sum(ExpressionWrapper(F('training_beneficiary_male'), output_field=IntegerField())),
-        sum_training_beneficiary_female=Sum(ExpressionWrapper(F('training_beneficiary_female'), output_field=IntegerField())),
-        sum_tv_show_number=Sum(ExpressionWrapper(F('tv_show_number'), output_field=IntegerField())),
-        sum_tv_show_beneficiary_male=Sum(ExpressionWrapper(F('tv_show_beneficiary_male'), output_field=IntegerField())),
-        sum_tv_show_beneficiary_female=Sum(ExpressionWrapper(F('tv_show_beneficiary_female'), output_field=IntegerField())),
-        sum_radio_talks_numbers=Sum(ExpressionWrapper(F('radio_talks_numbers'), output_field=IntegerField())),
-        sum_radio_talks_beneficiary_male=Sum(ExpressionWrapper(F('radio_talks_beneficiary_male'), output_field=IntegerField())),
-        sum_radio_talks_beneficiary_female=Sum(ExpressionWrapper(F('radio_talks_beneficiary_female'), output_field=IntegerField())),
-        sum_sensitization_workshop_number=Sum(ExpressionWrapper(F('sensitization_workshop_number'), output_field=IntegerField())),
-        sum_sensitization_workshop_beneficiary_male=Sum(ExpressionWrapper(F('sensitization_workshop_beneficiary_male'), output_field=IntegerField())),
-        sum_sensitization_workshop_beneficiary_female=Sum(ExpressionWrapper(F('sensitization_workshop_beneficiary_female'), output_field=IntegerField())),
-        sum_farmers_queries_number=Sum(ExpressionWrapper(F('farmers_queries_number'), output_field=IntegerField())),
-        sum_farmers_queries_beneficiary_male=Sum(ExpressionWrapper(F('farmers_queries_beneficiary_male'), output_field=IntegerField())),
-        sum_farmers_queries_beneficiary_female=Sum(ExpressionWrapper(F('farmers_queries_beneficiary_female'), output_field=IntegerField())),
-        sum_lectures_delivered_number=Sum(ExpressionWrapper(F('lectures_delivered_number'), output_field=IntegerField())),
-        sum_lectures_delivered_beneficiary_male=Sum(ExpressionWrapper(F('lectures_delivered_beneficiary_male'), output_field=IntegerField())),
-        sum_lectures_delivered_beneficiary_female=Sum(ExpressionWrapper(F('lectures_delivered_beneficiary_female'), output_field=IntegerField())),
-        sum_news_clips_number=Sum(ExpressionWrapper(F('news_clips_number'), output_field=IntegerField())),
-        sum_news_clips_beneficiary_male=Sum(ExpressionWrapper(F('news_clips_beneficiary_male'), output_field=IntegerField())),
-        sum_news_clips_beneficiary_female=Sum(ExpressionWrapper(F('news_clips_beneficiary_female'), output_field=IntegerField())),
-        sum_visit_of_farmers_numbers=Sum(ExpressionWrapper(F('visit_of_farmers_numbers'), output_field=IntegerField())),
-        sum_visit_of_farmers_beneficiary_male=Sum(ExpressionWrapper(F('visit_of_farmers_beneficiary_male'), output_field=IntegerField())),
-        sum_visit_of_farmers_beneficiary_female=Sum(ExpressionWrapper(F('visit_of_farmers_beneficiary_female'), output_field=IntegerField())),
-    )
+    extension_activity_sum_fields = [
+        'popular_artical_number', 'popular_artical_beneficiary_male', 'popular_artical_beneficiary_female',
+        'press_release_number', 'press_release_beneficiary_male', 'press_release_beneficiary_female',
+        'extension_material_booklet_number', 'extension_material_booklet_beneficiary_male', 'extension_material_booklet_beneficiary_female',
+        'extension_material_leaflet_number', 'extension_material_leaflet_beneficiary_male', 'extension_material_leaflet_beneficiary_female',
+        'extension_material_pamphlet_number', 'extension_material_pamphlet_beneficiary_male', 'extension_material_pamphlet_beneficiary_female',
+        'extension_material_poster_number', 'extension_material_poster_beneficiary_male', 'extension_material_poster_beneficiary_female',
+        'literature_distributed_booklet_number', 'literature_distributed_booklet_beneficiary_male', 'literature_distributed_booklet_beneficiary_female',
+        'literature_distributed_leaflet_number', 'literature_distributed_leaflet_beneficiary_male', 'literature_distributed_leaflet_beneficiary_female',
+        'literature_distributed_pamphlet_number', 'literature_distributed_pamphlet_beneficiary_male', 'literature_distributed_pamphlet_beneficiary_female',
+        'voice_messages_number', 'voice_messages_beneficiary_male', 'voice_messages_beneficiary_female',
+        'field_visit_number', 'field_visit_beneficiary_male', 'field_visit_beneficiary_female',
+        'farmer_mela_number', 'farmer_mela_beneficiary_male', 'farmer_mela_beneficiary_female',
+        'exhibition_arranged_number', 'exhibition_arranged_beneficiary_male', 'exhibition_arranged_beneficiary_female',
+        'farmer_training_number', 'farmer_training_beneficiary_male', 'farmer_training_beneficiary_female',
+        'training_number', 'training_beneficiary_male', 'training_beneficiary_female',
+        'tv_show_number', 'tv_show_beneficiary_male', 'tv_show_beneficiary_female',
+        'radio_talks_numbers', 'radio_talks_beneficiary_male', 'radio_talks_beneficiary_female',
+        'sensitization_workshop_number', 'sensitization_workshop_beneficiary_male', 'sensitization_workshop_beneficiary_female',
+        'farmers_queries_number', 'farmers_queries_beneficiary_male', 'farmers_queries_beneficiary_female',
+        'lectures_delivered_number', 'lectures_delivered_beneficiary_male', 'lectures_delivered_beneficiary_female',
+        'news_clips_number', 'news_clips_beneficiary_male', 'news_clips_beneficiary_female',
+        'visit_of_farmers_numbers', 'visit_of_farmers_beneficiary_male', 'visit_of_farmers_beneficiary_female',
+    ]
+    activities_sums = safe_numeric_sums(activities_data, extension_activity_sum_fields)
 
     # ---------- 7) Photographs (FY + month + district) ----------
     photograph_data = RepresentedPhotograph.objects.filter(
