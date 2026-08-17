@@ -74,26 +74,23 @@
             </thead>
             <tbody id="monthsTable">
                 {% for item in year_data_availability %}
-                    {% if item.has_data %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ item.year }}</td>
-                            <td>
-                                <div>
-                                    <a type="button" data-toggle="tooltip" data-original-title="View" href="/yearly_super_report/{{district_name}}/{{ item.year }}/" >
-                                        <i class="uil uil-eye" style="color: #000000; font-size:16px"></i>
-                                    </a>
-                                </div>
-                            </td> 
-
-                            
-                        </tr>
-                    {% else %}
-                    <td></td>
-                    <td>
-                    <div class="text-center">Years Not Available</div>
-                    </td>
-                    {% endif %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ item.year }}</td>
+                        <td>
+                            <div>
+                                <a type="button" data-toggle="tooltip" data-original-title="View" href="/yearly_super_report/{{district_name}}/{{ item.year }}/" >
+                                    <i class="uil uil-eye" style="color: #000000; font-size:16px"></i>
+                                </a>
+                            </div>
+                        </td> 
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">
+                            <div class="text-center">Years Not Available</div>
+                        </td>
+                    </tr>
                 {% endfor %}
         
             </tbody>

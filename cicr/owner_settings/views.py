@@ -23,6 +23,7 @@ from django.db.models.functions import Cast
 from django.db.models import Sum, F, ExpressionWrapper, IntegerField
 import random
 import string
+import calendar
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
@@ -36,7 +37,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.shortcuts import render
 from django.db.models import Avg
 from django.db.models import Avg
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 
 from django.shortcuts import render
@@ -77,6 +78,42 @@ def safe_numeric_averages(queryset, field_map):
         output_key: (totals[output_key] / counts[output_key] if counts[output_key] else None)
         for output_key in field_map
     }
+
+
+def selected_financial_year_range(request):
+    financial_year = Financial_Year.objects.order_by('-id').first()
+    selected_fin_year = request.session.get(
+        'financial_year',
+        financial_year.financial_year if financial_year else '2024-2025'
+    )
+    try:
+        start_year, end_year = map(int, selected_fin_year.split('-'))
+    except (AttributeError, TypeError, ValueError):
+        selected_fin_year = '2024-2025'
+        start_year, end_year = 2024, 2025
+    return selected_fin_year, date(start_year, 4, 1), date(end_year, 3, 31)
+
+
+def report_months_for_district(district_name, start_date, end_date):
+    month_numbers = set()
+    report_models = (
+        pest_incidence_data,
+        monthly_physical_progress,
+        extension_activities_carried_out,
+        RepresentedPhotograph,
+        AssessmentSeason,
+    )
+
+    for model in report_models:
+        dates = (
+            model.objects
+            .filter(district=district_name, date_field__range=(start_date, end_date))
+            .exclude(date_field__isnull=True)
+            .values_list('date_field', flat=True)
+        )
+        month_numbers.update(value.month for value in dates if value)
+
+    return [calendar.month_name[number] for number in sorted(month_numbers)]
 
 
 # Create your views here.
@@ -352,15 +389,12 @@ def display_weeks(request):
 
 @login_required(login_url='/login/')
 def monthly_report_month(request,district_name):
-    data = pest_incidence_data.objects.filter(district=district_name)
-    unique_months = data.values_list('month', flat=True).distinct().order_by('month')
-    print('ffffffffffffffff',data)
-    print('unique_months',unique_months)
-    for i in unique_months:
-        print('nnnnnnnnnnn',i)
+    selected_fin_year, start_date, end_date = selected_financial_year_range(request)
+    unique_months = report_months_for_district(district_name, start_date, end_date)
     context={
     'unique_months':unique_months,
     'district_name':district_name,
+    'selected_fin_year': selected_fin_year,
     }
     return render(request,'owner/monthly_report_month.html',context)
 
@@ -1044,15 +1078,12 @@ def monthly_district(request):
 
 @login_required(login_url='/login/')
 def super_monthly_report(request,district_name):
-    data = pest_incidence_data.objects.filter(district=district_name)
-    unique_months = data.values_list('month', flat=True).distinct().order_by('month')
-    print('ffffffffffffffff',data)
-    print('unique_months',unique_months)
-    for i in unique_months:
-        print('nnnnnnnnnnn',i)
+    selected_fin_year, start_date, end_date = selected_financial_year_range(request)
+    unique_months = report_months_for_district(district_name, start_date, end_date)
     context={
     'unique_months':unique_months,
     'district_name':district_name,
+    'selected_fin_year': selected_fin_year,
     }
     return render(request,'owner/super_monthly_report.html',context)
 
@@ -2410,34 +2441,23 @@ def yearly_district(request):
 
 @login_required(login_url='/')
 def superadmin_year(request,district_name):
-    year_data = standard_weeks.objects.values('year').distinct().order_by('year')
-
-    print('yearyearyearyearyearyearyearyearyearyear',year_data)
-
-    # Prepare a list to store year and availability of data
-    year_data_availability = []
-    
-    for year_obj in year_data:
-        year = year_obj['year']
-        
-        # Check if there is any data in YearlyProgressReport for the given year and district
-        data = YearlyProgressReport.objects.filter(
-            district=district_name,
-            date_field__year=year
-        )
-        
-        # Store the year and whether data exists
-        year_data_availability.append({
-            'year': year,
-            'has_data': data.exists()  # Check if the queryset is not empty
-        })
-
-    # Debugging output
-    print('year_data_availability', year_data_availability)
+    yearly_reports = (
+        YearlyProgressReport.objects
+        .filter(district=district_name, date_field__isnull=False)
+        .order_by('-date_field')
+    )
+    years = sorted(
+        {report.date_field.year for report in yearly_reports},
+        reverse=True
+    )
+    year_data_availability = [
+        {'year': year, 'has_data': True}
+        for year in years
+    ]
 
 
     context={
-    'year':year_data,
+    'year':years,
     'district_name':district_name,
     'year_data_availability': year_data_availability,
     }
