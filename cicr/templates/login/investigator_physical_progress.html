@@ -40,6 +40,8 @@
         }
 
         .back {
+            position: relative;
+            z-index: 5;
             width: 42px;
             height: 42px;
             display: grid;
@@ -48,6 +50,7 @@
             text-decoration: none;
             border: 1px solid rgba(255,255,255,0.24);
             border-radius: 50%;
+            cursor: pointer;
         }
 
         .topbar h1 {
@@ -285,7 +288,7 @@
     {{ investigator_id|json_script:"investigator-id" }}
 
     <header class="topbar">
-        <a class="back" href="/investigator/monthly-progress/" aria-label="Back to monthly progress">
+        <a class="back" href="/investigator/monthly-progress/" data-page-back="/investigator/monthly-progress/" aria-label="Back to monthly progress">
             <svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
         </a>
         <h1>Physical Progress Report</h1>
@@ -534,6 +537,11 @@
         });
 
         loadDistricts();
+
+        document.querySelector('[data-page-back]').addEventListener('click', (event) => {
+            event.preventDefault();
+            window.location.assign(event.currentTarget.dataset.pageBack);
+        });
     </script>
     {% include "includes/accessibility_panel.html" %}
 </body>

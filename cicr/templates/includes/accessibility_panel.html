@@ -33,6 +33,13 @@
         color: #ffffff !important;
     }
 
+    :where(.topbar .back, .top-appbar .back, .drawer-head .back) {
+        position: relative !important;
+        z-index: 10 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+    }
+
     html.cicr-a11y-dark {
         --green-950: #f7fff8;
         --green-900: #1fb34d;
