@@ -331,6 +331,13 @@
         border-radius: 50%;
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
         cursor: pointer;
+        touch-action: none;
+        user-select: none;
+    }
+
+    .cicr-a11y-button.cicr-a11y-dragging {
+        cursor: grabbing;
+        transition: none !important;
     }
 
     .cicr-a11y-button[hidden],
@@ -668,6 +675,7 @@
         window.__cicrAccessibilityReady = true;
 
         const storageKey = 'cicrAccessibilitySettingsV2';
+        const positionStorageKey = 'cicrAccessibilityButtonPosition';
         const legacyStorageKey = 'cicrAccessibilitySettings';
         const defaults = {
             readAloud: false,
@@ -688,6 +696,8 @@
         const textScaleSelector = 'body :where(h1, h2, h3, h4, h5, h6, p, li, a, button, label, span, strong, small, td, th, input, select, textarea, .card-title, .section-title, .pest-name, .pest-copy, .detail-button, .button, .small-button)';
         let settings = readSettings();
         let speakTimer = null;
+        let dragState = null;
+        let suppressNextClick = false;
 
         function readSettings() {
             try {
@@ -700,6 +710,50 @@
 
         function saveSettings() {
             localStorage.setItem(storageKey, JSON.stringify(settings));
+        }
+
+        function readButtonPosition() {
+            try {
+                return JSON.parse(localStorage.getItem(positionStorageKey) || 'null');
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function saveButtonPosition(left, top) {
+            localStorage.setItem(positionStorageKey, JSON.stringify({ left, top }));
+        }
+
+        function clampButtonPosition(left, top, button = openButton) {
+            const margin = 8;
+            const width = button.offsetWidth || 60;
+            const height = button.offsetHeight || 60;
+            return {
+                left: Math.min(Math.max(margin, left), Math.max(margin, window.innerWidth - width - margin)),
+                top: Math.min(Math.max(margin, top), Math.max(margin, window.innerHeight - height - margin))
+            };
+        }
+
+        function setButtonPosition(left, top, shouldSave = true) {
+            const position = clampButtonPosition(left, top);
+            [openButton, floatingCloseButton].forEach(button => {
+                button.style.left = `${position.left}px`;
+                button.style.top = `${position.top}px`;
+                button.style.right = 'auto';
+                button.style.bottom = 'auto';
+            });
+            if (shouldSave) saveButtonPosition(position.left, position.top);
+        }
+
+        function applyButtonPosition() {
+            const saved = readButtonPosition();
+            if (!saved || !Number.isFinite(saved.left) || !Number.isFinite(saved.top)) {
+                const width = openButton.offsetWidth || 60;
+                const height = openButton.offsetHeight || 60;
+                setButtonPosition(window.innerWidth - width - 28, window.innerHeight - height - 28, false);
+                return;
+            }
+            setButtonPosition(saved.left, saved.top, false);
         }
 
         function applyTextSize() {
@@ -781,6 +835,41 @@
             else openPanel();
         }
 
+        function startButtonDrag(event) {
+            if (event.button !== undefined && event.button !== 0) return;
+            const rect = openButton.hidden ? floatingCloseButton.getBoundingClientRect() : openButton.getBoundingClientRect();
+            dragState = {
+                pointerId: event.pointerId,
+                startX: event.clientX,
+                startY: event.clientY,
+                offsetX: event.clientX - rect.left,
+                offsetY: event.clientY - rect.top,
+                moved: false
+            };
+            event.currentTarget.setPointerCapture(event.pointerId);
+            openButton.classList.add('cicr-a11y-dragging');
+            floatingCloseButton.classList.add('cicr-a11y-dragging');
+        }
+
+        function moveButtonDrag(event) {
+            if (!dragState || dragState.pointerId !== event.pointerId) return;
+            const distance = Math.hypot(event.clientX - dragState.startX, event.clientY - dragState.startY);
+            if (distance > 4) dragState.moved = true;
+            if (!dragState.moved) return;
+            setButtonPosition(event.clientX - dragState.offsetX, event.clientY - dragState.offsetY);
+        }
+
+        function endButtonDrag(event) {
+            if (!dragState || dragState.pointerId !== event.pointerId) return;
+            suppressNextClick = dragState.moved;
+            dragState = null;
+            openButton.classList.remove('cicr-a11y-dragging');
+            floatingCloseButton.classList.remove('cicr-a11y-dragging');
+            window.setTimeout(() => {
+                suppressNextClick = false;
+            }, 0);
+        }
+
         document.querySelectorAll('[data-a11y-setting]').forEach(input => {
             input.addEventListener('change', event => {
                 const key = event.target.dataset.a11ySetting;
@@ -817,16 +906,26 @@
 
         openButton.setAttribute('aria-expanded', 'false');
         floatingCloseButton.hidden = true;
+        applyButtonPosition();
+        window.addEventListener('resize', applyButtonPosition);
+        [openButton, floatingCloseButton].forEach(button => {
+            button.addEventListener('pointerdown', startButtonDrag);
+            button.addEventListener('pointermove', moveButtonDrag);
+            button.addEventListener('pointerup', endButtonDrag);
+            button.addEventListener('pointercancel', endButtonDrag);
+        });
         openButton.addEventListener('click', event => {
             event.preventDefault();
             event.stopPropagation();
             event.stopImmediatePropagation();
+            if (suppressNextClick) return;
             togglePanel();
         }, true);
         floatingCloseButton.addEventListener('click', event => {
             event.preventDefault();
             event.stopPropagation();
             event.stopImmediatePropagation();
+            if (suppressNextClick) return;
             closePanel(false);
         }, true);
         closeButton.addEventListener('click', closePanel);
