@@ -26,6 +26,30 @@
       h2{
         font-size: 20px;
       }
+      .report-meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .report-card {
+        border: 1px solid #dbe8dd;
+        border-radius: 8px;
+        padding: 10px 12px;
+        background: #fbfdfb;
+      }
+      .report-card span {
+        display: block;
+        color: #5f6f63;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .report-card strong {
+        display: block;
+        margin-top: 4px;
+        color: #003d0d;
+        font-size: 16px;
+      }
       .table th,.table td {
         vertical-align: middle;
         text-align: center;
@@ -131,6 +155,44 @@
         </div> -->
 
      
+{% for i in data %}
+<article class="report-card mb-3">
+  <div class="report-meta">
+    <div><span>Sr. No.</span><strong>{{ forloop.counter }}</strong></div>
+    <div><span>Date</span><strong>{{ i.date_field|default:"-" }}</strong></div>
+    <div><span>Week</span><strong>{{ i.week|default:"-" }}{% if i.standard_week %} | {{ i.standard_week }}{% endif %}</strong></div>
+    <div><span>Month / Year</span><strong>{{ i.month|default:"-" }} {{ i.year|default:"" }}</strong></div>
+    <div><span>Investigator</span><strong>{{ i.name_of_investigator|default:i.user_id|default:"-" }}</strong></div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered mb-0">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>IRM Avg</th>
+          <th>Non-IRM Avg</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Jassid / 3 leaves / plant</td><td>{{ i.jassid_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.jassid_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>Whitefly / 3 leaves / plant</td><td>{{ i.whitefly_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.whitefly_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>Thrips / 3 leaves / plant</td><td>{{ i.thrips_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.thrips_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>% Flowers infestation</td><td>{{ i.flowers_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.flowers_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>% Green boll infestation</td><td>{{ i.green_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.green_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>% Locule damage</td><td>{{ i.locule_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.locule_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>% Open boll infestation</td><td>{{ i.open_ball_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.open_ball_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>Average pheromone trap catches per trap/week</td><td>{{ i.pheromone_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.pheromone_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>% Boll rot incidence</td><td>{{ i.incidence_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.incidence_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+        <tr><td>% Locular damage</td><td>{{ i.locular_damage_irm_average|floatformat:2|default:"-" }}</td><td>{{ i.locular_damage_nonirm_average|floatformat:2|default:"-" }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</article>
+{% empty %}
+<div class="report-card text-center">Weekly reports not available for this district.</div>
+{% endfor %}
+
+{% comment %}
 <table class="table table-bordered table-responsive" id="myTable">
   <thead class="position-sticky top-0">
   <tr>
@@ -325,6 +387,7 @@
   </tr>
 </tbody>
 </table>
+{% endcomment %}
       </div>
       <div class="pagination p-2">
         <button id="prevBtn" class="btn btn-sucesss">Previous</button>
@@ -344,6 +407,7 @@
 
       <script>
         const table = document.getElementById('myTable');
+        if (table) {
         const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
         const rowsPerPage = 10;  // Number of rows per page
         let currentPage = 1;
@@ -371,6 +435,7 @@
           }
         });
         displayRows();  // Initialize table
+        }
     </script> 
   </body>
 </html>
