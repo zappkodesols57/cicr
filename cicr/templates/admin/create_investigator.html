@@ -122,6 +122,62 @@
             border: 1.5px solid black;
             background-color: white;
           }
+          .create-investigator-section {
+            align-items: flex-start !important;
+            min-height: calc(100vh - 160px) !important;
+            padding: 32px 0 40px !important;
+          }
+          .form-container {
+            border: 1px solid #d8eadf !important;
+            border-radius: 14px !important;
+            box-shadow: 0 20px 55px rgba(0, 93, 24, 0.1) !important;
+            max-width: none !important;
+            padding: 42px !important;
+            width: 100% !important;
+          }
+          .form-container form {
+            width: min(100%, 1080px) !important;
+          }
+          .form-container h2 {
+            color: #005d18 !important;
+            font-size: clamp(32px, 3vw, 46px) !important;
+            font-weight: 800 !important;
+            margin-bottom: 20px !important;
+          }
+          .modal-input-section label {
+            color: #10251a !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+          }
+          .modal-input-section input,
+          .modal-input-section select {
+            border: 1px solid #cfe3d5 !important;
+            border-radius: 10px !important;
+            font-size: 17px !important;
+            min-height: 54px !important;
+            padding: 12px 15px !important;
+          }
+          .modal-input-section input:focus,
+          .modal-input-section select:focus {
+            border-color: #008a24 !important;
+            box-shadow: 0 0 0 4px rgba(0, 107, 36, 0.08) !important;
+            outline: none !important;
+          }
+          .form-container button {
+            background: #007a2a !important;
+            border-radius: 10px !important;
+            font-size: 17px !important;
+            font-weight: 800 !important;
+            min-height: 54px !important;
+          }
+          @media (max-width: 768px) {
+            .create-investigator-section {
+              padding: 24px 0 !important;
+            }
+            .form-container {
+              padding: 24px !important;
+            }
+          }
     </style>
 </head>
 <body>

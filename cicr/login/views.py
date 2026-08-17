@@ -94,12 +94,19 @@ def super_login(request):
 
         if user is None:
             return render(request, 'login/admin_login.html', {'error_message': 'Invalid login credentials.'})
-      
-        if user is not None:
-            login(request, user)
-            return redirect('/super_dashboard/')  # Redirect to the admin index page after login
-        else:
-            return HttpResponse("Invalid login credentials.")
+
+        is_super_admin = (
+            user.is_active
+            and user.is_superuser
+            and not getattr(user, 'is_admin', False)
+            and not getattr(user, 'is_investigator', False)
+            and not getattr(user, 'is_farmer', False)
+        )
+        if not is_super_admin:
+            return render(request, 'login/admin_login.html', {'error_message': 'Only super admin users can login here.'})
+
+        login(request, user)
+        return redirect('/super_dashboard/')
     return render(request, 'login/admin_login.html')
 
 

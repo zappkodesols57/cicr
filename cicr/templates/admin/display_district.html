@@ -10,18 +10,241 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
     />
     <style>
-      body {
-        background-color: #ffffff;
+      .container {
+        max-width: none;
+        padding: 0;
       }
       .table-container {
-        margin-top: 50px;
-        padding: 20px;
+        margin-top: 0;
+        padding: 24px;
         background-color: #ffffff;
+        border: 1px solid #d9eadc;
         border-radius: 8px;
+        box-shadow: 0 14px 32px rgba(0, 93, 24, 0.08);
+      }
+      .district-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 22px;
+      }
+      .district-header h2 {
+        color: #17251d;
+        font-size: 24px;
+        font-weight: 800;
+        margin: 0 0 5px;
+      }
+      .district-header p {
+        color: #66766d;
+        margin: 0;
+        font-size: 13px;
+      }
+      .district-tools {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .district-search {
+        position: relative;
+      }
+      .district-search i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #7a8a81;
+        font-size: 16px;
+      }
+      .district-search input {
+        width: 230px;
+        height: 38px;
+        border: 1px solid #d9eadc;
+        border-radius: 6px;
+        padding: 0 12px 0 38px;
+        font-size: 13px;
+      }
+      .add-district-btn {
+        height: 38px;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 15px;
+        background: #007f2a;
+        color: #ffffff;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 13px;
+        box-shadow: 0 10px 20px rgba(0, 127, 42, 0.18);
+      }
+      .add-district-btn:hover {
+        color: #ffffff;
+        background: #006d24;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+      .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-height: 88px;
+        border: 1px solid #d9eadc;
+        border-radius: 8px;
+        padding: 14px;
+        background: #ffffff;
+      }
+      .stat-icon {
+        flex: 0 0 46px;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        line-height: 1;
+        position: relative;
+        overflow: hidden;
+      }
+      .stat-icon i {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        transform: translate(-50%, -50%);
+        font-size: 21px;
+        line-height: 1;
+        margin: 0;
+      }
+      .stat-icon.green { background: #ddf6e5; color: #008232; }
+      .stat-icon.yellow { background: #fff3d7; color: #c48500; }
+      .stat-icon.blue { background: #e3f0ff; color: #1877f2; }
+      .stat-card span {
+        color: #66766d;
+        display: block;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .stat-card strong {
+        color: #007f2a;
+        display: block;
+        font-size: 22px;
+        line-height: 1.1;
+        margin: 2px 0;
+      }
+      .stat-card small {
+        color: #66766d;
+        font-size: 11px;
       }
       .table th,
       .table td {
         vertical-align: middle;
+        padding: 13px 16px;
+        font-size: 13px;
+      }
+      .table {
+        margin-bottom: 0;
+        box-shadow: none;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .table thead th {
+        background: #eef8f1 !important;
+        color: #17251d;
+        border-bottom: 0;
+      }
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #dcf6e5;
+        color: #007f2a;
+        font-weight: 800;
+        font-size: 12px;
+      }
+      .status-pill::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .action-btn {
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #d9eadc;
+        border-radius: 6px;
+        color: #007f2a;
+        text-decoration: none;
+        margin: 0 2px;
+      }
+      .action-btn.danger {
+        color: #dc3545;
+        border-color: #f4c7cd;
+        background: #fff7f8;
+      }
+      .action-btn:hover {
+        background: #eaf8ee;
+      }
+      .action-btn.danger:hover {
+        background: #fdecef;
+      }
+      .table tbody tr:nth-child(even) {
+        background: #fbfdfb;
+      }
+      .table tbody tr:hover {
+        background: #f1faf4;
+      }
+      .table-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-top: 14px;
+        color: #66766d;
+        font-size: 12px;
+      }
+      .pager {
+        display: flex;
+        gap: 6px;
+      }
+      .pager span,
+      .pager button {
+        min-width: 32px;
+        height: 32px;
+        border: 1px solid #d9eadc;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        font-weight: 700;
+        color: #17251d;
+        cursor: pointer;
+      }
+      .pager button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .pager .active,
+      .pager button.active {
+        background: #007f2a;
+        color: #ffffff;
+        border-color: #007f2a;
       }
       .btn-primary {
         background-color: #198754;
@@ -40,16 +263,70 @@
       }
 
       .create i {
-        font-size: 20px;
+        font-size: 18px;
         color: #198754;
         text-decoration: none;
+      }
+      @media (max-width: 1100px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .district-header {
+          flex-direction: column;
+        }
+      }
+      @media (max-width: 700px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        .district-tools {
+          width: 100%;
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .district-search input,
+        .add-district-btn {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="table-container">
-        <h2 class="text-center">Districts List</h2>
+        <div class="district-header">
+          <div>
+            <h2>Admin Districts List</h2>
+            <p>Manage and view all districts in the system</p>
+          </div>
+          <div class="district-tools">
+            <div class="district-search">
+              <i class="bx bx-search"></i>
+              <input type="search" id="districtSearch" placeholder="Search district...">
+            </div>
+            <a class="add-district-btn" href="/add-district/"><i class="bx bx-plus"></i> Add District</a>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon green"><i class="bx bx-map"></i></span>
+            <div><span>Total Districts</span><strong>{{ data|length }}</strong><small>All registered districts</small></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon green"><i class="bx bx-user-check"></i></span>
+            <div><span>Active Districts</span><strong>{{ data|length }}</strong><small>Currently active</small></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon yellow"><i class="bx bx-shield-quarter"></i></span>
+            <div><span>Inactive Districts</span><strong>0</strong><small>Currently inactive</small></div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon blue"><i class="bx bx-group"></i></span>
+            <div><span>Total Users</span><strong>{{ data|length }}</strong><small>Across all districts</small></div>
+          </div>
+        </div>
+
         <table class="table table-hover table-bordered">
           <thead class="">
             <tr>
@@ -57,6 +334,7 @@
                 Sr. No.
               </th>
               <th scope="col" style="width: 70%">District</th>
+              <th scope="col" style="width: 20%; text-align: center">Status</th>
               <th scope="col" style="width: 20%; text-align: center">
                 Actions
               </th>
@@ -67,6 +345,7 @@
             <tr>
               <td style="text-align: center">{{ forloop.counter }}</td>
               <td>{{ i.district_name }}</td>
+              <td style="text-align: center"><span class="status-pill">Active</span></td>
               <td style="text-align: center">
                 <a
                   type="button"
@@ -74,9 +353,9 @@
                   data-bs-placement="top"
                   title="Edit"
                   href="/edit-district/{{ i.id }}/"
-                  class="create"
+                  class="action-btn"
                 >
-                  <i class="bx bx-edit"></i>
+                  <i class="bx bx-show"></i>
                 </a>
                 <a
                   type="button"
@@ -84,7 +363,8 @@
                   data-bs-placement="top"
                   title="Delete"
                   href="/delete-district/{{ i.id }}/"
-                  class="create"
+                  class="action-btn danger delete-district"
+                  data-district="{{ i.district_name }}"
                 >
                   <i class="bx bx-trash"></i>
                 </a>
@@ -93,19 +373,52 @@
             {% endfor %}
           </tbody>
         </table>
-        <div class="text-center mt-4">
-          <p>Total Number of Districts: <strong>{{ data|length }}</strong></p>
-        </div>
       </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
       var tooltipTriggerList = [].slice.call(
         document.querySelectorAll('[data-bs-toggle="tooltip"]')
       );
       var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
+      });
+      const districtSearch = document.getElementById('districtSearch');
+      if (districtSearch) {
+        districtSearch.addEventListener('input', function () {
+          const query = this.value.toLowerCase();
+          const table = document.querySelector('.table');
+          document.querySelectorAll('.table tbody tr').forEach((row) => {
+            row.dataset.hiddenBySearch = row.innerText.toLowerCase().includes(query) ? '0' : '1';
+          });
+          if (window.CICRPaginate && table) {
+            table._cicrPagination = { page: 1 };
+            window.CICRPaginate.refresh(table);
+          }
+        });
+      }
+      document.querySelectorAll('.delete-district').forEach((link) => {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          const href = this.getAttribute('href');
+          const district = this.dataset.district || 'this district';
+          Swal.fire({
+            title: 'Delete District?',
+            text: `Are you sure you want to delete ${district}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#66766d'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = href;
+            }
+          });
+        });
       });
     </script>
   </body>

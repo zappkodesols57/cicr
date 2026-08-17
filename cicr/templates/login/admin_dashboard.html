@@ -12,9 +12,6 @@
   <style>
     @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-    body {
-      font-family: "Open Sans", Arial;
-    }
     .dashboard {
       width: 100%;
       height: 100%;
@@ -23,8 +20,8 @@
       align-items: start;
       flex-direction: row;
       flex-wrap: wrap;
-      padding: 3rem;
-      gap: 2rem;
+      padding: 0;
+      gap: 24px;
     }
 
     .dashboard-title {
@@ -39,12 +36,22 @@
       font-weight: bold;
     }
 
+    .dashboard-title h2 {
+      color: #005d18;
+      font-size: 34px;
+      font-weight: 800;
+      margin: 0;
+      text-transform: capitalize;
+    }
+
     .charts-section {
-      width: 48%;
+      width: calc(50% - 12px);
       height: 350px; /* Fixed height */
-      padding: 0.5rem;
-      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
+      padding: 18px;
+      background: #ffffff;
+      border: 1px solid #d9eadc;
+      box-shadow: 0 16px 35px rgba(0, 93, 24, 0.08);
+      border-radius: 8px;
       display: flex;
       justify-content: start;
       align-items: start;
@@ -72,7 +79,9 @@
       flex-wrap: wrap;
     }
     .weekly-status-title span {
-      font-size: 30px;
+      color: #005d18;
+      font-size: 28px;
+      font-weight: 800;
     }
 
     /*.weekly-status-section {
@@ -88,9 +97,11 @@
 
     .charts-section-week {
       height: 380px; /* Fixed height */
-      padding: 20px 10px;
-      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
+      padding: 18px;
+      background: #ffffff;
+      border: 1px solid #d9eadc;
+      box-shadow: 0 16px 35px rgba(0, 93, 24, 0.08);
+      border-radius: 8px;
     }
 
     #bar-chart1,
@@ -144,6 +155,139 @@
       background-color: white;
     }
 
+    .charts-section-title span,
+    .charts-section-title-parent span {
+      color: #10251a;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 1100px) {
+      .charts-section {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-title {
+        gap: 14px;
+      }
+
+      .dashboard-title h2 {
+        font-size: 26px;
+      }
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px;
+    }
+
+    .dashboard-title {
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #d9eadc;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0, 93, 24, 0.08);
+      display: flex !important;
+      grid-column: 1 / -1;
+      padding: 22px 24px;
+    }
+
+    .dashboard-title h2 {
+      font-size: clamp(30px, 3vw, 46px);
+    }
+
+    .modal-input-section {
+      margin: 0 !important;
+      margin-left: auto !important;
+    }
+
+    .modal-input-section select {
+      border: 1px solid #cfe3d5 !important;
+      border-radius: 10px !important;
+      color: #10251a;
+      font-weight: 700;
+      min-height: 46px;
+      min-width: 170px;
+    }
+
+    .charts-section {
+      border-radius: 14px;
+      gap: 14px;
+      grid-column: span 6;
+      height: 360px;
+      padding: 22px;
+      width: 100% !important;
+    }
+
+    .weekly-status-parent-section {
+      display: block;
+      grid-column: 1 / -1;
+    }
+
+    .weekly-status-parent-section .row {
+      margin: 0 -10px;
+      width: calc(100% + 20px);
+    }
+
+    .weekly-status-title {
+      background: #ffffff;
+      border: 1px solid #d9eadc;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0, 93, 24, 0.08);
+      margin-bottom: 14px;
+      padding: 20px 22px;
+    }
+
+    .charts-section-week {
+      border-radius: 14px;
+      height: 330px;
+      padding: 20px;
+    }
+
+    #bar-chart1,
+    #bar-chart2,
+    #line-chart1,
+    #line-chart2,
+    #line-chart3,
+    #line-chart4,
+    #line-chart5,
+    #line-chart6,
+    #line-chart7,
+    #line-chart8 {
+      align-items: center;
+      display: flex;
+      height: calc(100% - 38px);
+      justify-content: center;
+      min-height: 230px;
+      padding: 0;
+      width: 100%;
+    }
+
+    .chart-empty {
+      align-items: center;
+      background: #f3faf5;
+      border: 1px dashed #b8ddc2;
+      border-radius: 12px;
+      color: #617166;
+      display: flex;
+      font-size: 15px;
+      font-weight: 700;
+      height: 100%;
+      justify-content: center;
+      min-height: 210px;
+      text-align: center;
+      width: 100%;
+    }
+
+    @media (max-width: 1100px) {
+      .charts-section {
+        grid-column: 1 / -1;
+      }
+    }
+
 
     
   </style>
@@ -151,7 +295,7 @@
   <body>
     <section class="dashboard">
       <div class="dashboard-title d-flex justify-content-between">
-        <h2>ADMIN PANEL</h2>
+        <h2>Admin Panel</h2>
         <div class="modal-input-section">
             <form id="month-form" method="GET" action="{% url 'dashboard_admin' %}">
               <select id="month" name="month" class="" required>
@@ -288,64 +432,62 @@
       google.setOnLoadCallback(drawCharts);
 
       function drawCharts() {
-        // Bar chart data
-        var barData1 = google.visualization.arrayToDataTable([
-                ["Month", "Surveys"],
-                {% for item in survey_data %}
-                    ["{{ item.month_name }}", {{ item.count }}],
-                {% endfor %}
-                
-            ]);
+        var barRaw1 = [
+          ["Month", "Surveys"],
+          {% for item in survey_data %}
+            ["{{ item.month_name }}", Number("{{ item.count|default:0 }}")],
+          {% endfor %}
+        ];
 
-        var barData2 = google.visualization.arrayToDataTable([
-              ["Region", "Weekly Reports"],
-              {% for item in pest_data %}
-                ["{{ item.month }}", {{ item.count }}],
-              {% endfor %}
-            
-            ]);
+        var barRaw2 = [
+          ["Month", "Weekly Reports"],
+          {% for item in pest_data %}
+            ["{{ item.month }}", Number("{{ item.count|default:0 }}")],
+          {% endfor %}
+        ];
 
-        // Line chart data (jassid data)
-        var lineData1 = google.visualization.arrayToDataTable({{ chart_data|safe }});
+        var lineRaw1 = {{ chart_data|safe }};
+        var lineRaw2 = {{ chart_data2|safe }};
+        var lineRaw3 = {{ chart_data3|safe }};
+        var lineRaw4 = {{ chart_data4|safe }};
+        var lineRaw5 = {{ chart_data5|safe }};
+        var lineRaw6 = {{ chart_data6|safe }};
+        var lineRaw7 = {{ chart_data7|safe }};
+        var lineRaw8 = {{ chart_data8|safe }};
 
-        // comment aparna to do:
+        function normalizeRows(raw) {
+          if (!Array.isArray(raw) || raw.length === 0) return [];
+          return raw.map(function(row, index) {
+            if (index === 0) return row;
+            return [String(row[0] || "-"), Number(row[1] || 0), Number(row[2] || 0)];
+          });
+        }
 
-        // var lineData1 = google.visualization.arrayToDataTable([
-        //   ["Month", "IRM", "NON-IRM"],
-        //   ["week-1", 1000, 41],
-        //   ["week-2", 170, 460],
-        //   ["week-3", 660, 111],
-        //   ["week-4", 110, 540],
-        // ]);
+        function drawEmpty(id) {
+          var el = document.getElementById(id);
+          if (el) {
+            el.innerHTML = '<div class="chart-empty">No data available for selected filters</div>';
+          }
+        }
 
-        // Line chart data (whitfly)
-        var lineData2 = google.visualization.arrayToDataTable({{ chart_data2|safe }});
-        
+        function drawChart(id, raw, chartType, options) {
+          raw = normalizeRows(raw);
+          if (raw.length <= 1) {
+            drawEmpty(id);
+            return;
+          }
+          var el = document.getElementById(id);
+          var data = google.visualization.arrayToDataTable(raw);
+          var chart = chartType === "bar"
+            ? new google.visualization.ColumnChart(el)
+            : new google.visualization.LineChart(el);
+          chart.draw(data, options);
+        }
 
-        // Line chart data (THRIPS)
-        var lineData3 = google.visualization.arrayToDataTable({{ chart_data3|safe }});
-        
-        // Line chart data (PINK BOLLWORM)
-        var lineData4 = google.visualization.arrayToDataTable({{ chart_data4|safe }});
-
-        // Line chart data (PINK BOLLWORM Infestation (Green Boll))
-        var lineData5 = google.visualization.arrayToDataTable({{ chart_data5|safe }});
-
-        // Line chart data (PINK BOLLWORM Infestation (Locule Damage))
-        var lineData6 = google.visualization.arrayToDataTable({{ chart_data6|safe }});
-
-        // Line chart data (PINK BOLLWORM Infestation (Open Boll))
-        var lineData7 = google.visualization.arrayToDataTable({{ chart_data7|safe }});
-
-        // Line chart data (Pheromone trap Catches)
-        var lineData8 = google.visualization.arrayToDataTable({{ chart_data8|safe }});
-
-
-        // Set bar chart options
         var barOptions = {
           focusTarget: "category",
           backgroundColor: "transparent",
-          colors: ["green", "lightgreen"],
+          colors: ["#008a24"],
           fontName: "Open Sans",
           chartArea: {
             left: 50,
@@ -364,7 +506,6 @@
           //
           vAxis: {
             minValue: 0,
-            maxValue: 100,
             baselineColor: "#DDD",
             gridlines: {
               color: "#DDD",
@@ -390,7 +531,7 @@
         var barOptions2 = {
           focusTarget: "category",
           backgroundColor: "transparent",
-          colors: ["green", "lightgreen"],
+          colors: ["#008a24"],
           fontName: "Open Sans",
           chartArea: {
             left: 50,
@@ -408,8 +549,7 @@
           },
           //
           vAxis: {
-            minValue: 50,
-            maxValue: 0,
+            minValue: 0,
             baselineColor: "#DDD",
             gridlines: {
               color: "#DDD",
@@ -435,7 +575,7 @@
         // Set line chart options
         var lineOptions = {
           backgroundColor: "transparent",
-          colors: ["cornflowerblue", "lightcoral"],
+          colors: ["#008a24", "#f59e0b"],
           fontName: "Open Sans",
           chartArea: {
             left: 50,
@@ -449,8 +589,7 @@
             },
           },
           vAxis: {
-            minValue: 50,
-            maxValue: 0,
+            minValue: 0,
             baselineColor: "#DDD",
             gridlines: {
               color: "#DDD",
@@ -481,51 +620,16 @@
           },
         };
 
-        // Draw bar charts
-        var barChart1 = new google.visualization.ColumnChart(
-          document.getElementById("bar-chart1")
-        );
-        var barChart2 = new google.visualization.ColumnChart(
-          document.getElementById("bar-chart2")
-        );
-
-        barChart1.draw(barData1, barOptions);
-        barChart2.draw(barData2, barOptions2);
-
-        // Draw line chart
-        var lineChart1 = new google.visualization.LineChart(
-          document.getElementById("line-chart1")
-        );
-        var lineChart2 = new google.visualization.LineChart(
-          document.getElementById("line-chart2")
-        );
-        var lineChart3 = new google.visualization.LineChart(
-          document.getElementById("line-chart3")
-        );
-        var lineChart4 = new google.visualization.LineChart(
-          document.getElementById("line-chart4")
-        );
-        var lineChart5 = new google.visualization.LineChart(
-          document.getElementById("line-chart5")
-        );
-        var lineChart6 = new google.visualization.LineChart(
-          document.getElementById("line-chart6")
-        );
-        var lineChart7 = new google.visualization.LineChart(
-          document.getElementById("line-chart7")
-        );
-        var lineChart8 = new google.visualization.LineChart(
-          document.getElementById("line-chart8")
-        );
-
-        lineChart1.draw(lineData1, lineOptions);
-        lineChart2.draw(lineData2, lineOptions);
-        lineChart3.draw(lineData3, lineOptions);
-        lineChart4.draw(lineData4, lineOptions);
-        lineChart5.draw(lineData5, lineOptions);
-        lineChart6.draw(lineData6, lineOptions);
-        lineChart7.draw(lineData7, lineOptions);
-        lineChart8.draw(lineData8, lineOptions);
+        drawChart("bar-chart1", barRaw1, "bar", barOptions);
+        drawChart("bar-chart2", barRaw2, "bar", barOptions2);
+        drawChart("line-chart1", lineRaw1, "line", lineOptions);
+        drawChart("line-chart2", lineRaw2, "line", lineOptions);
+        drawChart("line-chart3", lineRaw3, "line", lineOptions);
+        drawChart("line-chart4", lineRaw4, "line", lineOptions);
+        drawChart("line-chart5", lineRaw5, "line", lineOptions);
+        drawChart("line-chart6", lineRaw6, "line", lineOptions);
+        drawChart("line-chart7", lineRaw7, "line", lineOptions);
+        drawChart("line-chart8", lineRaw8, "line", lineOptions);
       }
     </script>
   </body>

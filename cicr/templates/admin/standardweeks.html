@@ -9,59 +9,67 @@
     <title>Add District</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-        }
-
         .add-district-form{
             width: 100%;
-            min-height: 80vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            min-height: calc(100vh - 118px);
+            display: block;
+            padding: 0;
         }
 
         .form-container {
             background: #ffffff;
+            border: 1px solid #d9eadc;
             border-radius: 8px;
-            padding: 20px;
-            max-width: 400px;
+            padding: 28px 30px;
+            max-width: none;
             width: 100%;
+            min-height: calc(100vh - 142px);
+            box-shadow: 0 18px 40px rgba(0, 93, 24, 0.08);
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
+            font-size: 28px;
+            margin-bottom: 6px;
+            color: #17251d;
+            font-weight: 800;
+            text-align: left;
+        }
+
+        .form-subtitle {
+            color: #66766d;
+            margin-bottom: 24px;
+            font-size: 14px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            max-width: 760px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 5px;
+            font-size: 16px;
+            color: #10251a;
+            margin-bottom: 8px;
+            font-weight: 700;
         }
 
-        .form-group input {
+        .form-group input,
+        .form-group select {
             width: 100%;
-            padding: 10px;
+            min-height: 52px;
+            padding: 10px 14px;
             font-size: 16px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+            border-radius: 8px;
+            border: 1px solid #d9eadc;
             box-sizing: border-box;
             transition: border-color 0.3s ease;
         }
 
-        .form-group input:focus {
-            border-color: black;
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #008000;
+            box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.08);
             outline: none;
         }
 
@@ -72,16 +80,24 @@
         }
 
         button {
-            background-color: #198754;
+            background-color: #005d18;
             color: #fff;
             border: none;
-            border-radius: 4px;
-            padding: 10px 15px;
-            font-size: 16px;
+            border-radius: 8px;
+            padding: 14px 15px;
+            font-size: 18px;
+            font-weight: 800;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            width: 100%;
-            display: block;
+            min-width: 220px;
+            width: auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background-color: #007d22;
         }
 
 
@@ -99,6 +115,7 @@
         <div class="add-district-form">
             <div class="form-container">
                 <h1>Add Standard Weeks</h1>
+                <p class="form-subtitle">Create a new standard week for report mapping.</p>
                 <form method="post" onsubmit="showToast()">
                     {% csrf_token %}
                     <div class="form-group">

@@ -12,10 +12,6 @@
   <style>
     @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-    body {
-      font-family: "Open Sans", Arial;
-    }
-
     .dashboard {
       width: 100%;
       height: 100%;
@@ -24,8 +20,8 @@
       align-items: start;
       flex-direction: column;
       flex-wrap: wrap;
-      padding:20px;
-      gap: 2rem;
+      padding: 0;
+      gap: 24px;
     }
 
     .dashboard-title {
@@ -42,10 +38,11 @@
 
     .charts-section {
       width: 100%;
-      /*height: 350px; */
-      padding: 10px;
-      box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
+      padding: 22px;
+      background: #ffffff;
+      border: 1px solid #d9eadc;
+      box-shadow: 0 16px 35px rgba(0, 93, 24, 0.08);
+      border-radius: 8px;
       display: flex;
       justify-content: start;
       align-items: start;
@@ -54,12 +51,12 @@
 
     #bar-chart1, #bar-chart2 {
       width: 100%;
-      height: 550px;
+      height: 460px;
     }
 
     .table {
       width: 100%;
-      margin-top: 2rem;
+      margin-top: 0;
     }
 
     .table thead th {
@@ -73,6 +70,31 @@
     .text-center {
       text-align: center;
     }
+
+    .dashboard-heading h2 {
+      color: #005d18;
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin: 0 0 6px;
+    }
+
+    .dashboard-heading p {
+      color: #617166;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      #bar-chart1,
+      #bar-chart2 {
+        height: 360px;
+      }
+
+      .dashboard-heading h2 {
+        font-size: 26px;
+      }
+    }
   </style>
 
   <body>
@@ -80,6 +102,10 @@
       <!-- <div class="dashboard-title">
         <span>CICR - IRM SUPER ADMIN PANEL</span>
       </div> -->
+      <div class="dashboard-heading">
+        <h2>Super Admin Dashboard</h2>
+        <p>Monitor investigator submissions and district activity.</p>
+      </div>
 
       <div class="charts-section">
         <!-- <div class="charts-section-title">

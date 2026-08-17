@@ -15,50 +15,84 @@
         margin: 0;
       }
       body {
-        background-color: #ffffff;
+        background-color: #f3faf5;
+      }
+      .container {
+        max-width: 1280px;
+        padding: 0;
       }
       .table-container {
-        padding: 10px;
-        background-color: #ffffff;
+        padding: 0;
+        background-color: transparent;
         border-radius: 8px;
-        overflow: auto;
+        overflow: visible;
       }
       h2{
-        font-size: 20px;
+        color: #005d18;
+        font-size: 30px;
+        font-weight: 800;
+        margin: 0 0 22px;
+        letter-spacing: 0;
       }
       .report-meta {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-        gap: 10px;
-        margin-bottom: 14px;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 18px;
       }
       .report-card {
-        border: 1px solid #dbe8dd;
+        border: 1px solid #d9eadc;
         border-radius: 8px;
-        padding: 10px 12px;
-        background: #fbfdfb;
+        padding: 22px;
+        background: #ffffff;
+        box-shadow: 0 18px 40px rgba(0, 93, 24, 0.08);
+      }
+      .report-meta > div {
+        background: #f3faf5;
+        border: 1px solid #d9eadc;
+        border-radius: 8px;
+        padding: 12px 14px;
       }
       .report-card span {
         display: block;
         color: #5f6f63;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 700;
       }
       .report-card strong {
         display: block;
         margin-top: 4px;
         color: #003d0d;
-        font-size: 16px;
+        font-size: 18px;
+        line-height: 1.25;
+      }
+      .report-card .table-responsive {
+        border: 1px solid #d9eadc;
+        border-radius: 8px;
+        overflow: hidden;
       }
       .table th,.table td {
         vertical-align: middle;
-        text-align: center;
-        padding: 5px;
+        padding: 12px 14px;
         border-collapse: collapse;
+        font-size: 16px;
       }
       .table th{
-        font-size: 12px;
-        font-weight: 400;
+        font-size: 15px;
+        font-weight: 800;
+      }
+      .report-card .table {
+        margin: 0;
+        box-shadow: none;
+      }
+      .report-card .table td:first-child,
+      .report-card .table th:first-child {
+        text-align: left;
+      }
+      .report-card .table td:not(:first-child),
+      .report-card .table th:not(:first-child) {
+        text-align: center;
+        width: 150px;
       }
 
     .r-irm{background-color:#ccc;text-align:center;vertical-align:top}
@@ -73,11 +107,27 @@
             margin: 0 2px;
             cursor: pointer;
         }
+      @media (max-width: 1100px) {
+        .report-meta {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 640px) {
+        h2 {
+          font-size: 24px;
+        }
+        .report-meta {
+          grid-template-columns: 1fr;
+        }
+        .report-card {
+          padding: 16px;
+        }
+      }
 </style>
   </head>
   <body>
     <div class="container">
-      <h2 class="text-center">PEST INCIDENCE DETAILS OF DISTRICT <b>{{district_name}}<b></h2>
+      <h2 class="text-center">Pest Incidence Details Of District <b>{{district_name}}</b></h2>
       <div class="table-container">
         
        <!--  <table class="table table-hover table-bordered">

@@ -23,19 +23,180 @@
     />
   </head>
   <body>
+    <style>
+      .yearly-report-view {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .yearly-overview {
+        background: #ffffff;
+        border: 1px solid #d6eadc;
+        border-radius: 14px;
+        box-shadow: 0 18px 45px rgba(0, 92, 32, 0.08);
+        padding: 28px;
+      }
+
+      .yearly-overview__head {
+        align-items: center;
+        border-bottom: 1px solid #d8eadf;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 22px;
+        padding-bottom: 18px;
+      }
+
+      .yearly-overview__head h2,
+      .spray-schedule-card h2 {
+        color: #005f1f;
+        font-size: clamp(26px, 2.2vw, 38px);
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .yearly-overview__head p {
+        color: #5d6f64;
+        font-size: 16px;
+        margin: 6px 0 0;
+      }
+
+      .yearly-badge {
+        align-items: center;
+        background: #e8f7ee;
+        border-radius: 999px;
+        color: #006b24;
+        display: inline-flex;
+        font-size: 15px;
+        font-weight: 700;
+        gap: 8px;
+        padding: 10px 16px;
+        white-space: nowrap;
+      }
+
+      .yearly-meta-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .yearly-meta-item {
+        align-items: flex-start;
+        background: linear-gradient(180deg, #fbfffd 0%, #f2faf5 100%);
+        border: 1px solid #dceee2;
+        border-radius: 12px;
+        display: flex;
+        gap: 14px;
+        min-height: 106px;
+        padding: 18px;
+      }
+
+      .yearly-meta-icon {
+        align-items: center;
+        background: #ddf4e4;
+        border-radius: 14px;
+        color: #007d2a;
+        display: inline-flex;
+        flex: 0 0 44px;
+        font-size: 22px;
+        height: 44px;
+        justify-content: center;
+        width: 44px;
+      }
+
+      .yearly-meta-label {
+        color: #617166;
+        display: block;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .yearly-meta-value {
+        color: #07160d;
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      .spray-schedule-card {
+        background: #ffffff;
+        border: 1px solid #d6eadc;
+        border-radius: 14px;
+        box-shadow: 0 18px 45px rgba(0, 92, 32, 0.08);
+        padding: 24px;
+      }
+
+      .spray-schedule-card h2 {
+        font-size: clamp(24px, 2vw, 32px);
+        margin-bottom: 18px;
+      }
+
+      .spray-schedule-card .table {
+        margin-bottom: 0;
+      }
+
+      .spray-schedule-card .table thead th {
+        background: #edf8f1;
+        color: #005f1f;
+        font-weight: 700;
+      }
+
+      @media (max-width: 768px) {
+        .yearly-overview,
+        .spray-schedule-card {
+          padding: 18px;
+        }
+
+        .yearly-overview__head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
       <section>
         {% for report in yearly_data %}
-        <div>
-            <label>Name of Farmer: <span>{{ report.name_of_farmer|default:"-" }}</span></label><br>
-            <label>Village: <span>{{ report.village|default:"-" }}</span></label><br>
-            <label>Taluka: <span>{{ report.taluka|default:"-" }}</span></label><br>
-            <label>District: <span>{{ report.district|default:"-" }}</span></label><br>
-            <label>State: <span>{{ report.state|default:"-" }}</span></label><br>
-            <label>Cultivation: 
-                <span>{{ report.get_cultivation_display|default:"-" }}</span>
-            </label>
-        </div>
-        <div class="container-table">
+        <div class="yearly-report-view">
+          <div class="yearly-overview">
+            <div class="yearly-overview__head">
+              <div>
+                <h2>Yearly Report Overview</h2>
+                <p>Farmer profile, location and cultivation details.</p>
+              </div>
+              <span class="yearly-badge"><i class="bx bx-calendar"></i>{{ selected_fin_year|default:"-" }}</span>
+            </div>
+            <div class="yearly-meta-grid">
+              <div class="yearly-meta-item">
+                <span class="yearly-meta-icon"><i class="bx bx-user"></i></span>
+                <div><span class="yearly-meta-label">Name of Farmer</span><span class="yearly-meta-value">{{ report.name_of_farmer|default:"-" }}</span></div>
+              </div>
+              <div class="yearly-meta-item">
+                <span class="yearly-meta-icon"><i class="bx bx-home"></i></span>
+                <div><span class="yearly-meta-label">Village</span><span class="yearly-meta-value">{{ report.village|default:"-" }}</span></div>
+              </div>
+              <div class="yearly-meta-item">
+                <span class="yearly-meta-icon"><i class="bx bx-map"></i></span>
+                <div><span class="yearly-meta-label">Taluka</span><span class="yearly-meta-value">{{ report.taluka|default:"-" }}</span></div>
+              </div>
+              <div class="yearly-meta-item">
+                <span class="yearly-meta-icon"><i class="bx bx-map-pin"></i></span>
+                <div><span class="yearly-meta-label">District</span><span class="yearly-meta-value">{{ report.district|default:"-" }}</span></div>
+              </div>
+              <div class="yearly-meta-item">
+                <span class="yearly-meta-icon"><i class="bx bx-building-house"></i></span>
+                <div><span class="yearly-meta-label">State</span><span class="yearly-meta-value">{{ report.state|default:"-" }}</span></div>
+              </div>
+              <div class="yearly-meta-item">
+                <span class="yearly-meta-icon"><i class="bx bx-leaf"></i></span>
+                <div><span class="yearly-meta-label">Cultivation</span><span class="yearly-meta-value">{{ report.get_cultivation_display|default:"-" }}</span></div>
+              </div>
+            </div>
+          </div>
+        <div class="container-table spray-schedule-card">
+            <h2>Spray Schedule on Cotton</h2>
             <table class="table table-responsive table-bordered">
                 <thead class="table-secondary">
                     <tr>
@@ -108,6 +269,7 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
         </div>
         {% endfor %}
     </section>
