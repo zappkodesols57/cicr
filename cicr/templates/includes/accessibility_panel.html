@@ -24,6 +24,15 @@
         border-color: #000000 !important;
     }
 
+    :where(.topbar, .top-appbar, .drawer-head) {
+        color: #ffffff !important;
+        background: linear-gradient(135deg, #003d0d, #005417) !important;
+    }
+
+    :where(.topbar, .topbar *, .top-appbar, .top-appbar *, .drawer-head, .drawer-head *) {
+        color: #ffffff !important;
+    }
+
     html.cicr-a11y-dark {
         --green-950: #f7fff8;
         --green-900: #1fb34d;
@@ -298,7 +307,11 @@
         background: #0b0f0c !important;
     }
 
-    html.cicr-a11y-dark :where(.topbar, .top-appbar, .drawer-head, .cicr-a11y-header) {
+    html.cicr-a11y-dark :where(.topbar, .top-appbar, .drawer-head) {
+        background: linear-gradient(135deg, #003d0d, #005417) !important;
+    }
+
+    html.cicr-a11y-dark .cicr-a11y-header {
         background: #000000 !important;
     }
 
