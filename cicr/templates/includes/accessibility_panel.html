@@ -45,7 +45,13 @@
         background: #0f1511 !important;
     }
 
-    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .report-list, .survey-list, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .main, .mobile-app, .advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .hero-photo, .pest-card, .calculator-card, .calculator-visual, .note-card, .stat-card, .section-panel, .quick-card, .quick-visual, .hero-overlay-card, .recent-item, .tip-strip, .empty-state, .tip) {
+    html.cicr-a11y-dark :where(.dashboard-shell, .main-panel, .content, .page-content, .page-body, .app-shell, .layout, .main-content) {
+        color: #f7fff8 !important;
+        background: #0f1511 !important;
+        border-color: #435047 !important;
+    }
+
+    html.cicr-a11y-dark :where(.card, .panel, .toolbar, .sidebar, .message, .metric, .set, .report-card, .survey-card, .report-list, .survey-list, .detail-item, .metric-value, .item-value, .meta-item, .edit-panel, .feature, .action-card, .glass-card, .main, .mobile-app, .advisory-card, .strategy-card, .tip-card, .info-card, .section-card, .tips-card, .hero-photo, .pest-card, .calculator-card, .calculator-visual, .note-card, .stat-card, .section-panel, .quick-card, .quick-visual, .hero-overlay-card, .recent-item, .tip-strip, .empty-state, .tip, .welcome, .chart-grid, .action-grid, .sidebar-footer) {
         color: #f7fff8 !important;
         background: #171d19 !important;
         border-color: #435047 !important;
@@ -146,6 +152,23 @@
         color: #ffffff !important;
         background: #08a33a !important;
         border-color: #22c55e !important;
+    }
+
+    html.cicr-a11y-dark :where(.nav-link, .logout-link, .nav-sub-link) {
+        color: #f7fff8 !important;
+    }
+
+    html.cicr-a11y-dark :where(.nav-link.active, .nav-link:hover, .logout-link:hover, .nav-sub-link:hover) {
+        color: #ffffff !important;
+        background: #1fb34d !important;
+        border-color: #58d178 !important;
+        box-shadow: none !important;
+    }
+
+    html.cicr-a11y-dark :where(.arrow) {
+        color: #ffffff !important;
+        background: #203126 !important;
+        border: 1px solid #54725d !important;
     }
 
     html.cicr-a11y-dark :where(.stat-icon, .step-icon, .pest-icon, .point-icon, .info-icon, .strategy-icon, .strategy-num, .note-icon, .tip-badge, .guide-arrow, .quick-badge, .quick-action) {
@@ -762,6 +785,12 @@
             input.addEventListener('change', event => {
                 const key = event.target.dataset.a11ySetting;
                 settings[key] = event.target.checked;
+                if (key === 'darkMode' && event.target.checked) {
+                    settings.highContrast = false;
+                }
+                if (key === 'highContrast' && event.target.checked) {
+                    settings.darkMode = false;
+                }
                 saveSettings();
                 applySettings();
                 if (key === 'readAloud') {
