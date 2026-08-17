@@ -1,3 +1,4 @@
+{% load static %}
 {% include "includes/global_typography.html" %}
 <style>
     html.cicr-a11y-reduce-motion *,
@@ -252,9 +253,20 @@
     }
 
     .cicr-a11y-button svg,
+    .cicr-a11y-button img,
     .cicr-a11y-panel svg {
         width: 22px;
         height: 22px;
+        object-fit: contain;
+    }
+
+    .cicr-a11y-button img {
+        width: 34px;
+        height: 34px;
+        display: block;
+    }
+
+    .cicr-a11y-panel svg {
         fill: none;
         stroke: currentColor;
         stroke-width: 2.2;
@@ -455,12 +467,12 @@
 </style>
 
 <button class="cicr-a11y-button" type="button" id="cicrA11yOpen" aria-label="Open accessibility settings">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M4 9h16"/><path d="M12 9v12"/><path d="m8 21 4-7 4 7"/></svg>
+    <img src="{% static 'images/accessibility png.png' %}" alt="" aria-hidden="true">
 </button>
 
 <section class="cicr-a11y-overlay" id="cicrA11yOverlay" hidden>
     <button class="cicr-a11y-button cicr-a11y-floating-close" type="button" id="cicrA11yFloatingClose" aria-label="Close accessibility settings">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4" r="2"/><path d="M4 9h16"/><path d="M12 9v12"/><path d="m8 21 4-7 4 7"/></svg>
+        <img src="{% static 'images/accessibility png.png' %}" alt="" aria-hidden="true">
     </button>
     <div class="cicr-a11y-panel" role="dialog" aria-modal="true" aria-labelledby="cicrA11yTitle">
         <header class="cicr-a11y-header">
@@ -578,6 +590,7 @@
         const textSize = document.getElementById('cicrA11yTextSize');
         const textValue = document.getElementById('cicrA11yTextValue');
         const textCurrent = document.getElementById('cicrA11yTextCurrent');
+        const textScaleSelector = 'body :where(h1, h2, h3, h4, h5, h6, p, li, a, button, label, span, strong, small, td, th, input, select, textarea, .card-title, .section-title, .pest-name, .pest-copy, .detail-button, .button, .small-button)';
         let settings = readSettings();
         let speakTimer = null;
 
@@ -594,12 +607,26 @@
             localStorage.setItem(storageKey, JSON.stringify(settings));
         }
 
+        function applyTextSize() {
+            const scale = (Number(settings.textSize) || defaults.textSize) / 100;
+            document.querySelectorAll(textScaleSelector).forEach(element => {
+                if (element.closest('.cicr-a11y-panel, .cicr-a11y-button, script, style, svg')) return;
+                if (!element.dataset.cicrBaseFontSize) {
+                    element.dataset.cicrBaseFontSize = window.getComputedStyle(element).fontSize;
+                }
+                const baseSize = parseFloat(element.dataset.cicrBaseFontSize);
+                if (!Number.isFinite(baseSize)) return;
+                element.style.fontSize = `${Math.max(10, Math.round(baseSize * scale * 100) / 100)}px`;
+            });
+        }
+
         function applySettings() {
             root.classList.toggle('cicr-a11y-high-contrast', Boolean(settings.highContrast));
             root.classList.toggle('cicr-a11y-dark', Boolean(settings.darkMode));
             root.classList.toggle('cicr-a11y-reduce-motion', Boolean(settings.reduceMotion));
             root.classList.toggle('cicr-a11y-touch-feedback', Boolean(settings.touchFeedback));
-            root.style.fontSize = `${Number(settings.textSize) || defaults.textSize}%`;
+            root.style.setProperty('--cicr-a11y-text-size', `${Number(settings.textSize) || defaults.textSize}%`);
+            applyTextSize();
 
             document.querySelectorAll('[data-a11y-setting]').forEach(input => {
                 input.checked = Boolean(settings[input.dataset.a11ySetting]);
@@ -685,6 +712,8 @@
 
         textSize.addEventListener('change', () => speak(`Text size ${settings.textSize} percent`));
 
+        window.cicrApplyAccessibilityTextSize = applyTextSize;
+
         openButton.setAttribute('aria-expanded', 'false');
         floatingCloseButton.hidden = true;
         openButton.addEventListener('click', event => {
@@ -718,6 +747,8 @@
         }, true);
 
         applySettings();
+        new MutationObserver(() => window.setTimeout(applyTextSize, 60))
+            .observe(document.body, { childList: true, subtree: true });
         speakCurrentPage();
     }());
 </script>
