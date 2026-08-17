@@ -36,13 +36,34 @@
     }
 
     .required-marker {
+        display: inline-block;
         color: #dc2626;
         font-weight: 700;
         margin-left: 4px;
+        line-height: 1;
     }
 </style>
 <script>
     (function () {
+        function firstControl(label) {
+            return label.querySelector('input, select, textarea');
+        }
+
+        function insertMarker(label, marker, field) {
+            if (label.htmlFor) {
+                label.appendChild(marker);
+                return;
+            }
+
+            const control = firstControl(label);
+            if (!control || control === field) {
+                label.insertBefore(marker, field);
+                return;
+            }
+
+            label.insertBefore(marker, control);
+        }
+
         function addRequiredMarkers() {
             const fields = document.querySelectorAll('input[required], select[required], textarea[required]');
             fields.forEach((field) => {
@@ -55,7 +76,7 @@
                 marker.className = 'required-marker';
                 marker.textContent = '*';
                 marker.setAttribute('aria-hidden', 'true');
-                label.appendChild(marker);
+                insertMarker(label, marker, field);
                 label.dataset.requiredMarker = 'true';
             });
         }
