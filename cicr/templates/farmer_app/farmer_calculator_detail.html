@@ -201,10 +201,10 @@
         const unit = unitFor(chemical);
 
         setTranslatedText(doseLabel, `Dose calculated for ${acreInput.value} acre${acres === 1 ? '' : 's'}`);
-        doseValue.textContent = formatRange(resultDoseMin, resultDoseMax, unit);
-        litreValue.textContent = dosePerAcreMin === dosePerAcreMax
+        setTranslatedText(doseValue, formatRange(resultDoseMin, resultDoseMax, unit));
+        setTranslatedText(litreValue, dosePerAcreMin === dosePerAcreMax
             ? `${(dosePerAcreMin / 200).toFixed(1)} ${unit}`
-            : `${(dosePerAcreMin / 200).toFixed(1)} - ${(dosePerAcreMax / 200).toFixed(1)} ${unit}`;
+            : `${(dosePerAcreMin / 200).toFixed(1)} - ${(dosePerAcreMax / 200).toFixed(1)} ${unit}`);
         calcResult.classList.add('show');
         refreshTranslation();
     }
