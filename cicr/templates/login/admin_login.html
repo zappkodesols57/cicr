@@ -235,11 +235,11 @@
             <div class="subtitle">Sign in to manage districts, weeks, reports and admin users.</div>
             {% csrf_token %}
             <div class="field-group">
-                <label for="user_id">Username <span class="required">*</span></label>
+                <label for="user_id">Username <span class="required"></span></label>
                 <input type="text" id="user_id" name="user_id" autocomplete="username" required>
             </div>
             <div class="field-group">
-                <label for="password">Password <span class="required">*</span></label>
+                <label for="password">Password <span class="required"></span></label>
                 <input type="password" id="password" name="password" autocomplete="current-password" required>
             </div>
             <p id="error-message">{{ error_message }}</p>
