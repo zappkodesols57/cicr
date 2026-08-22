@@ -515,7 +515,7 @@ button, select, a, .feature-card, .info-card, .advisory-card, .bottom-item {
 .advisory-hero {
   margin: -28px -22px 26px;
   padding: 26px 52px;
-  background: linear-gradient(90deg, #effaf0, #f8fff9);
+  background: linear-gradient(90deg, #effaf0 0%, rgba(239,250,240,.92) 60%, rgba(239,250,240,.65)), url("assets/production/n-hdps-6.jpg") right center/cover;
   border-bottom: 1px solid var(--line);
 }
 
@@ -3544,6 +3544,7 @@ button.view-advisory[disabled] {
   align-items: center;
   flex-wrap: wrap;
   gap: 24px;
+  background: linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,.92) 55%, rgba(255,255,255,.55)), url("assets/banner/bann10.JPG") right center/cover;
 }
 
 .about-hero-text {
