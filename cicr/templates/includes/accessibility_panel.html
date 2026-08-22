@@ -808,6 +808,16 @@
             textCurrent.textContent = `Current size: ${settings.textSize}%`;
         }
 
+        const CHROME_SELECTOR = '.site-header, .site-footer, .mobile-nav, .sidebar, .drawer, .drawer-head, .topbar, .top-appbar, .cicr-a11y-button, .cicr-a11y-overlay, script, style, .notranslate, [aria-hidden="true"]';
+
+        function detectSpeechLang(text) {
+            const gujaratiRange = new RegExp('[઀-૿]');
+            const devanagariRange = new RegExp('[ऀ-ॿ]');
+            if (gujaratiRange.test(text)) return 'gu-IN';
+            if (devanagariRange.test(text)) return 'hi-IN';
+            return 'en-IN';
+        }
+
         function speak(text) {
             if (!settings.readAloud || !('speechSynthesis' in window)) return;
             const cleaned = String(text || '').replace(/\s+/g, ' ').trim();
@@ -815,15 +825,33 @@
             window.clearTimeout(speakTimer);
             speakTimer = window.setTimeout(() => {
                 window.speechSynthesis.cancel();
-                window.speechSynthesis.speak(new SpeechSynthesisUtterance(cleaned.slice(0, 650)));
+                const utterance = new SpeechSynthesisUtterance(cleaned.slice(0, 650));
+                utterance.lang = detectSpeechLang(cleaned);
+                window.speechSynthesis.speak(utterance);
             }, 120);
         }
 
+        function pageHeading() {
+            return document.querySelector('[data-page-title]')
+                || document.querySelector('main h1')
+                || document.querySelector('main h2')
+                || document.querySelector('h1')
+                || document.querySelector('h2')
+                || null;
+        }
+
+        function pageContentRoot() {
+            return document.querySelector('main')
+                || document.querySelector('.dashboard-shell, .page-content, .page-body, .app-shell, .content, #content')
+                || document.body;
+        }
+
         function pageSummary() {
-            const heading = document.querySelector('h1, h2, [data-page-title]');
-            const main = document.querySelector('main');
+            const heading = pageHeading();
             const headingText = heading ? heading.textContent : document.title;
-            const bodyText = main ? main.textContent : document.body.textContent;
+            const clone = pageContentRoot().cloneNode(true);
+            clone.querySelectorAll(CHROME_SELECTOR).forEach((node) => node.remove());
+            const bodyText = clone.textContent;
             return `${headingText}. ${bodyText}`.replace(/\s+/g, ' ').slice(0, 700);
         }
 
@@ -961,12 +989,18 @@
             if (event.key === 'Escape' && !overlay.hidden) closePanel();
         });
 
+        function accessibleText(el) {
+            const clone = el.cloneNode(true);
+            clone.querySelectorAll('[aria-hidden="true"], script, style').forEach((node) => node.remove());
+            return clone.textContent;
+        }
+
         document.addEventListener('click', event => {
             if (settings.touchFeedback && navigator.vibrate) navigator.vibrate(18);
             if (!settings.readAloud) return;
             const actionable = event.target.closest('button, a, input, select, textarea, summary');
             if (!actionable || actionable.closest('.cicr-a11y-panel')) return;
-            const label = actionable.getAttribute('aria-label') || actionable.placeholder || actionable.textContent || actionable.value;
+            const label = actionable.getAttribute('aria-label') || actionable.placeholder || accessibleText(actionable) || actionable.value;
             speak(label);
         }, true);
 

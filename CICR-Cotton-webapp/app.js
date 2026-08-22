@@ -1570,14 +1570,16 @@ function renderCollection(viewId, items) {
     }
   }
   view.className = "content wide";
-  view.innerHTML = `<h2>${pageTitles[viewId]}</h2><div class="collection-grid">${items.map(dataCard).join("")}</div>`;
+  const imagePosition = viewId === "facts" ? "top" : undefined;
+  view.innerHTML = `<h2>${pageTitles[viewId]}</h2><div class="collection-grid">${items.map((item, index) => dataCard(item, index, imagePosition)).join("")}</div>`;
   bindDataCards(items, (item) => openDetail(viewId, item));
 }
 
-function dataCard(item, index) {
+function dataCard(item, index, imagePosition) {
+  const positionStyle = imagePosition ? ` style="object-position:${imagePosition}"` : "";
   return `<article class="data-card" data-index="${index}" role="button" tabindex="0">
     <div class="data-card-img-wrap">
-      <img src="${assetPath(item.image)}" alt="${item.name}" loading="lazy">
+      <img src="${assetPath(item.image)}" alt="${item.name}" loading="lazy"${positionStyle}>
     </div>
     <div class="data-card-body">
       <h3>${item.name}</h3>

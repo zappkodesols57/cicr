@@ -486,7 +486,7 @@ const diseases = [
 ].map(([name, file]) => ({ name, image: asset(`disease/${file}`), description: 'Disease management information sourced from mobile app image/data assets.', category: 'Disease Management' }));
 
 const production = [
-  ['Cropping System','n-cropping-1.jpg'], ['High Density Planting System','n-hdps-1.JPG'], ['Irrigation Management','irrigationmana.jpg'],
+  ['Cropping System','n-cropping-1.jpg'], ['High Density Planting System','n-hdps-6.jpg'], ['Irrigation Management','irrigationmana.jpg'],
   ['Nutrient Management','n-nutrient.jpg'], ['Soil Tillage','n-soilt-1.jpg'], ['Sowing Time','n-sowingt-1.jpg'], ['Weed Management','n-weed-1.JPG'],
   ['Physical Disorder','prod7.jpg']
 ].map(([name, file]) => ({ name, image: file === 'prod7.jpg' ? asset(`images/${file}`) : asset(`production/${file}`), description: 'Cotton production technology module from CICR Cotton mobile app.', category: 'Production Technology' }));
