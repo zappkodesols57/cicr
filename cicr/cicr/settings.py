@@ -92,6 +92,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "login.context_processors.session_financial_year",
+                "farmer_app.context_processors.farmer_profile_photo",
             ],
         },
     },

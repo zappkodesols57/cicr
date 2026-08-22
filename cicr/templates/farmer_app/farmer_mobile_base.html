@@ -56,6 +56,26 @@
             place-items: center;
         }
 
+        .profile-link {
+            position: absolute;
+            right: 76px;
+            width: 34px;
+            height: 34px;
+            color: #ffffff;
+            text-decoration: none;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .topbar-avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
         .content {
             flex: 1;
             width: min(1120px, 100%);
@@ -188,6 +208,13 @@
     <div class="mobile-app">
         <header class="top-appbar">
             {% block app_title %}Farmer Dashboard{% endblock %}
+            <a class="profile-link" href="/farmer/profile/" aria-label="My Profile">
+                {% if farmer_profile_photo_url %}
+                    <img src="{{ farmer_profile_photo_url }}" alt="" class="topbar-avatar">
+                {% else %}
+                    <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+                {% endif %}
+            </a>
             <a class="logout" href="/web_panel_logout/" aria-label="Exit">
                 <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
             </a>

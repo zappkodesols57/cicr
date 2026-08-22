@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | CICR IRM</title>
+    <style>
+        :root {
+            --green-900: #006313;
+            --green-800: #08701f;
+            --green-100: #e8f5eb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: #ffffff;
+            font-family: var(--font-family, 'Inter', Arial, sans-serif);
+        }
+
+        .page {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            overflow: hidden;
+            background-image: linear-gradient(180deg, rgba(0, 30, 8, 0.72), rgba(0, 20, 5, 0.85)), url("{% static 'images/cotton-hero.png' %}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .icar-logo {
+            position: absolute;
+            top: 28px;
+            right: 28px;
+            width: 72px;
+            height: 72px;
+            display: grid;
+            place-items: center;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+        }
+
+        .icar-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .card {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 560px);
+            text-align: center;
+        }
+
+        .main-logo {
+            width: 104px;
+            height: 104px;
+            margin: 0 auto 22px;
+            padding: 8px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+        }
+
+        .main-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .error-code {
+            margin: 0;
+            font-size: clamp(80px, 12vw, 140px);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -3px;
+            text-shadow: 0 8px 26px rgba(0, 0, 0, 0.35);
+        }
+
+        .error-title {
+            margin: 10px 0 0;
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 800;
+        }
+
+        .error-copy {
+            margin: 14px auto 34px;
+            max-width: 460px;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 54px;
+            padding: 0 28px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 800;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            color: #ffffff;
+            background: var(--green-900);
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--green-800);
+        }
+
+        .btn-outline {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid #ffffff;
+        }
+
+        .btn-outline:hover,
+        .btn-outline:focus {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        .brand-tag {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 28px;
+            color: rgba(255, 255, 255, 0.75);
+            text-align: center;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 560px) {
+            .icar-logo {
+                width: 56px;
+                height: 56px;
+                top: 18px;
+                right: 18px;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page" aria-label="Page not found">
+        <a class="icar-logo" href="/" aria-label="Home">
+            <img src="{% static 'images/icar-logo.png' %}?v=20260811" alt="ICAR">
+        </a>
+
+        <div class="card">
+            <div class="main-logo">
+                <img src="{% static 'images/CICR_logo.png' %}?v=20260811" alt="CICR IRM">
+            </div>
+            <p class="error-code">404</p>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-copy">The page you're looking for doesn't exist or may have been moved. Please check the link or head back to the home page.</p>
+            <div class="actions">
+                <a class="btn btn-primary" href="/">Back to Home</a>
+                <a class="btn btn-outline" href="/farmer/login/">Farmer Portal</a>
+            </div>
+        </div>
+
+        <p class="brand-tag">CICR - IRM &middot; Integrated Resistance Management</p>
+    </main>
+</body>
+</html>

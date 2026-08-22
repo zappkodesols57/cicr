@@ -6,6 +6,8 @@ urlpatterns = [
     # Web UI Paths
     path('', views.farmer_dashboard_view, name='farmer_home'),
     path('login/', views.farmer_login_view, name='farmer_login'),
+    path('register/', views.farmer_register_view, name='farmer_register'),
+    path('profile/', views.farmer_profile_view, name='farmer_profile'),
     path('dashboard/', views.farmer_dashboard_view, name='farmer_dashboard'),
     path('advisories/', views.farmer_advisories_view, name='farmer_advisories'),
     path('advisories/<slug:advisory_id>/', views.farmer_advisory_detail_view, name='farmer_advisory_detail'),

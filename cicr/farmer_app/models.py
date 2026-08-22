@@ -20,6 +20,7 @@ class FarmerProfile(models.Model):
     taluka = models.CharField(max_length=100, blank=True, null=True, default='')
     village = models.CharField(max_length=100, blank=True, null=True, default='')
     gender = models.CharField(max_length=20, blank=True, null=True, default='')
+    photo = models.ImageField(upload_to='farmer_photos/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

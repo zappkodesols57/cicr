@@ -4,7 +4,7 @@ from .models import FarmerProfile, FarmerOTP
 class FarmerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = FarmerProfile
-        fields = ['first_name', 'last_name', 'mobile_number', 'state', 'district', 'taluka', 'village', 'gender']
+        fields = ['first_name', 'last_name', 'mobile_number', 'state', 'district', 'taluka', 'village', 'gender', 'photo']
 
 class SendOTPSerializer(serializers.Serializer):
     mobile_number = serializers.CharField(max_length=15)

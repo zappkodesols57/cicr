@@ -1815,6 +1815,33 @@ button.view-advisory[disabled] {
 .drawer-brand strong { font-size: 25px; line-height: 1.2; }
 .drawer-brand span { opacity: .92; font-size: 14px; line-height: 1.35; }
 
+.drawer-irm-btn {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 16px 0;
+  padding: 10px 14px;
+  border: 1px solid var(--green);
+  border-radius: var(--radius-sm);
+  background: var(--green-soft);
+  color: var(--green-dark);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.drawer-irm-btn:hover {
+  background: var(--green);
+  color: #fff;
+}
+
+.drawer-irm-btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .drawer-nav {
   flex: 1 1 auto;
   padding: 10px 12px 32px;
@@ -2199,6 +2226,32 @@ button.view-advisory[disabled] {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.irm-app-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--green);
+  border-radius: var(--radius-sm);
+  color: var(--green-dark);
+  background: var(--green-soft);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.irm-app-btn:hover {
+  background: var(--green);
+  color: #fff;
+}
+
+.irm-app-btn svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
 }
 
 .desktop-a11y {
