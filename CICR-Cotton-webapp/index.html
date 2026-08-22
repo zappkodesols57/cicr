@@ -4,8 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/cotton_app/">
-    <title>CICR Cotton Web App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>CICR Cotton Research | Knowledge Portal</title>
+  <meta name="description" content="ICAR-CICR Cotton Research — your comprehensive guide to cotton farming, varieties, advisory and pest management.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <aside class="drawer" id="drawer">
@@ -39,8 +43,13 @@
 
       <header class="desktop-header" id="desktopHeader">
         <a class="desktop-brand" data-view="home">
-          <span class="brand-mark">CR</span>
-          <strong>CICR Cotton Research</strong>
+          <span class="brand-mark brand-mark-logo">
+            <img src="assets/icon/CICR_logo.png" alt="CICR" class="brand-logo-img">
+          </span>
+          <span class="brand-text">
+            <strong class="brand-title">ICAR-CICR</strong>
+            <span class="brand-subtitle">Cotton Research Portal</span>
+          </span>
         </a>
         <nav class="desktop-nav" id="desktopNav" aria-label="Main navigation"></nav>
         <div class="desktop-actions">

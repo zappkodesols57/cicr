@@ -41,49 +41,61 @@ const mobileDetails = {
   ],
   outreach: [
     {
-      name: "Special Project on Cotton",
-      image: "assets/images/farmerReach.JPG",
-      description: "Large scale demonstrations of best practices to enhance cotton productivity under NFSM.",
+      name: "ICAR: Central Institute for Cotton Research",
+      image: "assets/images/fr1.JPG",
+      description: "Special Project on Cotton, Pink Bollworm management, Frontline Demonstrations and Mera Gaon Mera Gaurav.",
       sections: [
         {
           title: "Special Project on Cotton",
           bullets: [
-            "Ministry of Agriculture and Farmers Welfare, Government of India approved a special project on cotton entitled Targeting technologies to agro-ecological zones: large scale demonstrations of best practices to enhance cotton productivity under National Food Security Mission (NFSM) for implementation during 2023-24.",
-            "The project is implemented through ICAR-Central Institute for Cotton Research (CICR), Nagpur on PPP mode in identified clusters through a value chain approach with Ministry of Textiles, CITI and SIMA, seed industry associations, extension partners, ICAR-ATARIs and KVKs, State Agriculture Departments, textile partners and Cotton Corporation of India.",
-            "The pilot project comprises three technologies: High Density Planting System (HDPS), closer spacing planting system and production technology for extra long staple cotton.",
-            "Assistance under the project is provided to marginal and small farmers through DBT besides geo-referencing of project sites."
+            "Ministry of Agriculture & Farmers Welfare, Govt. of India has approved a special project on cotton entitled 'Targeting technologies to agro-ecological zones- large scale demonstrations of best practices to enhance cotton productivity' under National Food Security Mission (NFSM) for implementation during 2023-24.",
+            "The project is being implemented through ICAR-Central Institute of Cotton Research (CICR), Nagpur on PPP mode in the identified clusters through value chain approach by collaboration with Ministry of Textiles, CITI & SIMA; Seed Industry Associations (NSAI and FSII); Extension partners (Cotton Development and Research Associations of CITI and SIMA); Agricultural Technology Application Research Institutes (ICAR-ATARIs) & their Krishi Vigyan Kendras (KVKs); State Departments of Agriculture-ATMA, Textile partners and Cotton Corporation of India (CCI) to increase productivity of cotton and production of Extra Long Staple (ELS) cotton.",
+            "The Pilot Project comprises of three technologies namely High Density Planting System (HDPS), Closer Spacing planting system and Production technology for ELS cotton.",
+            "The assistance under the project is to be provided to marginal & small farmers through DBT besides geo-referencing of project sites."
           ]
-        }
-      ]
-    },
-    {
-      name: "IRM: Pink Bollworm Management",
-      image: "assets/images/fr1.JPG",
-      description: "Dissemination of pink bollworm management strategies in major cotton growing states.",
-      sections: [
+        },
         {
-          title: "IRM Dissemination",
+          title: "IRM: Dissemination of Pink Bollworm Management Strategies",
           bullets: [
-            "The project on Insecticide Resistance Management: Dissemination of Pink Bollworm Management Strategies was approved under NFSM Commercial Crops.",
-            "ICAR-CICR, Nagpur is the nodal institute for implementation and overall coordination through respective State Agricultural Universities.",
-            "The project is implemented in major cotton growing districts to support timely monitoring and management decisions."
+            "Department of Agriculture, Cooperation & Farmers Welfare (Crops Division), Ministry of Agriculture and Farmers Welfare, Govt. of India approved a project on “Insecticide Resistance Management: Dissemination of Pink Bollworm management strategies” under Centrally sponsored scheme on “NFSM: Commercial Crops” for implementation during the year 2018-19.",
+            "ICAR-CICR, Nagpur is the Nodal Institute for implementation and overall coordination of the project through respective State Agricultural Universities.",
+            "The project is implemented in 21 districts of 10 major cotton growing states."
+          ]
+        },
+        {
+          title: "Frontline Demonstration on Cotton (FLDs)",
+          bullets: [
+            "With the support from Department of Agriculture, Cooperation & Farmers Welfare (Crops Division), Ministry of Agriculture and Farmers Welfare, Govt. of India, FLD's on Cotton are being implemented through All India Coordinated Project on Cotton (AICRP) at 21 centres.",
+            "Demonstrate the usefulness of the crop production and protection technologies to the farmers as well as extension workers with a view to reduce time gap between technology generation and its adoption.",
+            "Enable scientists obtain direct feedback from cotton farmers and suitably reorient their research program and develop appropriate technology packages.",
+            "Create effective linkages among scientists, extension personnel and farmers."
+          ]
+        },
+        {
+          title: "Mera Gaon Mera Gaurav",
+          bullets: [
+            "'Mera Gaon Mera Gaurav (My Village My Pride)' program launched by the Hon'ble Prime Minister on 25 July 2015 during the 87th Foundation Day of ICAR is being implemented by CICR Nagpur and its Regional Stations located at Coimbatore, as per the guidelines.",
+            "Scientists remain in touch with the adopted villages and provide information to farmers on technical and other related aspects in the time frame through personal visits to hasten the process of Lab to Land activities.",
+            "Each team comprises four scientists with five clusters of villages."
           ]
         }
       ]
     },
     {
-      name: "Frontline Demonstration on Cotton",
+      name: "Krishi Vigyan Kendra (KVK)",
       image: "assets/images/fr2.JPG",
-      description: "Field demonstrations, technical advice and farmer linkages for cotton production.",
+      description: "Krishi Vigyan Kendra (KVK) caters to the needs of farmers and stakeholders of Nagpur district.",
       sections: [
         {
-          title: "Activities",
+          title: "Key Activities",
           bullets: [
-            "Conduct field crop demonstrations on farmers' fields.",
-            "Extend technical advice on integrated cotton production to farmers of adopted villages.",
-            "Monitor insects and pests and update farmers with latest control measures.",
-            "Deliver need based weekly mobile advisory to registered farmers.",
-            "Organise meetings and Kisan Goshties at villages and provide literature support."
+            "Trainings: on-campus and off-campus for farmers, rural youth and extension functionaries.",
+            "Cluster Front Line Demonstrations on Oilseed and Pulses on farmer's field.",
+            "FLDs on Disease management, Nutrition management supplementation of mineral lick block, Feed & fodder management.",
+            "On campus as well as Off campus FLDs on Nutrition management, Recycling of agro wastes.",
+            "On Farm Trials.",
+            "Diagnostic surveys to understand problems faced by the farmers and provide on the spot recommendation.",
+            "Under ARYA (Attracting and Retaining Youth in Agriculture) project, operating enterprises for livelihood of rural youth."
           ]
         }
       ]
@@ -170,6 +182,133 @@ const mobileDetails = {
       name: "Wireless smart trap for automated pest monitoring in cotton",
       year: "2023",
       inventors: "K Rameash, K Shankarganesh, Babasaheb B Fand"
+    }
+  ],
+  internationalPatents: [
+    {
+      slNo: "1",
+      name: "Bacterial based volatiles composition as whitefly attractant",
+      applicationNo: "PCT/IB2024/057959",
+      inventors: "K Velmourougane, Pooja Verma, A Manikandan, YG Prasad, Rishikumar, D Blaise",
+      status: "PCT filed (16.8.2024)"
+    },
+    {
+      slNo: "2",
+      name: "Bacterial based volatiles composition as jassid attractant",
+      applicationNo: "PCT/IB2024/057957",
+      inventors: "K Velmourougane, Pooja Verma, A Manikandan, YG Prasad",
+      status: "PCT Filed (16.8.2024)"
+    },
+    {
+      slNo: "3",
+      name: "Rapid detection of Bt-Cry toxin",
+      applicationNo: "PCT/INO3/00199",
+      grantNumber: "ZA/2004/10268 (South Africa)",
+      inventors: "KR Kranthi",
+      status: "Abandoned (No more manufacture of Kits & commercialization)"
+    },
+    {
+      slNo: "4",
+      name: "Rapid detection of Bt-Cry toxin",
+      applicationNo: "PCT/INO3/00199",
+      grantNumber: "PA/A2004/MXPA04011769 (Mexico)",
+      inventors: "KR Kranthi",
+      status: "Abandoned (No more manufacture of Kits & commercialization)"
+    },
+    {
+      slNo: "5",
+      name: "Rapid detection of Bt-Cry toxin",
+      applicationNo: "PCT/INO3/00199",
+      grantNumber: "IAP2004-0451/ W003102208 (Uzbekistan)",
+      inventors: "KR Kranthi",
+      status: "Abandoned (No more manufacture of Kits & commercialization)"
+    },
+    {
+      slNo: "6",
+      name: "Rapid detection of Bt-Cry toxin",
+      applicationNo: "PCT/INO3/00199",
+      grantNumber: "ZL 03817641.6 CN1672049 No. FP02228-GB/vcd (China)",
+      inventors: "KR Kranthi",
+      status: "Abandoned (No more manufacture of Kits & commercialization)"
+    }
+  ],
+  nationalPatents: [
+    {
+      slNo: "1",
+      name: "A system for attracting pink bollworms, trapping and reporting and a method therefore",
+      applicationNo: "202421072205",
+      inventors: "K Rameash, YG Prasad",
+      status: "Patent filed"
+    },
+    {
+      slNo: "2",
+      name: "Semi-synthetic diet for cotton stem weevil.",
+      applicationNo: "202421073507",
+      inventors: "K Shankarganesh",
+      status: "Patent Filed"
+    },
+    {
+      slNo: "3",
+      name: "Bacterial based volatiles composition as whitefly attractant",
+      applicationNo: "202321058818",
+      inventors: "K Velmourougane, Pooja Verma, A Manikandan, YG Prasad, Rishikumar, D Blaise",
+      status: "Ready for commercialization"
+    },
+    {
+      slNo: "4",
+      name: "Bacterial Based Volatiles Composition As Beneficial Insects Attractant",
+      applicationNo: "202321058817",
+      inventors: "K Velmourougane, YG Prasad",
+      status: "Ready for commercialization"
+    },
+    {
+      slNo: "5",
+      name: "Bacterial based volatiles composition as jassid attractant",
+      applicationNo: "202321058813",
+      inventors: "K Velmourougane, Pooja Verma, A Manikandan, YG Prasad",
+      status: "Ready for commercialization"
+    },
+    {
+      slNo: "6",
+      name: "Bacterial based volatiles composition as thrips attractant",
+      applicationNo: "202321058814",
+      inventors: "K Velmourougane",
+      status: "Ready for commercialization"
+    },
+    {
+      slNo: "7",
+      name: "Bacterial based volatiles composition as aphid attractant",
+      applicationNo: "202321058816",
+      inventors: "K Velmourougane",
+      status: "Ready for commercialization"
+    },
+    {
+      slNo: "8",
+      name: "CICR Whitefly adult suction trap",
+      applicationNo: "1724/Del/2015",
+      inventors: "Rishi kumar, Dilip Monga, Sandhya Kranthi, KR Kranthi, Madan Lal",
+      status: "Patent Abandoned (No manufacture for commercialization)"
+    },
+    {
+      slNo: "9",
+      name: "A novel technique using GS-I and GS-II media for mass multiplication of fungal and bacterial biocontrol agents",
+      applicationNo: "1752/CHE/2014",
+      inventors: "K. Satyagopal, Girish AG, SK Sain",
+      status: "Ready for commercialization"
+    },
+    {
+      slNo: "10",
+      name: "Composition for early, profuse sporulation under solid state, of the improved isolate of Trichoderma harzianum and a process thereof",
+      applicationNo: "3459/DEL/2005",
+      inventors: "P Sharma, P Dureja, SK Sain, DV Singh",
+      status: "Ready for commercialization"
+    },
+    {
+      slNo: "11",
+      name: "PCR detection Kit for Xanthomonas oxonopodis pv.",
+      applicationNo: "1558/MUM/ 2009",
+      inventors: "PK Chakrabarty, RL Chavhan, CDMayee",
+      status: "Patent Abandoned (No manufacture for commercialization)"
     }
   ],
   production: {
