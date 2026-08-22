@@ -1254,7 +1254,31 @@ function infoCard(title, body, center = false) {
 
 function renderAboutApp() {
   view.className = "content about-app-view";
-  
+
+  if (state.aboutTab === "developers") {
+    view.innerHTML = `
+      <section class="vr-page-hero about-app-hero">
+        <div class="about-hero-text">
+          <span class="vr-page-eyebrow">ICAR-CICR Mobile Application</span>
+          <h2 class="vr-page-title">About Developers</h2>
+          <p class="vr-page-desc">Meet the team behind the CICR Cotton mobile app and web portal.</p>
+        </div>
+      </section>
+
+      <section class="developer-section">
+        <h3 class="developer-heading">About Developers</h3>
+        <div class="developer-grid">
+          ${developerBox("Published By", "<strong>Dr. Vijay N. Waghmare</strong><br>Director, ICAR-CICR, Nagpur")}
+          ${developerBox("Lead Developer", "<strong>Dr. V. S. Nagrare</strong>")}
+          ${developerBox("Co-Developers", "Dr. S. Manickam<br>Dr. Rahul Fuke<br>Dr. Babasaheb B. Fand<br>Dr. Dipak Nagrale<br>Dr. G.I. Ramakrushna<br>Dr. Amarpreet Singh<br>Dr. K. Velmourougane<br>Dr. K Rameash")}
+          ${developerBox("Hindi Translation", "Dr. Rachna Pande<br>Dr. Pooja Verma")}
+          ${developerBox("Software Providers", "<strong>Zappkode Solutions</strong><br>Nagpur")}
+        </div>
+      </section>
+    `;
+    return;
+  }
+
   view.innerHTML = `
     <section class="vr-page-hero about-app-hero">
       <div class="about-hero-text">
@@ -1262,7 +1286,7 @@ function renderAboutApp() {
         <h2 class="vr-page-title">About App</h2>
         <p class="vr-page-desc">Your comprehensive guide to cotton farming, available anytime, anywhere.</p>
       </div>
-      
+
       <div class="store-buttons">
         <a href="https://play.google.com/store/apps/details?id=cicr.com.cicr.cicrcottonapp" class="btn-store" target="_blank" rel="noopener">
           <svg viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
@@ -1325,25 +1349,13 @@ function renderAboutApp() {
         </div>
         <a class="privacy-link" href="https://cicr.org.in/privacypolicy/" target="_blank" rel="noopener">Privacy Policy <span class="cta-arrow">&rarr;</span></a>
       </article>
-      
+
       <article class="app-showcase">
         <div class="app-showcase-bg"></div>
         <img class="app-phone-image" src="${assetPath("assets/images/mobilepng.png")}" alt="Cotton Knowledge App Preview">
       </article>
     </section>
-
-    <section class="developer-section">
-      <h3 class="developer-heading">About Developers</h3>
-      <div class="developer-grid">
-        ${developerBox("Published By", "<strong>Dr. Vijay N. Waghmare</strong><br>Director, ICAR-CICR, Nagpur")}
-        ${developerBox("Lead Developer", "<strong>Dr. V. S. Nagrare</strong>")}
-        ${developerBox("Co-Developers", "Dr. S. Manickam<br>Dr. Rahul Fuke<br>Dr. Babasaheb B. Fand<br>Dr. Dipak Nagrale<br>Dr. G.I. Ramakrushna<br>Dr. Amarpreet Singh<br>Dr. K. Velmourougane<br>Dr. K Rameash")}
-        ${developerBox("Hindi Translation", "Dr. Rachna Pande<br>Dr. Pooja Verma")}
-        ${developerBox("Software Providers", "<strong>Zappkode Solutions</strong><br>Nagpur")}
-      </div>
-    </section>
   `;
-
 }
 
 function developerBox(title, body) {
