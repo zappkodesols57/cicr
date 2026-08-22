@@ -48,6 +48,10 @@ from investigator_app.models import *
 
 from django.db.models import Count
 from django.db.models.functions import ExtractMonth
+from django.conf import settings
+from django.http import FileResponse, Http404
+from pathlib import Path
+import mimetypes
 from django.db.models import Avg
 from owner_settings.models import *
 
@@ -112,6 +116,28 @@ def super_login(request):
 
 def web_app(request):
     return render(request, 'home.html')
+
+
+def cotton_web_app(request):
+    cotton_root = Path(settings.BASE_DIR).parent / "CICR-Cotton-webapp"
+    index_path = cotton_root / "index.html"
+    if not index_path.exists():
+        raise Http404("CICR Cotton web app not found")
+    return FileResponse(index_path.open("rb"), content_type="text/html")
+
+
+def cotton_web_asset(request, asset_path):
+    cotton_root = (Path(settings.BASE_DIR).parent / "CICR-Cotton-webapp").resolve()
+    target_path = (cotton_root / asset_path).resolve()
+    if cotton_root not in target_path.parents:
+        raise Http404("CICR Cotton web app asset not found")
+    if not target_path.is_file():
+        index_path = cotton_root / "index.html"
+        if index_path.exists():
+            return FileResponse(index_path.open("rb"), content_type="text/html")
+        raise Http404("CICR Cotton web app route not found")
+    content_type = mimetypes.guess_type(str(target_path))[0] or "application/octet-stream"
+    return FileResponse(target_path.open("rb"), content_type=content_type)
 
 
 def web_panel_logout(request):

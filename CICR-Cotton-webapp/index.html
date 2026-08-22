@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/cotton_app/">
+    <title>CICR Cotton Web App</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <aside class="drawer" id="drawer">
+      <div class="drawer-brand">
+        <img src="assets/icon/CICRlogo.jpeg" alt="CICR logo">
+        <strong>CICR Cotton</strong>
+        <span>Farmer Knowledge Portal</span>
+      </div>
+      <nav class="drawer-nav" id="drawerNav"></nav>
+    </aside>
+    <div class="drawer-scrim" id="drawerScrim"></div>
+
+    <main class="app-shell">
+      <header class="app-header">
+        <div class="status-row" aria-hidden="true">
+          <span>4:00</span>
+          <span>LTE</span>
+        </div>
+        <div class="appbar">
+          <button class="menu-btn" id="menuBtn" aria-label="Open menu"><span></span></button>
+          <h1 id="pageTitle">Home</h1>
+          <button class="access-btn" id="accessibilityFab" aria-label="Accessibility">A</button>
+          <select id="languageSelect" aria-label="Language">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="gu">Gujarati</option>
+          </select>
+        </div>
+        <div class="sub-header" id="subHeader"></div>
+      </header>
+
+      <header class="desktop-header" id="desktopHeader">
+        <a class="desktop-brand" data-view="home">
+          <span class="brand-mark">CR</span>
+          <strong>CICR Cotton Research</strong>
+        </a>
+        <nav class="desktop-nav" id="desktopNav" aria-label="Main navigation"></nav>
+        <div class="desktop-actions">
+          <button class="desktop-a11y" id="desktopA11y" aria-label="Accessibility">A</button>
+          <select id="desktopLanguageSelect" aria-label="Language">
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="gu">Gujarati</option>
+          </select>
+        </div>
+      </header>
+
+      <section class="content" id="view"></section>
+      <footer class="site-footer" id="pageFooter">
+        <section class="site-footer-main">
+          <div class="site-footer-brand">
+            <div class="site-footer-logo">
+              <img src="assets/icon/CICRlogo.jpeg" alt="CICR logo">
+            </div>
+            <div>
+              <strong>CICR Cotton Research</strong>
+              <p>Central Institute for Cotton Research (CICR) is committed to advance cotton research and support farmers with innovative solutions for sustainable agriculture.</p>
+            </div>
+          </div>
+
+          <div class="site-footer-links">
+            <h3>Quick Links</h3>
+            <button data-view="home">Home</button>
+            <button data-view="about">About CICR</button>
+            <button data-view="advisory">Advisory</button>
+            <button data-view="contact">Contact Us</button>
+            <button data-view="aboutApp">About App</button>
+          </div>
+
+          <div class="site-footer-links">
+            <h3>Resources</h3>
+            <button data-view="varieties">Varieties & Hybrids</button>
+            <button data-view="cottonTech">Publications</button>
+            <button data-view="facts">Research Reports</button>
+            <button data-view="news">Circulars & Notifications</button>
+            <button data-view="aboutApp">FAQs</button>
+          </div>
+
+          <address class="site-footer-contact">
+            <h3>Contact Us</h3>
+            <p><span>Pin</span>CICR, Nagpur - 440 010 Maharashtra, India</p>
+            <p><span>Tel</span>+91 712 280 5000</p>
+            <p><span>Mail</span>director.cicr@icar.gov.in</p>
+            <p><span>Web</span>www.cicr.org.in</p>
+          </address>
+        </section>
+        <section class="site-footer-bottom">
+          <p>© 2025 CICR Cotton Research. All rights reserved.</p>
+          <div class="site-footer-social" aria-label="Social links">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="X">X</a>
+            <a href="#" aria-label="YouTube">▶</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+          </div>
+          <p>CICR Cotton Web App Developed By <strong>Zappkode Solutions.</strong></p>
+        </section>
+      </footer>
+
+      <nav class="bottom-nav" id="bottomNav" aria-label="Primary navigation"></nav>
+    </main>
+
+    <div class="a11y-panel" id="a11yPanel" aria-hidden="true">
+      <button data-a11y="fontDown">A-</button>
+      <button data-a11y="fontUp">A+</button>
+      <button data-a11y="contrast">Contrast</button>
+      <button data-a11y="read">Read</button>
+    </div>
+
+    <div class="image-lightbox" id="imageLightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button class="image-lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+      <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <script src="data.js"></script>
+    <script src="mobile-details.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
